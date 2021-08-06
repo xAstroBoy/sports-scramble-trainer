@@ -1,0 +1,81 @@
+﻿#pragma once
+
+// Name: Sport Scramble, Version: 1
+
+
+/*!!DEFINE!!*/
+
+/*!!HELPER_DEF!!*/
+
+/*!!HELPER_INC!!*/
+
+#ifdef _MSC_VER
+	#pragma pack(push, 0x01)
+#endif
+
+namespace CG
+{
+//---------------------------------------------------------------------------
+// Classes
+//---------------------------------------------------------------------------
+
+// AnimBlueprintGeneratedClass TN_Fish_Racket_AnimBP.TN_Fish_Racket_AnimBP_C
+// 0x09F4 (FullSize[0x0DB4] - InheritedSize[0x03C0])
+class UTN_Fish_Racket_AnimBP_C : public UScramInstrumentAnimInstance
+{
+public:
+	struct FPointerToUberGraphFrame                    UberGraphFrame;                                            // 0x03C0(0x0008) (ZeroConstructor, Transient, DuplicateTransient)
+	struct FAnimNode_Root                              AnimGraphNode_Root_9DCCFC5B4245138B3144379C5B3AB429;       // 0x03C8(0x0040)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_1421130148EC9C0CDD99DF9C96DB6678; // 0x0408(0x0048)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_826372804E092D8753BD2B87CF264920; // 0x0450(0x0048)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_498D58084C0F2AD6A057EC8C2BC244B1; // 0x0498(0x0048)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_3FE0B0B742FF573526CC338D6F589D77; // 0x04E0(0x0048)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_916B202746053801E421DABB30EF46A4; // 0x0528(0x0048)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_426E8A9145E194F3C4CC6D978C9236DF; // 0x0570(0x0048)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_4FB5BB2E49E7F1CD124D80BE1578BE7A; // 0x05B8(0x0048)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_B57C97FF4780C664DB8F97A7BFBD06A6; // 0x0600(0x0048)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_E0678AE64E4DB40AFB20F9B6870910F6; // 0x0648(0x0048)
+	struct FAnimNode_BlendSpacePlayer                  AnimGraphNode_BlendSpacePlayer_27617E7A4D43964AA0B89789EEA1A02D; // 0x0690(0x0128)
+	struct FAnimNode_StateResult                       AnimGraphNode_StateResult_33602F5F4A7E6B8C2207578400536EB4; // 0x07B8(0x0040)
+	struct FAnimNode_TransitionResult                  AnimGraphNode_TransitionResult_B9B7721146FF43A1600ADB951D5CEEB1; // 0x07F8(0x0048)
+	struct FAnimNode_BlendSpacePlayer                  AnimGraphNode_BlendSpacePlayer_B5D4219A4C7FD418263EB6A2D20E6EEA; // 0x0840(0x0128)
+	struct FAnimNode_StateResult                       AnimGraphNode_StateResult_82AF5DA8485FCB37EB17A881B3A8687E; // 0x0968(0x0040)
+	struct FAnimNode_SequencePlayer                    AnimGraphNode_SequencePlayer_3BCCE5A641BDD6DA77F504A4247ECB04; // 0x09A8(0x00A0)
+	struct FAnimNode_StateResult                       AnimGraphNode_StateResult_7798812F4DB2194EB929599D25C38BF1; // 0x0A48(0x0040)
+	struct FAnimNode_BlendSpacePlayer                  AnimGraphNode_BlendSpacePlayer_4D084961498C76322B728FBC8CC6DE26; // 0x0A88(0x0128)
+	struct FAnimNode_StateResult                       AnimGraphNode_StateResult_A90FF6574CD5F65514DCB9A9A99EA5B4; // 0x0BB0(0x0040)
+	struct FAnimNode_SequencePlayer                    AnimGraphNode_SequencePlayer_12489C9944B62ED6A2372EACA741C821; // 0x0BF0(0x00A0)
+	struct FAnimNode_StateResult                       AnimGraphNode_StateResult_2E0C3C154480EF708D4A5B9B20A60643; // 0x0C90(0x0040)
+	struct FAnimNode_StateMachine                      AnimGraphNode_StateMachine_A42A1B9E40BEE9E6C6DA50A321659AAA; // 0x0CD0(0x00E0)
+	float                                              GravityForceAlpha;                                         // 0x0DB0(0x0004) (Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("AnimBlueprintGeneratedClass TN_Fish_Racket_AnimBP.TN_Fish_Racket_AnimBP_C");
+		return ptr;
+	}
+
+
+
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_1421130148EC9C0CDD99DF9C96DB6678();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_826372804E092D8753BD2B87CF264920();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_498D58084C0F2AD6A057EC8C2BC244B1();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_3FE0B0B742FF573526CC338D6F589D77();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_916B202746053801E421DABB30EF46A4();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_426E8A9145E194F3C4CC6D978C9236DF();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_4FB5BB2E49E7F1CD124D80BE1578BE7A();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_B57C97FF4780C664DB8F97A7BFBD06A6();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_TransitionResult_E0678AE64E4DB40AFB20F9B6870910F6();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_BlendSpacePlayer_27617E7A4D43964AA0B89789EEA1A02D();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_BlendSpacePlayer_B5D4219A4C7FD418263EB6A2D20E6EEA();
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_TN_Fish_Racket_AnimBP_AnimGraphNode_BlendSpacePlayer_4D084961498C76322B728FBC8CC6DE26();
+	void AnimNotify_AnimStarted();
+	void ExecuteUbergraph_TN_Fish_Racket_AnimBP(int EntryPoint);
+};
+
+}
+
+#ifdef _MSC_VER
+	#pragma pack(pop)
+#endif

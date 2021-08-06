@@ -1,0 +1,345 @@
+﻿#pragma once
+
+// Name: Sport Scramble, Version: 1
+
+
+/*!!DEFINE!!*/
+
+/*!!HELPER_DEF!!*/
+
+/*!!HELPER_INC!!*/
+
+#ifdef _MSC_VER
+	#pragma pack(push, 0x01)
+#endif
+
+namespace CG
+{
+//---------------------------------------------------------------------------
+// Parameters
+//---------------------------------------------------------------------------
+
+// Function BB_Train_Base.BB_Train_Base_C.AddActorToGameElementList
+struct ABB_Train_Base_C_AddActorToGameElementList_Params
+{
+	class AActor*                                      Actor;                                                     // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	bool                                               Callback;                                                  // (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.Shutdown
+struct ABB_Train_Base_C_Shutdown_Params
+{
+	bool                                               ShutdownBegun;                                             // (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnPitchTargetListener
+struct ABB_Train_Base_C_BB_SpawnPitchTargetListener_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_TNG_SpawnNeverMissBatter
+struct ABB_Train_Base_C_BB_TNG_SpawnNeverMissBatter_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_TNG_TrackBasketballBounces
+struct ABB_Train_Base_C_BB_TNG_TrackBasketballBounces_Params
+{
+	class ABB_BasketBall_C*                            Basketball;                                                // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	bool                                               DestroyBasketball;                                         // (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnPitchingEquipment
+struct ABB_Train_Base_C_BB_SpawnPitchingEquipment_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnBBScrambleDisplay
+struct ABB_Train_Base_C_BB_SpawnBBScrambleDisplay_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnLauncherBarrier
+struct ABB_Train_Base_C_BB_SpawnLauncherBarrier_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnScrambleTargets
+struct ABB_Train_Base_C_BB_SpawnScrambleTargets_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_GetBattingSide
+struct ABB_Train_Base_C_BB_GetBattingSide_Params
+{
+	SportsScramble_EBattingSide                        Side;                                                      // (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_UpdateLargeScoreboardScore
+struct ABB_Train_Base_C_BB_UpdateLargeScoreboardScore_Params
+{
+	int                                                score;                                                     // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	bool                                               Player2;                                                   // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_TeleportBatter
+struct ABB_Train_Base_C_BB_TeleportBatter_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnOutfieldTarget
+struct ABB_Train_Base_C_BB_SpawnOutfieldTarget_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnWindows
+struct ABB_Train_Base_C_BB_SpawnWindows_Params
+{
+	bool                                               ShowTargetScore;                                           // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnBattingCage
+struct ABB_Train_Base_C_BB_SpawnBattingCage_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnLauncher
+struct ABB_Train_Base_C_BB_SpawnLauncher_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_SpawnPitchTarget
+struct ABB_Train_Base_C_BB_SpawnPitchTarget_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_MakeStrikezoneVisible
+struct ABB_Train_Base_C_BB_MakeStrikezoneVisible_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_UpdateTrainingScoreboardCount
+struct ABB_Train_Base_C_BB_UpdateTrainingScoreboardCount_Params
+{
+	int                                                score;                                                     // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_UpdateTrainingScoreboardScore
+struct ABB_Train_Base_C_BB_UpdateTrainingScoreboardScore_Params
+{
+	int                                                score;                                                     // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_CalculateEndScore
+struct ABB_Train_Base_C_BB_CalculateEndScore_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.SpawnPitchingEquipment_DEPRECATED
+struct ABB_Train_Base_C_SpawnPitchingEquipment_DEPRECATED_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.ClearScoreboards
+struct ABB_Train_Base_C_ClearScoreboards_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.Initialize
+struct ABB_Train_Base_C_Initialize_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.UserConstructionScript
+struct ABB_Train_Base_C_UserConstructionScript_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.ShowScoreboardAnimation
+struct ABB_Train_Base_C_ShowScoreboardAnimation_Params
+{
+	TEnumAsByte<BB_ScoreboardVideos_EBB_ScoreboardVideos> Animation;                                                 // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.SetScoreMaterialAndFont
+struct ABB_Train_Base_C_SetScoreMaterialAndFont_Params
+{
+	int                                                FontSize;                                                  // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.SetScoreVisibility
+struct ABB_Train_Base_C_SetScoreVisibility_Params
+{
+	UMG_ESlateVisibility                               Visibility;                                                // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.AttachTrainingScoreboard
+struct ABB_Train_Base_C_AttachTrainingScoreboard_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BindToScoring
+struct ABB_Train_Base_C_BindToScoring_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.PlayerHitSingle
+struct ABB_Train_Base_C_PlayerHitSingle_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.PlayerHitDouble
+struct ABB_Train_Base_C_PlayerHitDouble_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.PlayerHitTriple
+struct ABB_Train_Base_C_PlayerHitTriple_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.PlayerHitHomerun
+struct ABB_Train_Base_C_PlayerHitHomerun_Params
+{
+	bool                                               BasesLoaded;                                               // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.UnbindScoring
+struct ABB_Train_Base_C_UnbindScoring_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.TrainingTargetHit
+struct ABB_Train_Base_C_TrainingTargetHit_Params
+{
+	SportsScramble_EBaseballScrambleTargetLocations    Location;                                                  // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_OutfieldTargetHit
+struct ABB_Train_Base_C_BB_OutfieldTargetHit_Params
+{
+	class AScramBall*                                  Ball;                                                      // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	int                                                TargetId;                                                  // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_BallLaunched
+struct ABB_Train_Base_C_BB_BallLaunched_Params
+{
+	class AActor*                                      LaunchedBall;                                              // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.Strikezone_Strike
+struct ABB_Train_Base_C_Strikezone_Strike_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.Strikezone_Ball
+struct ABB_Train_Base_C_Strikezone_Ball_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.SportMgr_CatcherThrewBall
+struct ABB_Train_Base_C_SportMgr_CatcherThrewBall_Params
+{
+	class ABaseballBall*                               Ball;                                                      // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.SportMgr_PitcherReady
+struct ABB_Train_Base_C_SportMgr_PitcherReady_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.HitFloorCollision
+struct ABB_Train_Base_C_HitFloorCollision_Params
+{
+	class ABB_Ball_Base_C*                             Ball;                                                      // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	struct FVector                                     HitLocation;                                               // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.CatcherCaughtBall
+struct ABB_Train_Base_C_CatcherCaughtBall_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.PitchTargetHit
+struct ABB_Train_Base_C_PitchTargetHit_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.ReceiveBeginPlay
+struct ABB_Train_Base_C_ReceiveBeginPlay_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.EndOfGame
+struct ABB_Train_Base_C_EndOfGame_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.PlayerMoved
+struct ABB_Train_Base_C_PlayerMoved_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.NoTeleport
+struct ABB_Train_Base_C_NoTeleport_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.ReadyForTraining
+struct ABB_Train_Base_C_ReadyForTraining_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_EquipmentGrabbed
+struct ABB_Train_Base_C_BB_EquipmentGrabbed_Params
+{
+	class AActor*                                      DominantHand;                                              // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	class ABB_Mitt_C*                                  Mitt;                                                      // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.PitcherCaughtSomething
+struct ABB_Train_Base_C_PitcherCaughtSomething_Params
+{
+	class UScramEventBasePayload*                      Payload;                                                   // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.BB_ResetScoreboards
+struct ABB_Train_Base_C_BB_ResetScoreboards_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.LargeScoreboard_TrainingProgress
+struct ABB_Train_Base_C_LargeScoreboard_TrainingProgress_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.PitcherMittReleasedBall
+struct ABB_Train_Base_C_PitcherMittReleasedBall_Params
+{
+	class AActor*                                      TouchedActor;                                              // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	struct FKey                                        ButtonReleased;                                            // (BlueprintVisible, BlueprintReadOnly, Parm, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.OpenTravelCapsule
+struct ABB_Train_Base_C_OpenTravelCapsule_Params
+{
+	float                                              Delay;                                                     // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.CloseTravelCapsule
+struct ABB_Train_Base_C_CloseTravelCapsule_Params
+{
+};
+
+// Function BB_Train_Base.BB_Train_Base_C.ExecuteUbergraph_BB_Train_Base
+struct ABB_Train_Base_C_ExecuteUbergraph_BB_Train_Base_Params
+{
+	int                                                EntryPoint;                                                // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+};
+
+}
+
+#ifdef _MSC_VER
+	#pragma pack(pop)
+#endif

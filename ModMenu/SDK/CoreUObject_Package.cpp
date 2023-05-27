@@ -1197,19 +1197,14 @@ namespace CG
 	{
 		if (function == nullptr)
 		{
-			// Handle the case where the function pointer is null
-			// You can choose to log an error, throw an exception, or take appropriate action
 			return;
 		}
-
-		// Get the function pointer using GetVFunction
 		auto vFunction = GetVFunction<void(*)(UObject*, class UFunction*, void*)>(this, PROCESS_EVENTS_INDEX);
 
 		if (vFunction != nullptr)
 		{
 			try
 			{
-				// Call the vFunction with proper error handling
 				vFunction(this, function, parms);
 			}
 			catch (...)

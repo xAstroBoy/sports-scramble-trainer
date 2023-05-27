@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,28 +11,20 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass FunctionLibraryLite.FunctionLibraryLite_C
-// 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
-class UFunctionLibraryLite_C : public UBlueprintFunctionLibrary
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass FunctionLibraryLite.FunctionLibraryLite_C
+	 * Size -> 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
+	 */
+	class UFunctionLibraryLite_C : public UBlueprintFunctionLibrary
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass FunctionLibraryLite.FunctionLibraryLite_C");
-		return ptr;
-	}
-
-
-
-	void STATIC_GetPlayerNamesLite(class UObject* WorldContextObject, int MaxLength, class UObject* __WorldContext, struct FText* Player1, struct FText* Player2);
-	void STATIC_GetLocTextLite(const struct FName& LocTextName, class UObject* __WorldContext, struct FText* Text);
-};
+	public:
+		void STATIC_GetPlayerNamesLite(class UObject* WorldContextObject, int32_t MaxLength, class UObject* __WorldContext, class FText* Player1, class FText* Player2);
+		void STATIC_GetLocTextLite(const class FName& LocTextName, class UObject* __WorldContext, class FText* Text);
+		static UClass* StaticClass();
+	};
 
 }
 

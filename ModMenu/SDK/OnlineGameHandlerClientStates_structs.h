@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,24 +11,24 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum OnlineGameHandlerClientStates.OnlineGameHandlerClientStates
-enum class OnlineGameHandlerClientStates_EOnlineGameHandlerClientStates : uint8_t
-{
-	OnlineGameHandlerClientStates__NewEnumerator12 = 0,
-	OnlineGameHandlerClientStates__NewEnumerator13 = 1,
-	OnlineGameHandlerClientStates__NewEnumerator14 = 2,
-	OnlineGameHandlerClientStates__NewEnumerator15 = 3,
-	OnlineGameHandlerClientStates__NewEnumerator16 = 4,
-	OnlineGameHandlerClientStates__NewEnumerator17 = 5,
-	OnlineGameHandlerClientStates__NewEnumerator19 = 6,
-	OnlineGameHandlerClientStates__NewEnumerator20 = 7,
-	OnlineGameHandlerClientStates__OnlineGameHandlerClientStates_MAX = 8,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum OnlineGameHandlerClientStates.OnlineGameHandlerClientStates
+	 */
+	enum class EOnlineGameHandlerClientStates : uint8_t
+	{
+		OnlineGameHandlerClientStatesNewEnumerator12                   = 0,
+		OnlineGameHandlerClientStatesNewEnumerator13                   = 1,
+		OnlineGameHandlerClientStatesNewEnumerator14                   = 2,
+		OnlineGameHandlerClientStatesNewEnumerator15                   = 3,
+		OnlineGameHandlerClientStatesNewEnumerator16                   = 4,
+		OnlineGameHandlerClientStatesNewEnumerator17                   = 5,
+		OnlineGameHandlerClientStatesNewEnumerator19                   = 6,
+		OnlineGameHandlerClientStatesNewEnumerator20                   = 7,
+		OnlineGameHandlerClientStatesOnlineGameHandlerClientStates_MAX = 8
+	};
 
 }
 

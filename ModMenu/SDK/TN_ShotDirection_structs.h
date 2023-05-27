@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,21 +11,21 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum TN_ShotDirection.TN_ShotDirection
-enum class TN_ShotDirection_ETN_ShotDirection : uint8_t
-{
-	TN_ShotDirection__NewEnumerator0 = 0,
-	TN_ShotDirection__NewEnumerator1 = 1,
-	TN_ShotDirection__NewEnumerator2 = 2,
-	TN_ShotDirection__NewEnumerator3 = 3,
-	TN_ShotDirection__NewEnumerator4 = 4,
-	TN_ShotDirection__TN_MAX       = 5,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum TN_ShotDirection.TN_ShotDirection
+	 */
+	enum class ETN_ShotDirection : uint8_t
+	{
+		TN_ShotDirectionNewEnumerator0 = 0,
+		TN_ShotDirectionNewEnumerator1 = 1,
+		TN_ShotDirectionNewEnumerator2 = 2,
+		TN_ShotDirectionNewEnumerator3 = 3,
+		TN_ShotDirectionNewEnumerator4 = 4,
+		TN_ShotDirectionTN_MAX         = 5
+	};
 
 }
 

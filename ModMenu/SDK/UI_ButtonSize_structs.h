@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,24 +11,24 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum UI_ButtonSize.UI_ButtonSize
-enum class UI_ButtonSize_EUI_ButtonSize : uint8_t
-{
-	UI_ButtonSize__NewEnumerator0  = 0,
-	UI_ButtonSize__NewEnumerator1  = 1,
-	UI_ButtonSize__NewEnumerator2  = 2,
-	UI_ButtonSize__NewEnumerator3  = 3,
-	UI_ButtonSize__NewEnumerator4  = 4,
-	UI_ButtonSize__NewEnumerator5  = 5,
-	UI_ButtonSize__NewEnumerator6  = 6,
-	UI_ButtonSize__NewEnumerator7  = 7,
-	UI_ButtonSize__UI_MAX          = 8,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum UI_ButtonSize.UI_ButtonSize
+	 */
+	enum class EUI_ButtonSize : uint8_t
+	{
+		UI_ButtonSizeNewEnumerator0 = 0,
+		UI_ButtonSizeNewEnumerator1 = 1,
+		UI_ButtonSizeNewEnumerator2 = 2,
+		UI_ButtonSizeNewEnumerator3 = 3,
+		UI_ButtonSizeNewEnumerator4 = 4,
+		UI_ButtonSizeNewEnumerator5 = 5,
+		UI_ButtonSizeNewEnumerator6 = 6,
+		UI_ButtonSizeNewEnumerator7 = 7,
+		UI_ButtonSizeUI_MAX         = 8
+	};
 
 }
 

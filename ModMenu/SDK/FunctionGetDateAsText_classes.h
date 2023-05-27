@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,27 +11,19 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass FunctionGetDateAsText.FunctionGetDateAsText_C
-// 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
-class UFunctionGetDateAsText_C : public UBlueprintFunctionLibrary
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass FunctionGetDateAsText.FunctionGetDateAsText_C
+	 * Size -> 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
+	 */
+	class UFunctionGetDateAsText_C : public UBlueprintFunctionLibrary
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass FunctionGetDateAsText.FunctionGetDateAsText_C");
-		return ptr;
-	}
-
-
-
-	void STATIC_GetDateAsText(const struct FDateTime& date, class UObject* __WorldContext, struct FText* Text);
-};
+	public:
+		void STATIC_GetDateAsText(const struct FDateTime& date, class UObject* __WorldContext, class FText* Text);
+		static UClass* StaticClass();
+	};
 
 }
 

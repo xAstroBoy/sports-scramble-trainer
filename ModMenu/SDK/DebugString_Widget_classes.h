@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,27 +11,21 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// WidgetBlueprintGeneratedClass DebugString_Widget.DebugString_Widget_C
-// 0x0008 (FullSize[0x0218] - InheritedSize[0x0210])
-class UDebugString_Widget_C : public UUserWidget
-{
-public:
-	class UTextBlock*                                  TextBlock_1;                                               // 0x0210(0x0008) (BlueprintVisible, ExportObject, ZeroConstructor, InstancedReference, IsPlainOldData, RepSkip, NoDestructor, PersistentInstance, HasGetValueTypeHash)
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * WidgetBlueprintGeneratedClass DebugString_Widget.DebugString_Widget_C
+	 * Size -> 0x0008 (FullSize[0x0218] - InheritedSize[0x0210])
+	 */
+	class UDebugString_Widget_C : public UUserWidget
 	{
-		static auto ptr = UObject::FindClass("WidgetBlueprintGeneratedClass DebugString_Widget.DebugString_Widget_C");
-		return ptr;
-	}
+	public:
+		class UTextBlock*                                          TextBlock_1;                                             // 0x0210(0x0008) BlueprintVisible, ExportObject, ZeroConstructor, InstancedReference, IsPlainOldData, RepSkip, NoDestructor, PersistentInstance, HasGetValueTypeHash
 
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

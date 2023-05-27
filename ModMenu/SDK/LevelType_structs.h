@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,18 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum LevelType.LevelType
-enum class LevelType_ELevelType : uint8_t
-{
-	LevelType__NewEnumerator0      = 0,
-	LevelType__NewEnumerator1      = 1,
-	LevelType__LevelType_MAX       = 2,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum LevelType.LevelType
+	 */
+	enum class ELevelType : uint8_t
+	{
+		LevelTypeNewEnumerator0 = 0,
+		LevelTypeNewEnumerator1 = 1,
+		LevelTypeLevelType_MAX  = 2
+	};
 
 }
 

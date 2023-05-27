@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,19 +11,19 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum ScrambleTargetSubsetTypes.ScrambleTargetSubsetTypes
-enum class ScrambleTargetSubsetTypes_EScrambleTargetSubsetTypes : uint8_t
-{
-	ScrambleTargetSubsetTypes__NewEnumerator0 = 0,
-	ScrambleTargetSubsetTypes__NewEnumerator1 = 1,
-	ScrambleTargetSubsetTypes__NewEnumerator2 = 2,
-	ScrambleTargetSubsetTypes__ScrambleTargetSubsetTypes_MAX = 3,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum ScrambleTargetSubsetTypes.ScrambleTargetSubsetTypes
+	 */
+	enum class EScrambleTargetSubsetTypes : uint8_t
+	{
+		ScrambleTargetSubsetTypesNewEnumerator0                = 0,
+		ScrambleTargetSubsetTypesNewEnumerator1                = 1,
+		ScrambleTargetSubsetTypesNewEnumerator2                = 2,
+		ScrambleTargetSubsetTypesScrambleTargetSubsetTypes_MAX = 3
+	};
 
 }
 

@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,30 +11,24 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass PauseBubble.PauseBubble_C
-// 0x0018 (FullSize[0x0360] - InheritedSize[0x0348])
-class APauseBubble_C : public AScramActor
-{
-public:
-	class USkeletalMeshComponent*                      reference_mesh__editor_only_;                              // 0x0348(0x0008) (BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash)
-	class UWidgetComponent*                            Widget;                                                    // 0x0350(0x0008) (BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash)
-	class USceneComponent*                             DefaultSceneRoot;                                          // 0x0358(0x0008) (BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash)
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass PauseBubble.PauseBubble_C
+	 * Size -> 0x0018 (FullSize[0x0360] - InheritedSize[0x0348])
+	 */
+	class APauseBubble_C : public AScramActor
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass PauseBubble.PauseBubble_C");
-		return ptr;
-	}
+	public:
+		class USkeletalMeshComponent*                              referencemesheditoronly;                                 // 0x0348(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
+		class UWidgetComponent*                                    Widget;                                                  // 0x0350(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
+		class USceneComponent*                                     DefaultSceneRoot;                                        // 0x0358(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
 
-
-
-	void UserConstructionScript();
-};
+	public:
+		void UserConstructionScript();
+		static UClass* StaticClass();
+	};
 
 }
 

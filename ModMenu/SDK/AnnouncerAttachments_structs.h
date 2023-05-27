@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,22 +11,22 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum AnnouncerAttachments.AnnouncerAttachments
-enum class AnnouncerAttachments_EAnnouncerAttachments : uint8_t
-{
-	AnnouncerAttachments__NewEnumerator0 = 0,
-	AnnouncerAttachments__NewEnumerator1 = 1,
-	AnnouncerAttachments__NewEnumerator2 = 2,
-	AnnouncerAttachments__NewEnumerator3 = 3,
-	AnnouncerAttachments__NewEnumerator4 = 4,
-	AnnouncerAttachments__NewEnumerator5 = 5,
-	AnnouncerAttachments__AnnouncerAttachments_MAX = 6,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum AnnouncerAttachments.AnnouncerAttachments
+	 */
+	enum class EAnnouncerAttachments : uint8_t
+	{
+		AnnouncerAttachmentsNewEnumerator0           = 0,
+		AnnouncerAttachmentsNewEnumerator1           = 1,
+		AnnouncerAttachmentsNewEnumerator2           = 2,
+		AnnouncerAttachmentsNewEnumerator3           = 3,
+		AnnouncerAttachmentsNewEnumerator4           = 4,
+		AnnouncerAttachmentsNewEnumerator5           = 5,
+		AnnouncerAttachmentsAnnouncerAttachments_MAX = 6
+	};
 
 }
 

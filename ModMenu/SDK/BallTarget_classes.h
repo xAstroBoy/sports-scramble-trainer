@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,29 +11,21 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass BallTarget.BallTarget_C
-// 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
-class UBallTarget_C : public UInterface
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass BallTarget.BallTarget_C
+	 * Size -> 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
+	 */
+	class UBallTarget_C : public UInterface
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass BallTarget.BallTarget_C");
-		return ptr;
-	}
-
-
-
-	void ShowBallTarget(bool Instant, bool* Callback);
-	void HideBallTarget(bool Instant, bool* Callback);
-	void FlashScore(int score, const struct FSlateColor& Color, bool* ScoreFlashed);
-};
+	public:
+		void ShowBallTarget(bool Instant, bool* Callback);
+		void HideBallTarget(bool Instant, bool* Callback);
+		void FlashScore(int32_t score, const struct FSlateColor& Color, bool* ScoreFlashed);
+		static UClass* StaticClass();
+	};
 
 }
 

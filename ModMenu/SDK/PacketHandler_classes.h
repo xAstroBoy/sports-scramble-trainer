@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,44 +11,31 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// Class PacketHandler.HandlerComponentFactory
-// 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
-class UHandlerComponentFactory : public UObject
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * Class PacketHandler.HandlerComponentFactory
+	 * Size -> 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
+	 */
+	class UHandlerComponentFactory : public UObject
 	{
-		static auto ptr = UObject::FindClass("Class PacketHandler.HandlerComponentFactory");
-		return ptr;
-	}
+	public:
+		static UClass* StaticClass();
+	};
 
-
-
-};
-
-// Class PacketHandler.NetAnalyticsAggregatorConfig
-// 0x0010 (FullSize[0x0038] - InheritedSize[0x0028])
-class UNetAnalyticsAggregatorConfig : public UObject
-{
-public:
-	TArray<struct FNetAnalyticsDataConfig>             NetAnalyticsData;                                          // 0x0028(0x0010) (ZeroConstructor, Config, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class PacketHandler.NetAnalyticsAggregatorConfig
+	 * Size -> 0x0010 (FullSize[0x0038] - InheritedSize[0x0028])
+	 */
+	class UNetAnalyticsAggregatorConfig : public UObject
 	{
-		static auto ptr = UObject::FindClass("Class PacketHandler.NetAnalyticsAggregatorConfig");
-		return ptr;
-	}
+	public:
+		TArray<struct FNetAnalyticsDataConfig>                     NetAnalyticsData;                                        // 0x0028(0x0010) ZeroConstructor, Config, NativeAccessSpecifierPublic
 
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

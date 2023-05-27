@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,19 +11,19 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum ErrorMessage.ErrorMessage
-enum class ErrorMessage_ErrorMessage : uint8_t
-{
-	ErrorMessage__NewEnumerator0   = 0,
-	ErrorMessage__NewEnumerator1   = 1,
-	ErrorMessage__NewEnumerator2   = 2,
-	ErrorMessage__ErrorMessage_MAX = 3,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum ErrorMessage.ErrorMessage
+	 */
+	enum class ErrorMessage : uint8_t
+	{
+		NewEnumerator0 = 0,
+		NewEnumerator1 = 1,
+		NewEnumerator2 = 2,
+		MAX            = 3
+	};
 
 }
 

@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,26 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass GripSet_Pineapple.GripSet_Pineapple_C
-// 0x0000 (FullSize[0x0370] - InheritedSize[0x0370])
-class AGripSet_Pineapple_C : public AScramGripSet
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass GripSet_Pineapple.GripSet_Pineapple_C
+	 * Size -> 0x0000 (FullSize[0x0370] - InheritedSize[0x0370])
+	 */
+	class AGripSet_Pineapple_C : public AScramGripSet
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass GripSet_Pineapple.GripSet_Pineapple_C");
-		return ptr;
-	}
-
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

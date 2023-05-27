@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,28 +11,22 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass PlinkoAccelerator.PlinkoAccelerator_C
-// 0x0008 (FullSize[0x0380] - InheritedSize[0x0378])
-class APlinkoAccelerator_C : public ABowlingConveyor
-{
-public:
-	class UBoxComponent*                               Box;                                                       // 0x0378(0x0008) (BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash)
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass PlinkoAccelerator.PlinkoAccelerator_C
+	 * Size -> 0x0008 (FullSize[0x0380] - InheritedSize[0x0378])
+	 */
+	class APlinkoAccelerator_C : public ABowlingConveyor
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass PlinkoAccelerator.PlinkoAccelerator_C");
-		return ptr;
-	}
+	public:
+		class UBoxComponent*                                       Box;                                                     // 0x0378(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
 
-
-
-	void UserConstructionScript();
-};
+	public:
+		void UserConstructionScript();
+		static UClass* StaticClass();
+	};
 
 }
 

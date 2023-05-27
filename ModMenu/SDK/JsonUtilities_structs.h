@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,18 +11,19 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Script Structs
-//---------------------------------------------------------------------------
-
-// ScriptStruct JsonUtilities.JsonObjectWrapper
-// 0x0020
-struct FJsonObjectWrapper
-{
-	struct FString                                     JsonString;                                                // 0x0000(0x0010) (Edit, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-	unsigned char                                      UnknownData_FXVO[0x10];                                    // 0x0010(0x0010) MISSED OFFSET (PADDING)
-
-};
+	// --------------------------------------------------
+	// # Structs
+	// --------------------------------------------------
+	/**
+	 * ScriptStruct JsonUtilities.JsonObjectWrapper
+	 * Size -> 0x0020
+	 */
+	struct FJsonObjectWrapper
+	{
+	public:
+		class FString                                              JsonString;                                              // 0x0000(0x0010) Edit, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
+		unsigned char                                              UnknownData_9U7L[0x10];                                  // 0x0010(0x0010) MISSED OFFSET (PADDING)
+	};
 
 }
 

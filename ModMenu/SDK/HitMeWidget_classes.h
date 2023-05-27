@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,30 +11,24 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// WidgetBlueprintGeneratedClass HitMeWidget.HitMeWidget_C
-// 0x0010 (FullSize[0x0220] - InheritedSize[0x0210])
-class UHitMeWidget_C : public UUserWidget
-{
-public:
-	struct FPointerToUberGraphFrame                    UberGraphFrame;                                            // 0x0210(0x0008) (ZeroConstructor, Transient, DuplicateTransient)
-	class UTextBlock*                                  HitMeText;                                                 // 0x0218(0x0008) (BlueprintVisible, ExportObject, ZeroConstructor, InstancedReference, IsPlainOldData, RepSkip, NoDestructor, PersistentInstance, HasGetValueTypeHash)
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * WidgetBlueprintGeneratedClass HitMeWidget.HitMeWidget_C
+	 * Size -> 0x0010 (FullSize[0x0220] - InheritedSize[0x0210])
+	 */
+	class UHitMeWidget_C : public UUserWidget
 	{
-		static auto ptr = UObject::FindClass("WidgetBlueprintGeneratedClass HitMeWidget.HitMeWidget_C");
-		return ptr;
-	}
+	public:
+		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0210(0x0008) ZeroConstructor, Transient, DuplicateTransient
+		class UTextBlock*                                          HitMeText;                                               // 0x0218(0x0008) BlueprintVisible, ExportObject, ZeroConstructor, InstancedReference, IsPlainOldData, RepSkip, NoDestructor, PersistentInstance, HasGetValueTypeHash
 
-
-
-	void PreConstruct(bool IsDesignTime);
-	void ExecuteUbergraph_HitMeWidget(int EntryPoint);
-};
+	public:
+		void PreConstruct(bool IsDesignTime);
+		void ExecuteUbergraph_HitMeWidget(int32_t EntryPoint);
+		static UClass* StaticClass();
+	};
 
 }
 

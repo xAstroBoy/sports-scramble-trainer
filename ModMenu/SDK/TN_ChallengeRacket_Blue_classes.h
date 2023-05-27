@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,30 +11,24 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass TN_ChallengeRacket_Blue.TN_ChallengeRacket_Blue_C
-// 0x0008 (FullSize[0x1048] - InheritedSize[0x1040])
-class ATN_ChallengeRacket_Blue_C : public ATN_ChallengeRacket_Base_C
-{
-public:
-	struct FPointerToUberGraphFrame                    UberGraphFrame;                                            // 0x1040(0x0008) (ZeroConstructor, Transient, DuplicateTransient)
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass TN_ChallengeRacket_Blue.TN_ChallengeRacket_Blue_C
+	 * Size -> 0x0008 (FullSize[0x1048] - InheritedSize[0x1040])
+	 */
+	class ATN_ChallengeRacket_Blue_C : public ATN_ChallengeRacket_Base_C
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass TN_ChallengeRacket_Blue.TN_ChallengeRacket_Blue_C");
-		return ptr;
-	}
+	public:
+		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x1040(0x0008) ZeroConstructor, Transient, DuplicateTransient
 
-
-
-	void UserConstructionScript();
-	void UpdateMesh();
-	void ExecuteUbergraph_TN_ChallengeRacket_Blue(int EntryPoint);
-};
+	public:
+		void UserConstructionScript();
+		void UpdateMesh();
+		void ExecuteUbergraph_TN_ChallengeRacket_Blue(int32_t EntryPoint);
+		static UClass* StaticClass();
+	};
 
 }
 

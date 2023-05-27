@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,19 +11,19 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum CrossPlayType.CrossPlayType
-enum class CrossPlayType_ECrossPlayType : uint8_t
-{
-	CrossPlayType__NewEnumerator0  = 0,
-	CrossPlayType__NewEnumerator1  = 1,
-	CrossPlayType__NewEnumerator2  = 2,
-	CrossPlayType__CrossPlayType_MAX = 3,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum CrossPlayType.CrossPlayType
+	 */
+	enum class ECrossPlayType : uint8_t
+	{
+		CrossPlayTypeNewEnumerator0    = 0,
+		CrossPlayTypeNewEnumerator1    = 1,
+		CrossPlayTypeNewEnumerator2    = 2,
+		CrossPlayTypeCrossPlayType_MAX = 3
+	};
 
 }
 

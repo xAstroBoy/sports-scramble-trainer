@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,20 +11,20 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum BW_Quality.BW_Quality
-enum class BW_Quality_EBW_Quality : uint8_t
-{
-	BW_Quality__NewEnumerator0     = 0,
-	BW_Quality__NewEnumerator1     = 1,
-	BW_Quality__NewEnumerator2     = 2,
-	BW_Quality__NewEnumerator3     = 3,
-	BW_Quality__BW_MAX             = 4,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum BW_Quality.BW_Quality
+	 */
+	enum class EBW_Quality : uint8_t
+	{
+		BW_QualityNewEnumerator0 = 0,
+		BW_QualityNewEnumerator1 = 1,
+		BW_QualityNewEnumerator2 = 2,
+		BW_QualityNewEnumerator3 = 3,
+		BW_QualityBW_MAX         = 4
+	};
 
 }
 

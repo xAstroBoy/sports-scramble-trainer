@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,21 +11,21 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// Enum TimeManagement.EFrameNumberDisplayFormats
-enum class TimeManagement_EFrameNumberDisplayFormats : uint8_t
-{
-	EFrameNumberDisplayFormats__NonDropFrameTimecode = 0,
-	EFrameNumberDisplayFormats__DropFrameTimecode = 1,
-	EFrameNumberDisplayFormats__Seconds = 2,
-	EFrameNumberDisplayFormats__Frames = 3,
-	EFrameNumberDisplayFormats__MAX_Count = 4,
-	EFrameNumberDisplayFormats__EFrameNumberDisplayFormats_MAX = 5,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * Enum TimeManagement.EFrameNumberDisplayFormats
+	 */
+	enum class EFrameNumberDisplayFormats : uint8_t
+	{
+		NonDropFrameTimecode = 0,
+		DropFrameTimecode    = 1,
+		Seconds              = 2,
+		Frames               = 3,
+		MAX_Count            = 4,
+		MAX                  = 5
+	};
 
 }
 

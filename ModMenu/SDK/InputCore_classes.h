@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,26 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// Class InputCore.InputCoreTypes
-// 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
-class UInputCoreTypes : public UObject
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * Class InputCore.InputCoreTypes
+	 * Size -> 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
+	 */
+	class UInputCoreTypes : public UObject
 	{
-		static auto ptr = UObject::FindClass("Class InputCore.InputCoreTypes");
-		return ptr;
-	}
-
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

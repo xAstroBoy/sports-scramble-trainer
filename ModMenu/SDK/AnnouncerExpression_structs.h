@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,24 +11,24 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum AnnouncerExpression.AnnouncerExpression
-enum class AnnouncerExpression_EAnnouncerExpression : uint8_t
-{
-	AnnouncerExpression__NewEnumerator0 = 0,
-	AnnouncerExpression__NewEnumerator1 = 1,
-	AnnouncerExpression__NewEnumerator2 = 2,
-	AnnouncerExpression__NewEnumerator3 = 3,
-	AnnouncerExpression__NewEnumerator4 = 4,
-	AnnouncerExpression__NewEnumerator5 = 5,
-	AnnouncerExpression__NewEnumerator6 = 6,
-	AnnouncerExpression__NewEnumerator7 = 7,
-	AnnouncerExpression__AnnouncerExpression_MAX = 8,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum AnnouncerExpression.AnnouncerExpression
+	 */
+	enum class EAnnouncerExpression : uint8_t
+	{
+		AnnouncerExpressionNewEnumerator0          = 0,
+		AnnouncerExpressionNewEnumerator1          = 1,
+		AnnouncerExpressionNewEnumerator2          = 2,
+		AnnouncerExpressionNewEnumerator3          = 3,
+		AnnouncerExpressionNewEnumerator4          = 4,
+		AnnouncerExpressionNewEnumerator5          = 5,
+		AnnouncerExpressionNewEnumerator6          = 6,
+		AnnouncerExpressionNewEnumerator7          = 7,
+		AnnouncerExpressionAnnouncerExpression_MAX = 8
+	};
 
 }
 

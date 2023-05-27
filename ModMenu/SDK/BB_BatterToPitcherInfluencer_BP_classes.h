@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,28 +11,22 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass BB_BatterToPitcherInfluencer_BP.BB_BatterToPitcherInfluencer_BP_C
-// 0x0008 (FullSize[0x0358] - InheritedSize[0x0350])
-class ABB_BatterToPitcherInfluencer_BP_C : public AScramSceneComponentActor
-{
-public:
-	class UScramTrajectoryInfluencerBaseball*          ScramTrajectoryInfluencerBaseball;                         // 0x0350(0x0008) (BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash)
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass BB_BatterToPitcherInfluencer_BP.BB_BatterToPitcherInfluencer_BP_C
+	 * Size -> 0x0008 (FullSize[0x0358] - InheritedSize[0x0350])
+	 */
+	class ABB_BatterToPitcherInfluencer_BP_C : public AScramSceneComponentActor
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass BB_BatterToPitcherInfluencer_BP.BB_BatterToPitcherInfluencer_BP_C");
-		return ptr;
-	}
+	public:
+		class UScramTrajectoryInfluencerBaseball*                  ScramTrajectoryInfluencerBaseball;                       // 0x0350(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
 
-
-
-	void UserConstructionScript();
-};
+	public:
+		void UserConstructionScript();
+		static UClass* StaticClass();
+	};
 
 }
 

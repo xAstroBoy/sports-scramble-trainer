@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,29 +11,21 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass SpaceInvaderLane.SpaceInvaderLane_C
-// 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
-class USpaceInvaderLane_C : public UInterface
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass SpaceInvaderLane.SpaceInvaderLane_C
+	 * Size -> 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
+	 */
+	class USpaceInvaderLane_C : public UInterface
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass SpaceInvaderLane.SpaceInvaderLane_C");
-		return ptr;
-	}
-
-
-
-	void UpdateAlienSpeed(float NewSpeed, bool* SpeedUpdated);
-	void SetInvaderLaneGameState(bool Run, bool* StateSet);
-	void BeginChallengeMode(float Speed, TArray<struct FName> Patterns, bool* ChallengeModeStarted);
-};
+	public:
+		void UpdateAlienSpeed(float NewSpeed, bool* SpeedUpdated);
+		void SetInvaderLaneGameState(bool Run, bool* StateSet);
+		void BeginChallengeMode(float Speed, TArray<class FName> Patterns, bool* ChallengeModeStarted);
+		static UClass* StaticClass();
+	};
 
 }
 

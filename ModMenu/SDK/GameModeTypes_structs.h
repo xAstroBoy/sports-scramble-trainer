@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,23 +11,23 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum GameModeTypes.GameModeTypes
-enum class GameModeTypes_EGameModeTypes : uint8_t
-{
-	GameModeTypes__NewEnumerator0  = 0,
-	GameModeTypes__NewEnumerator4  = 1,
-	GameModeTypes__NewEnumerator2  = 2,
-	GameModeTypes__NewEnumerator3  = 3,
-	GameModeTypes__NewEnumerator7  = 4,
-	GameModeTypes__NewEnumerator6  = 5,
-	GameModeTypes__NewEnumerator8  = 6,
-	GameModeTypes__GameModeTypes_MAX = 7,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum GameModeTypes.GameModeTypes
+	 */
+	enum class EGameModeTypes : uint8_t
+	{
+		GameModeTypesNewEnumerator0    = 0,
+		GameModeTypesNewEnumerator4    = 1,
+		GameModeTypesNewEnumerator2    = 2,
+		GameModeTypesNewEnumerator3    = 3,
+		GameModeTypesNewEnumerator7    = 4,
+		GameModeTypesNewEnumerator6    = 5,
+		GameModeTypesNewEnumerator8    = 6,
+		GameModeTypesGameModeTypes_MAX = 7
+	};
 
 }
 

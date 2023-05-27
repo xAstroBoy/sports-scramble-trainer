@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,226 +11,165 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// Class Slate.ButtonWidgetStyle
-// 0x0278 (FullSize[0x02A8] - InheritedSize[0x0030])
-class UButtonWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FButtonStyle                                ButtonStyle;                                               // 0x0030(0x0278) (Edit, BlueprintVisible, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * Class Slate.ButtonWidgetStyle
+	 * Size -> 0x0278 (FullSize[0x02A8] - InheritedSize[0x0030])
+	 */
+	class UButtonWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.ButtonWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FButtonStyle                                        ButtonStyle;                                             // 0x0030(0x0278) Edit, BlueprintVisible, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.CheckBoxWidgetStyle
-// 0x0580 (FullSize[0x05B0] - InheritedSize[0x0030])
-class UCheckBoxWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FCheckBoxStyle                              CheckBoxStyle;                                             // 0x0030(0x0580) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.CheckBoxWidgetStyle
+	 * Size -> 0x0580 (FullSize[0x05B0] - InheritedSize[0x0030])
+	 */
+	class UCheckBoxWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.CheckBoxWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FCheckBoxStyle                                      CheckBoxStyle;                                           // 0x0030(0x0580) Edit, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.ComboBoxWidgetStyle
-// 0x03D8 (FullSize[0x0408] - InheritedSize[0x0030])
-class UComboBoxWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FComboBoxStyle                              ComboBoxStyle;                                             // 0x0030(0x03D8) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.ComboBoxWidgetStyle
+	 * Size -> 0x03D8 (FullSize[0x0408] - InheritedSize[0x0030])
+	 */
+	class UComboBoxWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.ComboBoxWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FComboBoxStyle                                      ComboBoxStyle;                                           // 0x0030(0x03D8) Edit, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.ComboButtonWidgetStyle
-// 0x03A0 (FullSize[0x03D0] - InheritedSize[0x0030])
-class UComboButtonWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FComboButtonStyle                           ComboButtonStyle;                                          // 0x0030(0x03A0) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.ComboButtonWidgetStyle
+	 * Size -> 0x03A0 (FullSize[0x03D0] - InheritedSize[0x0030])
+	 */
+	class UComboButtonWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.ComboButtonWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FComboButtonStyle                                   ComboButtonStyle;                                        // 0x0030(0x03A0) Edit, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.EditableTextBoxWidgetStyle
-// 0x07F8 (FullSize[0x0828] - InheritedSize[0x0030])
-class UEditableTextBoxWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FEditableTextBoxStyle                       EditableTextBoxStyle;                                      // 0x0030(0x07F8) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.EditableTextBoxWidgetStyle
+	 * Size -> 0x07F8 (FullSize[0x0828] - InheritedSize[0x0030])
+	 */
+	class UEditableTextBoxWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.EditableTextBoxWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FEditableTextBoxStyle                               EditableTextBoxStyle;                                    // 0x0030(0x07F8) Edit, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.EditableTextWidgetStyle
-// 0x0220 (FullSize[0x0250] - InheritedSize[0x0030])
-class UEditableTextWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FEditableTextStyle                          EditableTextStyle;                                         // 0x0030(0x0220) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.EditableTextWidgetStyle
+	 * Size -> 0x0220 (FullSize[0x0250] - InheritedSize[0x0030])
+	 */
+	class UEditableTextWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.EditableTextWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FEditableTextStyle                                  EditableTextStyle;                                       // 0x0030(0x0220) Edit, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.ProgressWidgetStyle
-// 0x01A0 (FullSize[0x01D0] - InheritedSize[0x0030])
-class UProgressWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FProgressBarStyle                           ProgressBarStyle;                                          // 0x0030(0x01A0) (Edit, BlueprintVisible, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.ProgressWidgetStyle
+	 * Size -> 0x01A0 (FullSize[0x01D0] - InheritedSize[0x0030])
+	 */
+	class UProgressWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.ProgressWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FProgressBarStyle                                   ProgressBarStyle;                                        // 0x0030(0x01A0) Edit, BlueprintVisible, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.ScrollBarWidgetStyle
-// 0x04D0 (FullSize[0x0500] - InheritedSize[0x0030])
-class UScrollBarWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FScrollBarStyle                             ScrollBarStyle;                                            // 0x0030(0x04D0) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.ScrollBarWidgetStyle
+	 * Size -> 0x04D0 (FullSize[0x0500] - InheritedSize[0x0030])
+	 */
+	class UScrollBarWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.ScrollBarWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FScrollBarStyle                                     ScrollBarStyle;                                          // 0x0030(0x04D0) Edit, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.ScrollBoxWidgetStyle
-// 0x0228 (FullSize[0x0258] - InheritedSize[0x0030])
-class UScrollBoxWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FScrollBoxStyle                             ScrollBoxStyle;                                            // 0x0030(0x0228) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.ScrollBoxWidgetStyle
+	 * Size -> 0x0228 (FullSize[0x0258] - InheritedSize[0x0030])
+	 */
+	class UScrollBoxWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.ScrollBoxWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FScrollBoxStyle                                     ScrollBoxStyle;                                          // 0x0030(0x0228) Edit, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.SlateSettings
-// 0x0008 (FullSize[0x0030] - InheritedSize[0x0028])
-class USlateSettings : public UObject
-{
-public:
-	bool                                               bExplicitCanvasChildZOrder;                                // 0x0028(0x0001) (Edit, ZeroConstructor, Config, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-	unsigned char                                      UnknownData_JDJF[0x7];                                     // 0x0029(0x0007) MISSED OFFSET (PADDING)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.SlateSettings
+	 * Size -> 0x0008 (FullSize[0x0030] - InheritedSize[0x0028])
+	 */
+	class USlateSettings : public UObject
 	{
-		static auto ptr = UObject::FindClass("Class Slate.SlateSettings");
-		return ptr;
-	}
+	public:
+		bool                                                       bExplicitCanvasChildZOrder;                              // 0x0028(0x0001) Edit, ZeroConstructor, Config, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
+		unsigned char                                              UnknownData_798J[0x7];                                   // 0x0029(0x0007) MISSED OFFSET (PADDING)
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.SpinBoxWidgetStyle
-// 0x02E8 (FullSize[0x0318] - InheritedSize[0x0030])
-class USpinBoxWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FSpinBoxStyle                               SpinBoxStyle;                                              // 0x0030(0x02E8) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.SpinBoxWidgetStyle
+	 * Size -> 0x02E8 (FullSize[0x0318] - InheritedSize[0x0030])
+	 */
+	class USpinBoxWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.SpinBoxWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FSpinBoxStyle                                       SpinBoxStyle;                                            // 0x0030(0x02E8) Edit, NativeAccessSpecifierPublic
 
+	public:
+		static UClass* StaticClass();
+	};
 
-
-};
-
-// Class Slate.TextBlockWidgetStyle
-// 0x01E8 (FullSize[0x0218] - InheritedSize[0x0030])
-class UTextBlockWidgetStyle : public USlateWidgetStyleContainerBase
-{
-public:
-	struct FTextBlockStyle                             TextBlockStyle;                                            // 0x0030(0x01E8) (Edit, NativeAccessSpecifierPublic)
-
-
-	static UClass* StaticClass()
+	/**
+	 * Class Slate.TextBlockWidgetStyle
+	 * Size -> 0x01E8 (FullSize[0x0218] - InheritedSize[0x0030])
+	 */
+	class UTextBlockWidgetStyle : public USlateWidgetStyleContainerBase
 	{
-		static auto ptr = UObject::FindClass("Class Slate.TextBlockWidgetStyle");
-		return ptr;
-	}
+	public:
+		struct FTextBlockStyle                                     TextBlockStyle;                                          // 0x0030(0x01E8) Edit, NativeAccessSpecifierPublic
 
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

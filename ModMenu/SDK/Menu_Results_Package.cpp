@@ -1,0 +1,1097 @@
+﻿/**
+ * Name: SportsScramble
+ * Version: 1
+ */
+
+#include "../pch.h"
+
+namespace CG
+{
+	// --------------------------------------------------
+	// # Structs Functions
+	// --------------------------------------------------
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.EnableMenuInput
+	 * 		Flags  -> (Public, HasOutParms, BlueprintCallable, BlueprintEvent)
+	 * Parameters:
+	 * 		bool                                               InputEnabled                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
+	 */
+	void AMenu_Results_C::EnableMenuInput(bool* InputEnabled)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.EnableMenuInput");
+		
+		AMenu_Results_C_EnableMenuInput_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+		
+		if (InputEnabled != nullptr)
+			*InputEnabled = params.InputEnabled;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.DisableMenuInput
+	 * 		Flags  -> (Public, HasOutParms, BlueprintCallable, BlueprintEvent)
+	 * Parameters:
+	 * 		bool                                               InputDisabled                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
+	 */
+	void AMenu_Results_C::DisableMenuInput(bool* InputDisabled)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.DisableMenuInput");
+		
+		AMenu_Results_C_DisableMenuInput_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+		
+		if (InputDisabled != nullptr)
+			*InputDisabled = params.InputDisabled;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.RemoveSubMenu
+	 * 		Flags  -> (Public, HasOutParms, BlueprintCallable, BlueprintEvent)
+	 * Parameters:
+	 * 		bool                                               Removed                                                    (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
+	 */
+	void AMenu_Results_C::RemoveSubMenu(bool* Removed)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.RemoveSubMenu");
+		
+		AMenu_Results_C_RemoveSubMenu_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+		
+		if (Removed != nullptr)
+			*Removed = params.Removed;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.HideSubMenu
+	 * 		Flags  -> (Public, HasOutParms, BlueprintCallable, BlueprintEvent)
+	 * Parameters:
+	 * 		bool                                               MenuHidden                                                 (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
+	 */
+	void AMenu_Results_C::HideSubMenu(bool* MenuHidden)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.HideSubMenu");
+		
+		AMenu_Results_C_HideSubMenu_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+		
+		if (MenuHidden != nullptr)
+			*MenuHidden = params.MenuHidden;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.RestoreSubMenu
+	 * 		Flags  -> (Public, HasOutParms, BlueprintCallable, BlueprintEvent)
+	 * Parameters:
+	 * 		bool                                               MenuShown                                                  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
+	 */
+	void AMenu_Results_C::RestoreSubMenu(bool* MenuShown)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.RestoreSubMenu");
+		
+		AMenu_Results_C_RestoreSubMenu_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+		
+		if (MenuShown != nullptr)
+			*MenuShown = params.MenuShown;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.SwapToRed
+	 * 		Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::SwapToRed()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.SwapToRed");
+		
+		AMenu_Results_C_SwapToRed_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.RevealHighScore
+	 * 		Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::RevealHighScore()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.RevealHighScore");
+		
+		AMenu_Results_C_RevealHighScore_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.AvatarsReact
+	 * 		Flags  -> (Public, BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::AvatarsReact()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.AvatarsReact");
+		
+		AMenu_Results_C_AvatarsReact_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.SpawnAvatars
+	 * 		Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::SpawnAvatars()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.SpawnAvatars");
+		
+		AMenu_Results_C_SpawnAvatars_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ShowTrophyIcon
+	 * 		Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::ShowTrophyIcon()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ShowTrophyIcon");
+		
+		AMenu_Results_C_ShowTrophyIcon_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.SwapToGold
+	 * 		Flags  -> (Public, BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::SwapToGold()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.SwapToGold");
+		
+		AMenu_Results_C_SwapToGold_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.GetTitleText
+	 * 		Flags  -> (Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintEvent)
+	 * Parameters:
+	 * 		class FText                                        Title                                                      (Parm, OutParm)
+	 */
+	void AMenu_Results_C::GetTitleText(class FText* Title)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.GetTitleText");
+		
+		AMenu_Results_C_GetTitleText_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+		
+		if (Title != nullptr)
+			*Title = params.Title;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Initialize
+	 * 		Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::Initialize()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Initialize");
+		
+		AMenu_Results_C_Initialize_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.UserConstructionScript
+	 * 		Flags  -> (Event, Public, BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::UserConstructionScript()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.UserConstructionScript");
+		
+		AMenu_Results_C_UserConstructionScript_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ScaleBox__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ScaleBox__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ScaleBox__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_ScaleBox__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ScaleBox__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ScaleBox__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ScaleBox__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_ScaleBox__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_SwapBoxText__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_SwapBoxText__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_SwapBoxText__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_SwapBoxText__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_SwapBoxText__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_SwapBoxText__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_SwapBoxText__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_SwapBoxText__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ShowHighScore__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ShowHighScore__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ShowHighScore__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_ShowHighScore__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ShowHighScore__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ShowHighScore__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ShowHighScore__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_ShowHighScore__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_MoveTitle__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_MoveTitle__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_MoveTitle__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_MoveTitle__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_MoveTitle__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_MoveTitle__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_MoveTitle__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_MoveTitle__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ShowInnerMessage__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ShowInnerMessage__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ShowInnerMessage__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_ShowInnerMessage__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ShowInnerMessage__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ShowInnerMessage__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ShowInnerMessage__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_ShowInnerMessage__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_SwapBoxBump__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_SwapBoxBump__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_SwapBoxBump__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_SwapBoxBump__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_SwapBoxBump__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_SwapBoxBump__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_SwapBoxBump__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_SwapBoxBump__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ScaleAvatars__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ScaleAvatars__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ScaleAvatars__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_ScaleAvatars__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ScaleAvatars__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ScaleAvatars__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ScaleAvatars__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_ScaleAvatars__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_MoveAvatars__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_MoveAvatars__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_MoveAvatars__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_MoveAvatars__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_MoveAvatars__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_MoveAvatars__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_MoveAvatars__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_MoveAvatars__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ScaleMessage__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ScaleMessage__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ScaleMessage__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_ScaleMessage__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ScaleMessage__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ScaleMessage__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ScaleMessage__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_ScaleMessage__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_SwapBox__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_SwapBox__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_SwapBox__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_SwapBox__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_SwapBox__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_SwapBox__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_SwapBox__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_SwapBox__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ScaleBoxBump__FinishedFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ScaleBoxBump__FinishedFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ScaleBoxBump__FinishedFunc");
+		
+		AMenu_Results_C_Timeline_ScaleBoxBump__FinishedFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.Timeline_ScaleBoxBump__UpdateFunc
+	 * 		Flags  -> (BlueprintEvent)
+	 */
+	void AMenu_Results_C::Timeline_ScaleBoxBump__UpdateFunc()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.Timeline_ScaleBoxBump__UpdateFunc");
+		
+		AMenu_Results_C_Timeline_ScaleBoxBump__UpdateFunc_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ReceiveBeginPlay
+	 * 		Flags  -> (Event, Protected, BlueprintEvent)
+	 */
+	void AMenu_Results_C::ReceiveBeginPlay()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ReceiveBeginPlay");
+		
+		AMenu_Results_C_ReceiveBeginPlay_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ReceiveTick
+	 * 		Flags  -> (Event, Public, BlueprintEvent)
+	 * Parameters:
+	 * 		float                                              DeltaSeconds                                               (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	 */
+	void AMenu_Results_C::ReceiveTick(float DeltaSeconds)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ReceiveTick");
+		
+		AMenu_Results_C_ReceiveTick_Params params {};
+		params.DeltaSeconds = DeltaSeconds;
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ReceiveEndPlay
+	 * 		Flags  -> (Event, Public, BlueprintEvent)
+	 * Parameters:
+	 * 		EEndPlayReason                                     EndPlayReason                                              (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	 */
+	void AMenu_Results_C::ReceiveEndPlay(EEndPlayReason EndPlayReason)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ReceiveEndPlay");
+		
+		AMenu_Results_C_ReceiveEndPlay_Params params {};
+		params.EndPlayReason = EndPlayReason;
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.RevealBox
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::RevealBox()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.RevealBox");
+		
+		AMenu_Results_C_RevealBox_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ShowScore
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::ShowScore()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ShowScore");
+		
+		AMenu_Results_C_ShowScore_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ShowHighScore
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::ShowHighScore()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ShowHighScore");
+		
+		AMenu_Results_C_ShowHighScore_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.MoveMessage
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::MoveMessage()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.MoveMessage");
+		
+		AMenu_Results_C_MoveMessage_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ShowInnerMessage
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::ShowInnerMessage()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ShowInnerMessage");
+		
+		AMenu_Results_C_ShowInnerMessage_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ShowFinalMessage
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::ShowFinalMessage()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ShowFinalMessage");
+		
+		AMenu_Results_C_ShowFinalMessage_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.FinishFinalMessage
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::FinishFinalMessage()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.FinishFinalMessage");
+		
+		AMenu_Results_C_FinishFinalMessage_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.BeginResultsDisplay
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::BeginResultsDisplay()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.BeginResultsDisplay");
+		
+		AMenu_Results_C_BeginResultsDisplay_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.MoveAvatars
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::MoveAvatars()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.MoveAvatars");
+		
+		AMenu_Results_C_MoveAvatars_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.DisplayMessage
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::DisplayMessage()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.DisplayMessage");
+		
+		AMenu_Results_C_DisplayMessage_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.PlayFX
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::PlayFX()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.PlayFX");
+		
+		AMenu_Results_C_PlayFX_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.PlayRedFX
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::PlayRedFX()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.PlayRedFX");
+		
+		AMenu_Results_C_PlayRedFX_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.DelayedYellowPulse
+	 * 		Flags  -> (BlueprintCallable, BlueprintEvent)
+	 */
+	void AMenu_Results_C::DelayedYellowPulse()
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.DelayedYellowPulse");
+		
+		AMenu_Results_C_DelayedYellowPulse_Params params {};
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ExecuteUbergraph_Menu_Results
+	 * 		Flags  -> (Final, HasDefaults)
+	 * Parameters:
+	 * 		int32_t                                            EntryPoint                                                 (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	 */
+	void AMenu_Results_C::ExecuteUbergraph_Menu_Results(int32_t EntryPoint)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ExecuteUbergraph_Menu_Results");
+		
+		AMenu_Results_C_ExecuteUbergraph_Menu_Results_Params params {};
+		params.EntryPoint = EntryPoint;
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00669880
+	 * 		Name   -> Function Menu_Results.Menu_Results_C.ResultsDisplayComplete__DelegateSignature
+	 * 		Flags  -> (Public, Delegate, BlueprintCallable, BlueprintEvent)
+	 * Parameters:
+	 * 		bool                                               WideNextButton                                             (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor)
+	 */
+	void AMenu_Results_C::ResultsDisplayComplete__DelegateSignature(bool WideNextButton)
+	{
+		static UFunction* fn = nullptr;
+		if (!fn)
+			fn = UObject::FindObject<UFunction>("Function Menu_Results.Menu_Results_C.ResultsDisplayComplete__DelegateSignature");
+		
+		AMenu_Results_C_ResultsDisplayComplete__DelegateSignature_Params params {};
+		params.WideNextButton = WideNextButton;
+		
+		auto flags = fn->FunctionFlags;
+		UObject::ProcessEvent(fn, &params);
+		fn->FunctionFlags = flags;
+	}
+
+	/**
+	 * Function:
+	 * 		RVA    -> 0x00000000
+	 * 		Name   -> PredefinedFunction AMenu_Results_C.StaticClass
+	 * 		Flags  -> (Predefined, Static)
+	 */
+	UClass* AMenu_Results_C::StaticClass()
+	{
+		static UClass* ptr = nullptr;
+		if (!ptr)
+			ptr = UObject::FindClass("BlueprintGeneratedClass Menu_Results.Menu_Results_C");
+		return ptr;
+	}
+
+}
+
+

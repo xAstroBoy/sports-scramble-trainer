@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,19 +11,19 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum SpecialBallType.SpecialBallType
-enum class SpecialBallType_ESpecialBallType : uint8_t
-{
-	SpecialBallType__NewEnumerator0 = 0,
-	SpecialBallType__NewEnumerator1 = 1,
-	SpecialBallType__NewEnumerator2 = 2,
-	SpecialBallType__SpecialBallType_MAX = 3,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum SpecialBallType.SpecialBallType
+	 */
+	enum class ESpecialBallType : uint8_t
+	{
+		SpecialBallTypeNewEnumerator0      = 0,
+		SpecialBallTypeNewEnumerator1      = 1,
+		SpecialBallTypeNewEnumerator2      = 2,
+		SpecialBallTypeSpecialBallType_MAX = 3
+	};
 
 }
 

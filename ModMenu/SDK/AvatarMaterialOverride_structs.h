@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,18 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum AvatarMaterialOverride.AvatarMaterialOverride
-enum class AvatarMaterialOverride_EAvatarMaterialOverride : uint8_t
-{
-	AvatarMaterialOverride__NewEnumerator0 = 0,
-	AvatarMaterialOverride__NewEnumerator1 = 1,
-	AvatarMaterialOverride__AvatarMaterialOverride_MAX = 2,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum AvatarMaterialOverride.AvatarMaterialOverride
+	 */
+	enum class EAvatarMaterialOverride : uint8_t
+	{
+		AvatarMaterialOverrideNewEnumerator0             = 0,
+		AvatarMaterialOverrideNewEnumerator1             = 1,
+		AvatarMaterialOverrideAvatarMaterialOverride_MAX = 2
+	};
 
 }
 

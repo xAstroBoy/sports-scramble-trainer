@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,26 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// Class JsonUtilities.JsonUtilitiesDummyObject
-// 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
-class UJsonUtilitiesDummyObject : public UObject
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * Class JsonUtilities.JsonUtilitiesDummyObject
+	 * Size -> 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
+	 */
+	class UJsonUtilitiesDummyObject : public UObject
 	{
-		static auto ptr = UObject::FindClass("Class JsonUtilities.JsonUtilitiesDummyObject");
-		return ptr;
-	}
-
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

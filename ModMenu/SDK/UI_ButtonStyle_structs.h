@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,79 +11,79 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum UI_ButtonStyle.UI_ButtonStyle
-enum class UI_ButtonStyle_EUI_ButtonStyle : uint8_t
-{
-	UI_ButtonStyle__NewEnumerator0 = 0,
-	UI_ButtonStyle__NewEnumerator1 = 1,
-	UI_ButtonStyle__NewEnumerator2 = 2,
-	UI_ButtonStyle__NewEnumerator3 = 3,
-	UI_ButtonStyle__NewEnumerator4 = 4,
-	UI_ButtonStyle__NewEnumerator5 = 5,
-	UI_ButtonStyle__NewEnumerator6 = 6,
-	UI_ButtonStyle__NewEnumerator7 = 7,
-	UI_ButtonStyle__NewEnumerator8 = 8,
-	UI_ButtonStyle__NewEnumerator9 = 9,
-	UI_ButtonStyle__NewEnumerator10 = 10,
-	UI_ButtonStyle__NewEnumerator11 = 11,
-	UI_ButtonStyle__NewEnumerator12 = 12,
-	UI_ButtonStyle__NewEnumerator13 = 13,
-	UI_ButtonStyle__NewEnumerator14 = 14,
-	UI_ButtonStyle__NewEnumerator15 = 15,
-	UI_ButtonStyle__NewEnumerator16 = 16,
-	UI_ButtonStyle__NewEnumerator17 = 17,
-	UI_ButtonStyle__NewEnumerator18 = 18,
-	UI_ButtonStyle__NewEnumerator19 = 19,
-	UI_ButtonStyle__NewEnumerator20 = 20,
-	UI_ButtonStyle__NewEnumerator21 = 21,
-	UI_ButtonStyle__NewEnumerator22 = 22,
-	UI_ButtonStyle__NewEnumerator23 = 23,
-	UI_ButtonStyle__NewEnumerator24 = 24,
-	UI_ButtonStyle__NewEnumerator25 = 25,
-	UI_ButtonStyle__NewEnumerator26 = 26,
-	UI_ButtonStyle__NewEnumerator27 = 27,
-	UI_ButtonStyle__NewEnumerator28 = 28,
-	UI_ButtonStyle__NewEnumerator29 = 29,
-	UI_ButtonStyle__NewEnumerator30 = 30,
-	UI_ButtonStyle__NewEnumerator31 = 31,
-	UI_ButtonStyle__NewEnumerator32 = 32,
-	UI_ButtonStyle__NewEnumerator33 = 33,
-	UI_ButtonStyle__NewEnumerator34 = 34,
-	UI_ButtonStyle__NewEnumerator35 = 35,
-	UI_ButtonStyle__NewEnumerator36 = 36,
-	UI_ButtonStyle__NewEnumerator37 = 37,
-	UI_ButtonStyle__NewEnumerator38 = 38,
-	UI_ButtonStyle__NewEnumerator39 = 39,
-	UI_ButtonStyle__NewEnumerator40 = 40,
-	UI_ButtonStyle__NewEnumerator41 = 41,
-	UI_ButtonStyle__NewEnumerator42 = 42,
-	UI_ButtonStyle__NewEnumerator43 = 43,
-	UI_ButtonStyle__NewEnumerator44 = 44,
-	UI_ButtonStyle__NewEnumerator45 = 45,
-	UI_ButtonStyle__NewEnumerator46 = 46,
-	UI_ButtonStyle__NewEnumerator47 = 47,
-	UI_ButtonStyle__NewEnumerator48 = 48,
-	UI_ButtonStyle__NewEnumerator49 = 49,
-	UI_ButtonStyle__NewEnumerator50 = 50,
-	UI_ButtonStyle__NewEnumerator51 = 51,
-	UI_ButtonStyle__NewEnumerator52 = 52,
-	UI_ButtonStyle__NewEnumerator53 = 53,
-	UI_ButtonStyle__NewEnumerator54 = 54,
-	UI_ButtonStyle__NewEnumerator55 = 55,
-	UI_ButtonStyle__NewEnumerator56 = 56,
-	UI_ButtonStyle__NewEnumerator57 = 57,
-	UI_ButtonStyle__NewEnumerator58 = 58,
-	UI_ButtonStyle__NewEnumerator59 = 59,
-	UI_ButtonStyle__NewEnumerator60 = 60,
-	UI_ButtonStyle__NewEnumerator61 = 61,
-	UI_ButtonStyle__NewEnumerator62 = 62,
-	UI_ButtonStyle__UI_MAX         = 63,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum UI_ButtonStyle.UI_ButtonStyle
+	 */
+	enum class EUI_ButtonStyle : uint8_t
+	{
+		UI_ButtonStyleNewEnumerator0  = 0,
+		UI_ButtonStyleNewEnumerator1  = 1,
+		UI_ButtonStyleNewEnumerator2  = 2,
+		UI_ButtonStyleNewEnumerator3  = 3,
+		UI_ButtonStyleNewEnumerator4  = 4,
+		UI_ButtonStyleNewEnumerator5  = 5,
+		UI_ButtonStyleNewEnumerator6  = 6,
+		UI_ButtonStyleNewEnumerator7  = 7,
+		UI_ButtonStyleNewEnumerator8  = 8,
+		UI_ButtonStyleNewEnumerator9  = 9,
+		UI_ButtonStyleNewEnumerator10 = 10,
+		UI_ButtonStyleNewEnumerator11 = 11,
+		UI_ButtonStyleNewEnumerator12 = 12,
+		UI_ButtonStyleNewEnumerator13 = 13,
+		UI_ButtonStyleNewEnumerator14 = 14,
+		UI_ButtonStyleNewEnumerator15 = 15,
+		UI_ButtonStyleNewEnumerator16 = 16,
+		UI_ButtonStyleNewEnumerator17 = 17,
+		UI_ButtonStyleNewEnumerator18 = 18,
+		UI_ButtonStyleNewEnumerator19 = 19,
+		UI_ButtonStyleNewEnumerator20 = 20,
+		UI_ButtonStyleNewEnumerator21 = 21,
+		UI_ButtonStyleNewEnumerator22 = 22,
+		UI_ButtonStyleNewEnumerator23 = 23,
+		UI_ButtonStyleNewEnumerator24 = 24,
+		UI_ButtonStyleNewEnumerator25 = 25,
+		UI_ButtonStyleNewEnumerator26 = 26,
+		UI_ButtonStyleNewEnumerator27 = 27,
+		UI_ButtonStyleNewEnumerator28 = 28,
+		UI_ButtonStyleNewEnumerator29 = 29,
+		UI_ButtonStyleNewEnumerator30 = 30,
+		UI_ButtonStyleNewEnumerator31 = 31,
+		UI_ButtonStyleNewEnumerator32 = 32,
+		UI_ButtonStyleNewEnumerator33 = 33,
+		UI_ButtonStyleNewEnumerator34 = 34,
+		UI_ButtonStyleNewEnumerator35 = 35,
+		UI_ButtonStyleNewEnumerator36 = 36,
+		UI_ButtonStyleNewEnumerator37 = 37,
+		UI_ButtonStyleNewEnumerator38 = 38,
+		UI_ButtonStyleNewEnumerator39 = 39,
+		UI_ButtonStyleNewEnumerator40 = 40,
+		UI_ButtonStyleNewEnumerator41 = 41,
+		UI_ButtonStyleNewEnumerator42 = 42,
+		UI_ButtonStyleNewEnumerator43 = 43,
+		UI_ButtonStyleNewEnumerator44 = 44,
+		UI_ButtonStyleNewEnumerator45 = 45,
+		UI_ButtonStyleNewEnumerator46 = 46,
+		UI_ButtonStyleNewEnumerator47 = 47,
+		UI_ButtonStyleNewEnumerator48 = 48,
+		UI_ButtonStyleNewEnumerator49 = 49,
+		UI_ButtonStyleNewEnumerator50 = 50,
+		UI_ButtonStyleNewEnumerator51 = 51,
+		UI_ButtonStyleNewEnumerator52 = 52,
+		UI_ButtonStyleNewEnumerator53 = 53,
+		UI_ButtonStyleNewEnumerator54 = 54,
+		UI_ButtonStyleNewEnumerator55 = 55,
+		UI_ButtonStyleNewEnumerator56 = 56,
+		UI_ButtonStyleNewEnumerator57 = 57,
+		UI_ButtonStyleNewEnumerator58 = 58,
+		UI_ButtonStyleNewEnumerator59 = 59,
+		UI_ButtonStyleNewEnumerator60 = 60,
+		UI_ButtonStyleNewEnumerator61 = 61,
+		UI_ButtonStyleNewEnumerator62 = 62,
+		UI_ButtonStyleUI_MAX          = 63
+	};
 
 }
 

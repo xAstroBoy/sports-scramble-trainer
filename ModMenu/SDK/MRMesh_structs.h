@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,17 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Script Structs
-//---------------------------------------------------------------------------
-
-// ScriptStruct MRMesh.MRMeshConfiguration
-// 0x0001
-struct FMRMeshConfiguration
-{
-	unsigned char                                      UnknownData_92UO[0x1];                                     // 0x0000(0x0001) MISSED OFFSET (PADDING)
-
-};
+	// --------------------------------------------------
+	// # Structs
+	// --------------------------------------------------
+	/**
+	 * ScriptStruct MRMesh.MRMeshConfiguration
+	 * Size -> 0x0001
+	 */
+	struct FMRMeshConfiguration
+	{
+	public:
+		unsigned char                                              UnknownData_OBO9[0x1];                                   // 0x0000(0x0001) MISSED OFFSET (PADDING)
+	};
 
 }
 

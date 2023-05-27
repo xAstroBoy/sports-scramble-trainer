@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,26 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass BB_PingPongPaddle.BB_PingPongPaddle_C
-// 0x0000 (FullSize[0x0FC8] - InheritedSize[0x0FC8])
-class ABB_PingPongPaddle_C : public ABB_Instrument_Base_C
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass BB_PingPongPaddle.BB_PingPongPaddle_C
+	 * Size -> 0x0000 (FullSize[0x0FC8] - InheritedSize[0x0FC8])
+	 */
+	class ABB_PingPongPaddle_C : public ABB_Instrument_Base_C
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass BB_PingPongPaddle.BB_PingPongPaddle_C");
-		return ptr;
-	}
-
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

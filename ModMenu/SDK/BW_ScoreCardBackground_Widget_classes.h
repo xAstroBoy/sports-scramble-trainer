@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,26 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// WidgetBlueprintGeneratedClass BW_ScoreCardBackground_Widget.BW_ScoreCardBackground_Widget_C
-// 0x0000 (FullSize[0x0210] - InheritedSize[0x0210])
-class UBW_ScoreCardBackground_Widget_C : public UUserWidget
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * WidgetBlueprintGeneratedClass BW_ScoreCardBackground_Widget.BW_ScoreCardBackground_Widget_C
+	 * Size -> 0x0000 (FullSize[0x0210] - InheritedSize[0x0210])
+	 */
+	class UBW_ScoreCardBackground_Widget_C : public UUserWidget
 	{
-		static auto ptr = UObject::FindClass("WidgetBlueprintGeneratedClass BW_ScoreCardBackground_Widget.BW_ScoreCardBackground_Widget_C");
-		return ptr;
-	}
-
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

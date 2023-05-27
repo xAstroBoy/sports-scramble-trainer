@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,27 +11,19 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass MinigameElement.MinigameElement_C
-// 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
-class UMinigameElement_C : public UInterface
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass MinigameElement.MinigameElement_C
+	 * Size -> 0x0000 (FullSize[0x0028] - InheritedSize[0x0028])
+	 */
+	class UMinigameElement_C : public UInterface
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass MinigameElement.MinigameElement_C");
-		return ptr;
-	}
-
-
-
-	void RemoveGameElement(bool* Removed);
-};
+	public:
+		void RemoveGameElement(bool* Removed);
+		static UClass* StaticClass();
+	};
 
 }
 

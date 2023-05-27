@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,20 +11,20 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Enums
-//---------------------------------------------------------------------------
-
-// UserDefinedEnum ScrambleEffectTypes.ScrambleEffectTypes
-enum class ScrambleEffectTypes_EScrambleEffectTypes : uint8_t
-{
-	ScrambleEffectTypes__NewEnumerator0 = 0,
-	ScrambleEffectTypes__NewEnumerator1 = 1,
-	ScrambleEffectTypes__NewEnumerator2 = 2,
-	ScrambleEffectTypes__NewEnumerator3 = 3,
-	ScrambleEffectTypes__ScrambleEffectTypes_MAX = 4,
-
-};
+	// --------------------------------------------------
+	// # Enums
+	// --------------------------------------------------
+	/**
+	 * UserDefinedEnum ScrambleEffectTypes.ScrambleEffectTypes
+	 */
+	enum class EScrambleEffectTypes : uint8_t
+	{
+		ScrambleEffectTypesNewEnumerator0          = 0,
+		ScrambleEffectTypesNewEnumerator1          = 1,
+		ScrambleEffectTypesNewEnumerator2          = 2,
+		ScrambleEffectTypesNewEnumerator3          = 3,
+		ScrambleEffectTypesScrambleEffectTypes_MAX = 4
+	};
 
 }
 

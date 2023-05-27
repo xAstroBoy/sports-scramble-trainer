@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,26 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass BP_TrophyAward_TN_GrandSlammer.BP_TrophyAward_TN_GrandSlammer_C
-// 0x0000 (FullSize[0x03BA] - InheritedSize[0x03BA])
-class ABP_TrophyAward_TN_GrandSlammer_C : public ABP_TrophyAward_TN_MatchCompleteBase_C
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass BP_TrophyAward_TN_GrandSlammer.BP_TrophyAward_TN_GrandSlammer_C
+	 * Size -> 0x0000 (FullSize[0x03BA] - InheritedSize[0x03BA])
+	 */
+	class ABP_TrophyAward_TN_GrandSlammer_C : public ABP_TrophyAward_TN_MatchCompleteBase_C
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass BP_TrophyAward_TN_GrandSlammer.BP_TrophyAward_TN_GrandSlammer_C");
-		return ptr;
-	}
-
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,26 +11,18 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Classes
-//---------------------------------------------------------------------------
-
-// BlueprintGeneratedClass BaseballAIFielder_Normal_Blueprint.BaseballAIFielder_Normal_Blueprint_C
-// 0x0000 (FullSize[0x054A] - InheritedSize[0x054A])
-class ABaseballAIFielder_Normal_Blueprint_C : public ABaseballAIFielder_Blueprint_C
-{
-public:
-
-
-	static UClass* StaticClass()
+	// --------------------------------------------------
+	// # Classes
+	// --------------------------------------------------
+	/**
+	 * BlueprintGeneratedClass BaseballAIFielder_Normal_Blueprint.BaseballAIFielder_Normal_Blueprint_C
+	 * Size -> 0x0000 (FullSize[0x054A] - InheritedSize[0x054A])
+	 */
+	class ABaseballAIFielder_Normal_Blueprint_C : public ABaseballAIFielder_Blueprint_C
 	{
-		static auto ptr = UObject::FindClass("BlueprintGeneratedClass BaseballAIFielder_Normal_Blueprint.BaseballAIFielder_Normal_Blueprint_C");
-		return ptr;
-	}
-
-
-
-};
+	public:
+		static UClass* StaticClass();
+	};
 
 }
 

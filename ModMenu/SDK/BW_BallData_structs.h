@@ -1,13 +1,9 @@
 ﻿#pragma once
 
-// Name: Sport Scramble, Version: 1
-
-
-/*!!DEFINE!!*/
-
-/*!!HELPER_DEF!!*/
-
-/*!!HELPER_INC!!*/
+/**
+ * Name: SportsScramble
+ * Version: 1
+ */
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
@@ -15,18 +11,19 @@
 
 namespace CG
 {
-//---------------------------------------------------------------------------
-// Script Structs
-//---------------------------------------------------------------------------
-
-// UserDefinedStruct BW_BallData.BW_BallData
-// 0x0030
-struct FBW_BallData
-{
-	class UClass*                                      BallClass_31_5E2FAF4A45A5C1C7DBB60DB1C98E87F0;             // 0x0000(0x0008) (Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-	unsigned char                                      AnnoucnerVO_39_84FC41074C89D1603BC4078D736C174F[0x28];     // 0x0008(0x0028) UNKNOWN PROPERTY: SoftObjectProperty BW_BallData.BW_BallData.AnnoucnerVO_39_84FC41074C89D1603BC4078D736C174F
-
-};
+	// --------------------------------------------------
+	// # Structs
+	// --------------------------------------------------
+	/**
+	 * UserDefinedStruct BW_BallData.BW_BallData
+	 * Size -> 0x0030
+	 */
+	struct FBW_BallData
+	{
+	public:
+		class UClass*                                              BallClass_31_5E2FAF4A45A5C1C7DBB60DB1C98E87F0;           // 0x0000(0x0008) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+		unsigned char                                              AnnoucnerVO_39_84FC41074C89D1603BC4078D736C174F[0x28];   // 0x0008(0x0028) UNKNOWN PROPERTY: SoftObjectProperty BW_BallData.BW_BallData.AnnoucnerVO_39_84FC41074C89D1603BC4078D736C174F
+	};
 
 }
 

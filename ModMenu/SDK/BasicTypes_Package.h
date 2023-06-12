@@ -31,19 +31,21 @@ namespace CG
         auto vtable = *static_cast<const void***>(const_cast<void*>(instance));
         if (vtable != nullptr)
         {
-            auto VtableIndex = vtable[index];
-            if (VtableIndex != nullptr)
+            try
             {
-                try
+
+                auto VtableIndex = vtable[index];
+                if (VtableIndex != nullptr)
                 {
                     return reinterpret_cast<Fn>(const_cast<void(*)>(VtableIndex));
                 }
-                catch (...)
-                {
+            }
+			catch (...)
+			{
                     // Handle the exception if any
                     // You can choose to log an error, throw a different exception, or take appropriate action
-                }
             }
+
         }
         return nullptr;
     }

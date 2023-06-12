@@ -20,6 +20,14 @@
 #include <typeinfo>
 #include <stdexcept>
 #include <thread>
+#include <algorithm> // For std::transform
+#include <cctype>    // For std::tolower
+#include <future>
+#include <regex>     // For std::regex_search
+#include <queue>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 
 typedef void(__thiscall* ProcessEvent)(CG::UObject*, CG::UFunction*, void*);
 ProcessEvent oProcessEvent;
@@ -30,6 +38,409 @@ std::string bool_as_text(bool b)
 	converter << std::boolalpha << b;   // flag boolalpha calls converter.setf(std::ios_base::boolalpha)
 	return converter.str();
 }
+
+const std::vector<std::string> ClassNames = {
+	"PauseCapsule.PauseCapsule_C",
+	"ScrambleEvent_Base.ScrambleEvent_Base_C",
+};
+const std::vector<std::string> FilterList = {
+	"BlueprintUpdateCamera",
+	"BlueprintModifyCamera",
+	"K2_DestroyActor",
+	"BlueprintModifyPostProcess",
+	"ReceiveTick",
+	"OnMotionControllerUpdated",
+	"BlueprintUpdateAnimation",
+	"UpdateFunc",
+	"OnMoveCompleted",
+	"BlueprintUpdateAnimation",
+	"OnDeactivate",
+	"ReceiveDeactivationAI",
+	"OnMotionControllerUpdated",
+	"GetCombatStateES",
+	"ReceiveTick",
+	"OnAudioEnvelopeValueCb",
+	"BlueprintUpdateAnimation",
+	"OnMovementModeChanged",
+	"OnMotionControllerUpdated",
+	"BlueprintPostEvaluateAnimation",
+	"BlueprintModifyCamera",
+	"PerformConditionCheckAI",
+	"ReceiveExecuteAI",
+	"ReceiveActivationAI",
+	"OnActivate",
+	"UpdateSpawnManager",
+	"RegisterFlashlight",
+	"BlueprintModifyCamera",
+	"BlueprintModifyPostProcess",
+	"UpdateFadeProxy",
+	"OnMotionControllerUpdated",
+	"OnMovementModeChanged",
+	"ReadyToEndMatch",
+	"Tick",
+	"ReceiveTickAI",
+	"PerformConditionCheckAI",
+	"OnTick",
+	"BlueprintUpdateAnimation",
+	"ReceiveTick",
+	"AnimGraphNode",
+	"OnBuffsReset",
+	"ValidateGameProgression",
+	"ReceiveInit",
+	"OnSynchronizeProperties",
+	"PreConstruct",
+	"Construct",
+	"Destruct",
+	"InitializeHUDForPlayer",
+	"ReceiveInitCheatManager",
+	"EnableCheats",
+	"CheatAllowAutoSaving",
+	"CheatSetNoDurabilityLoss",
+	"ClientSetHUD",
+	"ClientVoiceHandshakeComplete",
+	"ClientEnableNetworkVoice",
+	"ClientCapBandwidth",
+	"HandleStartingNewPlayer",
+	"ReadyToStartMatch",
+	"PlayerCanRestart",
+	"FindPlayerStart",
+	"ChoosePlayerStart",
+	"MustSpectate",
+	"SpawnDefaultPawnFor",
+	"SpawnDefaultPawnAtTransform",
+	"GetDefaultPawnClassForController",
+	"PawnAttached",
+	"PlayerControllerAttached",
+	"Initialize",
+	"InitStartSpot",
+	"ReceivePossessed",
+	"PreApplySkin",
+	"PostApplySkin",
+	"ClientRestart",
+	"OnPawnChanged",
+	"ServerAcknowledgePossession",
+	"OnApplyGameUserSettings",
+	"SetPauseWidgetComponentProgress",
+	"OnApplyCheatModes",
+	"ClientSetRotation",
+	"GetPossibleSkins",
+	"GetCorpseCleanupSpawnWalkerClass",
+	"InitializeAIByGameMode",
+	"UpdateSkinReplicationData",
+	"PhysicsVolumeChanged",
+	"OnReturnedToPool",
+	"ServerReleaseGrapple",
+	"SignificanceChange",
+	"PawnReturnedToPool",
+	"StopLogic",
+	"ClearCurrentTarget",
+	"OnUpdateValidState",
+	"IsPlayerControlled",
+	"GetDesiredArchetypeBlueprint",
+	"AddInventoryItemList",
+	"GetSkinComponentBP",
+	"Retune",
+	"ResetTuning",
+	"TuneObject",
+	"OnSetupSection",
+	"OnPopulatePage",
+	"AddInventoryItemListEntry",
+	"AddInventoryItem",
+	"BlueprintInitializeAnimation",
+	"BlueprintLinkedAnimationLayersInitialized",
+	"UserConstructionScript",
+	"BlueprintBeginPlay",
+	"OnInitialized",
+	"ReceiveBeginPlay",
+	"OnInventoryAdded",
+	"GivenTo",
+	"ReturnToInventory",
+	"OnCountChanged",
+	"OnRep_bRepInsideInventory",
+	"GetInventoryOfType",
+	"ExecuteUbergraph",
+	"OnBuffsReset",
+	"OnBuffsReset",
+	"GetInventoryAttachPoint",
+	"GetInventorySlotGripTransform",
+	"InventoryAllowed",
+	"AttachInventory",
+	"OnAnimationStarted",
+	"SetupMaterialParameterCollectionValues",
+	"OnMeshHighlightedChanged",
+	"ServerShortTimeout",
+	"Start Landing Recovery",
+	"OnInventoryRemoved",
+	"PawnDetached",
+	"PlayerControllerDetached",
+	"OnNewInventoryItem",
+	"OnPlayerDestroyed",
+	"ReceiveUnpossessed",
+	"OnOwnerEndPlay",
+	"ReceiveEndPlay",
+	"OnPerceptionStimuliSourceEndPlay",
+	"ReceiveDestroyed",
+	"SetCurrentInventory",
+	"Init",
+	"ClientSetCinematicMode",
+	"UpdateHandHidden",
+	"InitSpawnManager",
+	"CE_FullNightMode",
+	"ReadyForPlay",
+	"RestartLogic",
+	"StartLogoMusic",
+	"HandWasTeleported",
+	"InputDeviceChanged",
+	"EndPrePrologue",
+	"StartFrontEndMusic",
+	"OnSignificanceBinChanged",
+	"GetTextValue",
+	"Get_Instructions_Text_Text_1",
+	"GetValue",
+	"Get_Calibration_Image_Brush_1",
+	"OnRecenter",
+	"OnHMDRecentered",
+	"AdvanceBootUp",
+	"OnMouseEnter",
+	"OnAnimationFinished",
+	"SpawnTimerComplete",
+	"OnPreviewMouseButtonDown",
+	"OnBuffAdded",
+	"OnAddedToFocusPath",
+	"IsInteractable",
+	"OnMouseMove",
+	"OnMouseLeave",
+	"GetFootstepSound",
+	"GetAkComponentByEnum",
+	"Received_Notify",
+	"CheckPlayerOrientation",
+	"OnAIEndPlay",
+	"Start",
+	"K2_Update",
+	"OnInventorySlotContentChanged",
+	"OnBackpackContentChanged",
+	"OnInventoryCountChanged",
+	"SetDurability",
+	"OnComponentCollisionSettingsChanged",
+	"GetSheathedInventoryMaterial",
+	"OnHealthUpdated",
+	"OnDoorShut",
+	"GetDoorComponent",
+	"OnAlarmTimerChanged",
+	"AnimNotify_InNoneState",
+	"AnimNotify_EnteredBaseAnimState",
+	"AnimNotify_EnteredIdleState",
+	"ReceivePossess",
+	"OnDialogWidgetIsEnabledCallback",
+	"ServerAddWeaponAttachment",
+	"SetWeaponOwner",
+	"WeaponOwnerUpdated",
+	"AttachToWeapon",
+	"WeaponAttachmentAttached",
+	"ModeStoppedFiring",
+	"GrabFromInventory",
+	"GetGripPoint",
+	"PlayGrabbedEffects",
+	"ServerUpdateLevelVisibility",
+	"BP_StartAnimationRedraw",
+	"GetGrappleStateEnumValues",
+	"OnPhysicsComponentSleep",
+	"OnPhysicsComponentWake",
+	"ClientUpdateLevelStreamingStatus",
+	"GetGuardPointLocation",
+	"IsDefaultBehaviorPatrol",
+	"SetPercent",
+	"OnMontageStartedEx",
+	"GetFireMode",
+	"OnLanded",
+	"UpdateAvailability",
+	"OnCharacterPostSignificance",
+	"OnHitReactEnd",
+	"OnShoveActorHit",
+	"OnOwnerActorHit",
+	"OnActorHitCustomThrowPhysics",
+	"OnWeaponActorHit",
+	"OnComponentHitCustomThrowPhysics",
+	"OnComponentHit",
+	"CanHitComponentApplyDamage",
+	"ServerSetHeldBy_IFC",
+	"GetCurrency",
+	"OnWeaponClassChanged",
+	"Grab",
+	"GetInteractionHighlights",
+	"OnInteractionHighlightChanged",
+	"OnLoaded",
+	"BP_FinishAnimationRedraw",
+	"AddInteractionHighlight",
+	"GetHighlightFeedback",
+	"SetIsGrappleMontagePlayingFullyBlended",
+	"PreActorSpawn",
+	"SetIsGrappleMontagePlaying",
+	"OnMontageEndedEx",
+	"Hide Notify",
+	"BP_HideHealthStamTimer",
+	"OnAbort",
+	"OnHandBeginOverlap",
+	"StopAnimationAction",
+	"ReceiveDeactivation",
+	"ReceiveActivation",
+	"RemoveInteractionHighlight",
+	"OnHandEndOverlap",
+	"PingOutLight",
+	"IsValidInteractionHighlight",
+	"GetHighlightHandPoseInfo",
+	"GetHighlightHandPose",
+	"GetInteractTriggerResistanceCurve",
+	"GetBodyMountedInteractLocation",
+	"OnSuccess",
+	"OnFail_",
+	"UpdateHighlight",
+	"AnimNotify_IsCompleteIdleFidget",
+	"OnInteractPress",
+	"OnGripPress",
+	"RegisterAnimInteractable_Internal",
+	"GetGripFeedback",
+	"GetDescription",
+	"GetFlavorText",
+	"GetInventoryEffectInfo",
+	"FormatSalvageEntry",
+	"GetDurabilityText",
+	"GetDurabilityIndex",
+	"UpdateItemInfo",
+	"HitReactEnd",
+	"PlayAnimationAction",
+	"IsValidInventory",
+	"AddImpulse",
+	"AddAngularImpulseInRadians",
+	"GetDisplayName",
+	"CanBeLoaded",
+	"IsClipEjectedOrChamberOpen",
+	"OnInventoryPutInSlotFailed",
+	"OnGripRelease",
+	"GetThrowInfo",
+	"ServerClearHeldBy_IFC",
+	"Dropped",
+	"OnHandHeldActorChange",
+	"OnHeldActorDropped",
+	"UnregisterAnimInteractable_Internal",
+	"SendInteractPresses_Internal",
+	"SetMaxCurveValues_Internal (Finger)",
+	"SendMaxCurveValues_Internal",
+	"HeldActorChanged",
+	"OnHitByPhysicsActor",
+	"OnActorBump",
+	"OnMeshComponentHit",
+	"ResetHitReactCanInterrupt",
+	"SearchAnimationBlendOut",
+	"ShowHighlight",
+	"GetHighlightType",
+	"GetHighlightTransform",
+	"UpdateHighlightActor",
+	"ReceiveActorBeginOverlap",
+	"ReceiveActorEndOverlap",
+	"K2_OnEndViewTarget",
+	"K2_OnBecomeViewTarget",
+	"K2_PostLogin",
+	"Reveal Timer Return",
+	"OnPlayerStay",
+	"ReceiveHit",
+	"SetGameTimeRemaining",
+	"GetBallReturn",
+	"GetReturnTrack",
+	"ComponentEndOverlapSignature",
+	"ComponentBoundEvent",
+	"ComponentBeginOverlapSignature",
+	"OnInputFocusReceived",
+	"Focus Recieved PauseEvent",
+	"GetActiveLane"
+};
+const std::vector<std::string> EndingFilterList = {
+		"UpdateFunc",
+		"FinishedFunc",
+		"ReceiveHit",
+};
+
+
+bool DoNotLogEvent(const std::string& funcname)
+{
+	std::regex FuncExample1(R"(Function\s([A-Za-z0-9]+(_[A-Za-z0-9]+)+)\.([A-Za-z0-9]+(_[A-Za-z0-9]+)+)\.)");
+	auto PurgeStepOne = std::regex_replace(funcname, FuncExample1, "");
+
+	std::regex FuncExample2(R"(Function\s[A-Za-z0-9]+\.[A-Za-z0-9]+\.)");
+	auto PurgeStepTwo = std::regex_replace(PurgeStepOne, FuncExample2, "");
+
+	std::regex FuncExample3(R"(Function\s[A-Za-z0-9]+\.[A-Za-z0-9]+_[A-Za-z0-9]+\.)");
+	auto Purged = std::regex_replace(PurgeStepTwo, FuncExample3, "");
+	std::string PurgedToLower = Purged;
+	std::transform(PurgedToLower.begin(), PurgedToLower.end(), PurgedToLower.begin(), ::tolower);
+
+	for (auto filter : EndingFilterList)
+	{
+		std::regex EndOfString(R"()" + filter + R"($)", std::regex_constants::icase);
+		if (std::regex_search(Purged.begin(), Purged.end(), EndOfString, std::regex_constants::match_any)) {
+			return true;
+		}
+	}
+
+	for (auto filter : FilterList)
+	{
+		std::regex Anywhere(filter, std::regex_constants::icase);
+		if (std::regex_search(Purged.begin(), Purged.end(), Anywhere, std::regex_constants::match_any)) {
+			return true;
+		}
+	}
+	for (auto filter : EndingFilterList)
+	{
+		std::string lowerFilter = filter;
+
+		std::transform(lowerFilter.begin(), lowerFilter.end(), lowerFilter.begin(), ::tolower);
+
+		if (PurgedToLower.find(lowerFilter) != std::string::npos)
+		{
+			return true;
+		}
+	}
+
+	for (auto filter : FilterList)
+	{
+		std::string lowerFilter = filter;
+		std::transform(lowerFilter.begin(), lowerFilter.end(), lowerFilter.begin(), ::tolower);
+		if (PurgedToLower.find(lowerFilter) != std::string::npos)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+bool LoggerActive = false;
+
+bool AllowAllFunctions = true;
+void ReportCustomEvent(const std::string& funcname) {
+	if (!LoggerActive) return;
+
+	auto BlockLogging = DoNotLogEvent(funcname);
+	if (BlockLogging) return;
+
+	// If AllowAllFunctions is true, we report all events.
+	// Otherwise, we proceed to check if the remaining string contains any of the specified class names.
+	if (AllowAllFunctions) {
+		ConsoleTools::ConsoleWrite(funcname);
+		return;
+	}
+
+	// Strip the function name from the input string
+	std::string eventNameWithoutFunction = funcname.substr(0, funcname.find("("));
+
+	// Check if the remaining string matches any of the specified class names
+	for (const auto& ClassName : ClassNames) {
+		if (eventNameWithoutFunction.find(ClassName) != std::string::npos) {
+			ConsoleTools::ConsoleWrite(funcname);
+			return;
+		}
+	}
+}
+
 
 void ToggleDebugMenu()
 {
@@ -233,6 +644,64 @@ void Disable_BigMode()
 		}
 	}
 }
+CG::AWorldSettings* GetWorldSettings()
+{
+	auto world = (*CG::UWorld::GWorld);
+	if (world != nullptr)
+	{
+		if (world->PersistentLevel != nullptr)
+		{
+			return world->PersistentLevel->WorldSettings;
+		}
+	}
+	return nullptr;
+}
+
+CG::ULocalPlayer* GetActiveLocalPlayer()
+{
+	auto world = (*CG::UWorld::GWorld);
+	if (world != nullptr && world->OwningGameInstance != nullptr && world->OwningGameInstance->LocalPlayers.Count() > 0)
+	{
+		auto localPlayer = world->OwningGameInstance->LocalPlayers[0];
+		if (localPlayer != nullptr && localPlayer->PlayerController != nullptr)
+		{
+			return localPlayer;
+		}
+	}
+	return nullptr;
+}
+
+CG::APlayerController* GetActivePlayerController()
+{
+	auto LocalPlayer = GetActiveLocalPlayer();
+	if (LocalPlayer != nullptr)
+	{
+		return LocalPlayer->PlayerController;
+	}
+	return nullptr;
+}
+
+void SpawnCheatManager(CG::APlayerController* Pc)
+{
+	if (Pc != nullptr)
+	{
+		if (Pc->CheatManager == nullptr)
+		{
+			if (CG::UCheatManager* Cm = static_cast<CG::UCheatManager*>(Pc->CheatClass->CreateDefaultObject()))
+			{
+				if (Cm != nullptr)
+				{
+					Cm->Outer = Pc;
+					Pc->CheatManager = Cm;
+					//Cm->ReceiveInitCheatManager();
+					//Pc->EnableCheats();
+					ConsoleTools::ConsoleWrite("Spawned " + Cm->GetFullName() + " !");
+					//SpawnConsole();
+				}
+			}
+		}
+	}
+}
 
 bool AutoCheatManager = true;
 void ExecutorThread()
@@ -273,8 +742,11 @@ CG::ATN_AcceleratorBall_C* GetActiveAcceleratorBallInstance()
 	return nullptr; // Return nullptr if no active instance is found
 }
 
-bool LoggerActive = true;
-bool Tennis_OnlyAccelleratorBall = false;
+
+bool SlowModeInsteadOfPauseMenu = true;
+bool isGameSlowed = false;
+bool HasSavedSetPlayerDilation = false;
+float BackupPlayerTimeDilation = 0;
 void ConsoleInput()
 {
 	ConsoleTools::ConsoleWrite("ModConsole Commands:  ");
@@ -288,26 +760,41 @@ void ConsoleInput()
 		ConsoleTools::ConsoleWrite("KillBounds [DESC]: Remove any game Boundaries!");
 		ConsoleTools::ConsoleWrite("ToggleDebugMenu [DESC]: Toggles Debug Menu!");
 		ConsoleTools::ConsoleWrite("CreateDebugMenu [DESC]: Creates Debug Menu!");
-		ConsoleTools::ConsoleWrite("Enable_Instance_DebugMode [DESC]: Enables Debug Mode!");
-		ConsoleTools::ConsoleWrite("Disable_Instance_DebugMode [DESC]: Disables Debug Mode!");
-		ConsoleTools::ConsoleWrite("Enable_Debug_Balls [DESC]: Enables Debug Items?!");
-		ConsoleTools::ConsoleWrite("Disable_Debug_Balls [DESC]: Disables Debug Items?!");
-		ConsoleTools::ConsoleWrite("Set_AI_Score (value) [DESC]: Set AI Score (Tennis)?!");
-		ConsoleTools::ConsoleWrite("Set_Player_Score (value) [DESC]: Set Player Score (Tennis)?!");
-		ConsoleTools::ConsoleWrite("Enable_BigMode (value) [DESC]: Enable Player BigMode !");
-		ConsoleTools::ConsoleWrite("Disable_BigMode (value) [DESC]: Disable Player BigMode!");
-		ConsoleTools::ConsoleWrite("TennisFastBallMode [DESC]: Toggles And enforces all tennis balls to be Only Accellerators!");
+		//ConsoleTools::ConsoleWrite("Enable_Instance_DebugMode [DESC]: Enables Debug Mode!");
+		//ConsoleTools::ConsoleWrite("Disable_Instance_DebugMode [DESC]: Disables Debug Mode!");
+		//ConsoleTools::ConsoleWrite("Enable_Debug_Balls [DESC]: Enables Debug Items?!");
+		//ConsoleTools::ConsoleWrite("Disable_Debug_Balls [DESC]: Disables Debug Items?!");
+		//ConsoleTools::ConsoleWrite("Set_AI_Score (value) [DESC]: Set AI Score (Tennis)?!");
+		//ConsoleTools::ConsoleWrite("Set_Player_Score (value) [DESC]: Set Player Score (Tennis)?!");
+		//ConsoleTools::ConsoleWrite("Enable_BigMode (value) [DESC]: Enable Player BigMode !");
+		//ConsoleTools::ConsoleWrite("Disable_BigMode (value) [DESC]: Disable Player BigMode!");
+		//ConsoleTools::ConsoleWrite("TennisFastBallMode [DESC]: Toggles And enforces all tennis balls to be Only Accellerators!");
+		ConsoleTools::ConsoleWrite("slowmodetoggles [DESC]: Toggles and enforces a slow mode instead of pause menu!");
 
 		ConsoleInput();
 	}
-	else if (input == "KillBounds")
+	else if (input == "slowmodetoggles")
+	{
+		SlowModeInsteadOfPauseMenu != SlowModeInsteadOfPauseMenu;
+		if (SlowModeInsteadOfPauseMenu)
+		{
+			ConsoleTools::ConsoleWrite("Toggleable SlowMode Enabled!");
+		}
+		else
+		{
+			ConsoleTools::ConsoleWrite("Toggleable SlowMode Disabled!");
+		}
+		ConsoleInput();
+	}
+
+	/*else if (input == "KillBounds")
 	{
 		KillCameraCovers();
 		CheckPermittedArea();
 		ExpandBoundsToMakeTriggerShutTheFuckUp();
 		ConsoleTools::ConsoleWrite("Killed Bounds");
 		ConsoleInput();
-	}
+	}*/
 	else if (input == "ToggleDebugMenu")
 	{
 		ToggleDebugMenu();
@@ -318,58 +805,58 @@ void ConsoleInput()
 		CreateDebugMenu();
 		ConsoleInput();
 	}
-	else if (input == "Enable_Instance_DebugMode")
-	{
-		Enable_Instance_DebugMode();
-		ConsoleInput();
-	}
-	else if (input == "Disable_Instance_DebugMode")
-	{
-		Disable_Instance_DebugMode();
-		ConsoleInput();
-	}
-	else if (input == "Enable_Debug_Balls")
-	{
-		Enable_Debug_Balls();
-		ConsoleInput();
-	}
-	else if (input == "Disable_Debug_Balls")
-	{
-		Disable_Debug_Balls();
-		ConsoleInput();
-	}
-	else if (input == "Enable_BigMode")
-	{
-		Enable_BigMode();
-		ConsoleInput();
-	}
-	else if (input == "Disable_BigMode")
-	{
-		Disable_BigMode();
-		ConsoleInput();
-	}
-	else if (input == "TennisFastBallMode")
-	{
-		Tennis_OnlyAccelleratorBall = !Tennis_OnlyAccelleratorBall;
-		ConsoleInput();
-	}
+	//else if (input == "Enable_Instance_DebugMode")
+	//{
+	//	Enable_Instance_DebugMode();
+	//	ConsoleInput();
+	//}
+	//else if (input == "Disable_Instance_DebugMode")
+	//{
+	//	Disable_Instance_DebugMode();
+	//	ConsoleInput();
+	//}
+	//else if (input == "Enable_Debug_Balls")
+	//{
+	//	Enable_Debug_Balls();
+	//	ConsoleInput();
+	//}
+	//else if (input == "Disable_Debug_Balls")
+	//{
+	//	Disable_Debug_Balls();
+	//	ConsoleInput();
+	//}
+	//else if (input == "Enable_BigMode")
+	//{
+	//	Enable_BigMode();
+	//	ConsoleInput();
+	//}
+	//else if (input == "Disable_BigMode")
+	//{
+	//	Disable_BigMode();
+	//	ConsoleInput();
+	//}
+	//else if (input == "TennisFastBallMode")
+	//{
+	//	Tennis_OnlyAccelleratorBall = !Tennis_OnlyAccelleratorBall;
+	//	ConsoleInput();
+	//}
 
-	else if (input == "Set_AI_Score")
-	{
-		ConsoleTools::ConsoleWrite("Put AI Score Here:");
-		int score;
-		std::cin >> score; // input the length
-		Set_AI_Score(score);
-		ConsoleInput();
-	}
-	else if (input == "Set_Player_Score")
-	{
-		ConsoleTools::ConsoleWrite("Put Player Score Here: ");
-		int score;
-		std::cin >> score; // input the length
-		Set_AI_Score(score);
-		ConsoleInput();
-	}
+	//else if (input == "Set_AI_Score")
+	//{
+	//	ConsoleTools::ConsoleWrite("Put AI Score Here:");
+	//	int score;
+	//	std::cin >> score; // input the length
+	//	Set_AI_Score(score);
+	//	ConsoleInput();
+	//}
+	//else if (input == "Set_Player_Score")
+	//{
+	//	ConsoleTools::ConsoleWrite("Put Player Score Here: ");
+	//	int score;
+	//	std::cin >> score; // input the length
+	//	Set_AI_Score(score);
+	//	ConsoleInput();
+	//}
 	else
 	{
 		ConsoleTools::ConsoleWrite("Command Not found. Type help for command list.");
@@ -385,394 +872,8 @@ bool ends_with(const std::string& mainStr, const std::string& toMatch)
 		return false;
 }
 
-const std::vector<std::string> ClassNames = {
-	"PauseCapsule.PauseCapsule_C",
-	"ScrambleEvent_Base.ScrambleEvent_Base_C",
-};
-const std::vector<std::string> FilterList = {
-		"BlueprintUpdateCamera",
-		"ExecuteUbergraph_",
-		"BlueprintModifyCamera",
-		"K2_DestroyActor",
-		"BlueprintModifyPostProcess",
-		"ReceiveTick",
-		"OnMotionControllerUpdated",
-		"BlueprintUpdateAnimation",
-		"BlueprintPostEvaluateAnimation"
-		"__UpdateFunc",
-		"Timeline_FadeOut__UpdateFunc",
-		"Timeline_BlackPulse__UpdateFunc",
-		"Timeline_BlackPulse__FinishedFunc"
-		"OnMoveCompleted",
-		"BlueprintUpdateAnimation",
-		"OnDeactivate",
-		"ReceiveDeactivationAI",
-		"OnMotionControllerUpdated",
-		"GetCombatStateES",
-		"ReceiveTick",
-		"OnAudioEnvelopeValueCb",
-		"BlueprintUpdateAnimation",
-		"OnMovementModeChanged",
-		"OnMotionControllerUpdated",
-		"BlueprintPostEvaluateAnimation",
-		"BlueprintModifyCamera",
-		"PerformConditionCheckAI",
-		"ReceiveExecuteAI",
-		"ReceiveActivationAI",
-		"OnActivate",
-		"UpdateSpawnManager",
-		"RegisterFlashlight",
-		"BlueprintModifyCamera",
-		"BlueprintModifyPostProcess",
-		"UpdateFadeProxy",
-		"OnMotionControllerUpdated",
-		"FlickerTimeline__UpdateFunc",
-		"OnMovementModeChanged",
-		"ReadyToEndMatch",
-		"Tick",
-		"ReceiveTickAI",
-		"PerformConditionCheckAI",
-		"OnTick",
-		"BlueprintUpdateAnimation",
-		"ReceiveTick",
-		"BlueprintPostEvaluateAnimation",
-		"AnimGraphNode"
-		"OnBuffsReset",
-		"ValidateGameProgression",
-		"ReceiveInit",
-		"OnSynchronizeProperties",
-		"PreConstruct",
-		"Construct",
-		"Destruct",
-		"InitializeHUDForPlayer",
-		"ReceiveInitCheatManager",
-		"EnableCheats",
-		"CheatAllowAutoSaving",
-		"CheatSetNoDurabilityLoss",
-		"ClientSetHUD",
-		"ClientVoiceHandshakeComplete",
-		"ClientEnableNetworkVoice",
-		"ClientCapBandwidth",
-		"HandleStartingNewPlayer",
-		"ReadyToStartMatch",
-		"PlayerCanRestart",
-		"FindPlayerStart",
-		"ChoosePlayerStart",
-		"MustSpectate",
-		"SpawnDefaultPawnFor",
-		"SpawnDefaultPawnAtTransform",
-		"GetDefaultPawnClassForController",
-		"PawnAttached",
-		"PlayerControllerAttached",
-		"Initialize",
-		"InitStartSpot",
-		"ReceivePossessed",
-		"PreApplySkin",
-		"PostApplySkin",
-		"ClientRestart",
-		"OnPawnChanged",
-		"ServerAcknowledgePossession",
-		"OnApplyGameUserSettings",
-		"SetPauseWidgetComponentProgress",
-		"OnApplyCheatModes",
-		"ClientSetRotation",
-		"GetPossibleSkins",
-		"GetCorpseCleanupSpawnWalkerClass",
-		"InitializeAIByGameMode",
-		"UpdateSkinReplicationData",
-		"PhysicsVolumeChanged",
-		"OnReturnedToPool",
-		"ServerReleaseGrapple",
-		"SignificanceChange",
-		"PawnReturnedToPool",
-		"StopLogic",
-		"ClearCurrentTarget",
-		"OnUpdateValidState",
-		"IsPlayerControlled",
-		"GetDesiredArchetypeBlueprint",
-		"AddInventoryItemList",
-		"GetSkinComponentBP",
-		"Retune",
-		"ResetTuning",
-		"TuneObject",
-		"OnSetupSection",
-		"OnPopulatePage",
-		"AddInventoryItemListEntry",
-		"AddInventoryItem",
-		"BlueprintInitializeAnimation",
-		"BlueprintLinkedAnimationLayersInitialized",
-		"UserConstructionScript",
-		"BlueprintBeginPlay",
-		"OnInitialized",
-		"ReceiveBeginPlay",
-		"OnInventoryAdded",
-		"GivenTo",
-		"ReturnToInventory",
-		"OnCountChanged",
-		"OnRep_bRepInsideInventory",
-		"GetInventoryOfType",
-		"_ExecuteUbergraph_",
-		"OnBuffsReset",
-		"_DelegateSignature",
-		"OnBuffsReset",
-		"GetInventoryAttachPoint",
-		"GetInventorySlotGripTransform",
-		"InventoryAllowed",
-		"AttachInventory",
-		"OnAnimationStarted",
-		"SetupMaterialParameterCollectionValues",
-		"OnMeshHighlightedChanged",
-		"_DelegateSignature",
-		"ServerShortTimeout",
-		"Timeline_1__UpdateFunc",
-		"Timeline_1__FinishedFunc",
-		"ExecuteUbergraph_BP_Flashlight",
-		"ExecuteUbergraph_BP_Notebook",
-		"Start Landing Recovery",
-		"OnInventoryRemoved",
-		"PawnDetached",
-		"PlayerControllerDetached",
-		"OnNewInventoryItem",
-		"OnPlayerDestroyed",
-		"ReceiveUnpossessed",
-		"OnOwnerEndPlay",
-		"ReceiveEndPlay",
-		"OnPerceptionStimuliSourceEndPlay",
-		"ReceiveDestroyed",
-		"SetCurrentInventory",
-		"Init",
-		"ClientSetCinematicMode",
-		"UpdateHandHidden",
-		"ExecuteUbergraph_BP_UnlockableDoorBase",
-		"ExecuteUbergraph_WBP_ControllerMaps",
-		"ExecuteUbergraph_BP_TWD_Elite_Walker_Outsider",
-		"InitSpawnManager",
-		"CE_FullNightMode",
-		"ReadyForPlay",
-		"RestartLogic",
-		"StartLogoMusic",
-		"HandWasTeleported",
-		"ExecuteUbergraph_Map_FrontEnd_Hotel_MASTER",
-		"BP_TeleportOpacity__UpdateFunc",
-		"BP_TeleportOpacity__FinishedFunc",
-		"InputDeviceChanged",
-		"EndPrePrologue",
-		"StartFrontEndMusic",
-		"OnSignificanceBinChanged",
-		"ExecuteUbergraph_Map_FrontEnd_Hotel_AUDIO",
-		"GetTextValue",
-		"Get_Instructions_Text_Text_1",
-		"GetValue",
-		"Get_Calibration_Image_Brush_1",
-		"OnRecenter",
-		"OnHMDRecentered",
-		"AdvanceBootUp",
-		"OnMouseEnter",
-		"OnAnimationFinished",
-		"SpawnTimerComplete",
-		"OnPreviewMouseButtonDown",
-		"OnBuffAdded",
-		"OnAddedToFocusPath",
-		"IsInteractable",
-		"OnMouseMove",
-		"OnMouseLeave",
-		"GetFootstepSound",
-		"GetAkComponentByEnum",
-		"Received_Notify",
-		"CheckPlayerOrientation",
-		"OnAIEndPlay",
-		"Start",
-		"K2_Update",
-		"OnInventorySlotContentChanged",
-		"OnBackpackContentChanged",
-		"OnInventoryCountChanged",
-		"SetDurability",
-		"OnComponentCollisionSettingsChanged",
-		"GetSheathedInventoryMaterial",
-		"OnHealthUpdated",
-		"OnDoorShut",
-		"GetDoorComponent",
-		"OnAlarmTimerChanged",
-		"AnimNotify_InNoneState",
-		"AnimNotify_EnteredBaseAnimState",
-		"AnimNotify_EnteredIdleState",
-		"ReceivePossess",
-		"OnDialogWidgetIsEnabledCallback",
-		"ServerAddWeaponAttachment",
-		"SetWeaponOwner",
-		"WeaponOwnerUpdated",
-		"AttachToWeapon",
-		"WeaponAttachmentAttached",
-		"ModeStoppedFiring",
-		"GrabFromInventory",
-		"GetGripPoint",
-		"PlayGrabbedEffects",
-		"ServerUpdateLevelVisibility",
-		"BP_StartAnimationRedraw",
-		"GetGrappleStateEnumValues",
-		"OnPhysicsComponentSleep",
-		"OnPhysicsComponentWake",
-		"ExecuteUbergraph_BP_CollectibleStatue",
-		"ExecuteUbergraph_Map_Master_DT_Approach",
-		"ClientUpdateLevelStreamingStatus",
-		"ExecuteUbergraph_BP_Prop",
-		"Timeline_0__UpdateFunc",
-		"Timeline_0__FinishedFunc",
-		"GetGuardPointLocation",
-		"IsDefaultBehaviorPatrol",
-		"SetPercent",
-		"OnMontageStartedEx",
-		"GetFireMode",
-		"TL_LightFlicker__UpdateFunc",
-		"OnLanded",
-		"UpdateAvailability",
-		"OnCharacterPostSignificance",
-		"OnHitReactEnd",
-		"OnShoveActorHit",
-		"OnOwnerActorHit",
-		"OnActorHitCustomThrowPhysics",
-		"OnWeaponActorHit",
-		"OnComponentHitCustomThrowPhysics",
-		"OnComponentHit",
-		"CanHitComponentApplyDamage",
-		"ServerSetHeldBy_IFC",
-		"GetCurrency",
-		"OnWeaponClassChanged",
-		"ExecuteUbergraph_AIC_TWD_EnemySurvivor",
-		"Grab",
-		"GetInteractionHighlights",
-		"OnInteractionHighlightChanged",
-		"OnLoaded_",
-		"ExecuteUbergraph",
-		"BP_FinishAnimationRedraw",
-		"AddInteractionHighlight",
-		"GetHighlightFeedback",
-		"SetIsGrappleMontagePlayingFullyBlended",
-		"PreActorSpawn",
-		"SetIsGrappleMontagePlaying",
-		"OnMontageEndedEx",
-		"Hide Notify",
-		"BP_HideHealthStamTimer",
-		"OnAbort",
-		"OnHandBeginOverlap",
-		"StopAnimationAction",
-		"ReceiveDeactivation",
-		"ReceiveActivation",
-		"RemoveInteractionHighlight",
-		"OnHandEndOverlap",
-		"PingOutLight",
-		"IsValidInteractionHighlight",
-		"GetHighlightHandPoseInfo",
-		"GetHighlightHandPose",
-		"GetInteractTriggerResistanceCurve",
-		"GetBodyMountedInteractLocation",
-		".OnSuccess_",
-		"OnFail_"
-		"UpdateHighlight",
-		"AnimNotify_IsCompleteIdleFidget",
-		"OnInteractPress",
-		"OnGripPress",
-		"RegisterAnimInteractable_Internal",
-		"GetGripFeedback",
-		"GetDescription",
-		"GetFlavorText",
-		"GetInventoryEffectInfo",
-		"FormatSalvageEntry",
-		"GetDurabilityText",
-		"GetDurabilityIndex",
-		"UpdateItemInfo",
-		"HitReactEnd",
-		"PlayAnimationAction",
-		"IsValidInventory",
-		"AddImpulse",
-		"AddAngularImpulseInRadians",
-		"GetDisplayName",
-		"CanBeLoaded",
-		"IsClipEjectedOrChamberOpen",
-		"OnInventoryPutInSlotFailed",
-		"OnGripRelease",
-		"GetThrowInfo",
-		"ServerClearHeldBy_IFC",
-		"Dropped",
-		"OnHandHeldActorChange",
-		"OnHeldActorDropped",
-		"UnregisterAnimInteractable_Internal",
-		"SendInteractPresses_Internal",
-		"SetMaxCurveValues_Internal (Finger)",
-		"SendMaxCurveValues_Internal",
-		"HeldActorChanged",
-		"OnHitByPhysicsActor",
-		"OnActorBump",
-		"OnMeshComponentHit",
-		"ResetHitReactCanInterrupt",
-		"SearchAnimationBlendOut",
-		"ShowHighlight",
-		"GetHighlightType",
-		"GetHighlightTransform",
-		"UpdateHighlightActor",
-		"ReceiveActorBeginOverlap",
-		"Timeline_SpinScale__UpdateFunc",
-		"Timeline_SpinScale__FinishedFunc",
-		"ReceiveActorEndOverlap",
-		"Timeline_RingMoveMajor__UpdateFunc",
-		"Timeline_ScaleMenu__UpdateFunc",
-		"Timeline_Brackets__UpdateFunc"
-		"HatOff Timeline__UpdateFunc"
-		"Timeline_ScaleWidget__UpdateFunc",
-		"Timeline_RingMoveMinor__UpdateFunc",
-		"Timeline_Fill__UpdateFunc",
-		"Timeline_Fill__FinishedFunc",
-		"Timeline_ButtonMove__UpdateFunc",
-		"Timeline_ButtonMove__FinishedFunc",
-		"Timeline_BackgroundThrob__UpdateFunc",
-		"Timeline_BackgroundThrob__FinishedFunc",
-		"Timeline_ChangeMediaAlpha__UpdateFunc",
-		"Timeline_ChangeMediaAlpha__FinishedFunc",
-		"Timeline_Fade__UpdateFunc",
-		"Timeline_Fade__FinishedFunc",
-		"Timeline_Scale__UpdateFunc",
-		"Timeline_Scale__FinishedFunc",
-		"Timeline_FadeOut__FinishedFunc",
-		"K2_OnEndViewTarget",
-		"K2_OnBecomeViewTarget",
-		"K2_PostLogin",
-		"Reveal Timer Return",
-		"Timeline__UpdateFunc"
-		"Timeline_DelayHack__UpdateFunc"
-		"__UpdateFunc",
-		
-};
 
-bool AllowAllFunctions = true;
-void ReportCustomEvent(const std::string& EventName) {
-	if (!LoggerActive) return;
-	std::string Function = EventName.substr(EventName.find_last_of(".") + 1);
 
-	for (const auto& filter : FilterList) {
-		if (Function.find(filter) != std::string::npos) {
-			// This function matches a filter or has a similar pattern, so we don't want to report it.
-			return;
-		}
-	}
-
-	// If AllowAllFunctions is true, we report all events.
-	// Otherwise, we proceed to check if the remaining string contains any of the specified class names.
-	if (AllowAllFunctions) {
-		ConsoleTools::ConsoleWrite(EventName);
-		return;
-	}
-
-	// Strip the function name from the input string
-	std::string eventNameWithoutFunction = EventName.substr(0, EventName.find("("));
-
-	// Check if the remaining string matches any of the specified class names
-	for (const auto& ClassName : ClassNames) {
-		if (eventNameWithoutFunction.find(ClassName) != std::string::npos) {
-			ConsoleTools::ConsoleWrite(EventName);
-			return;
-		}
-	}
-}
 
 void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 {
@@ -804,118 +905,83 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			}
 		}
 	}
-
-	if (func == "Function PauseCapsule.PauseCapsule_C.ReceiveBeginPlay")
+	if (func == "Function ScramPlayerController_BP.ScramPlayerController_BP_C.InpActEvt_Pause_K2Node_InputActionEvent_1")
 	{
-		auto instance = static_cast<CG::APauseCapsule_C*>(thiz);
-		if (instance != nullptr)
+		auto settings = GetWorldSettings();
+		auto Player = GetActivePlayerController();
+		if (settings != nullptr && Player != nullptr)
 		{
-			instance->K2_DestroyComponent(instance->Timeline_BlackPulse);
-		}
-	}
-	if (func == "Function PauseCapsule.PauseCapsule_C.Unpause")
-	{
-		auto instance = static_cast<CG::APauseCapsule_C*>(thiz);
-		if (instance != nullptr)
-		{
-			ReportCustomEvent(func);
-			oProcessEvent(thiz, function, parms);
-			instance->RemoveCapsule();
-			instance->QueuedRemoveCapsule();
-			instance->RemoveThisActor();
-			return;
-		}
-	}
-	if (func == "Function ScrambleEvent_Base.ScrambleEvent_Base_C.PerformScrambleEffect")
-	{
-		auto instance = static_cast<CG::AScrambleEvent_Base_C*>(thiz);
-		auto params = static_cast<CG::AScrambleEvent_Base_C_PerformScrambleEffect_Params*>(parms);
-		if (instance != nullptr)
-		{
-			if (params != nullptr)
+			if (SlowModeInsteadOfPauseMenu)
 			{
-				if (params->NewBall != nullptr)
+				if (!isGameSlowed)
 				{
-					ConsoleTools::ConsoleWrite("[Tennis Scramble] : Spawned Ball Actor " + params->NewBall->Name.GetName());
-					if (Tennis_OnlyAccelleratorBall)
+					if (!HasSavedSetPlayerDilation)
 					{
-						// replace the current ball with the accellerator one!
-						if (GetActiveAcceleratorBallInstance() != nullptr)
-						{
-							params->NewBall = GetActiveAcceleratorBallInstance();
-							ConsoleTools::ConsoleWrite("[Tennis Scramble] : Swapped Ball Actor  With A Accellerator One! : " + params->NewBall->Name.GetName());
-						}
+						BackupPlayerTimeDilation = Player->CustomTimeDilation;
+						HasSavedSetPlayerDilation = true;
+					}
+					settings->timeDilation = static_cast<float>(0.15);
+					Player->CustomTimeDilation = static_cast<float>(3.15);
+					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Game Paused!");
+					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Time Dilation : " + std::to_string(settings->timeDilation));
+					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
+
+					isGameSlowed = true;
+				}
+				else
+				{
+					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Game Unpaused!");
+					settings->timeDilation = static_cast<float>(1);
+					if (HasSavedSetPlayerDilation)
+					{
+						Player->CustomTimeDilation = static_cast<float>(BackupPlayerTimeDilation);
+						HasSavedSetPlayerDilation = false;
+					}
+					else
+					{
+						Player->CustomTimeDilation = static_cast<float>(1);
+					}
+					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Time Dilation : " + std::to_string(settings->timeDilation));
+					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
+					isGameSlowed = false;
+				}
+				// avoid Player from being affected by the pause
+
+				return;
+			}
+			else
+			{
+				if (settings->timeDilation != static_cast<float>(1))
+				{
+					settings->timeDilation = static_cast<float>(1);
+					if (HasSavedSetPlayerDilation)
+					{
+						Player->CustomTimeDilation = static_cast<float>(BackupPlayerTimeDilation);
+						HasSavedSetPlayerDilation = false;
+					}
+					else
+					{
+						Player->CustomTimeDilation = static_cast<float>(1);
 					}
 				}
 			}
 		}
 	}
-	//if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallGrabbed")
-	//{
-	//	auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
-	//	auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallGrabbed_Params*>(parms);
-	//	if (instance != nullptr)
-	//	{
-	//		if (params != nullptr)
-	//		{
-	//			auto ball = params->Ball;
-	//			if (ball != nullptr)
-	//			{
-	//				if (Tennis_OnlyAccelleratorBall)
-	//				{
-	//					auto ballInstance = GetActiveAcceleratorBallInstance();
-	//					if (ballInstance != nullptr)
-	//					{
-	//						params->Ball = ballInstance;
-	//					}
-	//				}
-
-	//				ConsoleTools::ConsoleWrite("[Tennis] : Grabbed Ball Actor " + ball->Name.GetName());
-	//			}
-	//		}
-	//	}
-	//}
-
-	//if (func == "Function SportsScramble.ScramSportManagerTennis.ReplaceBallInPlay")
-	//{
-	//	auto instance = static_cast<CG::AScramSportManagerTennis*>(thiz);
-	//	auto params = static_cast<CG::AScramSportManagerTennis_ReplaceBallInPlay_Params*>(parms);
-	//	if (instance != nullptr)
-	//	{
-	//		if (params != nullptr)
-	//		{
-	//			auto ball = params->Ball;
-	//			if (ball != nullptr)
-	//			{
-	//				if (Tennis_OnlyAccelleratorBall)
-	//				{
-	//					auto ballInstance = GetActiveAcceleratorBallInstance();
-	//					if (ballInstance != nullptr)
-	//					{
-	//						params->Ball = ballInstance;
-	//					}
-	//				}
-	//				ConsoleTools::ConsoleWrite("[Tennis] : Replaced Ball Actor  With " + ball->Name.GetName());
-	//			}
-	//		}
-	//	}
-	//}
 
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.OnPlayerOutOfBoundary") return;
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.PlayerExitBoundary__DelegateSignature") return;
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.QueuedPlayerOutOfBoundary") return;
-	if (func == "Function PauseCapsule.PauseCapsule_C.BlackPulse") return;
-
 	if (func == "Function SportsScramble.ScramPlayerTrigger.OnPlayerExit") return;
 
-	if (func == "Function PauseCapsule.PauseCapsule_C.Timeline_BlackPulse__FinishedFunc") return;
-	if (func == "Function PauseCapsule.PauseCapsule_C.Timeline_BlackPulse__UpdateFunc") return;
-	ReportCustomEvent(func);
+	std::async(std::launch::async, ReportCustomEvent, func);
+
 
 	try {
 		oProcessEvent(thiz, function, parms);
 	}
 	catch (...) {}
+
+
 }
 
 uintptr_t GetBaseAddress(const std::wstring& moduleName)

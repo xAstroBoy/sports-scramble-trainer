@@ -775,7 +775,7 @@ void ConsoleInput()
 	}
 	else if (input == "slowmodetoggles")
 	{
-		SlowModeInsteadOfPauseMenu != SlowModeInsteadOfPauseMenu;
+		SlowModeInsteadOfPauseMenu = !SlowModeInsteadOfPauseMenu;
 		if (SlowModeInsteadOfPauseMenu)
 		{
 			ConsoleTools::ConsoleWrite("Toggleable SlowMode Enabled!");
@@ -920,17 +920,17 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 						BackupPlayerTimeDilation = Player->CustomTimeDilation;
 						HasSavedSetPlayerDilation = true;
 					}
-					settings->timeDilation = static_cast<float>(0.15);
+					settings->timeDilation = static_cast<float>(0.09);
 					Player->CustomTimeDilation = static_cast<float>(3.15);
-					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Game Paused!");
-					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Time Dilation : " + std::to_string(settings->timeDilation));
-					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
+					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Time Slowed!");
+					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Time Dilation : " + std::to_string(settings->timeDilation));
+					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
 
 					isGameSlowed = true;
 				}
 				else
 				{
-					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Game Unpaused!");
+					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Time Restored!");
 					settings->timeDilation = static_cast<float>(1);
 					if (HasSavedSetPlayerDilation)
 					{
@@ -941,12 +941,10 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 					{
 						Player->CustomTimeDilation = static_cast<float>(1);
 					}
-					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Time Dilation : " + std::to_string(settings->timeDilation));
-					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
+					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Time Dilation : " + std::to_string(settings->timeDilation));
+					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
 					isGameSlowed = false;
 				}
-				// avoid Player from being affected by the pause
-
 				return;
 			}
 			else

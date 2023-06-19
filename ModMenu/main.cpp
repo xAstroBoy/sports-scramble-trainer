@@ -582,6 +582,30 @@ void Set_Player_Score(int score)
 		}
 	}
 }
+void TennisForceAiServe()
+{
+	auto TargetClass = CG::UObject::FindObjects<CG::AScramSportManagerTennis_Blueprint_C>();
+	if (!TargetClass.empty())
+	{
+		if (TargetClass.size() > 1)
+		{
+			bool skip = false;
+			for (auto& mods : TargetClass)
+			{
+				if (mods != nullptr)
+				{
+					if (!skip)
+					{
+						skip = true;
+						continue; // Skip the first instance
+					}
+					ConsoleTools::ConsoleWrite("Forcing AI to serve!");
+					mods->ServeSwitch(false);
+				}
+			}
+		}
+	}
+}
 
 CG::AWorldSettings* GetWorldSettings()
 {
@@ -657,38 +681,38 @@ void ExecutorThread()
 	}
 }
 
-static CG::ATN_AcceleratorBall_C* savedInstance = nullptr;
+static CG::ATN_Ball_Base_C* AccelleratorInstance = nullptr;
 
-CG::ATN_AcceleratorBall_C* GetActiveAcceleratorBallInstance()
+CG::ATN_Ball_Base_C* GetCapturedAccelleratorInstance()
 {
-	if (savedInstance != nullptr)
+	if (AccelleratorInstance != nullptr)
 	{
-		return savedInstance;
+		return AccelleratorInstance;
 	}
 
-	auto TargetClass = CG::UObject::FindObjects<CG::ATN_AcceleratorBall_C>();
-	if (!TargetClass.empty())
-	{
-		// check if there's more than 1 instance in TargetClass
-		if (TargetClass.size() > 1)
-		{
-			bool firstInstanceSkipped = false;
-			for (auto& ball : TargetClass)
-			{
-				if (!firstInstanceSkipped)
-				{
-					firstInstanceSkipped = true;
-					continue; // Skip the first instance
-				}
+	//auto TargetClass = CG::UObject::FindObjects<CG::ATN_AcceleratorBall_C>();
+	//if (!TargetClass.empty())
+	//{
+	//	// check if there's more than 1 instance in TargetClass
+	//	if (TargetClass.size() > 1)
+	//	{
+	//		bool firstInstanceSkipped = false;
+	//		for (auto& ball : TargetClass)
+	//		{
+	//			if (!firstInstanceSkipped)
+	//			{
+	//				firstInstanceSkipped = true;
+	//				continue; // Skip the first instance
+	//			}
 
-				if (ball != nullptr && ball->BounceChargedSFX != nullptr)
-				{
-					savedInstance = ball;
-					return ball;
-				}
-			}
-		}
-	}
+	//			if (ball != nullptr && ball->BounceChargedSFX != nullptr)
+	//			{
+	//				AccelleratorInstance = ball;
+	//				return ball;
+	//			}
+	//		}
+	//	}
+	//}
 
 	return nullptr; // Return nullptr if no active instance is found
 }
@@ -755,23 +779,26 @@ void HelpCommand()
 {
 	ConsoleTools::ConsoleWrite("Sport Scramble Mod Console Available commands:");
 	ConsoleTools::ConsoleWrite("help [DESC]: This page.");
-	ConsoleTools::ConsoleWrite("ToggleDebugMenu [DESC]: Toggles Debug Menu!");
-	ConsoleTools::ConsoleWrite("CreateDebugMenu [DESC]: Creates Debug Menu!");
-	ConsoleTools::ConsoleWrite("Set_AI_Score (value) [DESC]: Set AI Score (Tennis)?!");
-	ConsoleTools::ConsoleWrite("Set_Player_Score (value) [DESC]: Set Player Score (Tennis)?!");
-	ConsoleTools::ConsoleWrite("TennisFastBallMode [DESC]: Toggles And enforces all tennis balls to be Only Accelerators!");
-	ConsoleTools::ConsoleWrite("slowmodetoggles [DESC]: Toggles and enforces a slow mode instead of pause menu!");
+	ConsoleTools::ConsoleWrite("toggledebugmenu [DESC]: Toggles Debug Menu!");
+	ConsoleTools::ConsoleWrite("spawndebugmenu [DESC]: Creates Debug Menu!");
+	ConsoleTools::ConsoleWrite("set_ai_score (value) [DESC]: Set AI Score (Tennis)?!");
+	ConsoleTools::ConsoleWrite("set_player_score (value) [DESC]: Set Player Score (Tennis)?!");
+	ConsoleTools::ConsoleWrite("tennis_speedball [DESC]: Toggles And enforces all tennis balls to be Only Accelerators!");
+	ConsoleTools::ConsoleWrite("slowmodecheat [DESC]: Toggles and enforces a slow mode instead of pause menu!");
+	ConsoleTools::ConsoleWrite("tennis_ai_serve [DESC]: Make the AI serve the ball in tennis !");
+
 }
 
 // Define the command map as a global variable
 std::unordered_map<std::string, std::function<void()>> commandMap = {
 	{"help", HelpCommand},
 	{"toggledebugmenu", ToggleDebugMenuCommand},
-	{"createdebugmenu", CreateDebugMenuCommand},
-	{"tennisfastballmode", TennisFastBallModeCommand},
+	{"spawndebugmenu", CreateDebugMenuCommand},
+	{"tennis_speedball", TennisFastBallModeCommand},
 	{"set_ai_score", SetAIScoreCommand},
 	{"set_player_score", SetPlayerScoreCommand},
-	{"slowmodetoggles", SlowGameInsteadOfPauseCommand}
+	{"slowmodecheat", SlowGameInsteadOfPauseCommand},
+	{"tennis_ai_serve", TennisForceAiServe},
 
 };
 
@@ -945,7 +972,16 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 		auto params = static_cast<CG::ATN_Ball_Base_C_BallHit_Params*>(parms);
 		if (instance != nullptr && params != nullptr)
 		{
-			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + instance->GetFullName());
+			auto name = instance->GetFullName();
+			if (AccelleratorInstance == nullptr)
+			{
+				if (name.find("TN_AcceleratorBall_C") != std::string::npos)
+				{
+					AccelleratorInstance = instance;
+					ConsoleTools::ConsoleWrite("Captured ATN_AcceleratorBall_C Instance!");
+				}
+			}
+			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
 		}
 	}
 
@@ -962,20 +998,18 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 	{
 		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
 		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallSpawned_Params*>(parms);
-
-		if (Tennis_OnlyAccelleratorBall)
+		if (instance != nullptr && params != nullptr)
 		{
-			auto SpeedBall = GetActiveAcceleratorBallInstance();
-			if (SpeedBall != nullptr)
+			if (Tennis_OnlyAccelleratorBall)
 			{
-				// Only spawn accelerator balls
-				params->Ball = SpeedBall;
+				auto SpeedBall = GetCapturedAccelleratorInstance();
+				if (SpeedBall != nullptr)
+				{
+					// Only spawn accelerator balls
+					params->Ball = SpeedBall;
+				}
 			}
-			else
-			{
-				// add something for the breakpoint to hit, so i can check which ball is being spawned
-				ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + params->Ball->GetFullName());
-			}
+			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + params->Ball->GetFullName());
 		}
 	}
 

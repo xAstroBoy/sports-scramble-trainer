@@ -21,7 +21,7 @@ namespace CG
 	class ABP_TrophyAward_Ace_C : public ABP_TrophyAward_TennisBase_C
 	{
 	public:
-		unsigned char                                              UnknownData_WYXW[0x7];                                   // 0x03A9(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_XWBS[0x7];                                   // 0x03A9(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x03B0(0x0008) ZeroConstructor, Transient, DuplicateTransient
 
 	public:

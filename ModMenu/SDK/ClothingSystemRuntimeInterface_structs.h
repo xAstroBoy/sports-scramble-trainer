@@ -45,7 +45,7 @@ namespace CG
 	public:
 		TArray<struct FPlane>                                      Planes;                                                  // 0x0000(0x0010) ZeroConstructor, NativeAccessSpecifierPublic
 		int32_t                                                    BoneIndex;                                               // 0x0010(0x0004) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
-		unsigned char                                              UnknownData_0YCI[0x4];                                   // 0x0014(0x0004) MISSED OFFSET (PADDING)
+		unsigned char                                              UnknownData_S3YH[0x4];                                   // 0x0014(0x0004) MISSED OFFSET (PADDING)
 	};
 
 	/**

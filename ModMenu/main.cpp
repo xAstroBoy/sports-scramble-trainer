@@ -1,37 +1,28 @@
 #include <regex>
 
 #include "pch.h"
-#include "CheatsCode.h"
 #include "ConsoleUtils.h"
 #include "includes.h"
 #include "SDK.h"
 #include <thread>
-#pragma once
-#pragma warning(disable: 4717)
-#pragma warning(disable: 4806)
-#pragma warning(disable: 305)
-
 #include "stdafx.h"
 #include <iostream>
 #include <sstream>
-#include "mem.h"
-#include <limits>
-#include <exception>
 #include <typeinfo>
-#include <stdexcept>
 #include <thread>
 #include <algorithm> // For std::transform
 #include <cctype>    // For std::tolower
 #include <future>
 #include <regex>     // For std::regex_search
-#include <queue>
 #include <thread>
-#include <mutex>
-#include <condition_variable>
-#include <algorithm> // For std::transform
 #include <iostream>
 #include <string>
 #include <unordered_map>
+
+#pragma once
+#pragma warning(disable: 4717)
+#pragma warning(disable: 4806)
+#pragma warning(disable: 305)
 
 typedef void(__thiscall* ProcessEvent)(CG::UObject*, CG::UFunction*, void*);
 ProcessEvent oProcessEvent;
@@ -474,7 +465,6 @@ void CreateDebugMenu()
 	}
 }
 
-
 void KillCameraCovers()
 {
 	auto TargetClass = CG::UObject::FindObjects<CG::AScramCameraCover>();
@@ -543,7 +533,6 @@ void ExpandBoundsToMakeTriggerShutTheFuckUp()
 	}
 }
 
-
 void Set_AI_Score(int score)
 {
 	auto TargetClass = CG::UObject::FindObjects<CG::AScramSportManagerTennis_Blueprint_C>();
@@ -551,7 +540,6 @@ void Set_AI_Score(int score)
 	{
 		if (TargetClass.size() > 1)
 		{
-
 			bool skip = false;
 			for (auto& mods : TargetClass)
 			{
@@ -577,7 +565,6 @@ void Set_Player_Score(int score)
 	{
 		if (TargetClass.size() > 1)
 		{
-
 			bool skip = false;
 			for (auto& mods : TargetClass)
 			{
@@ -711,9 +698,6 @@ bool HasSavedSetPlayerDilation = false;
 bool Tennis_OnlyAccelleratorBall = true;
 float BackupPlayerTimeDilation = 0;
 
-
-
-
 void ToggleDebugMenuCommand()
 {
 	ToggleDebugMenu();
@@ -727,6 +711,28 @@ void CreateDebugMenuCommand()
 void TennisFastBallModeCommand()
 {
 	Tennis_OnlyAccelleratorBall = !Tennis_OnlyAccelleratorBall;
+	if(Tennis_OnlyAccelleratorBall)
+	{
+		ConsoleTools::ConsoleWrite("Only Accellerator Ball Enabled!");
+	}
+	else
+	{
+		ConsoleTools::ConsoleWrite("Only Accellerator Ball Disabled!");
+
+	}
+}
+void SlowGameInsteadOfPauseCommand()
+{
+	SlowModeInsteadOfPauseMenu = !SlowModeInsteadOfPauseMenu;
+	if (SlowModeInsteadOfPauseMenu)
+	{
+		ConsoleTools::ConsoleWrite("Game will Slow Down instead of pausing now!");
+	}
+	else
+	{
+		ConsoleTools::ConsoleWrite("Game will work as normal with the pause menu!");
+
+	}
 }
 
 void SetAIScoreCommand()
@@ -764,7 +770,9 @@ std::unordered_map<std::string, std::function<void()>> commandMap = {
 	{"createdebugmenu", CreateDebugMenuCommand},
 	{"tennisfastballmode", TennisFastBallModeCommand},
 	{"set_ai_score", SetAIScoreCommand},
-	{"set_player_score", SetPlayerScoreCommand}
+	{"set_player_score", SetPlayerScoreCommand},
+	{"slowmodetoggles", SlowGameInsteadOfPauseCommand}
+
 };
 
 void ConsoleInput()
@@ -931,6 +939,16 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			}
 		}
 	}
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.Ball Hit")
+	{
+		auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
+		auto params = static_cast<CG::ATN_Ball_Base_C_BallHit_Params*>(parms);
+		if (instance != nullptr && params != nullptr)
+		{
+			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + instance->GetFullName());
+		}
+	}
+
 	if (func == "Function SportsScramble.ScramBall.IsImmuneToInstruments")
 	{
 		auto instance = static_cast<CG::AScramBall*>(thiz);

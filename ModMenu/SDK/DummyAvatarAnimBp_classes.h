@@ -21,7 +21,7 @@ namespace CG
 	class UDummyAvatarAnimBp_C : public UAnimInstance
 	{
 	public:
-		unsigned char                                              UnknownData_TLF9[0x8];                                   // 0x0358(0x0008) Fix Super Size
+		unsigned char                                              UnknownData_S1GY[0x8];                                   // 0x0358(0x0008) Fix Super Size
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0360(0x0008) ZeroConstructor, Transient, DuplicateTransient
 		struct FAnimNode_Root                                      AnimGraphNode_Root_FCD2272F4D9F4241717D0589BB7D8BD0;     // 0x0368(0x0040)
 		struct FAnimNode_TransitionResult                          AnimGraphNode_TransitionResult_3CC0A59E4DBA07F1933DDAB841C366CD; // 0x03A8(0x0048)

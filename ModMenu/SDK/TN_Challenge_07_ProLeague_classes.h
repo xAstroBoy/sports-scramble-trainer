@@ -21,7 +21,7 @@ namespace CG
 	class ATN_Challenge_07_ProLeague_C : public ATN_Challenge_Base_C
 	{
 	public:
-		unsigned char                                              UnknownData_3V0L[0x6];                                   // 0x06BA(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_PKXT[0x6];                                   // 0x06BA(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x06C0(0x0008) ZeroConstructor, Transient, DuplicateTransient
 		class UAudioComponent*                                     Crowd;                                                   // 0x06C8(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
 		TArray<class AActor*>                                      Scoreboards;                                             // 0x06D0(0x0010) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance

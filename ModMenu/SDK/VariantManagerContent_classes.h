@@ -54,17 +54,17 @@ namespace CG
 	class UPropertyValue : public UObject
 	{
 	public:
-		unsigned char                                              UnknownData_FB6A[0x50];                                  // 0x0028(0x0050) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_QOIZ[0x50];                                  // 0x0028(0x0050) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		class FString                                              FullDisplayString;                                       // 0x0078(0x0010) ZeroConstructor, Protected, HasGetValueTypeHash, NativeAccessSpecifierProtected
 		bool                                                       bHasRecordedData;                                        // 0x0088(0x0001) ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash, NativeAccessSpecifierProtected
 		bool                                                       bIsObjectProperty;                                       // 0x0089(0x0001) ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash, NativeAccessSpecifierProtected
-		unsigned char                                              UnknownData_L329[0x6];                                   // 0x008A(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_4NXC[0x6];                                   // 0x008A(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<unsigned char>                                      ValueBytes;                                              // 0x0090(0x0010) ZeroConstructor, Protected, NativeAccessSpecifierProtected
 		EPropertyValueCategory                                     PropCategory;                                            // 0x00A0(0x0001) ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash, NativeAccessSpecifierProtected
-		unsigned char                                              UnknownData_UYGU[0x7];                                   // 0x00A1(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_L7KI[0x7];                                   // 0x00A1(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<class UProperty*>                                   Properties;                                              // 0x00A8(0x0010) ZeroConstructor, Protected, NativeAccessSpecifierProtected
 		TArray<int32_t>                                            PropertyIndices;                                         // 0x00B8(0x0010) ZeroConstructor, Protected, NativeAccessSpecifierProtected
-		unsigned char                                              UnknownData_E4BT[0x28];                                  // 0x00C8(0x0028) MISSED OFFSET (PADDING)
+		unsigned char                                              UnknownData_2DWO[0x28];                                  // 0x00C8(0x0028) MISSED OFFSET (PADDING)
 
 	public:
 		static UClass* StaticClass();
@@ -128,7 +128,7 @@ namespace CG
 	public:
 		struct FSoftObjectPath                                     ObjectPtr;                                               // 0x0028(0x0018) ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPrivate
 		TLazyObjectPtr<class UObject>                              LazyObjectPtr;                                           // 0x0040(0x001C) IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPrivate
-		unsigned char                                              UnknownData_STG2[0x4];                                   // 0x005C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_RZB2[0x4];                                   // 0x005C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<class UPropertyValue*>                              CapturedProperties;                                      // 0x0060(0x0010) ZeroConstructor, NativeAccessSpecifierPrivate
 
 	public:

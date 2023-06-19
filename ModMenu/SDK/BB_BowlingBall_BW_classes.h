@@ -21,7 +21,7 @@ namespace CG
 	class ABB_BowlingBall_BW_C : public ABW_Ball_Base_C
 	{
 	public:
-		unsigned char                                              UnknownData_D9K7[0x7];                                   // 0x0F01(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_G68J[0x7];                                   // 0x0F01(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0F08(0x0008) ZeroConstructor, Transient, DuplicateTransient
 
 	public:

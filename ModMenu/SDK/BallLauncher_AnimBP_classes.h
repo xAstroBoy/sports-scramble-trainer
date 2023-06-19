@@ -21,7 +21,7 @@ namespace CG
 	class UBallLauncher_AnimBP_C : public UAnimInstance
 	{
 	public:
-		unsigned char                                              UnknownData_6WN2[0x8];                                   // 0x0358(0x0008) Fix Super Size
+		unsigned char                                              UnknownData_LVWH[0x8];                                   // 0x0358(0x0008) Fix Super Size
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0360(0x0008) ZeroConstructor, Transient, DuplicateTransient
 		struct FAnimNode_Root                                      AnimGraphNode_Root_144B779F4C62E9695CECEFB210243684;     // 0x0368(0x0040)
 		struct FAnimNode_ModifyBone                                AnimGraphNode_ModifyBone_2C3D5149404C67AFF848069B34EB7BAC; // 0x03A8(0x0138)
@@ -78,12 +78,12 @@ namespace CG
 		float                                                      LaunchPitchOffset;                                       // 0x1CF0(0x0004) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		bool                                                       PlaySpawn;                                               // 0x1CF4(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
 		bool                                                       PlayFire;                                                // 0x1CF5(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
-		unsigned char                                              UnknownData_IN1Y[0x2];                                   // 0x1CF6(0x0002) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_LZ2U[0x2];                                   // 0x1CF6(0x0002) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		class FScriptMulticastDelegate                             SpawnAnimComplete;                                       // 0x1CF8(0x0010) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, BlueprintAssignable, BlueprintCallable
 		float                                                      ScaleOverride;                                           // 0x1D08(0x0004) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		bool                                                       PlayMoveL;                                               // 0x1D0C(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
 		bool                                                       PlayMoveR;                                               // 0x1D0D(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
-		unsigned char                                              UnknownData_AX8Y[0x2];                                   // 0x1D0E(0x0002) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_IYMH[0x2];                                   // 0x1D0E(0x0002) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		float                                                      WheelRotationOffset;                                     // 0x1D10(0x0004) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		bool                                                       PlayMoveF;                                               // 0x1D14(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
 		bool                                                       PlayMoveB;                                               // 0x1D15(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor

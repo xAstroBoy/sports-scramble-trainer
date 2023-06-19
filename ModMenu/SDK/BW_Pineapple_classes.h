@@ -21,7 +21,7 @@ namespace CG
 	class ABW_Pineapple_C : public ABW_Ball_Base_C
 	{
 	public:
-		unsigned char                                              UnknownData_DC39[0x7];                                   // 0x0F01(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_FMPO[0x7];                                   // 0x0F01(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		class UStaticMeshComponent*                                AdditionalMassMesh;                                      // 0x0F08(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
 
 	public:

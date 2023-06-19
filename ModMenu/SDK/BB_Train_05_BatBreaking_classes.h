@@ -33,10 +33,10 @@ namespace CG
 		class UAudioComponent*                                     Audio_Dialog09;                                          // 0x0668(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
 		float                                                      PauseBetweenVO;                                          // 0x0670(0x0004) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		struct FBaseballBatterPreferences                          OriginalBattingPreferences;                              // 0x0674(0x0003) Edit, BlueprintVisible, DisableEditOnInstance, NoDestructor
-		unsigned char                                              UnknownData_RF9D[0x1];                                   // 0x0677(0x0001) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_OYVJ[0x1];                                   // 0x0677(0x0001) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		class ABB_BatProgression_C*                                BatProgression;                                          // 0x0678(0x0008) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		bool                                                       AnnouncerClosingSequence;                                // 0x0680(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
-		unsigned char                                              UnknownData_6I9Q[0x7];                                   // 0x0681(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_9YJJ[0x7];                                   // 0x0681(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<class FName>                                        FinalAnnouncerSequence;                                  // 0x0688(0x0010) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance
 
 	public:

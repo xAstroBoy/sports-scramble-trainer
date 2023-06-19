@@ -21,7 +21,7 @@ namespace CG
 	class AScramPlayerHand_BP_Left_C : public AScramPlayerHand_BP_C
 	{
 	public:
-		unsigned char                                              UnknownData_SUBU[0x7];                                   // 0x0451(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_T27F[0x7];                                   // 0x0451(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0458(0x0008) ZeroConstructor, Transient, DuplicateTransient
 
 	public:

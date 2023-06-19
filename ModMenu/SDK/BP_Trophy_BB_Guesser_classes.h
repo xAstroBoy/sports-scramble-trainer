@@ -21,7 +21,7 @@ namespace CG
 	class ABP_Trophy_BB_Guesser_C : public ABP_TrophyAward_Baseball_InstrumentHitBase_C
 	{
 	public:
-		unsigned char                                              UnknownData_IM5L[0x4];                                   // 0x03B4(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_S1DK[0x4];                                   // 0x03B4(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x03B8(0x0008) ZeroConstructor, Transient, DuplicateTransient
 
 	public:

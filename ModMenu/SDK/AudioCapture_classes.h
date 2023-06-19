@@ -22,7 +22,7 @@ namespace CG
 	{
 	public:
 		int32_t                                                    JitterLatencyFrames;                                     // 0x05C0(0x0004) Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
-		unsigned char                                              UnknownData_7AU3[0xAC];                                  // 0x05C4(0x00AC) MISSED OFFSET (PADDING)
+		unsigned char                                              UnknownData_T6D4[0xAC];                                  // 0x05C4(0x00AC) MISSED OFFSET (PADDING)
 
 	public:
 		static UClass* StaticClass();

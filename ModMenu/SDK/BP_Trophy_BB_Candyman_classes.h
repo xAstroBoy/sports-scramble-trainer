@@ -21,7 +21,7 @@ namespace CG
 	class ABP_Trophy_BB_Candyman_C : public ABP_TrophyAward_Baseball_InstrumentHitBase_C
 	{
 	public:
-		unsigned char                                              UnknownData_2R4N[0x4];                                   // 0x03B4(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_5UDJ[0x4];                                   // 0x03B4(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x03B8(0x0008) ZeroConstructor, Transient, DuplicateTransient
 
 	public:

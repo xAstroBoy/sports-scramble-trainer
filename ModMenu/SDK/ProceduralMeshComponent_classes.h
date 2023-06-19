@@ -39,15 +39,15 @@ namespace CG
 	class UProceduralMeshComponent : public UMeshComponent
 	{
 	public:
-		unsigned char                                              UnknownData_NY01[0x8];                                   // 0x0588(0x0008) Fix Super Size
+		unsigned char                                              UnknownData_VU1J[0x8];                                   // 0x0588(0x0008) Fix Super Size
 		bool                                                       bUseComplexAsSimpleCollision;                            // 0x0590(0x0001) Edit, BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
 		bool                                                       bUseAsyncCooking;                                        // 0x0591(0x0001) Edit, BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
-		unsigned char                                              UnknownData_6IN3[0x6];                                   // 0x0592(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_9NOX[0x6];                                   // 0x0592(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		class UBodySetup*                                          ProcMeshBodySetup;                                       // 0x0598(0x0008) ExportObject, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, PersistentInstance, HasGetValueTypeHash, NativeAccessSpecifierPublic
 		TArray<struct FProcMeshSection>                            ProcMeshSections;                                        // 0x05A0(0x0010) ZeroConstructor, NativeAccessSpecifierPrivate
 		TArray<struct FKConvexElem>                                CollisionConvexElems;                                    // 0x05B0(0x0010) ZeroConstructor, NativeAccessSpecifierPrivate
 		struct FBoxSphereBounds                                    LocalBounds;                                             // 0x05C0(0x001C) ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPrivate
-		unsigned char                                              UnknownData_C3XP[0x4];                                   // 0x05DC(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_JNRA[0x4];                                   // 0x05DC(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<class UBodySetup*>                                  AsyncBodySetupQueue;                                     // 0x05E0(0x0010) ZeroConstructor, Transient, NativeAccessSpecifierPrivate
 
 	public:

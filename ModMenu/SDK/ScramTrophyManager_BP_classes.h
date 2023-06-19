@@ -30,11 +30,11 @@ namespace CG
 		unsigned char                                              TrophyGetSoundList[0x10];                                // 0x03D0(0x0010) UNKNOWN PROPERTY: ArrayProperty ScramTrophyManager_BP.ScramTrophyManager_BP_C.TrophyGetSoundList
 		float                                                      PreAnnounceDelay;                                        // 0x03E0(0x0004) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		bool                                                       Initialized;                                             // 0x03E4(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
-		unsigned char                                              UnknownData_KCDH[0x3];                                   // 0x03E5(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_J2AL[0x3];                                   // 0x03E5(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<class FString>                                      Logs;                                                    // 0x03E8(0x0010) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance
 		TArray<class FName>                                        NewlyEarnedTrophies;                                     // 0x03F8(0x0010) Edit, BlueprintVisible, ZeroConstructor
 		EScramSport                                                CurrentSport;                                            // 0x0408(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-		unsigned char                                              UnknownData_NVU9[0x7];                                   // 0x0409(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_HN8D[0x7];                                   // 0x0409(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<class FName>                                        NewlyEarnedAvatars;                                      // 0x0410(0x0010) Edit, BlueprintVisible, ZeroConstructor
 		class FScriptMulticastDelegate                             OnEarnedTrophyDispatcher;                                // 0x0420(0x0010) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, BlueprintAssignable, BlueprintCallable
 		TArray<class FName>                                        NewlyEarnedSkinPacks;                                    // 0x0430(0x0010) Edit, BlueprintVisible, ZeroConstructor

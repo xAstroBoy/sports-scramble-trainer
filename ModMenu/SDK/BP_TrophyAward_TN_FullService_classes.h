@@ -21,7 +21,7 @@ namespace CG
 	class ABP_TrophyAward_TN_FullService_C : public ABP_TrophyAward_TN_MatchCompleteBase_C
 	{
 	public:
-		unsigned char                                              UnknownData_QN5B[0x6];                                   // 0x03BA(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_RGX6[0x6];                                   // 0x03BA(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x03C0(0x0008) ZeroConstructor, Transient, DuplicateTransient
 		bool                                                       UsingTraditionalServing;                                 // 0x03C8(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
 

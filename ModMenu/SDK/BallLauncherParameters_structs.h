@@ -32,7 +32,7 @@ namespace CG
 		float                                                      MovementSpeed_18_1C401CEC4381908200729593DA8D8F76;       // 0x006C(0x0004) Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		float                                                      RaiseSpeed_20_BB872DCF4F927043A49595B088664747;          // 0x0070(0x0004) Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		bool                                                       DisplayHintLocation_26_8B5DD36B42FBA31910B263A88C3E43A6; // 0x0074(0x0001) Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor
-		unsigned char                                              UnknownData_D510[0x3];                                   // 0x0075(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_8RV2[0x3];                                   // 0x0075(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FVector                                             HintLocation_27_33716AE44DEE54BF93BB0DB03715CB0F;        // 0x0078(0x000C) Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 	};
 

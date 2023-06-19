@@ -75,7 +75,7 @@ namespace CG
 	{
 	public:
 		class FString                                              UserDescription;                                         // 0x0028(0x0010) Edit, ZeroConstructor, DisableEditOnInstance, HasGetValueTypeHash, NativeAccessSpecifierPublic
-		unsigned char                                              UnknownData_UAZ0[0x10];                                  // 0x0038(0x0010) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_110H[0x10];                                  // 0x0038(0x0010) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		class UEditableGameplayTagQueryExpression*                 RootExpression;                                          // 0x0048(0x0008) Edit, ExportObject, ZeroConstructor, DisableEditOnInstance, InstancedReference, IsPlainOldData, NoDestructor, PersistentInstance, HasGetValueTypeHash, NativeAccessSpecifierPublic
 		struct FGameplayTagQuery                                   TagQueryExportText_Helper;                               // 0x0050(0x0048) NativeAccessSpecifierPrivate
 
@@ -178,12 +178,12 @@ namespace CG
 	class UGameplayTagsManager : public UObject
 	{
 	public:
-		unsigned char                                              UnknownData_6KQT[0x80];                                  // 0x0028(0x0080) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_X5DE[0x80];                                  // 0x0028(0x0080) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<struct FGameplayTagSource>                          TagSources;                                              // 0x00A8(0x0010) ZeroConstructor, NativeAccessSpecifierPrivate
-		unsigned char                                              UnknownData_GVPZ[0x68];                                  // 0x00B8(0x0068) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_7HDX[0x68];                                  // 0x00B8(0x0068) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<class UDataTable*>                                  RestrictedGameplayTagTables;                             // 0x0120(0x0010) ZeroConstructor, NativeAccessSpecifierPrivate
 		TArray<class UDataTable*>                                  GameplayTagTables;                                       // 0x0130(0x0010) ZeroConstructor, NativeAccessSpecifierPrivate
-		unsigned char                                              UnknownData_B8PT[0x50];                                  // 0x0140(0x0050) MISSED OFFSET (PADDING)
+		unsigned char                                              UnknownData_A4UP[0x50];                                  // 0x0140(0x0050) MISSED OFFSET (PADDING)
 
 	public:
 		static UClass* StaticClass();
@@ -226,10 +226,10 @@ namespace CG
 	public:
 		bool                                                       ImportTagsFromConfig;                                    // 0x0048(0x0001) Edit, ZeroConstructor, Config, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
 		bool                                                       WarnOnInvalidTags;                                       // 0x0049(0x0001) Edit, ZeroConstructor, Config, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
-		unsigned char                                              UnknownData_WJHR[0x6];                                   // 0x004A(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_MMBP[0x6];                                   // 0x004A(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<struct FGameplayTagCategoryRemap>                   CategoryRemapping;                                       // 0x0050(0x0010) Edit, ZeroConstructor, Config, NativeAccessSpecifierPublic
 		bool                                                       FastReplication;                                         // 0x0060(0x0001) Edit, ZeroConstructor, Config, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic
-		unsigned char                                              UnknownData_16G9[0x7];                                   // 0x0061(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_1KGE[0x7];                                   // 0x0061(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<struct FSoftObjectPath>                             GameplayTagTableList;                                    // 0x0068(0x0010) Edit, ZeroConstructor, Config, NativeAccessSpecifierPublic
 		TArray<struct FGameplayTagRedirect>                        GameplayTagRedirects;                                    // 0x0078(0x0010) Edit, ZeroConstructor, Config, NativeAccessSpecifierPublic
 		TArray<class FName>                                        CommonlyReplicatedTags;                                  // 0x0088(0x0010) Edit, ZeroConstructor, Config, NativeAccessSpecifierPublic

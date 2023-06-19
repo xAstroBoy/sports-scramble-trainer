@@ -21,10 +21,10 @@ namespace CG
 	class ABW_Train_04_ScrambleLanes_C : public ABW_Train_Base_C
 	{
 	public:
-		unsigned char                                              UnknownData_CRF6[0x6];                                   // 0x0472(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_HRWJ[0x6];                                   // 0x0472(0x0006) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0478(0x0008) ZeroConstructor, Transient, DuplicateTransient
 		bool                                                       PracticeOver;                                            // 0x0480(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
-		unsigned char                                              UnknownData_AB23[0x7];                                   // 0x0481(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_WOMB[0x7];                                   // 0x0481(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FRandomActorTable                                   TutorialBallTable;                                       // 0x0488(0x0020) Edit, BlueprintVisible, DisableEditOnInstance
 		TArray<struct FVector>                                     SplitPins;                                               // 0x04A8(0x0010) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance
 		unsigned char                                              TrainingLaneRefList[0x10];                               // 0x04B8(0x0010) UNKNOWN PROPERTY: ArrayProperty BW_Train_04_ScrambleLanes.BW_Train_04_ScrambleLanes_C.TrainingLaneRefList

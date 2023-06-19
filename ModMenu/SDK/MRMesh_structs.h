@@ -21,7 +21,7 @@ namespace CG
 	struct FMRMeshConfiguration
 	{
 	public:
-		unsigned char                                              UnknownData_OBO9[0x1];                                   // 0x0000(0x0001) MISSED OFFSET (PADDING)
+		unsigned char                                              UnknownData_CADW[0x1];                                   // 0x0000(0x0001) MISSED OFFSET (PADDING)
 	};
 
 }

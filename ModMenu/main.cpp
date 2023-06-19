@@ -681,38 +681,28 @@ void ExecutorThread()
 	}
 }
 
-static CG::ATN_Ball_Base_C* AccelleratorInstance = nullptr;
+static CG::ATN_AcceleratorBall_C* AccelleratorInstance = nullptr;
 
-CG::ATN_Ball_Base_C* GetCapturedAccelleratorInstance()
+CG::ATN_AcceleratorBall_C* GetCapturedAccelleratorInstance()
 {
 	if (AccelleratorInstance != nullptr)
 	{
 		return AccelleratorInstance;
 	}
 
-	//auto TargetClass = CG::UObject::FindObjects<CG::ATN_AcceleratorBall_C>();
-	//if (!TargetClass.empty())
-	//{
-	//	// check if there's more than 1 instance in TargetClass
-	//	if (TargetClass.size() > 1)
-	//	{
-	//		bool firstInstanceSkipped = false;
-	//		for (auto& ball : TargetClass)
-	//		{
-	//			if (!firstInstanceSkipped)
-	//			{
-	//				firstInstanceSkipped = true;
-	//				continue; // Skip the first instance
-	//			}
+	auto TargetClass = CG::UObject::FindObjects<CG::ATN_AcceleratorBall_C>();
+	if (!TargetClass.empty())
+	{
+		for (auto& ball : TargetClass)
+		{
 
-	//			if (ball != nullptr && ball->BounceChargedSFX != nullptr)
-	//			{
-	//				AccelleratorInstance = ball;
-	//				return ball;
-	//			}
-	//		}
-	//	}
-	//}
+			if (ball != nullptr && ball->BounceChargedSFX != nullptr)
+			{
+				AccelleratorInstance = ball;
+				return ball;
+			}
+		}
+	}
 
 	return nullptr; // Return nullptr if no active instance is found
 }
@@ -973,14 +963,6 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 		if (instance != nullptr && params != nullptr)
 		{
 			auto name = instance->GetFullName();
-			if (AccelleratorInstance == nullptr)
-			{
-				if (name.find("TN_AcceleratorBall_C") != std::string::npos)
-				{
-					AccelleratorInstance = instance;
-					ConsoleTools::ConsoleWrite("Captured ATN_AcceleratorBall_C Instance!");
-				}
-			}
 			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
 		}
 	}
@@ -1000,15 +982,15 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallSpawned_Params*>(parms);
 		if (instance != nullptr && params != nullptr)
 		{
-			if (Tennis_OnlyAccelleratorBall)
-			{
-				auto SpeedBall = GetCapturedAccelleratorInstance();
-				if (SpeedBall != nullptr)
-				{
-					// Only spawn accelerator balls
-					params->Ball = SpeedBall;
-				}
-			}
+			//if (Tennis_OnlyAccelleratorBall)
+			//{
+			//	auto SpeedBall = GetCapturedAccelleratorInstance();
+			//	if (SpeedBall != nullptr)
+			//	{
+			//		// Only spawn accelerator balls
+			//		params->Ball = SpeedBall;
+			//	}
+			//}
 			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + params->Ball->GetFullName());
 		}
 	}

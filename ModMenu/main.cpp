@@ -28,6 +28,10 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#include <algorithm> // For std::transform
+#include <iostream>
+#include <string>
+#include <unordered_map>
 
 typedef void(__thiscall* ProcessEvent)(CG::UObject*, CG::UFunction*, void*);
 ProcessEvent oProcessEvent;
@@ -360,7 +364,6 @@ const std::vector<std::string> EndingFilterList = {
 		"ReceiveHit",
 };
 
-
 bool DoNotLogEvent(const std::string& funcname)
 {
 	std::regex FuncExample1(R"(Function\s([A-Za-z0-9]+(_[A-Za-z0-9]+)+)\.([A-Za-z0-9]+(_[A-Za-z0-9]+)+)\.)");
@@ -374,21 +377,21 @@ bool DoNotLogEvent(const std::string& funcname)
 	std::string PurgedToLower = Purged;
 	std::transform(PurgedToLower.begin(), PurgedToLower.end(), PurgedToLower.begin(), ::tolower);
 
-	for (auto filter : EndingFilterList)
-	{
-		std::regex EndOfString(R"()" + filter + R"($)", std::regex_constants::icase);
-		if (std::regex_search(Purged.begin(), Purged.end(), EndOfString, std::regex_constants::match_any)) {
-			return true;
-		}
-	}
+	//for (auto filter : EndingFilterList)
+	//{
+	//	std::regex EndOfString(R"()" + filter + R"($)", std::regex_constants::icase);
+	//	if (std::regex_search(Purged.begin(), Purged.end(), EndOfString, std::regex_constants::match_any)) {
+	//		return true;
+	//	}
+	//}
 
-	for (auto filter : FilterList)
-	{
-		std::regex Anywhere(filter, std::regex_constants::icase);
-		if (std::regex_search(Purged.begin(), Purged.end(), Anywhere, std::regex_constants::match_any)) {
-			return true;
-		}
-	}
+	//for (auto filter : FilterList)
+	//{
+	//	std::regex Anywhere(filter, std::regex_constants::icase);
+	//	if (std::regex_search(Purged.begin(), Purged.end(), Anywhere, std::regex_constants::match_any)) {
+	//		return true;
+	//	}
+	//}
 	for (auto filter : EndingFilterList)
 	{
 		std::string lowerFilter = filter;
@@ -441,7 +444,6 @@ void ReportCustomEvent(const std::string& funcname) {
 	}
 }
 
-
 void ToggleDebugMenu()
 {
 	auto TargetClass = CG::UObject::FindObjects<CG::AFrontEndManager_C>();
@@ -472,35 +474,6 @@ void CreateDebugMenu()
 	}
 }
 
-void Enable_Instance_DebugMode()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::UScramGameInstance_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				mods->DebugMode = 1;
-			}
-		}
-	}
-}
-
-void Disable_Instance_DebugMode()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::UScramGameInstance_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				mods->DebugMode = 0;
-			}
-		}
-	}
-}
 
 void KillCameraCovers()
 {
@@ -531,6 +504,21 @@ void CheckPermittedArea()
 		}
 	}
 }
+void FuckCameraCovers()
+{
+	auto maxFloatValue = static_cast<float>(9999999999);
+	auto TargetClass = CG::UObject::FindObjects<CG::AScramCameraCover>();
+	if (!TargetClass.empty())
+	{
+		for (auto& mods : TargetClass)
+		{
+			if (mods != nullptr)
+			{
+				mods->K2_DestroyActor();
+			}
+		}
+	}
+}
 
 void ExpandBoundsToMakeTriggerShutTheFuckUp()
 {
@@ -555,46 +543,28 @@ void ExpandBoundsToMakeTriggerShutTheFuckUp()
 	}
 }
 
-void Enable_Debug_Balls()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::UScramGameInstance_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				mods->DebugBallsAllowed = true;
-			}
-		}
-	}
-}
-
-void Disable_Debug_Balls()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::UScramGameInstance_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				mods->DebugBallsAllowed = false;
-			}
-		}
-	}
-}
 
 void Set_AI_Score(int score)
 {
 	auto TargetClass = CG::UObject::FindObjects<CG::AScramSportManagerTennis_Blueprint_C>();
 	if (!TargetClass.empty())
 	{
-		for (auto& mods : TargetClass)
+		if (TargetClass.size() > 1)
 		{
-			if (mods != nullptr)
+
+			bool skip = false;
+			for (auto& mods : TargetClass)
 			{
-				mods->ScorePlayer2 = score;
+				if (mods != nullptr)
+				{
+					if (!skip)
+					{
+						skip = true;
+						continue; // Skip the first instance
+					}
+					mods->ScorePlayer2 = score;
+					mods->PointMade(mods->ScorePlayer1, score);
+				}
 			}
 		}
 	}
@@ -605,45 +575,27 @@ void Set_Player_Score(int score)
 	auto TargetClass = CG::UObject::FindObjects<CG::AScramSportManagerTennis_Blueprint_C>();
 	if (!TargetClass.empty())
 	{
-		for (auto& mods : TargetClass)
+		if (TargetClass.size() > 1)
 		{
-			if (mods != nullptr)
+
+			bool skip = false;
+			for (auto& mods : TargetClass)
 			{
-				mods->ScorePlayer1 = score;
+				if (mods != nullptr)
+				{
+					if (!skip)
+					{
+						skip = true;
+						continue; // Skip the first instance
+					}
+					mods->ScorePlayer1 = score;
+					mods->PointMade(score, mods->ScorePlayer2);
+				}
 			}
 		}
 	}
 }
 
-void Enable_BigMode()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramPlayer_BP_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				mods->BigMode = true;
-			}
-		}
-	}
-}
-
-void Disable_BigMode()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramPlayer_BP_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				mods->BigMode = false;
-			}
-		}
-	}
-}
 CG::AWorldSettings* GetWorldSettings()
 {
 	auto world = (*CG::UWorld::GWorld);
@@ -712,6 +664,7 @@ void ExecutorThread()
 			KillCameraCovers();
 			CheckPermittedArea();
 			ExpandBoundsToMakeTriggerShutTheFuckUp();
+			FuckCameraCovers();
 		}
 		catch (...) {}
 	}
@@ -729,140 +682,117 @@ CG::ATN_AcceleratorBall_C* GetActiveAcceleratorBallInstance()
 	auto TargetClass = CG::UObject::FindObjects<CG::ATN_AcceleratorBall_C>();
 	if (!TargetClass.empty())
 	{
-		for (auto& ball : TargetClass)
+		// check if there's more than 1 instance in TargetClass
+		if (TargetClass.size() > 1)
 		{
-			if (ball != nullptr && ball->BounceChargedSFX != nullptr)
+			bool firstInstanceSkipped = false;
+			for (auto& ball : TargetClass)
 			{
-				savedInstance = ball;
-				return ball;
+				if (!firstInstanceSkipped)
+				{
+					firstInstanceSkipped = true;
+					continue; // Skip the first instance
+				}
+
+				if (ball != nullptr && ball->BounceChargedSFX != nullptr)
+				{
+					savedInstance = ball;
+					return ball;
+				}
 			}
 		}
 	}
 
 	return nullptr; // Return nullptr if no active instance is found
 }
-
-
 bool SlowModeInsteadOfPauseMenu = true;
 bool isGameSlowed = false;
 bool HasSavedSetPlayerDilation = false;
+bool Tennis_OnlyAccelleratorBall = true;
 float BackupPlayerTimeDilation = 0;
+
+
+
+
+void ToggleDebugMenuCommand()
+{
+	ToggleDebugMenu();
+}
+
+void CreateDebugMenuCommand()
+{
+	CreateDebugMenu();
+}
+
+void TennisFastBallModeCommand()
+{
+	Tennis_OnlyAccelleratorBall = !Tennis_OnlyAccelleratorBall;
+}
+
+void SetAIScoreCommand()
+{
+	ConsoleTools::ConsoleWrite("Put AI Score Here:");
+	int score;
+	std::cin >> score;
+	Set_AI_Score(score);
+}
+
+void SetPlayerScoreCommand()
+{
+	ConsoleTools::ConsoleWrite("Put Player Score Here:");
+	int score;
+	std::cin >> score;
+	Set_Player_Score(score);
+}
+
+void HelpCommand()
+{
+	ConsoleTools::ConsoleWrite("Sport Scramble Mod Console Available commands:");
+	ConsoleTools::ConsoleWrite("help [DESC]: This page.");
+	ConsoleTools::ConsoleWrite("ToggleDebugMenu [DESC]: Toggles Debug Menu!");
+	ConsoleTools::ConsoleWrite("CreateDebugMenu [DESC]: Creates Debug Menu!");
+	ConsoleTools::ConsoleWrite("Set_AI_Score (value) [DESC]: Set AI Score (Tennis)?!");
+	ConsoleTools::ConsoleWrite("Set_Player_Score (value) [DESC]: Set Player Score (Tennis)?!");
+	ConsoleTools::ConsoleWrite("TennisFastBallMode [DESC]: Toggles And enforces all tennis balls to be Only Accelerators!");
+	ConsoleTools::ConsoleWrite("slowmodetoggles [DESC]: Toggles and enforces a slow mode instead of pause menu!");
+}
+
+// Define the command map as a global variable
+std::unordered_map<std::string, std::function<void()>> commandMap = {
+	{"help", HelpCommand},
+	{"toggledebugmenu", ToggleDebugMenuCommand},
+	{"createdebugmenu", CreateDebugMenuCommand},
+	{"tennisfastballmode", TennisFastBallModeCommand},
+	{"set_ai_score", SetAIScoreCommand},
+	{"set_player_score", SetPlayerScoreCommand}
+};
+
 void ConsoleInput()
 {
-	ConsoleTools::ConsoleWrite("ModConsole Commands:  ");
+	ConsoleTools::ConsoleWrite("ModConsole Commands:");
 	std::string input;
-	std::cin >> input;
-
-	if (input == "help")
+	while (true)
 	{
-		ConsoleTools::ConsoleWrite("Sport Scramble Mod Console Available commands:");
-		ConsoleTools::ConsoleWrite("help  [DESC]:  This page. ");
-		ConsoleTools::ConsoleWrite("KillBounds [DESC]: Remove any game Boundaries!");
-		ConsoleTools::ConsoleWrite("ToggleDebugMenu [DESC]: Toggles Debug Menu!");
-		ConsoleTools::ConsoleWrite("CreateDebugMenu [DESC]: Creates Debug Menu!");
-		//ConsoleTools::ConsoleWrite("Enable_Instance_DebugMode [DESC]: Enables Debug Mode!");
-		//ConsoleTools::ConsoleWrite("Disable_Instance_DebugMode [DESC]: Disables Debug Mode!");
-		//ConsoleTools::ConsoleWrite("Enable_Debug_Balls [DESC]: Enables Debug Items?!");
-		//ConsoleTools::ConsoleWrite("Disable_Debug_Balls [DESC]: Disables Debug Items?!");
-		//ConsoleTools::ConsoleWrite("Set_AI_Score (value) [DESC]: Set AI Score (Tennis)?!");
-		//ConsoleTools::ConsoleWrite("Set_Player_Score (value) [DESC]: Set Player Score (Tennis)?!");
-		//ConsoleTools::ConsoleWrite("Enable_BigMode (value) [DESC]: Enable Player BigMode !");
-		//ConsoleTools::ConsoleWrite("Disable_BigMode (value) [DESC]: Disable Player BigMode!");
-		//ConsoleTools::ConsoleWrite("TennisFastBallMode [DESC]: Toggles And enforces all tennis balls to be Only Accellerators!");
-		ConsoleTools::ConsoleWrite("slowmodetoggles [DESC]: Toggles and enforces a slow mode instead of pause menu!");
+		std::cin >> input;
 
-		ConsoleInput();
-	}
-	else if (input == "slowmodetoggles")
-	{
-		SlowModeInsteadOfPauseMenu = !SlowModeInsteadOfPauseMenu;
-		if (SlowModeInsteadOfPauseMenu)
+		// Convert input to lowercase
+		std::transform(input.begin(), input.end(), input.begin(), [](unsigned char c) {
+			return std::tolower(c);
+			});
+
+		auto it = commandMap.find(input);
+		if (it != commandMap.end())
 		{
-			ConsoleTools::ConsoleWrite("Toggleable SlowMode Enabled!");
+			// Execute the corresponding command function
+			it->second();
 		}
 		else
 		{
-			ConsoleTools::ConsoleWrite("Toggleable SlowMode Disabled!");
+			ConsoleTools::ConsoleWrite("Command Not found. Type help for command list.");
 		}
-		ConsoleInput();
-	}
-
-	/*else if (input == "KillBounds")
-	{
-		KillCameraCovers();
-		CheckPermittedArea();
-		ExpandBoundsToMakeTriggerShutTheFuckUp();
-		ConsoleTools::ConsoleWrite("Killed Bounds");
-		ConsoleInput();
-	}*/
-	else if (input == "ToggleDebugMenu")
-	{
-		ToggleDebugMenu();
-		ConsoleInput();
-	}
-	else if (input == "CreateDebugMenu")
-	{
-		CreateDebugMenu();
-		ConsoleInput();
-	}
-	//else if (input == "Enable_Instance_DebugMode")
-	//{
-	//	Enable_Instance_DebugMode();
-	//	ConsoleInput();
-	//}
-	//else if (input == "Disable_Instance_DebugMode")
-	//{
-	//	Disable_Instance_DebugMode();
-	//	ConsoleInput();
-	//}
-	//else if (input == "Enable_Debug_Balls")
-	//{
-	//	Enable_Debug_Balls();
-	//	ConsoleInput();
-	//}
-	//else if (input == "Disable_Debug_Balls")
-	//{
-	//	Disable_Debug_Balls();
-	//	ConsoleInput();
-	//}
-	//else if (input == "Enable_BigMode")
-	//{
-	//	Enable_BigMode();
-	//	ConsoleInput();
-	//}
-	//else if (input == "Disable_BigMode")
-	//{
-	//	Disable_BigMode();
-	//	ConsoleInput();
-	//}
-	//else if (input == "TennisFastBallMode")
-	//{
-	//	Tennis_OnlyAccelleratorBall = !Tennis_OnlyAccelleratorBall;
-	//	ConsoleInput();
-	//}
-
-	//else if (input == "Set_AI_Score")
-	//{
-	//	ConsoleTools::ConsoleWrite("Put AI Score Here:");
-	//	int score;
-	//	std::cin >> score; // input the length
-	//	Set_AI_Score(score);
-	//	ConsoleInput();
-	//}
-	//else if (input == "Set_Player_Score")
-	//{
-	//	ConsoleTools::ConsoleWrite("Put Player Score Here: ");
-	//	int score;
-	//	std::cin >> score; // input the length
-	//	Set_AI_Score(score);
-	//	ConsoleInput();
-	//}
-	else
-	{
-		ConsoleTools::ConsoleWrite("Command Not found. Type help for command list.");
-		ConsoleInput();
 	}
 }
+
 bool ends_with(const std::string& mainStr, const std::string& toMatch)
 {
 	if (mainStr.size() >= toMatch.size() &&
@@ -871,9 +801,6 @@ bool ends_with(const std::string& mainStr, const std::string& toMatch)
 	else
 		return false;
 }
-
-
-
 
 void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 {
@@ -889,6 +816,45 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 	}
 
 	const std::string func = function->GetFullName();
+
+	if (func.find("SportsScramble.ScramBall") != std::string::npos)
+	{
+		auto instance = static_cast<CG::AScramBall*>(thiz);
+		if (instance != nullptr)
+		{
+			if (instance->GetProxyGrabbable() != nullptr)
+			{
+				instance->CanBeGrabbed = true;
+			}
+			if (!instance->CanBeGrabbed)
+			{
+				instance->CanBeGrabbed = true;
+			}
+			if (instance->mImmuneToInstruments)
+			{
+				instance->SetImmuneToInstruments(false);
+			}
+		}
+	}
+
+	if (func == "Function SportsScramble.ScramPlayer.ConstrainToPlayArea")
+	{
+		auto instance = static_cast<CG::AScramPlayer*>(thiz);
+		auto params = static_cast<CG::AScramPlayer_ConstrainToPlayArea_Params*>(parms);
+		if (instance != nullptr && params != nullptr)
+		{
+			params->Radius = maxFloatValue;
+		}
+	}
+	if (func == "SportsScramble.ScramPlayer.GetPlayAreaTransform")
+	{
+		auto instance = static_cast<CG::AScramPlayer*>(thiz);
+		auto params = static_cast<CG::AScramPlayer_GetPlayAreaTransform_Params*>(parms);
+		if (instance != nullptr && params != nullptr)
+		{
+			params->ReturnValue.Scale3D = CG::FVector(maxFloatValue, maxFloatValue, maxFloatValue);
+		}
+	}
 
 	if (func.find("SportsScramble.ScramPlayerTrigger") != std::string::npos)
 	{
@@ -965,6 +931,35 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			}
 		}
 	}
+	if (func == "Function SportsScramble.ScramBall.IsImmuneToInstruments")
+	{
+		auto instance = static_cast<CG::AScramBall*>(thiz);
+		auto params = static_cast<CG::AScramBall_IsImmuneToInstruments_Params*>(parms);
+		if (instance != nullptr && params != nullptr)
+		{
+			params->ReturnValue = false;
+		}
+	}
+	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
+	{
+		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
+		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallSpawned_Params*>(parms);
+
+		if (Tennis_OnlyAccelleratorBall)
+		{
+			auto SpeedBall = GetActiveAcceleratorBallInstance();
+			if (SpeedBall != nullptr)
+			{
+				// Only spawn accelerator balls
+				params->Ball = SpeedBall;
+			}
+			else
+			{
+				// add something for the breakpoint to hit, so i can check which ball is being spawned
+				ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + params->Ball->GetFullName());
+			}
+		}
+	}
 
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.OnPlayerOutOfBoundary") return;
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.PlayerExitBoundary__DelegateSignature") return;
@@ -973,13 +968,10 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 
 	std::async(std::launch::async, ReportCustomEvent, func);
 
-
 	try {
 		oProcessEvent(thiz, function, parms);
 	}
 	catch (...) {}
-
-
 }
 
 uintptr_t GetBaseAddress(const std::wstring& moduleName)

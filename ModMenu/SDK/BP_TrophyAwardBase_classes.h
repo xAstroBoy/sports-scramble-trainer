@@ -27,7 +27,7 @@ namespace CG
 		EScramSport                                                Sport;                                                   // 0x0378(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 		bool                                                       CanOnlyObtainInChallenges;                               // 0x0379(0x0001) Edit, BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor
 		bool                                                       ShowDebugMessages;                                       // 0x037A(0x0001) Edit, BlueprintVisible, BlueprintReadOnly, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
-		unsigned char                                              UnknownData_I6W2[0x5];                                   // 0x037B(0x0005) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_I7OL[0x5];                                   // 0x037B(0x0005) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FDataTableRowHandle                                 TrophyRowEntry;                                          // 0x0380(0x0010) Edit, BlueprintVisible, DisableEditOnInstance, NoDestructor
 		bool                                                       CanObtainInChallenges;                                   // 0x0390(0x0001) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
 

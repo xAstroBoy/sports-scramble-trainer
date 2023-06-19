@@ -9723,8 +9723,8 @@ namespace CG
 		
 		FVector worldPos{};
 		
-		const TArray<struct FTransform>& componentSpaceTransforms =  CachedBoneSpaceTransforms;
-		int32_t componentToWorldOffset = 0x190; /*|| 0x1C0 || 0x1D0 || 0x250;*/
+		const TArray<struct FTransform>& componentSpaceTransforms =  CachedBoneSpaceTransforms ;
+		int32_t componentToWorldOffset =  0x190 || 0x1C0 || 0x1D0 || 0x250;
 		
 		if (boneId >= componentSpaceTransforms.Count())
 			return worldPos;

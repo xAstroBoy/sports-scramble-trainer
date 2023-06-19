@@ -21,7 +21,7 @@ namespace CG
 	class UAssetRegistryImpl : public UObject
 	{
 	public:
-		unsigned char                                              UnknownData_SCGM[0x6E8];                                 // 0x0028(0x06E8) MISSED OFFSET (PADDING)
+		unsigned char                                              UnknownData_7YRZ[0x6E8];                                 // 0x0028(0x06E8) MISSED OFFSET (PADDING)
 
 	public:
 		static UClass* StaticClass();

@@ -22,7 +22,7 @@ namespace CG
 	{
 	public:
 		EBaseballInstrumentType                                    InstrumentType_26_C5429CC24359CE2B10CAFBA244D5998D;      // 0x0000(0x0001) Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-		unsigned char                                              UnknownData_UE09[0x3];                                   // 0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_IC44[0x3];                                   // 0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FChance                                             Chance_30_F017C682490F7D93470B3BA09746566F;              // 0x0004(0x0004) Edit, BlueprintVisible, NoDestructor
 	};
 

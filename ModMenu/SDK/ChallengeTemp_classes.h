@@ -21,7 +21,7 @@ namespace CG
 	class AChallengeTemp_C : public AChallengeBase_C
 	{
 	public:
-		unsigned char                                              UnknownData_M0OO[0x7];                                   // 0x0491(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_H9IR[0x7];                                   // 0x0491(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0498(0x0008) ZeroConstructor, Transient, DuplicateTransient
 
 	public:

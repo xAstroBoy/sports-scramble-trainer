@@ -21,7 +21,7 @@ namespace CG
 	class ABW_Challenge_03_EasyPeesy_C : public ABW_Challenge_Base_C
 	{
 	public:
-		unsigned char                                              UnknownData_YN5A[0x7];                                   // 0x0541(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_RB2I[0x7];                                   // 0x0541(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0548(0x0008) ZeroConstructor, Transient, DuplicateTransient
 		class UAudioComponent*                                     Crowd;                                                   // 0x0550(0x0008) BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NonTransactional, NoDestructor, HasGetValueTypeHash
 		TArray<class FName>                                        PairedList;                                              // 0x0558(0x0010) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance

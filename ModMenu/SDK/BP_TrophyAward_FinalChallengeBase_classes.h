@@ -21,11 +21,11 @@ namespace CG
 	class ABP_TrophyAward_FinalChallengeBase_C : public ABP_TrophyAwardBase_C
 	{
 	public:
-		unsigned char                                              UnknownData_EXR2[0x7];                                   // 0x0391(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_KPIR[0x7];                                   // 0x0391(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x0398(0x0008) ZeroConstructor, Transient, DuplicateTransient
 		TArray<class FName>                                        ChallengeTrophyIDs;                                      // 0x03A0(0x0010) Edit, BlueprintVisible, ZeroConstructor
 		int32_t                                                    counter;                                                 // 0x03B0(0x0004) Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-		unsigned char                                              UnknownData_CXNL[0x4];                                   // 0x03B4(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_EJ0T[0x4];                                   // 0x03B4(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		class FString                                              PrependString;                                           // 0x03B8(0x0010) Edit, BlueprintVisible, ZeroConstructor, HasGetValueTypeHash
 		class FString                                              FirstID;                                                 // 0x03C8(0x0010) Edit, BlueprintVisible, ZeroConstructor, HasGetValueTypeHash
 

@@ -21,7 +21,7 @@ namespace CG
 	class ATN_ChallengeBall_Red_C : public ATN_ChallengeBall_Base_C
 	{
 	public:
-		unsigned char                                              UnknownData_7GPE[0x7];                                   // 0x1189(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_LYVU[0x7];                                   // 0x1189(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		struct FPointerToUberGraphFrame                            UberGraphFrame;                                          // 0x1190(0x0008) ZeroConstructor, Transient, DuplicateTransient
 
 	public:

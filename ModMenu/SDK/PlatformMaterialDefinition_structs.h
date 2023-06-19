@@ -22,7 +22,7 @@ namespace CG
 	{
 	public:
 		EScramPlatform                                             ScramPlatform_2_DFE06AC54824EBEB5265F687F5E27E4E;        // 0x0000(0x0001) Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-		unsigned char                                              UnknownData_X4MM[0x7];                                   // 0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+		unsigned char                                              UnknownData_HWVS[0x7];                                   // 0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 		TArray<struct FMaterialIndexDefinition>                    Materials_13_9C79F6AA40611B7ED983C3B3B26168C4;           // 0x0008(0x0010) Edit, BlueprintVisible, ZeroConstructor
 	};
 

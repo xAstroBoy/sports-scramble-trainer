@@ -21,7 +21,7 @@ namespace CG
 	class UPnpWinnerTitleWidget_C : public UUserWidget
 	{
 	public:
-		class UTextBlock*                                          SubtitleText;                                            // 0x0210(0x0008) BlueprintVisible, ExportObject, ZeroConstructor, InstancedReference, IsPlainOldData, RepSkip, NoDestructor, PersistentInstance, HasGetValueTypeHash
+		class UTextBlock*                                          SubTitleText;                                            // 0x0210(0x0008) BlueprintVisible, ExportObject, ZeroConstructor, InstancedReference, IsPlainOldData, RepSkip, NoDestructor, PersistentInstance, HasGetValueTypeHash
 
 	public:
 		static UClass* StaticClass();

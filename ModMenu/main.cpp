@@ -18,6 +18,9 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <vector>
+#include <list>
+#include <mutex>
 
 #pragma once
 #pragma warning(disable: 4717)
@@ -354,6 +357,12 @@ const std::vector<std::string> EndingFilterList = {
 		"FinishedFunc",
 		"ReceiveHit",
 };
+bool SlowModeInsteadOfPauseMenu = true;
+bool isGameSlowed = false;
+bool HasSavedSetPlayerDilation = false;
+bool Tennis_OnlyAccelleratorBall = false;
+bool BigBallMode = false;
+float BackupPlayerTimeDilation = 0;
 
 bool DoNotLogEvent(const std::string& funcname)
 {
@@ -665,6 +674,51 @@ void SpawnCheatManager(CG::APlayerController* Pc)
 		}
 	}
 }
+struct Ball_Data
+{
+	CG::AActor* Ball;
+	CG::FVector Original_Scale;
+	CG::FVector Scaled_Value;
+};
+float Scale_Adjuster = static_cast<float>(5);
+Ball_Data CurrentBall;
+void BigBallModeFunc(CG::AActor* Active_Ball_Instance)
+{
+	if (Active_Ball_Instance == nullptr)
+		return;
+	auto root = Active_Ball_Instance->RootComponent;
+	if (root == nullptr)
+		return;
+
+	if (CurrentBall.Ball == nullptr || CurrentBall.Ball != Active_Ball_Instance)
+	{
+		ConsoleTools::ConsoleWrite(
+			"Original Ball scale is X: " + std::to_string(root->RelativeScale3D.X) +
+			" Y: " + std::to_string(root->RelativeScale3D.Y) +
+			" Z: " + std::to_string(root->RelativeScale3D.Z));
+
+		CurrentBall.Ball = Active_Ball_Instance;
+		CurrentBall.Original_Scale = root->RelativeScale3D;
+		auto AdjustedScale = root->RelativeScale3D;
+		AdjustedScale.X += Scale_Adjuster;
+		AdjustedScale.Y += Scale_Adjuster;
+		AdjustedScale.Z += Scale_Adjuster;
+		CurrentBall.Scaled_Value = AdjustedScale;
+		ConsoleTools::ConsoleWrite(
+			"Modified Ball scale is X: " + std::to_string(AdjustedScale.X) +
+			" Y: " + std::to_string(AdjustedScale.Y) +
+			" Z: " + std::to_string(AdjustedScale.Z));
+	}
+
+	if (BigBallMode)
+	{
+		root->RelativeScale3D = CurrentBall.Scaled_Value;
+	}
+	else
+	{
+		root->RelativeScale3D = CurrentBall.Original_Scale;
+	}
+}
 
 bool AutoCheatManager = true;
 void ExecutorThread()
@@ -695,7 +749,6 @@ CG::ATN_AcceleratorBall_C* GetCapturedAccelleratorInstance()
 	{
 		for (auto& ball : TargetClass)
 		{
-
 			if (ball != nullptr && ball->BounceChargedSFX != nullptr)
 			{
 				AccelleratorInstance = ball;
@@ -706,11 +759,6 @@ CG::ATN_AcceleratorBall_C* GetCapturedAccelleratorInstance()
 
 	return nullptr; // Return nullptr if no active instance is found
 }
-bool SlowModeInsteadOfPauseMenu = true;
-bool isGameSlowed = false;
-bool HasSavedSetPlayerDilation = false;
-bool Tennis_OnlyAccelleratorBall = true;
-float BackupPlayerTimeDilation = 0;
 
 void ToggleDebugMenuCommand()
 {
@@ -725,14 +773,13 @@ void CreateDebugMenuCommand()
 void TennisFastBallModeCommand()
 {
 	Tennis_OnlyAccelleratorBall = !Tennis_OnlyAccelleratorBall;
-	if(Tennis_OnlyAccelleratorBall)
+	if (Tennis_OnlyAccelleratorBall)
 	{
 		ConsoleTools::ConsoleWrite("Only Accellerator Ball Enabled!");
 	}
 	else
 	{
 		ConsoleTools::ConsoleWrite("Only Accellerator Ball Disabled!");
-
 	}
 }
 void SlowGameInsteadOfPauseCommand()
@@ -745,7 +792,18 @@ void SlowGameInsteadOfPauseCommand()
 	else
 	{
 		ConsoleTools::ConsoleWrite("Game will work as normal with the pause menu!");
-
+	}
+}
+void BigBallModeCommand()
+{
+	BigBallMode = !BigBallMode;
+	if (BigBallMode)
+	{
+		ConsoleTools::ConsoleWrite("Big Ball Mode Enabled!");
+	}
+	else
+	{
+		ConsoleTools::ConsoleWrite("Big Ball Mode Disabled!");
 	}
 }
 
@@ -776,7 +834,7 @@ void HelpCommand()
 	ConsoleTools::ConsoleWrite("tennis_speedball [DESC]: Toggles And enforces all tennis balls to be Only Accelerators!");
 	ConsoleTools::ConsoleWrite("slowmodecheat [DESC]: Toggles and enforces a slow mode instead of pause menu!");
 	ConsoleTools::ConsoleWrite("tennis_ai_serve [DESC]: Make the AI serve the ball in tennis !");
-
+	ConsoleTools::ConsoleWrite("tennis_bigball [DESC]: Toggles and enforces all tennis balls to be triple it's size.!");
 }
 
 // Define the command map as a global variable
@@ -789,7 +847,7 @@ std::unordered_map<std::string, std::function<void()>> commandMap = {
 	{"set_player_score", SetPlayerScoreCommand},
 	{"slowmodecheat", SlowGameInsteadOfPauseCommand},
 	{"tennis_ai_serve", TennisForceAiServe},
-
+	{"tennis_bigball", BigBallModeCommand}
 };
 
 void ConsoleInput()
@@ -841,6 +899,11 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 	}
 
 	const std::string func = function->GetFullName();
+	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.OnPlayerOutOfBoundary") return;
+	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.PlayerExitBoundary__DelegateSignature") return;
+	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.QueuedPlayerOutOfBoundary") return;
+	if (func == "Function SportsScramble.ScramPlayerTrigger.OnPlayerExit") return;
+	if (func == "Function SportsScramble.ScramCameraCover.EnqueueVignette") return;
 
 	if (func.find("SportsScramble.ScramBall") != std::string::npos)
 	{
@@ -861,26 +924,6 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			}
 		}
 	}
-
-	if (func == "Function SportsScramble.ScramPlayer.ConstrainToPlayArea")
-	{
-		auto instance = static_cast<CG::AScramPlayer*>(thiz);
-		auto params = static_cast<CG::AScramPlayer_ConstrainToPlayArea_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
-			params->Radius = maxFloatValue;
-		}
-	}
-	if (func == "SportsScramble.ScramPlayer.GetPlayAreaTransform")
-	{
-		auto instance = static_cast<CG::AScramPlayer*>(thiz);
-		auto params = static_cast<CG::AScramPlayer_GetPlayAreaTransform_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
-			params->ReturnValue.Scale3D = CG::FVector(maxFloatValue, maxFloatValue, maxFloatValue);
-		}
-	}
-
 	if (func.find("SportsScramble.ScramPlayerTrigger") != std::string::npos)
 	{
 		auto instance = static_cast<CG::AScramPlayerTrigger*>(thiz);
@@ -896,7 +939,25 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			}
 		}
 	}
-	if (func == "Function ScramPlayerController_BP.ScramPlayerController_BP_C.InpActEvt_Pause_K2Node_InputActionEvent_1")
+	if (func == "Function SportsScramble.ScramPlayer.ConstrainToPlayArea")
+	{
+		auto instance = static_cast<CG::AScramPlayer*>(thiz);
+		auto params = static_cast<CG::AScramPlayer_ConstrainToPlayArea_Params*>(parms);
+		if (instance != nullptr && params != nullptr)
+		{
+			params->Radius = maxFloatValue;
+		}
+	}
+	else if (func == "SportsScramble.ScramPlayer.GetPlayAreaTransform")
+	{
+		auto instance = static_cast<CG::AScramPlayer*>(thiz);
+		auto params = static_cast<CG::AScramPlayer_GetPlayAreaTransform_Params*>(parms);
+		if (instance != nullptr && params != nullptr)
+		{
+			params->ReturnValue.Scale3D = CG::FVector(maxFloatValue, maxFloatValue, maxFloatValue);
+		}
+	}
+	else if (func == "Function ScramPlayerController_BP.ScramPlayerController_BP_C.InpActEvt_Pause_K2Node_InputActionEvent_1")
 	{
 		auto settings = GetWorldSettings();
 		auto Player = GetActivePlayerController();
@@ -956,54 +1017,48 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			}
 		}
 	}
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.Ball Hit")
+	else if (func == "Function TN_Ball_Base.TN_Ball_Base_C.Ball Hit")
 	{
 		auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
 		auto params = static_cast<CG::ATN_Ball_Base_C_BallHit_Params*>(parms);
 		if (instance != nullptr && params != nullptr)
 		{
+			std::async(std::launch::async, BigBallModeFunc, instance);
 			auto name = instance->GetFullName();
 			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
 		}
 	}
 
-	if (func == "Function SportsScramble.ScramBall.IsImmuneToInstruments")
-	{
-		auto instance = static_cast<CG::AScramBall*>(thiz);
-		auto params = static_cast<CG::AScramBall_IsImmuneToInstruments_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
-			params->ReturnValue = false;
-		}
-	}
-	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
+	else if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
 	{
 		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
 		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallSpawned_Params*>(parms);
 		if (instance != nullptr && params != nullptr)
 		{
-			//if (Tennis_OnlyAccelleratorBall)
-			//{
-			//	auto SpeedBall = GetCapturedAccelleratorInstance();
-			//	if (SpeedBall != nullptr)
-			//	{
-			//		// Only spawn accelerator balls
-			//		params->Ball = SpeedBall;
-			//	}
-			//}
-			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + params->Ball->GetFullName());
+			auto name = params->Ball->GetFullName();
+			std::async(std::launch::async, BigBallModeFunc, params->Ball);
+			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + name);
 		}
 	}
+	else if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
+	{
+		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
+		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallGrabbed_Params*>(parms);
+		if (instance != nullptr && params != nullptr)
+		{
+			auto name = params->Ball->GetFullName();
+			std::async(std::launch::async, BigBallModeFunc, params->Ball);
+			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + name);
+		}
+		}
 
-	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.OnPlayerOutOfBoundary") return;
-	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.PlayerExitBoundary__DelegateSignature") return;
-	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.QueuedPlayerOutOfBoundary") return;
-	if (func == "Function SportsScramble.ScramPlayerTrigger.OnPlayerExit") return;
-
-	std::async(std::launch::async, ReportCustomEvent, func);
+	ReportCustomEvent(func);
 
 	try {
-		oProcessEvent(thiz, function, parms);
+		if (thiz != nullptr && function != nullptr)
+		{
+			oProcessEvent(thiz, function, parms);
+		}
 	}
 	catch (...) {}
 }
@@ -1046,7 +1101,6 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
 
 	// Console (Used Mainly for Debug Purpose) (not needed)
 	ConsoleTools::ShowConsole();
-
 	bool init_hook = false;
 	do
 	{

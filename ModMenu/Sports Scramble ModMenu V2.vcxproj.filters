@@ -27,9 +27,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDK.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
     <ClInclude Include="CheatsCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -73,6 +70,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="kiero\minhook\src\trampoline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

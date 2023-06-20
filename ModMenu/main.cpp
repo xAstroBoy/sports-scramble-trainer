@@ -363,6 +363,7 @@ bool HasSavedSetPlayerDilation = false;
 bool Tennis_OnlyAccelleratorBall = false;
 bool BigBallMode = false;
 float BackupPlayerTimeDilation = 0;
+CG::AScramSportManagerTennis_Blueprint_C* TennisManagerinstance;
 
 bool DoNotLogEvent(const std::string& funcname)
 {
@@ -544,75 +545,27 @@ void ExpandBoundsToMakeTriggerShutTheFuckUp()
 
 void Set_AI_Score(int score)
 {
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramSportManagerTennis_Blueprint_C>();
-	if (!TargetClass.empty())
+	if(TennisManagerinstance != nullptr)
 	{
-		if (TargetClass.size() > 1)
-		{
-			bool skip = false;
-			for (auto& mods : TargetClass)
-			{
-				if (mods != nullptr)
-				{
-					if (!skip)
-					{
-						skip = true;
-						continue; // Skip the first instance
-					}
-					mods->ScorePlayer2 = score;
-					mods->PointMade(mods->ScorePlayer1, score);
-				}
-			}
-		}
+		TennisManagerinstance->ScorePlayer2 = score;
+		TennisManagerinstance->PointMade(TennisManagerinstance->ScorePlayer1, score);
 	}
+
 }
 
 void Set_Player_Score(int score)
 {
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramSportManagerTennis_Blueprint_C>();
-	if (!TargetClass.empty())
+	if (TennisManagerinstance != nullptr)
 	{
-		if (TargetClass.size() > 1)
-		{
-			bool skip = false;
-			for (auto& mods : TargetClass)
-			{
-				if (mods != nullptr)
-				{
-					if (!skip)
-					{
-						skip = true;
-						continue; // Skip the first instance
-					}
-					mods->ScorePlayer1 = score;
-					mods->PointMade(score, mods->ScorePlayer2);
-				}
-			}
-		}
+		TennisManagerinstance->ScorePlayer1 = score;
+		TennisManagerinstance->PointMade(score, TennisManagerinstance->ScorePlayer2);
 	}
 }
 void TennisForceAiServe()
 {
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramSportManagerTennis_Blueprint_C>();
-	if (!TargetClass.empty())
+	if (TennisManagerinstance != nullptr)
 	{
-		if (TargetClass.size() > 1)
-		{
-			bool skip = false;
-			for (auto& mods : TargetClass)
-			{
-				if (mods != nullptr)
-				{
-					if (!skip)
-					{
-						skip = true;
-						continue; // Skip the first instance
-					}
-					ConsoleTools::ConsoleWrite("Forcing AI to serve!");
-					mods->ServeSwitch(false);
-				}
-			}
-		}
+		TennisManagerinstance->ServeSwitch(false);
 	}
 }
 
@@ -680,7 +633,7 @@ struct Ball_Data
 	CG::FVector Original_Scale;
 	CG::FVector Scaled_Value;
 };
-float Scale_Adjuster = static_cast<float>(5);
+float Scale_Adjuster = static_cast<float>(2);
 Ball_Data CurrentBall;
 void BigBallModeFunc(CG::AActor* Active_Ball_Instance)
 {
@@ -822,6 +775,13 @@ void SetPlayerScoreCommand()
 	std::cin >> score;
 	Set_Player_Score(score);
 }
+void Scale_AdjusterCommand()
+{
+	ConsoleTools::ConsoleWrite("Enter Ball Scale Value:");
+	float scale;
+	std::cin >> scale;
+	Scale_Adjuster = scale;
+}
 
 void HelpCommand()
 {
@@ -835,6 +795,7 @@ void HelpCommand()
 	ConsoleTools::ConsoleWrite("slowmodecheat [DESC]: Toggles and enforces a slow mode instead of pause menu!");
 	ConsoleTools::ConsoleWrite("tennis_ai_serve [DESC]: Make the AI serve the ball in tennis !");
 	ConsoleTools::ConsoleWrite("tennis_bigball [DESC]: Toggles and enforces all tennis balls to be triple it's size.!");
+	ConsoleTools::ConsoleWrite("scale_adjuster <float> [DESC]: Control how much the ball will increase of it's size!");
 }
 
 // Define the command map as a global variable
@@ -847,7 +808,8 @@ std::unordered_map<std::string, std::function<void()>> commandMap = {
 	{"set_player_score", SetPlayerScoreCommand},
 	{"slowmodecheat", SlowGameInsteadOfPauseCommand},
 	{"tennis_ai_serve", TennisForceAiServe},
-	{"tennis_bigball", BigBallModeCommand}
+	{"tennis_bigball", BigBallModeCommand},
+	{"scale_adjuster", Scale_AdjusterCommand}
 };
 
 void ConsoleInput()
@@ -905,6 +867,16 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 	if (func == "Function SportsScramble.ScramPlayerTrigger.OnPlayerExit") return;
 	if (func == "Function SportsScramble.ScramCameraCover.EnqueueVignette") return;
 
+
+	if(func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos)
+	{
+		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
+		if(TennisManagerinstance == nullptr)
+		{
+			TennisManagerinstance = instance;
+			ConsoleTools::ConsoleWrite("Tennis Manager Instance Captured!");
+		}
+	}
 	if (func.find("SportsScramble.ScramBall") != std::string::npos)
 	{
 		auto instance = static_cast<CG::AScramBall*>(thiz);
@@ -948,7 +920,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			params->Radius = maxFloatValue;
 		}
 	}
-	else if (func == "SportsScramble.ScramPlayer.GetPlayAreaTransform")
+	if (func == "SportsScramble.ScramPlayer.GetPlayAreaTransform")
 	{
 		auto instance = static_cast<CG::AScramPlayer*>(thiz);
 		auto params = static_cast<CG::AScramPlayer_GetPlayAreaTransform_Params*>(parms);
@@ -957,7 +929,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			params->ReturnValue.Scale3D = CG::FVector(maxFloatValue, maxFloatValue, maxFloatValue);
 		}
 	}
-	else if (func == "Function ScramPlayerController_BP.ScramPlayerController_BP_C.InpActEvt_Pause_K2Node_InputActionEvent_1")
+	if (func == "Function ScramPlayerController_BP.ScramPlayerController_BP_C.InpActEvt_Pause_K2Node_InputActionEvent_1")
 	{
 		auto settings = GetWorldSettings();
 		auto Player = GetActivePlayerController();
@@ -1017,7 +989,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			}
 		}
 	}
-	else if (func == "Function TN_Ball_Base.TN_Ball_Base_C.Ball Hit")
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.Ball Hit")
 	{
 		auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
 		auto params = static_cast<CG::ATN_Ball_Base_C_BallHit_Params*>(parms);
@@ -1029,7 +1001,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 		}
 	}
 
-	else if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
+	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
 	{
 		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
 		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallSpawned_Params*>(parms);
@@ -1040,7 +1012,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + name);
 		}
 	}
-	else if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
+	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
 	{
 		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
 		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallGrabbed_Params*>(parms);

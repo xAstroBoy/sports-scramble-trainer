@@ -545,12 +545,11 @@ void ExpandBoundsToMakeTriggerShutTheFuckUp()
 
 void Set_AI_Score(int score)
 {
-	if(TennisManagerinstance != nullptr)
+	if (TennisManagerinstance != nullptr)
 	{
 		TennisManagerinstance->ScorePlayer2 = score;
 		TennisManagerinstance->PointMade(TennisManagerinstance->ScorePlayer1, score);
 	}
-
 }
 
 void Set_Player_Score(int score)
@@ -867,11 +866,17 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 	if (func == "Function SportsScramble.ScramPlayerTrigger.OnPlayerExit") return;
 	if (func == "Function SportsScramble.ScramCameraCover.EnqueueVignette") return;
 
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedSliceFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeBounceFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayNormalBounceFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeSliceBounceFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.SetTrail") if (BigBallMode) return;
 
-	if(func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos)
+	if (func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos)
 	{
 		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
-		if(TennisManagerinstance == nullptr)
+		if (TennisManagerinstance == nullptr)
 		{
 			TennisManagerinstance = instance;
 			ConsoleTools::ConsoleWrite("Tennis Manager Instance Captured!");
@@ -1000,6 +1005,17 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
 		}
 	}
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.BallGrabbed")
+	{
+		auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
+		auto params = static_cast<CG::ATN_Ball_Base_C_BallGrabbed_Params*>(parms);
+		if (instance != nullptr && params != nullptr)
+		{
+			std::async(std::launch::async, BigBallModeFunc, instance);
+			auto name = instance->GetFullName();
+			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
+		}
+	}
 
 	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
 	{
@@ -1012,7 +1028,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + name);
 		}
 	}
-	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
+	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallGrabbed")
 	{
 		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
 		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallGrabbed_Params*>(parms);
@@ -1020,9 +1036,9 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 		{
 			auto name = params->Ball->GetFullName();
 			std::async(std::launch::async, BigBallModeFunc, params->Ball);
-			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + name);
+			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Grabbed : " + name);
 		}
-		}
+	}
 
 	ReportCustomEvent(func);
 

@@ -190,6 +190,7 @@
     <ClCompile Include="SDK\ScramPlayerController_BP_Package.cpp" />
     <ClCompile Include="SDK\ScramPlayer_BP_Package.cpp" />
     <ClCompile Include="SDK\ScramSportManagerTennis_Blueprint_Package.cpp" />
+    <ClCompile Include="SDK\ServeLocationIndicator_Package.cpp" />
     <ClCompile Include="SDK\SportsScramble_Package.cpp" />
     <ClCompile Include="SDK\TennisScrambleTargetGroup_Package.cpp" />
     <ClCompile Include="SDK\TennisScrambleTarget_Package.cpp" />

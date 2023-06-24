@@ -361,7 +361,7 @@ bool SlowModeInsteadOfPauseMenu = true;
 bool isGameSlowed = false;
 bool HasSavedSetPlayerDilation = false;
 bool Tennis_OnlyAccelleratorBall = false;
-bool BigBallMode = false;
+bool BigBallMode = true;
 float BackupPlayerTimeDilation = 0;
 CG::AScramSportManagerTennis_Blueprint_C* TennisManagerinstance;
 
@@ -475,20 +475,6 @@ void CreateDebugMenu()
 	}
 }
 
-void KillCameraCovers()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramCameraCover>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				mods->K2_DestroyActor();
-			}
-		}
-	}
-}
 
 void CheckPermittedArea()
 {
@@ -626,49 +612,77 @@ void SpawnCheatManager(CG::APlayerController* Pc)
 		}
 	}
 }
-struct Ball_Data
-{
-	CG::AActor* Ball;
-	CG::FVector Original_Scale;
-	CG::FVector Scaled_Value;
-};
+CG::ATN_Ball_Base_C* Tn_Ball;
+CG::FVector TN_Original_Scale;
+CG::FVector TN_Scaled_Value;
 float Scale_Adjuster = static_cast<float>(2);
-Ball_Data CurrentBall;
-void BigBallModeFunc(CG::AActor* Active_Ball_Instance)
+
+void CreateNewBallScale(CG::ATN_Ball_Base_C* instance, CG::USceneComponent* root)
 {
-	if (Active_Ball_Instance == nullptr)
+	ConsoleTools::ConsoleWrite("Current Ball is " + instance->GetFullName());
+	ConsoleTools::ConsoleWrite(
+		"Instance Ball scale is X: " + std::to_string(root->RelativeScale3D.X) +
+		" Y: " + std::to_string(root->RelativeScale3D.Y) +
+		" Z: " + std::to_string(root->RelativeScale3D.Z));
+
+	Tn_Ball = instance;
+	TN_Original_Scale = root->RelativeScale3D;
+	auto AdjustedScale = root->RelativeScale3D;
+	AdjustedScale.X += Scale_Adjuster;
+	AdjustedScale.Y += Scale_Adjuster;
+	AdjustedScale.Z += Scale_Adjuster;
+	TN_Scaled_Value = AdjustedScale;
+	ConsoleTools::ConsoleWrite(
+		"Modified Ball scale is X: " + std::to_string(AdjustedScale.X) +
+		" Y: " + std::to_string(AdjustedScale.Y) +
+		" Z: " + std::to_string(AdjustedScale.Z));
+}
+
+
+void BigBallModeFunc(CG::ATN_Ball_Base_C* instance)
+{
+	if (instance == nullptr)
 		return;
-	auto root = Active_Ball_Instance->RootComponent;
+
+	auto root = instance->RootComponent;
 	if (root == nullptr)
 		return;
 
-	if (CurrentBall.Ball == nullptr || CurrentBall.Ball != Active_Ball_Instance)
-	{
-		ConsoleTools::ConsoleWrite(
-			"Original Ball scale is X: " + std::to_string(root->RelativeScale3D.X) +
-			" Y: " + std::to_string(root->RelativeScale3D.Y) +
-			" Z: " + std::to_string(root->RelativeScale3D.Z));
 
-		CurrentBall.Ball = Active_Ball_Instance;
-		CurrentBall.Original_Scale = root->RelativeScale3D;
-		auto AdjustedScale = root->RelativeScale3D;
-		AdjustedScale.X += Scale_Adjuster;
-		AdjustedScale.Y += Scale_Adjuster;
-		AdjustedScale.Z += Scale_Adjuster;
-		CurrentBall.Scaled_Value = AdjustedScale;
-		ConsoleTools::ConsoleWrite(
-			"Modified Ball scale is X: " + std::to_string(AdjustedScale.X) +
-			" Y: " + std::to_string(AdjustedScale.Y) +
-			" Z: " + std::to_string(AdjustedScale.Z));
+	if (Tn_Ball != nullptr && TN_Scaled_Value == root->RelativeScale3D)
+	{
+
+		// check if TN_Ball is the same scaled value as the current ball
+		if(root->RelativeScale3D.X == TN_Scaled_Value.X && root->RelativeScale3D.Y == TN_Scaled_Value.Y && root->RelativeScale3D.Z == TN_Scaled_Value.Z)
+		{
+			Tn_Ball = instance;
+		}
+		else
+		{
+			CreateNewBallScale(instance, root);
+		}
+	}
+	else
+	{
+		// create a new ball scale
+		CreateNewBallScale(instance, root);
 	}
 
 	if (BigBallMode)
 	{
-		root->RelativeScale3D = CurrentBall.Scaled_Value;
+		// Check if the ball scale is already modified
+		if (root->RelativeScale3D != TN_Scaled_Value)
+		{
+			root->RelativeScale3D = TN_Scaled_Value;
+		}
 	}
 	else
 	{
-		root->RelativeScale3D = CurrentBall.Original_Scale;
+		// Check if the ball scale is already set to the original scale
+		if (root->RelativeScale3D != TN_Original_Scale)
+		{
+			root->RelativeScale3D = TN_Original_Scale;
+		}
 	}
 }
 
@@ -678,7 +692,6 @@ void ExecutorThread()
 	while (true)
 	{
 		try {
-			KillCameraCovers();
 			CheckPermittedArea();
 			ExpandBoundsToMakeTriggerShutTheFuckUp();
 			FuckCameraCovers();
@@ -777,9 +790,11 @@ void SetPlayerScoreCommand()
 void Scale_AdjusterCommand()
 {
 	ConsoleTools::ConsoleWrite("Enter Ball Scale Value:");
-	float scale;
-	std::cin >> scale;
-	Scale_Adjuster = scale;
+	std::string input;
+	std::cin >> input;
+
+	Scale_Adjuster = std::stof(input);
+	ConsoleTools::ConsoleWrite("Scale Adjuster set to " + std::to_string(Scale_Adjuster));
 }
 
 void HelpCommand()
@@ -864,14 +879,24 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.PlayerExitBoundary__DelegateSignature") return;
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.QueuedPlayerOutOfBoundary") return;
 	if (func == "Function SportsScramble.ScramPlayerTrigger.OnPlayerExit") return;
-	if (func == "Function SportsScramble.ScramCameraCover.EnqueueVignette") return;
-
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedSliceFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeBounceFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayNormalBounceFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayNormalHitFX") if (BigBallMode) return;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeSliceBounceFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.SetTrail") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeBounceFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedSliceFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlaySliceFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayImbuedFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.NetPlayImbuedFX") if (BigBallMode) return;
+
+	if (func == "Function SportsScramble.ScramCameraCover.EnqueueVignette")
+	{
+		auto instance = static_cast<CG::AScramCameraCover*>(thiz);
+		if (instance != nullptr)
+		{
+			instance->K2_DestroyActor();
+			return;
+		}
+	}
 
 	if (func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos)
 	{
@@ -925,7 +950,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			params->Radius = maxFloatValue;
 		}
 	}
-	if (func == "SportsScramble.ScramPlayer.GetPlayAreaTransform")
+	if (func == "Function SportsScramble.ScramPlayer.GetPlayAreaTransform")
 	{
 		auto instance = static_cast<CG::AScramPlayer*>(thiz);
 		auto params = static_cast<CG::AScramPlayer_GetPlayAreaTransform_Params*>(parms);
@@ -994,51 +1019,73 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 			}
 		}
 	}
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.Ball Hit")
+	//if (func == "Function TN_Ball_Base.TN_Ball_Base_C.Ball Hit")
+	//{
+	//	auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
+	//	auto params = static_cast<CG::ATN_Ball_Base_C_BallHit_Params*>(parms);
+	//	if (instance != nullptr && params != nullptr)
+	//	{
+	//		std::async(std::launch::async, BigBallModeFunc, instance);
+	//		auto name = instance->GetFullName();
+	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
+	//	}
+	//}
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.ReceiveTick")
 	{
 		auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
-		auto params = static_cast<CG::ATN_Ball_Base_C_BallHit_Params*>(parms);
+		auto params = static_cast<CG::ATN_Ball_Base_C_ReceiveTick_Params*>(parms);
 		if (instance != nullptr && params != nullptr)
 		{
 			std::async(std::launch::async, BigBallModeFunc, instance);
 			auto name = instance->GetFullName();
-			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
+			//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
 		}
 	}
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.BallGrabbed")
-	{
-		auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
-		auto params = static_cast<CG::ATN_Ball_Base_C_BallGrabbed_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
-			std::async(std::launch::async, BigBallModeFunc, instance);
-			auto name = instance->GetFullName();
-			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
-		}
-	}
+	//if (func == "Function ServeLocationIndicator.ServeLocationIndicator_C.ServeBallGrabbed")
+	//{
+	//	auto instance = static_cast<CG::AServeLocationIndicator_C*>(thiz);
+	//	auto params = static_cast<CG::AServeLocationIndicator_C_ServeBallGrabbed_Params*>(parms);
+	//	if (instance != nullptr && params != nullptr)
+	//	{
+	//		auto name = params->Ball->GetFullName();
+	//		std::async(std::launch::async, BigBallModeFunc, params->Ball);
+	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Serve Ball Grabbed : " + name);
+	//	}
+	//}
+	//if (func == "Function ServeLocationIndicator.ServeLocationIndicator_C.ServeBallSpawned")
+	//{
+	//	auto instance = static_cast<CG::AServeLocationIndicator_C*>(thiz);
+	//	auto params = static_cast<CG::AServeLocationIndicator_C_ServeBallSpawned_Params*>(parms);
+	//	if (instance != nullptr && params != nullptr)
+	//	{
+	//		auto name = params->Ball->GetFullName();
+	//		std::async(std::launch::async, BigBallModeFunc, params->Ball);
+	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Serve Ball Spawned : " + name);
+	//	}
+	//}
 
-	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
-	{
-		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
-		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallSpawned_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
-			auto name = params->Ball->GetFullName();
-			std::async(std::launch::async, BigBallModeFunc, params->Ball);
-			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + name);
-		}
-	}
-	if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallGrabbed")
-	{
-		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
-		auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallGrabbed_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
-			auto name = params->Ball->GetFullName();
-			std::async(std::launch::async, BigBallModeFunc, params->Ball);
-			ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Grabbed : " + name);
-		}
-	}
+	//if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
+	//{
+	//	auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
+	//	auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallSpawned_Params*>(parms);
+	//	if (instance != nullptr && params != nullptr)
+	//	{
+	//		auto name = params->Ball->GetFullName();
+	//		std::async(std::launch::async, BigBallModeFunc, params->Ball);
+	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + name);
+	//	}
+	//}
+	//if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallGrabbed")
+	//{
+	//	auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
+	//	auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallGrabbed_Params*>(parms);
+	//	if (instance != nullptr && params != nullptr)
+	//	{
+	//		auto name = params->Ball->GetFullName();
+	//		std::async(std::launch::async, BigBallModeFunc, params->Ball);
+	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Grabbed : " + name);
+	//	}
+	//}
 
 	ReportCustomEvent(func);
 

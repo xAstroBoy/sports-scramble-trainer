@@ -164,6 +164,9 @@
     <ClCompile Include="SDK\TN_BallTypes_Package.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
+    <ClCompile Include="SDK\ServeLocationIndicator_Package.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="kiero\minhook\dll_resources\MinHook.rc">

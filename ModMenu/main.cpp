@@ -361,6 +361,8 @@ bool HasSavedSetPlayerDilation = false;
 bool Tennis_OnlyAccelleratorBall = false;
 bool BigBallMode = true;
 float BackupPlayerTimeDilation = 0;
+
+
 CG::AScramSportManagerTennis_Blueprint_C* TennisManagerinstance;
 
 bool DoNotLogEvent(const std::string& funcname) {
@@ -624,6 +626,18 @@ void PatchPlayerRestrictions() {
 		}
 	}
 }
+
+void DestroyCameraBlocker() {
+	auto TargetClass = CG::UObject::FindObjects < CG::ACameraBlockingVolume >();
+	if (!TargetClass.empty()) {
+		for (auto& mods : TargetClass) {
+			if (mods != nullptr) {
+				mods->K2_DestroyActor();
+			}
+		}
+	}
+}
+
 void FuckCameraCovers() {
 	auto TargetClass = CG::UObject::FindObjects < CG::AScramCameraCover >();
 	if (!TargetClass.empty()) {
@@ -794,6 +808,7 @@ bool AutoCheatManager = true;
 void ExecutorThread() {
 	while (true) {
 		try {
+			DestroyCameraBlocker();
 			PatchPlayerRestrictions();
 			DieGodFuckingDamnBoundaries();
 			ExpandBoundsToMakeTriggerShutTheFuckUp();
@@ -1101,6 +1116,8 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 	}
 	catch (...) {}
 }
+
+
 uintptr_t GetBaseAddress(const std::wstring& moduleName)
 {
 	return  reinterpret_cast<uintptr_t>(GetModuleHandleW(moduleName.c_str()));
@@ -1114,18 +1131,18 @@ uintptr_t GetBaseAddress()
 void StartProcessEventHook()
 {
 	uintptr_t mBaseAddress = GetBaseAddress();
-	uintptr_t ProcessEventOffset = 0x6694E0;
+	uintptr_t ProcessEventOffset = 0x662510;
 	uintptr_t ProcessEventAddress = mBaseAddress + ProcessEventOffset;
 
 	auto peFunc = reinterpret_cast<ProcessEvent>(ProcessEventAddress);
 	bool processEventHooked = MH_CreateHook(peFunc, reinterpret_cast<void*>(HkProcessEvent), reinterpret_cast<void**>(&oProcessEvent)) == MH_OK && MH_EnableHook(peFunc) == MH_OK;
 	if (processEventHooked)
 	{
-		ConsoleTools::ConsoleWrite("Hooked Process Event!");
+		ConsoleTools::ConsoleWrite("Hooked Object Process Event!");
 	}
 	else
 	{
-		ConsoleTools::ConsoleWrite("Failed to Hook Process Event!");
+		ConsoleTools::ConsoleWrite("Failed to Hook Object Process Event!");
 	}
 }
 

@@ -1,5 +1,4 @@
 #include <regex>
-
 #include "pch.h"
 #include "ConsoleUtils.h"
 #include "includes.h"
@@ -10,10 +9,10 @@
 #include <sstream>
 #include <typeinfo>
 #include <thread>
-#include <algorithm> // For std::transform
-#include <cctype>    // For std::tolower
+#include <algorithm>
+#include <cctype>
 #include <future>
-#include <regex>     // For std::regex_search
+#include <regex>
 #include <thread>
 #include <iostream>
 #include <string>
@@ -30,332 +29,331 @@
 typedef void(__thiscall* ProcessEvent)(CG::UObject*, CG::UFunction*, void*);
 ProcessEvent oProcessEvent;
 
-std::string bool_as_text(bool b)
-{
+std::string bool_as_text(bool b) {
 	std::stringstream converter;
-	converter << std::boolalpha << b;   // flag boolalpha calls converter.setf(std::ios_base::boolalpha)
+	converter << std::boolalpha << b; // flag boolalpha calls converter.setf(std::ios_base::boolalpha)
 	return converter.str();
 }
 
-const std::vector<std::string> ClassNames = {
-	"PauseCapsule.PauseCapsule_C",
-	"ScrambleEvent_Base.ScrambleEvent_Base_C",
+const std::vector < std::string > ClassNames = {
+  "PauseCapsule.PauseCapsule_C",
+  "ScrambleEvent_Base.ScrambleEvent_Base_C",
 };
-const std::vector<std::string> FilterList = {
-	"BlueprintUpdateCamera",
-	"BlueprintModifyCamera",
-	"K2_DestroyActor",
-	"BlueprintModifyPostProcess",
-	"ReceiveTick",
-	"OnMotionControllerUpdated",
-	"BlueprintUpdateAnimation",
-	"UpdateFunc",
-	"OnMoveCompleted",
-	"BlueprintUpdateAnimation",
-	"OnDeactivate",
-	"ReceiveDeactivationAI",
-	"OnMotionControllerUpdated",
-	"GetCombatStateES",
-	"ReceiveTick",
-	"OnAudioEnvelopeValueCb",
-	"BlueprintUpdateAnimation",
-	"OnMovementModeChanged",
-	"OnMotionControllerUpdated",
-	"BlueprintPostEvaluateAnimation",
-	"BlueprintModifyCamera",
-	"PerformConditionCheckAI",
-	"ReceiveExecuteAI",
-	"ReceiveActivationAI",
-	"OnActivate",
-	"UpdateSpawnManager",
-	"RegisterFlashlight",
-	"BlueprintModifyCamera",
-	"BlueprintModifyPostProcess",
-	"UpdateFadeProxy",
-	"OnMotionControllerUpdated",
-	"OnMovementModeChanged",
-	"ReadyToEndMatch",
-	"Tick",
-	"ReceiveTickAI",
-	"PerformConditionCheckAI",
-	"OnTick",
-	"BlueprintUpdateAnimation",
-	"ReceiveTick",
-	"AnimGraphNode",
-	"OnBuffsReset",
-	"ValidateGameProgression",
-	"ReceiveInit",
-	"OnSynchronizeProperties",
-	"PreConstruct",
-	"Construct",
-	"Destruct",
-	"InitializeHUDForPlayer",
-	"ReceiveInitCheatManager",
-	"EnableCheats",
-	"CheatAllowAutoSaving",
-	"CheatSetNoDurabilityLoss",
-	"ClientSetHUD",
-	"ClientVoiceHandshakeComplete",
-	"ClientEnableNetworkVoice",
-	"ClientCapBandwidth",
-	"HandleStartingNewPlayer",
-	"ReadyToStartMatch",
-	"PlayerCanRestart",
-	"FindPlayerStart",
-	"ChoosePlayerStart",
-	"MustSpectate",
-	"SpawnDefaultPawnFor",
-	"SpawnDefaultPawnAtTransform",
-	"GetDefaultPawnClassForController",
-	"PawnAttached",
-	"PlayerControllerAttached",
-	"Initialize",
-	"InitStartSpot",
-	"ReceivePossessed",
-	"PreApplySkin",
-	"PostApplySkin",
-	"ClientRestart",
-	"OnPawnChanged",
-	"ServerAcknowledgePossession",
-	"OnApplyGameUserSettings",
-	"SetPauseWidgetComponentProgress",
-	"OnApplyCheatModes",
-	"ClientSetRotation",
-	"GetPossibleSkins",
-	"GetCorpseCleanupSpawnWalkerClass",
-	"InitializeAIByGameMode",
-	"UpdateSkinReplicationData",
-	"PhysicsVolumeChanged",
-	"OnReturnedToPool",
-	"ServerReleaseGrapple",
-	"SignificanceChange",
-	"PawnReturnedToPool",
-	"StopLogic",
-	"ClearCurrentTarget",
-	"OnUpdateValidState",
-	"IsPlayerControlled",
-	"GetDesiredArchetypeBlueprint",
-	"AddInventoryItemList",
-	"GetSkinComponentBP",
-	"Retune",
-	"ResetTuning",
-	"TuneObject",
-	"OnSetupSection",
-	"OnPopulatePage",
-	"AddInventoryItemListEntry",
-	"AddInventoryItem",
-	"BlueprintInitializeAnimation",
-	"BlueprintLinkedAnimationLayersInitialized",
-	"UserConstructionScript",
-	"BlueprintBeginPlay",
-	"OnInitialized",
-	"ReceiveBeginPlay",
-	"OnInventoryAdded",
-	"GivenTo",
-	"ReturnToInventory",
-	"OnCountChanged",
-	"OnRep_bRepInsideInventory",
-	"GetInventoryOfType",
-	"ExecuteUbergraph",
-	"OnBuffsReset",
-	"OnBuffsReset",
-	"GetInventoryAttachPoint",
-	"GetInventorySlotGripTransform",
-	"InventoryAllowed",
-	"AttachInventory",
-	"OnAnimationStarted",
-	"SetupMaterialParameterCollectionValues",
-	"OnMeshHighlightedChanged",
-	"ServerShortTimeout",
-	"Start Landing Recovery",
-	"OnInventoryRemoved",
-	"PawnDetached",
-	"PlayerControllerDetached",
-	"OnNewInventoryItem",
-	"OnPlayerDestroyed",
-	"ReceiveUnpossessed",
-	"OnOwnerEndPlay",
-	"ReceiveEndPlay",
-	"OnPerceptionStimuliSourceEndPlay",
-	"ReceiveDestroyed",
-	"SetCurrentInventory",
-	"Init",
-	"ClientSetCinematicMode",
-	"UpdateHandHidden",
-	"InitSpawnManager",
-	"CE_FullNightMode",
-	"ReadyForPlay",
-	"RestartLogic",
-	"StartLogoMusic",
-	"HandWasTeleported",
-	"InputDeviceChanged",
-	"EndPrePrologue",
-	"StartFrontEndMusic",
-	"OnSignificanceBinChanged",
-	"GetTextValue",
-	"Get_Instructions_Text_Text_1",
-	"GetValue",
-	"Get_Calibration_Image_Brush_1",
-	"OnRecenter",
-	"OnHMDRecentered",
-	"AdvanceBootUp",
-	"OnMouseEnter",
-	"OnAnimationFinished",
-	"SpawnTimerComplete",
-	"OnPreviewMouseButtonDown",
-	"OnBuffAdded",
-	"OnAddedToFocusPath",
-	"IsInteractable",
-	"OnMouseMove",
-	"OnMouseLeave",
-	"GetFootstepSound",
-	"GetAkComponentByEnum",
-	"Received_Notify",
-	"CheckPlayerOrientation",
-	"OnAIEndPlay",
-	"Start",
-	"K2_Update",
-	"OnInventorySlotContentChanged",
-	"OnBackpackContentChanged",
-	"OnInventoryCountChanged",
-	"SetDurability",
-	"OnComponentCollisionSettingsChanged",
-	"GetSheathedInventoryMaterial",
-	"OnHealthUpdated",
-	"OnDoorShut",
-	"GetDoorComponent",
-	"OnAlarmTimerChanged",
-	"AnimNotify_InNoneState",
-	"AnimNotify_EnteredBaseAnimState",
-	"AnimNotify_EnteredIdleState",
-	"ReceivePossess",
-	"OnDialogWidgetIsEnabledCallback",
-	"ServerAddWeaponAttachment",
-	"SetWeaponOwner",
-	"WeaponOwnerUpdated",
-	"AttachToWeapon",
-	"WeaponAttachmentAttached",
-	"ModeStoppedFiring",
-	"GrabFromInventory",
-	"GetGripPoint",
-	"PlayGrabbedEffects",
-	"ServerUpdateLevelVisibility",
-	"BP_StartAnimationRedraw",
-	"GetGrappleStateEnumValues",
-	"OnPhysicsComponentSleep",
-	"OnPhysicsComponentWake",
-	"ClientUpdateLevelStreamingStatus",
-	"GetGuardPointLocation",
-	"IsDefaultBehaviorPatrol",
-	"SetPercent",
-	"OnMontageStartedEx",
-	"GetFireMode",
-	"OnLanded",
-	"UpdateAvailability",
-	"OnCharacterPostSignificance",
-	"OnHitReactEnd",
-	"OnShoveActorHit",
-	"OnOwnerActorHit",
-	"OnActorHitCustomThrowPhysics",
-	"OnWeaponActorHit",
-	"OnComponentHitCustomThrowPhysics",
-	"OnComponentHit",
-	"CanHitComponentApplyDamage",
-	"ServerSetHeldBy_IFC",
-	"GetCurrency",
-	"OnWeaponClassChanged",
-	"Grab",
-	"GetInteractionHighlights",
-	"OnInteractionHighlightChanged",
-	"OnLoaded",
-	"BP_FinishAnimationRedraw",
-	"AddInteractionHighlight",
-	"GetHighlightFeedback",
-	"SetIsGrappleMontagePlayingFullyBlended",
-	"PreActorSpawn",
-	"SetIsGrappleMontagePlaying",
-	"OnMontageEndedEx",
-	"Hide Notify",
-	"BP_HideHealthStamTimer",
-	"OnAbort",
-	"OnHandBeginOverlap",
-	"StopAnimationAction",
-	"ReceiveDeactivation",
-	"ReceiveActivation",
-	"RemoveInteractionHighlight",
-	"OnHandEndOverlap",
-	"PingOutLight",
-	"IsValidInteractionHighlight",
-	"GetHighlightHandPoseInfo",
-	"GetHighlightHandPose",
-	"GetInteractTriggerResistanceCurve",
-	"GetBodyMountedInteractLocation",
-	"OnSuccess",
-	"OnFail_",
-	"UpdateHighlight",
-	"AnimNotify_IsCompleteIdleFidget",
-	"OnInteractPress",
-	"OnGripPress",
-	"RegisterAnimInteractable_Internal",
-	"GetGripFeedback",
-	"GetDescription",
-	"GetFlavorText",
-	"GetInventoryEffectInfo",
-	"FormatSalvageEntry",
-	"GetDurabilityText",
-	"GetDurabilityIndex",
-	"UpdateItemInfo",
-	"HitReactEnd",
-	"PlayAnimationAction",
-	"IsValidInventory",
-	"AddImpulse",
-	"AddAngularImpulseInRadians",
-	"GetDisplayName",
-	"CanBeLoaded",
-	"IsClipEjectedOrChamberOpen",
-	"OnInventoryPutInSlotFailed",
-	"OnGripRelease",
-	"GetThrowInfo",
-	"ServerClearHeldBy_IFC",
-	"Dropped",
-	"OnHandHeldActorChange",
-	"OnHeldActorDropped",
-	"UnregisterAnimInteractable_Internal",
-	"SendInteractPresses_Internal",
-	"SetMaxCurveValues_Internal (Finger)",
-	"SendMaxCurveValues_Internal",
-	"HeldActorChanged",
-	"OnHitByPhysicsActor",
-	"OnActorBump",
-	"OnMeshComponentHit",
-	"ResetHitReactCanInterrupt",
-	"SearchAnimationBlendOut",
-	"ShowHighlight",
-	"GetHighlightType",
-	"GetHighlightTransform",
-	"UpdateHighlightActor",
-	"ReceiveActorBeginOverlap",
-	"ReceiveActorEndOverlap",
-	"K2_OnEndViewTarget",
-	"K2_OnBecomeViewTarget",
-	"K2_PostLogin",
-	"Reveal Timer Return",
-	"OnPlayerStay",
-	"ReceiveHit",
-	"SetGameTimeRemaining",
-	"GetBallReturn",
-	"GetReturnTrack",
-	"ComponentEndOverlapSignature",
-	"ComponentBoundEvent",
-	"ComponentBeginOverlapSignature",
-	"OnInputFocusReceived",
-	"Focus Recieved PauseEvent",
-	"GetActiveLane"
+const std::vector < std::string > FilterList = {
+  "BlueprintUpdateCamera",
+  "BlueprintModifyCamera",
+  "K2_DestroyActor",
+  "BlueprintModifyPostProcess",
+  "ReceiveTick",
+  "OnMotionControllerUpdated",
+  "BlueprintUpdateAnimation",
+  "UpdateFunc",
+  "OnMoveCompleted",
+  "BlueprintUpdateAnimation",
+  "OnDeactivate",
+  "ReceiveDeactivationAI",
+  "OnMotionControllerUpdated",
+  "GetCombatStateES",
+  "ReceiveTick",
+  "OnAudioEnvelopeValueCb",
+  "BlueprintUpdateAnimation",
+  "OnMovementModeChanged",
+  "OnMotionControllerUpdated",
+  "BlueprintPostEvaluateAnimation",
+  "BlueprintModifyCamera",
+  "PerformConditionCheckAI",
+  "ReceiveExecuteAI",
+  "ReceiveActivationAI",
+  "OnActivate",
+  "UpdateSpawnManager",
+  "RegisterFlashlight",
+  "BlueprintModifyCamera",
+  "BlueprintModifyPostProcess",
+  "UpdateFadeProxy",
+  "OnMotionControllerUpdated",
+  "OnMovementModeChanged",
+  "ReadyToEndMatch",
+  "Tick",
+  "ReceiveTickAI",
+  "PerformConditionCheckAI",
+  "OnTick",
+  "BlueprintUpdateAnimation",
+  "ReceiveTick",
+  "AnimGraphNode",
+  "OnBuffsReset",
+  "ValidateGameProgression",
+  "ReceiveInit",
+  "OnSynchronizeProperties",
+  "PreConstruct",
+  "Construct",
+  "Destruct",
+  "InitializeHUDForPlayer",
+  "ReceiveInitCheatManager",
+  "EnableCheats",
+  "CheatAllowAutoSaving",
+  "CheatSetNoDurabilityLoss",
+  "ClientSetHUD",
+  "ClientVoiceHandshakeComplete",
+  "ClientEnableNetworkVoice",
+  "ClientCapBandwidth",
+  "HandleStartingNewPlayer",
+  "ReadyToStartMatch",
+  "PlayerCanRestart",
+  "FindPlayerStart",
+  "ChoosePlayerStart",
+  "MustSpectate",
+  "SpawnDefaultPawnFor",
+  "SpawnDefaultPawnAtTransform",
+  "GetDefaultPawnClassForController",
+  "PawnAttached",
+  "PlayerControllerAttached",
+  "Initialize",
+  "InitStartSpot",
+  "ReceivePossessed",
+  "PreApplySkin",
+  "PostApplySkin",
+  "ClientRestart",
+  "OnPawnChanged",
+  "ServerAcknowledgePossession",
+  "OnApplyGameUserSettings",
+  "SetPauseWidgetComponentProgress",
+  "OnApplyCheatModes",
+  "ClientSetRotation",
+  "GetPossibleSkins",
+  "GetCorpseCleanupSpawnWalkerClass",
+  "InitializeAIByGameMode",
+  "UpdateSkinReplicationData",
+  "PhysicsVolumeChanged",
+  "OnReturnedToPool",
+  "ServerReleaseGrapple",
+  "SignificanceChange",
+  "PawnReturnedToPool",
+  "StopLogic",
+  "ClearCurrentTarget",
+  "OnUpdateValidState",
+  "IsPlayerControlled",
+  "GetDesiredArchetypeBlueprint",
+  "AddInventoryItemList",
+  "GetSkinComponentBP",
+  "Retune",
+  "ResetTuning",
+  "TuneObject",
+  "OnSetupSection",
+  "OnPopulatePage",
+  "AddInventoryItemListEntry",
+  "AddInventoryItem",
+  "BlueprintInitializeAnimation",
+  "BlueprintLinkedAnimationLayersInitialized",
+  "UserConstructionScript",
+  "BlueprintBeginPlay",
+  "OnInitialized",
+  "ReceiveBeginPlay",
+  "OnInventoryAdded",
+  "GivenTo",
+  "ReturnToInventory",
+  "OnCountChanged",
+  "OnRep_bRepInsideInventory",
+  "GetInventoryOfType",
+  "ExecuteUbergraph",
+  "OnBuffsReset",
+  "OnBuffsReset",
+  "GetInventoryAttachPoint",
+  "GetInventorySlotGripTransform",
+  "InventoryAllowed",
+  "AttachInventory",
+  "OnAnimationStarted",
+  "SetupMaterialParameterCollectionValues",
+  "OnMeshHighlightedChanged",
+  "ServerShortTimeout",
+  "Start Landing Recovery",
+  "OnInventoryRemoved",
+  "PawnDetached",
+  "PlayerControllerDetached",
+  "OnNewInventoryItem",
+  "OnPlayerDestroyed",
+  "ReceiveUnpossessed",
+  "OnOwnerEndPlay",
+  "ReceiveEndPlay",
+  "OnPerceptionStimuliSourceEndPlay",
+  "ReceiveDestroyed",
+  "SetCurrentInventory",
+  "Init",
+  "ClientSetCinematicMode",
+  "UpdateHandHidden",
+  "InitSpawnManager",
+  "CE_FullNightMode",
+  "ReadyForPlay",
+  "RestartLogic",
+  "StartLogoMusic",
+  "HandWasTeleported",
+  "InputDeviceChanged",
+  "EndPrePrologue",
+  "StartFrontEndMusic",
+  "OnSignificanceBinChanged",
+  "GetTextValue",
+  "Get_Instructions_Text_Text_1",
+  "GetValue",
+  "Get_Calibration_Image_Brush_1",
+  "OnRecenter",
+  "OnHMDRecentered",
+  "AdvanceBootUp",
+  "OnMouseEnter",
+  "OnAnimationFinished",
+  "SpawnTimerComplete",
+  "OnPreviewMouseButtonDown",
+  "OnBuffAdded",
+  "OnAddedToFocusPath",
+  "IsInteractable",
+  "OnMouseMove",
+  "OnMouseLeave",
+  "GetFootstepSound",
+  "GetAkComponentByEnum",
+  "Received_Notify",
+  "CheckPlayerOrientation",
+  "OnAIEndPlay",
+  "Start",
+  "K2_Update",
+  "OnInventorySlotContentChanged",
+  "OnBackpackContentChanged",
+  "OnInventoryCountChanged",
+  "SetDurability",
+  "OnComponentCollisionSettingsChanged",
+  "GetSheathedInventoryMaterial",
+  "OnHealthUpdated",
+  "OnDoorShut",
+  "GetDoorComponent",
+  "OnAlarmTimerChanged",
+  "AnimNotify_InNoneState",
+  "AnimNotify_EnteredBaseAnimState",
+  "AnimNotify_EnteredIdleState",
+  "ReceivePossess",
+  "OnDialogWidgetIsEnabledCallback",
+  "ServerAddWeaponAttachment",
+  "SetWeaponOwner",
+  "WeaponOwnerUpdated",
+  "AttachToWeapon",
+  "WeaponAttachmentAttached",
+  "ModeStoppedFiring",
+  "GrabFromInventory",
+  "GetGripPoint",
+  "PlayGrabbedEffects",
+  "ServerUpdateLevelVisibility",
+  "BP_StartAnimationRedraw",
+  "GetGrappleStateEnumValues",
+  "OnPhysicsComponentSleep",
+  "OnPhysicsComponentWake",
+  "ClientUpdateLevelStreamingStatus",
+  "GetGuardPointLocation",
+  "IsDefaultBehaviorPatrol",
+  "SetPercent",
+  "OnMontageStartedEx",
+  "GetFireMode",
+  "OnLanded",
+  "UpdateAvailability",
+  "OnCharacterPostSignificance",
+  "OnHitReactEnd",
+  "OnShoveActorHit",
+  "OnOwnerActorHit",
+  "OnActorHitCustomThrowPhysics",
+  "OnWeaponActorHit",
+  "OnComponentHitCustomThrowPhysics",
+  "OnComponentHit",
+  "CanHitComponentApplyDamage",
+  "ServerSetHeldBy_IFC",
+  "GetCurrency",
+  "OnWeaponClassChanged",
+  "Grab",
+  "GetInteractionHighlights",
+  "OnInteractionHighlightChanged",
+  "OnLoaded",
+  "BP_FinishAnimationRedraw",
+  "AddInteractionHighlight",
+  "GetHighlightFeedback",
+  "SetIsGrappleMontagePlayingFullyBlended",
+  "PreActorSpawn",
+  "SetIsGrappleMontagePlaying",
+  "OnMontageEndedEx",
+  "Hide Notify",
+  "BP_HideHealthStamTimer",
+  "OnAbort",
+  "OnHandBeginOverlap",
+  "StopAnimationAction",
+  "ReceiveDeactivation",
+  "ReceiveActivation",
+  "RemoveInteractionHighlight",
+  "OnHandEndOverlap",
+  "PingOutLight",
+  "IsValidInteractionHighlight",
+  "GetHighlightHandPoseInfo",
+  "GetHighlightHandPose",
+  "GetInteractTriggerResistanceCurve",
+  "GetBodyMountedInteractLocation",
+  "OnSuccess",
+  "OnFail_",
+  "UpdateHighlight",
+  "AnimNotify_IsCompleteIdleFidget",
+  "OnInteractPress",
+  "OnGripPress",
+  "RegisterAnimInteractable_Internal",
+  "GetGripFeedback",
+  "GetDescription",
+  "GetFlavorText",
+  "GetInventoryEffectInfo",
+  "FormatSalvageEntry",
+  "GetDurabilityText",
+  "GetDurabilityIndex",
+  "UpdateItemInfo",
+  "HitReactEnd",
+  "PlayAnimationAction",
+  "IsValidInventory",
+  "AddImpulse",
+  "AddAngularImpulseInRadians",
+  "GetDisplayName",
+  "CanBeLoaded",
+  "IsClipEjectedOrChamberOpen",
+  "OnInventoryPutInSlotFailed",
+  "OnGripRelease",
+  "GetThrowInfo",
+  "ServerClearHeldBy_IFC",
+  "Dropped",
+  "OnHandHeldActorChange",
+  "OnHeldActorDropped",
+  "UnregisterAnimInteractable_Internal",
+  "SendInteractPresses_Internal",
+  "SetMaxCurveValues_Internal (Finger)",
+  "SendMaxCurveValues_Internal",
+  "HeldActorChanged",
+  "OnHitByPhysicsActor",
+  "OnActorBump",
+  "OnMeshComponentHit",
+  "ResetHitReactCanInterrupt",
+  "SearchAnimationBlendOut",
+  "ShowHighlight",
+  "GetHighlightType",
+  "GetHighlightTransform",
+  "UpdateHighlightActor",
+  "ReceiveActorBeginOverlap",
+  "ReceiveActorEndOverlap",
+  "K2_OnEndViewTarget",
+  "K2_OnBecomeViewTarget",
+  "K2_PostLogin",
+  "Reveal Timer Return",
+  "OnPlayerStay",
+  "ReceiveHit",
+  "SetGameTimeRemaining",
+  "GetBallReturn",
+  "GetReturnTrack",
+  "ComponentEndOverlapSignature",
+  "ComponentBoundEvent",
+  "ComponentBeginOverlapSignature",
+  "OnInputFocusReceived",
+  "Focus Recieved PauseEvent",
+  "GetActiveLane"
 };
-const std::vector<std::string> EndingFilterList = {
-		"UpdateFunc",
-		"FinishedFunc",
-		"ReceiveHit",
+const std::vector < std::string > EndingFilterList = {
+  "UpdateFunc",
+  "FinishedFunc",
+  "ReceiveHit",
 };
 bool SlowModeInsteadOfPauseMenu = true;
 bool isGameSlowed = false;
@@ -365,8 +363,7 @@ bool BigBallMode = true;
 float BackupPlayerTimeDilation = 0;
 CG::AScramSportManagerTennis_Blueprint_C* TennisManagerinstance;
 
-bool DoNotLogEvent(const std::string& funcname)
-{
+bool DoNotLogEvent(const std::string& funcname) {
 	std::regex FuncExample1(R"(Function\s([A-Za-z0-9]+(_[A-Za-z0-9]+)+)\.([A-Za-z0-9]+(_[A-Za-z0-9]+)+)\.)");
 	auto PurgeStepOne = std::regex_replace(funcname, FuncExample1, "");
 
@@ -377,6 +374,7 @@ bool DoNotLogEvent(const std::string& funcname)
 	auto Purged = std::regex_replace(PurgeStepTwo, FuncExample3, "");
 	std::string PurgedToLower = Purged;
 	std::transform(PurgedToLower.begin(), PurgedToLower.end(), PurgedToLower.begin(), ::tolower);
+
 
 	//for (auto filter : EndingFilterList)
 	//{
@@ -393,24 +391,20 @@ bool DoNotLogEvent(const std::string& funcname)
 	//		return true;
 	//	}
 	//}
-	for (auto filter : EndingFilterList)
-	{
+	for (auto filter : EndingFilterList) {
 		std::string lowerFilter = filter;
 
 		std::transform(lowerFilter.begin(), lowerFilter.end(), lowerFilter.begin(), ::tolower);
 
-		if (PurgedToLower.find(lowerFilter) != std::string::npos)
-		{
+		if (PurgedToLower.find(lowerFilter) != std::string::npos) {
 			return true;
 		}
 	}
 
-	for (auto filter : FilterList)
-	{
+	for (auto filter : FilterList) {
 		std::string lowerFilter = filter;
 		std::transform(lowerFilter.begin(), lowerFilter.end(), lowerFilter.begin(), ::tolower);
-		if (PurgedToLower.find(lowerFilter) != std::string::npos)
-		{
+		if (PurgedToLower.find(lowerFilter) != std::string::npos) {
 			return true;
 		}
 	}
@@ -445,162 +439,280 @@ void ReportCustomEvent(const std::string& funcname) {
 	}
 }
 
-void ToggleDebugMenu()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::AFrontEndManager_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
+void MaxBoundaries(CG::AScramPlayerBoundary* PlayerBoundaryInstance) {
+	if (!PlayerBoundaryInstance) {
+		ConsoleTools::ConsoleWrite("Invalid AScramPlayerBoundary instance provided to MaxBoundaries. Exiting function.");
+		return; // Check if the instance is valid
+	}
+
+	// Check each boolean property and set to true if not already true
+	if (!PlayerBoundaryInstance->DebugMinimumPlayArea) {
+		ConsoleTools::ConsoleWrite("DebugMinimumPlayArea is not enabled. Setting to true.");
+		PlayerBoundaryInstance->DebugMinimumPlayArea = true;
+	}
+
+	if (!PlayerBoundaryInstance->DebugOverrideLocalPlayBox) {
+		ConsoleTools::ConsoleWrite("DebugOverrideLocalPlayBox is not enabled. Setting to true.");
+		PlayerBoundaryInstance->DebugOverrideLocalPlayBox = true;
+	}
+
+	if (!PlayerBoundaryInstance->OverridePlayArea) {
+		ConsoleTools::ConsoleWrite("OverridePlayArea is not enabled. Setting to true.");
+		PlayerBoundaryInstance->OverridePlayArea = true;
+	}
+
+	if (!PlayerBoundaryInstance->HazardLineVisible) {
+		ConsoleTools::ConsoleWrite("HazardLineVisible is not enabled. Setting to true.");
+		PlayerBoundaryInstance->HazardLineVisible = true;
+	}
+
+	if (!PlayerBoundaryInstance->DebugHazardScaleEnabled) {
+		ConsoleTools::ConsoleWrite("DebugHazardScaleEnabled is not enabled. Setting to true.");
+		PlayerBoundaryInstance->DebugHazardScaleEnabled = true;
+	}
+
+	// Check and set each float property to FLT_MAX if not already set
+	if (PlayerBoundaryInstance->PlayAreaWidthOverride != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("PlayAreaWidthOverride is not at maximum (" + std::to_string(PlayerBoundaryInstance->PlayAreaWidthOverride) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->PlayAreaWidthOverride = FLT_MAX;
+	}
+
+	if (PlayerBoundaryInstance->PlayAreaLengthOverride != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("PlayAreaLengthOverride is not at maximum (" + std::to_string(PlayerBoundaryInstance->PlayAreaLengthOverride) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->PlayAreaLengthOverride = FLT_MAX;
+	}
+
+	if (PlayerBoundaryInstance->BaselineMarginOverride != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("BaselineMarginOverride is not at maximum (" + std::to_string(PlayerBoundaryInstance->BaselineMarginOverride) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->BaselineMarginOverride = FLT_MAX;
+	}
+
+	if (PlayerBoundaryInstance->HazardLineHeight != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("HazardLineHeight is not at maximum (" + std::to_string(PlayerBoundaryInstance->HazardLineHeight) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->HazardLineHeight = FLT_MAX;
+	}
+
+	if (PlayerBoundaryInstance->HazardLineBuffer != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("HazardLineBuffer is not at maximum (" + std::to_string(PlayerBoundaryInstance->HazardLineBuffer) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->HazardLineBuffer = FLT_MAX;
+	}
+
+	if (PlayerBoundaryInstance->HazardEdgeIncrement != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("HazardEdgeIncrement is not at maximum (" + std::to_string(PlayerBoundaryInstance->HazardEdgeIncrement) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->HazardEdgeIncrement = FLT_MAX;
+	}
+
+	if (PlayerBoundaryInstance->DebugHazardScaleRateX != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("DebugHazardScaleRateX is not at maximum (" + std::to_string(PlayerBoundaryInstance->DebugHazardScaleRateX) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->DebugHazardScaleRateX = FLT_MAX;
+	}
+
+	if (PlayerBoundaryInstance->DebugHazardScaleRateY != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("DebugHazardScaleRateY is not at maximum (" + std::to_string(PlayerBoundaryInstance->DebugHazardScaleRateY) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->DebugHazardScaleRateY = FLT_MAX;
+	}
+
+	if (PlayerBoundaryInstance->DebugHazardScaleCap != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("DebugHazardScaleCap is not at maximum (" + std::to_string(PlayerBoundaryInstance->DebugHazardScaleCap) + "). Setting to FLT_MAX.");
+		PlayerBoundaryInstance->DebugHazardScaleCap = FLT_MAX;
+	}
+}
+
+
+void AdjustPlayerArea(CG::AScramPlayer* instance) {
+	if (!instance) {
+		ConsoleTools::ConsoleWrite("Invalid instance provided to AdjustPlayerArea. Exiting function.");
+		return; // Check if the instance is valid
+	}
+
+	// Destroy the camera cover if it exists
+	if (instance->mpCameraCover != nullptr) {
+		ConsoleTools::ConsoleWrite("Destroying mpCameraCover actor.");
+		instance->mpCameraCover->K2_DestroyActor();
+	}
+
+	// Check and set OutOfBoundaryTimeLimit to FLT_MAX if not already set
+	if (instance->OutOfBoundaryTimeLimit != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("OutOfBoundaryTimeLimit is not at maximum (" + std::to_string(instance->OutOfBoundaryTimeLimit) + "). Setting to FLT_MAX.");
+		instance->OutOfBoundaryTimeLimit = FLT_MAX;
+	}
+
+	// Check and set ReturnAreaMinimumWidth to FLT_MAX if not already set
+	if (instance->ReturnAreaMinimumWidth != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("ReturnAreaMinimumWidth is not at maximum (" + std::to_string(instance->ReturnAreaMinimumWidth) + "). Setting to FLT_MAX.");
+		instance->ReturnAreaMinimumWidth = FLT_MAX;
+	}
+
+	// Check and set ReturnAreaLateralMargin to FLT_MAX if not already set
+	if (instance->ReturnAreaLateralMargin != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("ReturnAreaLateralMargin is not at maximum (" + std::to_string(instance->ReturnAreaLateralMargin) + "). Setting to FLT_MAX.");
+		instance->ReturnAreaLateralMargin = FLT_MAX;
+	}
+
+	// Check and set ReturnAreaBackMargin to FLT_MAX if not already set
+	if (instance->ReturnAreaBackMargin != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("ReturnAreaBackMargin is not at maximum (" + std::to_string(instance->ReturnAreaBackMargin) + "). Setting to FLT_MAX.");
+		instance->ReturnAreaBackMargin = FLT_MAX;
+	}
+
+	// Check and set ReturnAreaFrontMargin to FLT_MAX if not already set
+	if (instance->ReturnAreaFrontMargin != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("ReturnAreaFrontMargin is not at maximum (" + std::to_string(instance->ReturnAreaFrontMargin) + "). Setting to FLT_MAX.");
+		instance->ReturnAreaFrontMargin = FLT_MAX;
+	}
+
+	// Check and set ReturnPointRadius to FLT_MAX if not already set
+	if (instance->ReturnPointRadius != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("ReturnPointRadius is not at maximum (" + std::to_string(instance->ReturnPointRadius) + "). Setting to FLT_MAX.");
+		instance->ReturnPointRadius = FLT_MAX;
+	}
+
+	// Check and disable CheckPermittedArea if enabled
+	if (instance->CheckPermittedArea) {
+		ConsoleTools::ConsoleWrite("CheckPermittedArea is enabled. Disabling it.");
+		instance->CheckPermittedArea = false;
+	}
+}
+
+void AdjustTriggerInstance(CG::AScramPlayerTrigger* instance) {
+	if (!instance) {
+		ConsoleTools::ConsoleWrite("Invalid instance provided to AdjustTriggerInstance. Exiting function.");
+		return; // Check if the instance is valid
+	}
+
+	// Check and set Length to FLT_MAX if not already set
+	if (instance->Length != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("Length is not at maximum (" + std::to_string(instance->Length) + "). Setting to FLT_MAX.");
+		instance->Length = FLT_MAX;
+	}
+
+	// Check and set Width to FLT_MAX if not already set
+	if (instance->Width != FLT_MAX) {
+		ConsoleTools::ConsoleWrite("Width is not at maximum (" + std::to_string(instance->Width) + "). Setting to FLT_MAX.");
+		instance->Width = FLT_MAX;
+	}
+}
+void ToggleDebugMenu() {
+	auto TargetClass = CG::UObject::FindObjects < CG::AFrontEndManager_C >();
+	if (!TargetClass.empty()) {
+		for (auto& mods : TargetClass) {
+			if (mods != nullptr) {
 				mods->ToggleDebugMenu();
 			}
 		}
 	}
 }
 
-void CreateDebugMenu()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::AFrontEndManager_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
+void CreateDebugMenu() {
+	auto TargetClass = CG::UObject::FindObjects < CG::AFrontEndManager_C >();
+	if (!TargetClass.empty()) {
+		for (auto& mods : TargetClass) {
+			if (mods != nullptr) {
 				mods->CreateDebugMenu();
 			}
 		}
 	}
 }
 
-
-void CheckPermittedArea()
-{
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramPlayer>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				mods->CheckPermittedArea = false;
+void PatchPlayerRestrictions() {
+	auto TargetClass = CG::UObject::FindObjects < CG::AScramPlayer >();
+	if (!TargetClass.empty()) {
+		for (auto& mods : TargetClass) {
+			if (mods != nullptr) {
+				AdjustPlayerArea(mods);
 			}
 		}
 	}
 }
-void FuckCameraCovers()
-{
-	auto maxFloatValue = static_cast<float>(9999999999);
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramCameraCover>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
+void FuckCameraCovers() {
+	auto TargetClass = CG::UObject::FindObjects < CG::AScramCameraCover >();
+	if (!TargetClass.empty()) {
+		for (auto& mods : TargetClass) {
+			if (mods != nullptr) {
 				mods->K2_DestroyActor();
+				ConsoleTools::ConsoleWrite("Destroyed a Camera Cover!");
+			}
+		}
+	}
+}
+void ExpandBoundsToMakeTriggerShutTheFuckUp() {
+	auto TargetClass = CG::UObject::FindObjects < CG::AScramPlayerTrigger >();
+
+	// Check if any objects were found
+	if (!TargetClass.empty()) {
+		for (auto& mods : TargetClass) {
+			if (mods != nullptr) {
+				AdjustTriggerInstance(mods);
+			}
+		}
+	}
+}
+void DieGodFuckingDamnBoundaries() {
+	auto TargetClass = CG::UObject::FindObjects < CG::AScramPlayerBoundary >();
+
+	// Check if any objects were found
+	if (!TargetClass.empty()) {
+		for (auto& mods : TargetClass) {
+			if (mods != nullptr) {
+				MaxBoundaries(mods);
 			}
 		}
 	}
 }
 
-void ExpandBoundsToMakeTriggerShutTheFuckUp()
-{
-	auto maxFloatValue = static_cast<float>(9999999999);
-	auto TargetClass = CG::UObject::FindObjects<CG::AScramPlayerTrigger>();
-	if (!TargetClass.empty())
-	{
-		for (auto& mods : TargetClass)
-		{
-			if (mods != nullptr)
-			{
-				if (mods->Length != maxFloatValue)
-				{
-					mods->Length = maxFloatValue;
-				}
-				if (mods->Width != maxFloatValue)
-				{
-					mods->Width = maxFloatValue;
-				}
-			}
-		}
-	}
-}
-
-void Set_AI_Score(int score)
-{
-	if (TennisManagerinstance != nullptr)
-	{
+void Set_AI_Score(int score) {
+	if (TennisManagerinstance != nullptr) {
 		TennisManagerinstance->ScorePlayer2 = score;
 		TennisManagerinstance->PointMade(TennisManagerinstance->ScorePlayer1, score);
 	}
 }
 
-void Set_Player_Score(int score)
-{
-	if (TennisManagerinstance != nullptr)
-	{
+void Set_Player_Score(int score) {
+	if (TennisManagerinstance != nullptr) {
 		TennisManagerinstance->ScorePlayer1 = score;
 		TennisManagerinstance->PointMade(score, TennisManagerinstance->ScorePlayer2);
 	}
 }
-void TennisForceAiServe()
-{
-	if (TennisManagerinstance != nullptr)
-	{
+void TennisForceAiServe() {
+	if (TennisManagerinstance != nullptr) {
 		TennisManagerinstance->ServeSwitch(false);
 	}
 }
 
-CG::AWorldSettings* GetWorldSettings()
-{
+CG::AWorldSettings* GetWorldSettings() {
 	auto world = (*CG::UWorld::GWorld);
-	if (world != nullptr)
-	{
-		if (world->PersistentLevel != nullptr)
-		{
+	if (world != nullptr) {
+		if (world->PersistentLevel != nullptr) {
 			return world->PersistentLevel->WorldSettings;
 		}
 	}
 	return nullptr;
 }
 
-CG::ULocalPlayer* GetActiveLocalPlayer()
-{
+CG::ULocalPlayer* GetActiveLocalPlayer() {
 	auto world = (*CG::UWorld::GWorld);
-	if (world != nullptr && world->OwningGameInstance != nullptr && world->OwningGameInstance->LocalPlayers.Count() > 0)
-	{
+	if (world != nullptr && world->OwningGameInstance != nullptr && world->OwningGameInstance->LocalPlayers.Count() > 0) {
 		auto localPlayer = world->OwningGameInstance->LocalPlayers[0];
-		if (localPlayer != nullptr && localPlayer->PlayerController != nullptr)
-		{
+		if (localPlayer != nullptr && localPlayer->PlayerController != nullptr) {
 			return localPlayer;
 		}
 	}
 	return nullptr;
 }
 
-CG::APlayerController* GetActivePlayerController()
-{
+CG::APlayerController* GetActivePlayerController() {
 	auto LocalPlayer = GetActiveLocalPlayer();
-	if (LocalPlayer != nullptr)
-	{
+	if (LocalPlayer != nullptr) {
 		return LocalPlayer->PlayerController;
 	}
 	return nullptr;
 }
 
-void SpawnCheatManager(CG::APlayerController* Pc)
-{
-	if (Pc != nullptr)
-	{
-		if (Pc->CheatManager == nullptr)
-		{
-			if (CG::UCheatManager* Cm = static_cast<CG::UCheatManager*>(Pc->CheatClass->CreateDefaultObject()))
-			{
-				if (Cm != nullptr)
-				{
+void SpawnCheatManager(CG::APlayerController* Pc) {
+	if (Pc != nullptr) {
+		if (Pc->CheatManager == nullptr) {
+			if (CG::UCheatManager* Cm = static_cast <CG::UCheatManager*> (Pc->CheatClass->CreateDefaultObject())) {
+				if (Cm != nullptr) {
 					Cm->Outer = Pc;
 					Pc->CheatManager = Cm;
 					//Cm->ReceiveInitCheatManager();
@@ -615,10 +727,9 @@ void SpawnCheatManager(CG::APlayerController* Pc)
 CG::ATN_Ball_Base_C* Tn_Ball;
 CG::FVector TN_Original_Scale;
 CG::FVector TN_Scaled_Value;
-float Scale_Adjuster = static_cast<float>(2);
+float Scale_Adjuster = static_cast <float> (1);
 
-void CreateNewBallScale(CG::ATN_Ball_Base_C* instance, CG::USceneComponent* root)
-{
+void CreateNewBallScale(CG::ATN_Ball_Base_C* instance, CG::USceneComponent* root) {
 	ConsoleTools::ConsoleWrite("Current Ball is " + instance->GetFullName());
 	ConsoleTools::ConsoleWrite(
 		"Instance Ball scale is X: " + std::to_string(root->RelativeScale3D.X) +
@@ -638,9 +749,7 @@ void CreateNewBallScale(CG::ATN_Ball_Base_C* instance, CG::USceneComponent* root
 		" Z: " + std::to_string(AdjustedScale.Z));
 }
 
-
-void BigBallModeFunc(CG::ATN_Ball_Base_C* instance)
-{
+void BigBallModeFunc(CG::ATN_Ball_Base_C* instance) {
 	if (instance == nullptr)
 		return;
 
@@ -648,51 +757,45 @@ void BigBallModeFunc(CG::ATN_Ball_Base_C* instance)
 	if (root == nullptr)
 		return;
 
-
-	if (Tn_Ball != nullptr && TN_Scaled_Value == root->RelativeScale3D)
-	{
-
+	if (instance->GetFullName().find("TN_AcceleratorBall_C") != std::string::npos) {
+		ConsoleTools::ConsoleWrite("Found Accelerator Ball");
+		root->RelativeScale3D = TN_Original_Scale;
+		Tn_Ball = nullptr;
+	}
+	if (Tn_Ball != nullptr && TN_Scaled_Value == root->RelativeScale3D) {
 		// check if TN_Ball is the same scaled value as the current ball
-		if(root->RelativeScale3D.X == TN_Scaled_Value.X && root->RelativeScale3D.Y == TN_Scaled_Value.Y && root->RelativeScale3D.Z == TN_Scaled_Value.Z)
-		{
+		if (root->RelativeScale3D.X == TN_Scaled_Value.X && root->RelativeScale3D.Y == TN_Scaled_Value.Y && root->RelativeScale3D.Z == TN_Scaled_Value.Z) {
 			Tn_Ball = instance;
 		}
-		else
-		{
+		else {
 			CreateNewBallScale(instance, root);
 		}
 	}
-	else
-	{
+	else {
 		// create a new ball scale
 		CreateNewBallScale(instance, root);
 	}
 
-	if (BigBallMode)
-	{
+	if (BigBallMode) {
 		// Check if the ball scale is already modified
-		if (root->RelativeScale3D != TN_Scaled_Value)
-		{
+		if (root->RelativeScale3D.X != TN_Scaled_Value.X && root->RelativeScale3D.Y != TN_Scaled_Value.Y && root->RelativeScale3D.Z != TN_Scaled_Value.Z) {
 			root->RelativeScale3D = TN_Scaled_Value;
 		}
 	}
-	else
-	{
+	else {
 		// Check if the ball scale is already set to the original scale
-		if (root->RelativeScale3D != TN_Original_Scale)
-		{
+		if (root->RelativeScale3D.X != TN_Original_Scale.X && root->RelativeScale3D.Y != TN_Original_Scale.Y && root->RelativeScale3D.Z != TN_Original_Scale.Z) {
 			root->RelativeScale3D = TN_Original_Scale;
 		}
 	}
 }
 
 bool AutoCheatManager = true;
-void ExecutorThread()
-{
-	while (true)
-	{
+void ExecutorThread() {
+	while (true) {
 		try {
-			CheckPermittedArea();
+			PatchPlayerRestrictions();
+			DieGodFuckingDamnBoundaries();
 			ExpandBoundsToMakeTriggerShutTheFuckUp();
 			FuckCameraCovers();
 		}
@@ -702,20 +805,15 @@ void ExecutorThread()
 
 static CG::ATN_AcceleratorBall_C* AccelleratorInstance = nullptr;
 
-CG::ATN_AcceleratorBall_C* GetCapturedAccelleratorInstance()
-{
-	if (AccelleratorInstance != nullptr)
-	{
+CG::ATN_AcceleratorBall_C* GetCapturedAccelleratorInstance() {
+	if (AccelleratorInstance != nullptr) {
 		return AccelleratorInstance;
 	}
 
-	auto TargetClass = CG::UObject::FindObjects<CG::ATN_AcceleratorBall_C>();
-	if (!TargetClass.empty())
-	{
-		for (auto& ball : TargetClass)
-		{
-			if (ball != nullptr && ball->BounceChargedSFX != nullptr)
-			{
+	auto TargetClass = CG::UObject::FindObjects < CG::ATN_AcceleratorBall_C >();
+	if (!TargetClass.empty()) {
+		for (auto& ball : TargetClass) {
+			if (ball != nullptr && ball->BounceChargedSFX != nullptr) {
 				AccelleratorInstance = ball;
 				return ball;
 			}
@@ -725,70 +823,56 @@ CG::ATN_AcceleratorBall_C* GetCapturedAccelleratorInstance()
 	return nullptr; // Return nullptr if no active instance is found
 }
 
-void ToggleDebugMenuCommand()
-{
+void ToggleDebugMenuCommand() {
 	ToggleDebugMenu();
 }
 
-void CreateDebugMenuCommand()
-{
+void CreateDebugMenuCommand() {
 	CreateDebugMenu();
 }
 
-void TennisFastBallModeCommand()
-{
+void TennisFastBallModeCommand() {
 	Tennis_OnlyAccelleratorBall = !Tennis_OnlyAccelleratorBall;
-	if (Tennis_OnlyAccelleratorBall)
-	{
+	if (Tennis_OnlyAccelleratorBall) {
 		ConsoleTools::ConsoleWrite("Only Accellerator Ball Enabled!");
 	}
-	else
-	{
+	else {
 		ConsoleTools::ConsoleWrite("Only Accellerator Ball Disabled!");
 	}
 }
-void SlowGameInsteadOfPauseCommand()
-{
+void SlowGameInsteadOfPauseCommand() {
 	SlowModeInsteadOfPauseMenu = !SlowModeInsteadOfPauseMenu;
-	if (SlowModeInsteadOfPauseMenu)
-	{
+	if (SlowModeInsteadOfPauseMenu) {
 		ConsoleTools::ConsoleWrite("Game will Slow Down instead of pausing now!");
 	}
-	else
-	{
+	else {
 		ConsoleTools::ConsoleWrite("Game will work as normal with the pause menu!");
 	}
 }
-void BigBallModeCommand()
-{
+void BigBallModeCommand() {
 	BigBallMode = !BigBallMode;
-	if (BigBallMode)
-	{
+	if (BigBallMode) {
 		ConsoleTools::ConsoleWrite("Big Ball Mode Enabled!");
 	}
-	else
-	{
+	else {
 		ConsoleTools::ConsoleWrite("Big Ball Mode Disabled!");
 	}
 }
 
-void SetAIScoreCommand()
-{
+void SetAIScoreCommand() {
 	ConsoleTools::ConsoleWrite("Put AI Score Here:");
 	int score;
 	std::cin >> score;
 	Set_AI_Score(score);
 }
 
-void SetPlayerScoreCommand()
-{
+void SetPlayerScoreCommand() {
 	ConsoleTools::ConsoleWrite("Put Player Score Here:");
 	int score;
 	std::cin >> score;
 	Set_Player_Score(score);
 }
-void Scale_AdjusterCommand()
-{
+void Scale_AdjusterCommand() {
 	ConsoleTools::ConsoleWrite("Enter Ball Scale Value:");
 	std::string input;
 	std::cin >> input;
@@ -797,8 +881,7 @@ void Scale_AdjusterCommand()
 	ConsoleTools::ConsoleWrite("Scale Adjuster set to " + std::to_string(Scale_Adjuster));
 }
 
-void HelpCommand()
-{
+void HelpCommand() {
 	ConsoleTools::ConsoleWrite("Sport Scramble Mod Console Available commands:");
 	ConsoleTools::ConsoleWrite("help [DESC]: This page.");
 	ConsoleTools::ConsoleWrite("toggledebugmenu [DESC]: Toggles Debug Menu!");
@@ -842,7 +925,6 @@ void ConsoleInput()
 		auto it = commandMap.find(input);
 		if (it != commandMap.end())
 		{
-			// Execute the corresponding command function
 			it->second();
 		}
 		else
@@ -852,8 +934,10 @@ void ConsoleInput()
 	}
 }
 
-bool ends_with(const std::string& mainStr, const std::string& toMatch)
-{
+
+
+bool ends_with(const std::string& mainStr,
+	const std::string& toMatch) {
 	if (mainStr.size() >= toMatch.size() &&
 		mainStr.compare(mainStr.size() - toMatch.size(), toMatch.size(), toMatch) == 0)
 		return true;
@@ -861,9 +945,7 @@ bool ends_with(const std::string& mainStr, const std::string& toMatch)
 		return false;
 }
 
-void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
-{
-	auto maxFloatValue = static_cast<float>(9999999999);
+void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 	if (!thiz || !function) {
 		// Either thiz or function is null, so exit early
 		return;
@@ -879,121 +961,105 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.PlayerExitBoundary__DelegateSignature") return;
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.QueuedPlayerOutOfBoundary") return;
 	if (func == "Function SportsScramble.ScramPlayerTrigger.OnPlayerExit") return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayNormalHitFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeSliceBounceFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeBounceFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedSliceFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlaySliceFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayImbuedFX") if (BigBallMode) return;
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.NetPlayImbuedFX") if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayNormalHitFX")
+		if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeSliceBounceFX")
+		if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeBounceFX")
+		if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedSliceFX")
+		if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlaySliceFX")
+		if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedFX")
+		if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayImbuedFX")
+		if (BigBallMode) return;
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.NetPlayImbuedFX")
+		if (BigBallMode) return;
 
-	if (func == "Function SportsScramble.ScramCameraCover.EnqueueVignette")
-	{
-		auto instance = static_cast<CG::AScramCameraCover*>(thiz);
-		if (instance != nullptr)
-		{
+	if (func.find("SportsScramble.ScramCameraCover") != std::string::npos) {
+		auto instance = static_cast <CG::AScramCameraCover*> (thiz);
+		if (instance != nullptr) {
 			instance->K2_DestroyActor();
 			return;
 		}
 	}
 
-	if (func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos)
-	{
-		auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
-		if (TennisManagerinstance == nullptr)
-		{
+	if (func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos) {
+		auto instance = static_cast <CG::AScramSportManagerTennis_Blueprint_C*> (thiz);
+		if (TennisManagerinstance == nullptr) {
 			TennisManagerinstance = instance;
 			ConsoleTools::ConsoleWrite("Tennis Manager Instance Captured!");
 		}
 	}
-	if (func.find("SportsScramble.ScramBall") != std::string::npos)
-	{
-		auto instance = static_cast<CG::AScramBall*>(thiz);
-		if (instance != nullptr)
-		{
-			if (instance->GetProxyGrabbable() != nullptr)
-			{
+	if (func.find("SportsScramble.ScramBall") != std::string::npos) {
+		auto instance = static_cast <CG::AScramBall*> (thiz);
+		if (instance != nullptr) {
+			if (instance->GetProxyGrabbable() != nullptr) {
 				instance->CanBeGrabbed = true;
 			}
-			if (!instance->CanBeGrabbed)
-			{
+			if (!instance->CanBeGrabbed) {
 				instance->CanBeGrabbed = true;
 			}
-			if (instance->mImmuneToInstruments)
-			{
+			if (instance->mImmuneToInstruments) {
 				instance->SetImmuneToInstruments(false);
 			}
 		}
 	}
-	if (func.find("SportsScramble.ScramPlayerTrigger") != std::string::npos)
-	{
-		auto instance = static_cast<CG::AScramPlayerTrigger*>(thiz);
-		if (instance != nullptr)
-		{
-			if (instance->Length != maxFloatValue)
-			{
-				instance->Length = maxFloatValue;
-			}
-			if (instance->Width != maxFloatValue)
-			{
-				instance->Width = maxFloatValue;
-			}
+	if (func.find("SportsScramble.ScramPlayerTrigger") != std::string::npos) {
+		auto instance = static_cast <CG::AScramPlayerTrigger*> (thiz);
+		if (instance != nullptr) {
+			AdjustTriggerInstance(instance);
 		}
 	}
-	if (func == "Function SportsScramble.ScramPlayer.ConstrainToPlayArea")
-	{
-		auto instance = static_cast<CG::AScramPlayer*>(thiz);
-		auto params = static_cast<CG::AScramPlayer_ConstrainToPlayArea_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
-			params->Radius = maxFloatValue;
+	if (func.find("SportsScramble.ScramPlayer") != std::string::npos) {
+		auto instance = static_cast <CG::AScramPlayer*> (thiz);
+		if (instance != nullptr) {
+			AdjustPlayerArea(instance);
 		}
 	}
-	if (func == "Function SportsScramble.ScramPlayer.GetPlayAreaTransform")
-	{
-		auto instance = static_cast<CG::AScramPlayer*>(thiz);
-		auto params = static_cast<CG::AScramPlayer_GetPlayAreaTransform_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
-			params->ReturnValue.Scale3D = CG::FVector(maxFloatValue, maxFloatValue, maxFloatValue);
+	if (func == "Function SportsScramble.ScramPlayer.ConstrainToPlayArea") {
+		auto instance = static_cast <CG::AScramPlayer*> (thiz);
+		auto params = static_cast <CG::AScramPlayer_ConstrainToPlayArea_Params*> (parms);
+		if (instance != nullptr && params != nullptr) {
+			params->Radius = FLT_MAX;
 		}
 	}
-	if (func == "Function ScramPlayerController_BP.ScramPlayerController_BP_C.InpActEvt_Pause_K2Node_InputActionEvent_1")
-	{
+	if (func == "Function SportsScramble.ScramPlayer.GetPlayAreaTransform") {
+		auto instance = static_cast <CG::AScramPlayer*> (thiz);
+		auto params = static_cast <CG::AScramPlayer_GetPlayAreaTransform_Params*> (parms);
+		if (instance != nullptr && params != nullptr) {
+			params->ReturnValue.Scale3D = CG::FVector(FLT_MAX, FLT_MAX, FLT_MAX);
+		}
+	}
+	if (func == "Function ScramPlayerController_BP.ScramPlayerController_BP_C.InpActEvt_Pause_K2Node_InputActionEvent_1") {
 		auto settings = GetWorldSettings();
 		auto Player = GetActivePlayerController();
-		if (settings != nullptr && Player != nullptr)
-		{
-			if (SlowModeInsteadOfPauseMenu)
-			{
-				if (!isGameSlowed)
-				{
-					if (!HasSavedSetPlayerDilation)
-					{
+		if (settings != nullptr && Player != nullptr) {
+			if (SlowModeInsteadOfPauseMenu) {
+				if (!isGameSlowed) {
+					if (!HasSavedSetPlayerDilation) {
 						BackupPlayerTimeDilation = Player->CustomTimeDilation;
 						HasSavedSetPlayerDilation = true;
 					}
-					settings->timeDilation = static_cast<float>(0.09);
-					Player->CustomTimeDilation = static_cast<float>(3.15);
+					settings->timeDilation = static_cast <float> (0.09);
+					Player->CustomTimeDilation = static_cast <float> (3.15);
 					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Time Slowed!");
 					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Time Dilation : " + std::to_string(settings->timeDilation));
 					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
 
 					isGameSlowed = true;
 				}
-				else
-				{
+				else {
 					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Time Restored!");
-					settings->timeDilation = static_cast<float>(1);
-					if (HasSavedSetPlayerDilation)
-					{
-						Player->CustomTimeDilation = static_cast<float>(BackupPlayerTimeDilation);
+					settings->timeDilation = static_cast <float> (1);
+					if (HasSavedSetPlayerDilation) {
+						Player->CustomTimeDilation = static_cast <float> (BackupPlayerTimeDilation);
 						HasSavedSetPlayerDilation = false;
 					}
-					else
-					{
-						Player->CustomTimeDilation = static_cast<float>(1);
+					else {
+						Player->CustomTimeDilation = static_cast <float> (1);
 					}
 					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Time Dilation : " + std::to_string(settings->timeDilation));
 					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
@@ -1001,103 +1067,40 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms)
 				}
 				return;
 			}
-			else
-			{
-				if (settings->timeDilation != static_cast<float>(1))
-				{
-					settings->timeDilation = static_cast<float>(1);
-					if (HasSavedSetPlayerDilation)
-					{
-						Player->CustomTimeDilation = static_cast<float>(BackupPlayerTimeDilation);
+			else {
+				if (settings->timeDilation != static_cast <float> (1)) {
+					settings->timeDilation = static_cast <float> (1);
+					if (HasSavedSetPlayerDilation) {
+						Player->CustomTimeDilation = static_cast <float> (BackupPlayerTimeDilation);
 						HasSavedSetPlayerDilation = false;
 					}
-					else
-					{
-						Player->CustomTimeDilation = static_cast<float>(1);
+					else {
+						Player->CustomTimeDilation = static_cast <float> (1);
 					}
 				}
 			}
 		}
 	}
-	//if (func == "Function TN_Ball_Base.TN_Ball_Base_C.Ball Hit")
-	//{
-	//	auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
-	//	auto params = static_cast<CG::ATN_Ball_Base_C_BallHit_Params*>(parms);
-	//	if (instance != nullptr && params != nullptr)
-	//	{
-	//		std::async(std::launch::async, BigBallModeFunc, instance);
-	//		auto name = instance->GetFullName();
-	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
-	//	}
-	//}
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.ReceiveTick")
-	{
-		auto instance = static_cast<CG::ATN_Ball_Base_C*>(thiz);
-		auto params = static_cast<CG::ATN_Ball_Base_C_ReceiveTick_Params*>(parms);
-		if (instance != nullptr && params != nullptr)
-		{
+
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.ReceiveTick") {
+		auto instance = static_cast <CG::ATN_Ball_Base_C*> (thiz);
+		auto params = static_cast <CG::ATN_Ball_Base_C_ReceiveTick_Params*> (parms);
+		if (instance != nullptr && params != nullptr) {
 			std::async(std::launch::async, BigBallModeFunc, instance);
 			auto name = instance->GetFullName();
 			//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
 		}
 	}
-	//if (func == "Function ServeLocationIndicator.ServeLocationIndicator_C.ServeBallGrabbed")
-	//{
-	//	auto instance = static_cast<CG::AServeLocationIndicator_C*>(thiz);
-	//	auto params = static_cast<CG::AServeLocationIndicator_C_ServeBallGrabbed_Params*>(parms);
-	//	if (instance != nullptr && params != nullptr)
-	//	{
-	//		auto name = params->Ball->GetFullName();
-	//		std::async(std::launch::async, BigBallModeFunc, params->Ball);
-	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Serve Ball Grabbed : " + name);
-	//	}
-	//}
-	//if (func == "Function ServeLocationIndicator.ServeLocationIndicator_C.ServeBallSpawned")
-	//{
-	//	auto instance = static_cast<CG::AServeLocationIndicator_C*>(thiz);
-	//	auto params = static_cast<CG::AServeLocationIndicator_C_ServeBallSpawned_Params*>(parms);
-	//	if (instance != nullptr && params != nullptr)
-	//	{
-	//		auto name = params->Ball->GetFullName();
-	//		std::async(std::launch::async, BigBallModeFunc, params->Ball);
-	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Serve Ball Spawned : " + name);
-	//	}
-	//}
-
-	//if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallSpawned")
-	//{
-	//	auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
-	//	auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallSpawned_Params*>(parms);
-	//	if (instance != nullptr && params != nullptr)
-	//	{
-	//		auto name = params->Ball->GetFullName();
-	//		std::async(std::launch::async, BigBallModeFunc, params->Ball);
-	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Spawned : " + name);
-	//	}
-	//}
-	//if (func == "Function ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C.BallGrabbed")
-	//{
-	//	auto instance = static_cast<CG::AScramSportManagerTennis_Blueprint_C*>(thiz);
-	//	auto params = static_cast<CG::AScramSportManagerTennis_Blueprint_C_BallGrabbed_Params*>(parms);
-	//	if (instance != nullptr && params != nullptr)
-	//	{
-	//		auto name = params->Ball->GetFullName();
-	//		std::async(std::launch::async, BigBallModeFunc, params->Ball);
-	//		//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Grabbed : " + name);
-	//	}
-	//}
 
 	ReportCustomEvent(func);
 
 	try {
-		if (thiz != nullptr && function != nullptr)
-		{
+		if (thiz != nullptr && function != nullptr) {
 			oProcessEvent(thiz, function, parms);
 		}
 	}
 	catch (...) {}
 }
-
 uintptr_t GetBaseAddress(const std::wstring& moduleName)
 {
 	return  reinterpret_cast<uintptr_t>(GetModuleHandleW(moduleName.c_str()));

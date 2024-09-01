@@ -36,7 +36,7 @@ namespace CG
 	 */
 	bool InitSdk()
 	{
-		return InitSdk(L"SportsScramble-Win64-Shipping.exe", 0x2931740, 0x2C74D88, 0x2D672F8);
+		return InitSdk(L"SportsScramble-Win64-Shipping.exe", 0x29280B0, 0x2C6B608, 0x2D672F8);
 	}
 
 	// --------------------------------------------------

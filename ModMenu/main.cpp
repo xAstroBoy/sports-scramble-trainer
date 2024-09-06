@@ -29,6 +29,26 @@
 typedef void(__thiscall* ProcessEvent)(CG::UObject*, CG::UFunction*, void*);
 ProcessEvent oProcessEvent;
 
+
+
+uintptr_t GetBaseAddress(const std::wstring& moduleName)
+{
+	return  reinterpret_cast<uintptr_t>(GetModuleHandleW(moduleName.c_str()));
+}
+
+uintptr_t GetBaseAddress()
+{
+	return GetBaseAddress(L"SportsScramble-Win64-Shipping.exe");
+}
+
+
+uintptr_t GetOffset(uintptr_t address)
+{
+	return address - GetBaseAddress();
+}
+
+
+
 std::string bool_as_text(bool b) {
 	std::stringstream converter;
 	converter << std::boolalpha << b; // flag boolalpha calls converter.setf(std::ios_base::boolalpha)
@@ -738,7 +758,57 @@ CG::APlayerController* GetActivePlayerController() {
 	}
 	return nullptr;
 }
+void FindProcessEventIndex()
+{
+	int32_t index = 0;
 
+	while (true)
+	{
+		// Get the object by index
+		CG::UObject* SomeObj = CG::UObject::GetGlobalObjects()[index];
+
+		// Check if SomeObj is null
+		if (SomeObj == nullptr)
+		{
+			index++; // Move to the next object index
+			continue; // Skip this iteration and continue the loop
+		}
+
+		// Get the VTable of the object
+		void** VTable = reinterpret_cast<void**>(SomeObj->VfTable);
+
+		// Check if the VTable is null
+		if (VTable == nullptr)
+		{
+			index++; // Move to the next object index
+			continue; // Skip this iteration and continue the loop
+		}
+
+		// Loop through the VTable functions
+		for (int i = 0; i < 0x100; i++)
+		{
+			uintptr_t vFuncAddress = reinterpret_cast<uintptr_t>(VTable[i]);
+
+			// Calculate the offset
+			uintptr_t offset = GetOffset(vFuncAddress);
+
+			// Check if the offset matches the target
+			if (offset == 0x662510)
+			{
+				ConsoleTools::ConsoleWrite("Found matching offset! using table index: " + std::to_string(i));
+
+				std::ostringstream oss;
+				oss << "PEIndex: 0x" << std::hex << i;
+				ConsoleTools::ConsoleWrite(oss.str());
+
+				return; // Exit the function after finding the match
+			}
+		}
+
+		// Move to the next object if no match was found
+		index++;
+	}
+}
 void SpawnCheatManager(CG::APlayerController* Pc) {
 	if (Pc != nullptr) {
 		if (Pc->CheatManager == nullptr) {
@@ -926,6 +996,7 @@ void HelpCommand() {
 	ConsoleTools::ConsoleWrite("tennis_ai_serve [DESC]: Make the AI serve the ball in tennis !");
 	ConsoleTools::ConsoleWrite("tennis_bigball [DESC]: Toggles and enforces all tennis balls to be triple it's size.!");
 	ConsoleTools::ConsoleWrite("scale_adjuster <float> [DESC]: Control how much the ball will increase of it's size!");
+	ConsoleTools::ConsoleWrite("indexfinder [DESC]: Find the ProcessEvent Index!");
 }
 
 // Define the command map as a global variable
@@ -939,8 +1010,11 @@ std::unordered_map<std::string, std::function<void()>> commandMap = {
 	{"slowmodecheat", SlowGameInsteadOfPauseCommand},
 	{"tennis_ai_serve", TennisForceAiServe},
 	{"tennis_bigball", BigBallModeCommand},
-	{"scale_adjuster", Scale_AdjusterCommand}
+	{"scale_adjuster", Scale_AdjusterCommand},
+	{"indexfinder", FindProcessEventIndex}
 };
+
+
 
 void ConsoleInput()
 {
@@ -1148,74 +1222,8 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 }
 
 
-uintptr_t GetBaseAddress(const std::wstring& moduleName)
-{
-	return  reinterpret_cast<uintptr_t>(GetModuleHandleW(moduleName.c_str()));
-}
-
-uintptr_t GetBaseAddress()
-{
-	return GetBaseAddress(L"SportsScramble-Win64-Shipping.exe");
-}
 
 
-uintptr_t GetOffset(uintptr_t address)
-{
-	return address - GetBaseAddress();
-}
-
-
-void FindProcessEventIndex()
-{
-	int32_t index = 0;
-
-	while (true)
-	{
-		// Get the object by index
-		CG::UObject* SomeObj = CG::UObject::GetGlobalObjects().GetByIndex(index);
-
-		// Check if SomeObj is null
-		if (SomeObj == nullptr)
-		{
-			index++; // Move to the next object index
-			continue; // Skip this iteration and continue the loop
-		}
-
-		// Get the VTable of the object
-		void** VTable = reinterpret_cast<void**>(SomeObj->VfTable);
-
-		// Check if the VTable is null
-		if (VTable == nullptr)
-		{
-			index++; // Move to the next object index
-			continue; // Skip this iteration and continue the loop
-		}
-
-		// Loop through the VTable functions
-		for (int i = 0; i < 0x100; i++)
-		{
-			uintptr_t vFuncAddress = reinterpret_cast<uintptr_t>(VTable[i]);
-
-			// Calculate the offset
-			uintptr_t offset = GetOffset(vFuncAddress);
-
-			// Check if the offset matches the target
-			if (offset == 0x662510)
-			{
-				ConsoleTools::ConsoleWrite("Found matching offset!");
-
-				std::ostringstream oss;
-				oss << "PEIndex: 0x" << std::hex << i;
-				ConsoleTools::ConsoleWrite(oss.str());
-
-				return; // Exit the function after finding the match
-			}
-		}
-
-		// Move to the next object if no match was found
-		index++;
-	}
-}
 
 
 
@@ -1251,10 +1259,6 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
 	bool init_hook = false;
 	do
 	{
-
-		std::thread ProcessEventIndexFinder(FindProcessEventIndex);
-		ProcessEventIndexFinder.detach();
-
 
 		//std::thread executor(ExecutorThread);
 		//executor.detach();

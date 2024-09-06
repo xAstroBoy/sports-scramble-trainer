@@ -12,6 +12,11 @@ namespace ConsoleTools
 		std::cout << text << std::endl;
 	}
 
+	void ConsoleWrite(const std::wstring text)
+	{
+		std::wcout << text << std::endl;
+	}
+
 	std::string bool_as_text(bool b)
 	{
 		std::stringstream converter;

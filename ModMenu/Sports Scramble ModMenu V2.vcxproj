@@ -75,6 +75,7 @@
     <ClCompile Include="SDK\PauseCapsule_Package.cpp" />
     <ClCompile Include="SDK\PauseMenu_Package.cpp" />
     <ClCompile Include="SDK\ScrambleEvent_Base_Package.cpp" />
+    <ClCompile Include="SDK\ScramCameraCover_BP_Package.cpp" />
     <ClCompile Include="SDK\ScramGameInstance_Package.cpp" />
     <ClCompile Include="SDK\ScramPlayerBoundary_BP_Package.cpp" />
     <ClCompile Include="SDK\ScramPlayerController_BP_Package.cpp" />

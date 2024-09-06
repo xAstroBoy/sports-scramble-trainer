@@ -382,6 +382,7 @@ bool BigBallMode = true;
 float BackupPlayerTimeDilation = 0;
 
 
+
 CG::AScramSportManagerTennis_Blueprint_C* TennisManagerinstance;
 
 bool DoNotLogEvent(const std::string& funcname) {
@@ -435,16 +436,30 @@ bool DoNotLogEvent(const std::string& funcname) {
 bool LoggerActive = false;
 
 bool AllowAllFunctions = true;
-void ReportCustomEvent(const std::string& funcname) {
+
+
+void ReportCustomEvent(const std::string& funcname, bool blocked = false, bool modified = false) {
 	if (!LoggerActive) return;
 
 	auto BlockLogging = DoNotLogEvent(funcname);
 	if (BlockLogging) return;
 
+	// Append [BLOCKED] if the event is blocked
+	std::string logMessage = funcname;
+	if (blocked) {
+		logMessage += " [BLOCKED]";
+	}
+
+	if (modified) {
+		logMessage += " [MODIFIED]";
+	}
+
+
+
 	// If AllowAllFunctions is true, we report all events.
 	// Otherwise, we proceed to check if the remaining string contains any of the specified class names.
 	if (AllowAllFunctions) {
-		ConsoleTools::ConsoleWrite(funcname);
+		ConsoleTools::ConsoleWrite(logMessage + " ");
 		return;
 	}
 
@@ -454,10 +469,24 @@ void ReportCustomEvent(const std::string& funcname) {
 	// Check if the remaining string matches any of the specified class names
 	for (const auto& ClassName : ClassNames) {
 		if (eventNameWithoutFunction.find(ClassName) != std::string::npos) {
-			ConsoleTools::ConsoleWrite(funcname);
+			ConsoleTools::ConsoleWrite(logMessage);
 			return;
 		}
 	}
+}
+
+
+void ToggleProcLogger()
+{
+	LoggerActive = !LoggerActive;
+	ConsoleTools::ConsoleWrite("Process Event Logger is now " + bool_as_text(LoggerActive));
+}
+
+void ToggleAllLogFunctions()
+{
+	AllowAllFunctions = !AllowAllFunctions;
+	ConsoleTools::ConsoleWrite("AllowAllFunctions is now " + bool_as_text(AllowAllFunctions));
+
 }
 
 void MaxBoundaries(CG::AScramPlayerBoundary_BP_C* PlayerBoundaryInstance) {
@@ -639,6 +668,9 @@ void AdjustTriggerInstance(CG::AScramPlayerTrigger* instance) {
 		instance->Width = FLT_MAX;
 	}
 }
+
+
+
 void ToggleDebugMenu() {
 	auto TargetClass = CG::UObject::FindObjects < CG::AFrontEndManager_C >();
 	if (!TargetClass.empty()) {
@@ -756,6 +788,27 @@ void DieGodFuckingDamnBoundaries() {
 		}
 	}
 }
+
+void STOPANNOYINGME() {
+	bool bShouldRemove = true; // Define and initialize the bool variable
+	auto TargetClass = CG::UObject::FindObjects<CG::ACenterReturnWall_C>();
+	if (!TargetClass.empty()) {
+		if (TargetClass.size() > 1) {
+			for (size_t i = 1; i < TargetClass.size(); ++i) {
+				auto mods = TargetClass[i];
+				if (mods != nullptr) {
+					mods->DisableWall = true;
+					mods->RemoveGameElement(&bShouldRemove); // Pass the address of the bool variable
+					mods->K2_DestroyActor();
+					ConsoleTools::ConsoleWrite("Destroyed a CenterReturnWall instance");
+				}
+			}
+		}
+	}
+}
+
+
+
 
 void Set_AI_Score(int score) {
 	if (TennisManagerinstance != nullptr) {
@@ -947,6 +1000,7 @@ void ExecutorThread() {
 			DieGodFuckingDamnBoundaries();
 			ExpandBoundsToMakeTriggerShutTheFuckUp();
 			//FuckCameraCovers();
+			STOPANNOYINGME();
 		}
 		catch (...) {}
 	}
@@ -971,6 +1025,8 @@ CG::ATN_AcceleratorBall_C* GetCapturedAccelleratorInstance() {
 
 	return nullptr; // Return nullptr if no active instance is found
 }
+
+
 
 void ToggleDebugMenuCommand() {
 	ToggleDebugMenu();
@@ -1030,6 +1086,35 @@ void Scale_AdjusterCommand() {
 	ConsoleTools::ConsoleWrite("Scale Adjuster set to " + std::to_string(Scale_Adjuster));
 }
 
+
+void ViewComponents()
+{
+	auto TargetClass = CG::UObject::FindObjects<CG::AScramPlayerController_BP_C>();
+	if (!TargetClass.empty()) {
+		if (TargetClass.size() > 1) {
+			for (size_t i = 0; i < TargetClass.size(); ++i) {
+				auto mods = TargetClass[i];
+				if (mods != nullptr) {
+					// Retrieve attached actors
+					CG::TArray<class CG::AActor*> AttachedActors;
+					mods->GetAttachedActors(&AttachedActors); // Pass pointer to the TArray
+					ConsoleTools::ConsoleWrite("Attached Actors: " + std::to_string(AttachedActors.Count()));
+					// Print out information about each attached actor
+					for (int32_t Index = 0; Index < AttachedActors.Count(); ++Index) {
+						auto Actor = AttachedActors[Index];
+						if (Actor != nullptr) {
+							auto ActorName = Actor->GetName();
+							ConsoleTools::ConsoleWrite("Attached Actor: " + ActorName);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
 void HelpCommand() {
 	ConsoleTools::ConsoleWrite("Sport Scramble Mod Console Available commands:");
 	ConsoleTools::ConsoleWrite("help [DESC]: This page.");
@@ -1043,6 +1128,9 @@ void HelpCommand() {
 	ConsoleTools::ConsoleWrite("tennis_bigball [DESC]: Toggles and enforces all tennis balls to be triple it's size.!");
 	ConsoleTools::ConsoleWrite("scale_adjuster <float> [DESC]: Control how much the ball will increase of it's size!");
 	ConsoleTools::ConsoleWrite("indexfinder [DESC]: Find the ProcessEvent Index!");
+	ConsoleTools::ConsoleWrite("proclogger [DESC]: Toggle Process Event Logger!");
+	ConsoleTools::ConsoleWrite("logallfunctions [DESC]: Toggle All Log Functions!");
+	ConsoleTools::ConsoleWrite("viewplayer [DESC]: View Player Components!");
 }
 
 // Define the command map as a global variable
@@ -1057,8 +1145,13 @@ std::unordered_map<std::string, std::function<void()>> commandMap = {
 	{"tennis_ai_serve", TennisForceAiServe},
 	{"tennis_bigball", BigBallModeCommand},
 	{"scale_adjuster", Scale_AdjusterCommand},
-	{"indexfinder", FindProcessEventIndex}
+	{"indexfinder", FindProcessEventIndex},
+	{"proclogger", ToggleProcLogger},
+	{"logallfunctions", ToggleAllLogFunctions},
+	{"viewplayer", ViewComponents}
+		
 };
+
 
 
 
@@ -1098,6 +1191,10 @@ bool ends_with(const std::string& mainStr,
 		return false;
 }
 
+
+
+
+
 void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 	if (!thiz || !function) {
 		// Either thiz or function is null, so exit early
@@ -1108,31 +1205,45 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 		// Internal class is null, so exit early
 		return;
 	}
+	bool block = false;
+	bool modified = false;
+
 
 	const std::string func = function->GetFullName();
-	if (func.find("OnPlayerOutOfBoundary") != std::string::npos) return;
-	if (func.find("PlayerExitBoundary") != std::string::npos) return;
-	if (func.find("QueuedPlayerOutOfBoundary") != std::string::npos) return;
-	if (func.find("EnqueueVignette") != std::string::npos) return;
-	if (func.find("SportsScramble.ScramCameraCover") != std::string::npos) return;
-	if (func.find("ScramCameraCover_BP.ScramCameraCover_BP_C") != std::string::npos) return;
+	if (func.find("OnPlayerOutOfBoundary") != std::string::npos) block = true;
+	if (func.find("PlayerExitBoundary") != std::string::npos) block = true;
+	if (func.find("QueuedPlayerOutOfBoundary") != std::string::npos) block = true;
+	if (func.find("EnqueueVignette") != std::string::npos) block = true;
+	if (func.find("SportsScramble.ScramCameraCover") != std::string::npos) block = true;
+	if (func.find("ScramCameraCover_BP.ScramCameraCover_BP_C") != std::string::npos) block = true;
+	if (func.find("ScramPlayerBoundary_BP.ScramPlayerBoundary_BP_C") != std::string::npos) block = true;
+	if (func.find("SportsScramble.ScramPlayerTrigger") != std::string::npos) block = true;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayNormalHitFX")
-		if (BigBallMode) return;
+		if (BigBallMode) block = true;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeSliceBounceFX")
-		if (BigBallMode) return;
+		if (BigBallMode) block = true;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeBounceFX")
-		if (BigBallMode) return;
+		if (BigBallMode) block = true;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedSliceFX")
-		if (BigBallMode) return;
+		if (BigBallMode) block = true;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlaySliceFX")
-		if (BigBallMode) return;
+		if (BigBallMode) block = true;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargedFX")
-		if (BigBallMode) return;
+		if (BigBallMode) block = true;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayImbuedFX")
-		if (BigBallMode) return;
+		if (BigBallMode) block = true;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.NetPlayImbuedFX")
-		if (BigBallMode) return;
+		if (BigBallMode) block = true;
 
+	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.ReceiveTick")
+	{
+		auto instance = static_cast <CG::ATN_Ball_Base_C*> (thiz);
+		auto params = static_cast <CG::ATN_Ball_Base_C_ReceiveTick_Params*> (parms);
+		if (instance != nullptr && params != nullptr) {
+			std::async(std::launch::async, BigBallModeFunc, instance);
+			modified = true;
+		}
+	}
 
 	if (func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos)
 	{
@@ -1152,30 +1263,18 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 		}
 	}
 
-	if (func.find("SportsScramble.ScramBall") != std::string::npos) {
-		auto instance = static_cast <CG::AScramBall*> (thiz);
-		if (instance != nullptr) {
-			if (instance->GetProxyGrabbable() != nullptr) {
-				instance->CanBeGrabbed = true;
-			}
-			if (!instance->CanBeGrabbed) {
-				instance->CanBeGrabbed = true;
-			}
-			if (instance->mImmuneToInstruments) {
-				instance->SetImmuneToInstruments(false);
-			}
-		}
-	}
 	if (func.find("SportsScramble.ScramPlayerTrigger") != std::string::npos) {
 		auto instance = static_cast <CG::AScramPlayerTrigger*> (thiz);
 		if (instance != nullptr) {
 			AdjustTriggerInstance(instance);
+			modified = true;
 		}
 	}
 	if (func.find("ScramPlayer_BP.ScramPlayer_BP_C") != std::string::npos) {
 		auto instance = static_cast <CG::AScramPlayer_BP_C*> (thiz);
 		if (instance != nullptr) {
 			AdjustPlayerArea(instance);
+			modified = true;
 		}
 	}
 	if (func == "Function SportsScramble.ScramPlayer.ConstrainToPlayArea") {
@@ -1184,6 +1283,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 		if (instance != nullptr && params != nullptr) {
 			params->Radius = FLT_MAX;
 			ConsoleTools::ConsoleWrite("ConstrainToPlayArea Patched!");
+			modified = true;
 		}
 	}
 	if (func == "Function SportsScramble.ScramPlayer.GetPlayAreaTransform") {
@@ -1191,10 +1291,11 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 		auto params = static_cast <CG::AScramPlayer_GetPlayAreaTransform_Params*> (parms);
 		if (instance != nullptr && params != nullptr) {
 			params->ReturnValue.Scale3D = CG::FVector(FLT_MAX, FLT_MAX, FLT_MAX);
+			modified = true;
 		}
 	}
 
-	if(func == "Function ScramPlayer_BP.ScramPlayer_BP_C.ExecuteUbergraph_ScramPlayer_BP")
+	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.ExecuteUbergraph_ScramPlayer_BP")
 	{
 		// get instance and parameters
 		auto instance = static_cast <CG::AScramPlayer_BP_C*> (thiz);
@@ -1202,21 +1303,24 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 		if (instance != nullptr && params != nullptr)
 		{
 			auto code = params->EntryPoint;
-			if(code == 6226)
+			if (code == 6226)
 			{
 				ConsoleTools::ConsoleWrite("QueuedPlayerOutOfBoundary Blocked!");
-				return;
+				block = true;
+				modified = false;
 			}
 			if (code == 6544)
 			{
 				ConsoleTools::ConsoleWrite("HostFadeToBlack Blocked!");
-				return;
+				block = true;
+				modified = false;
 			}
+			ConsoleTools::ConsoleWrite("ScramPlayer_BP_C.ExecuteUbergraph_ScramPlayer_BP : " + std::to_string(code));
 
-			
 		}
 	}
-	if (func == "Function ScramPlayerController_BP.ScramPlayerController_BP_C.InpActEvt_Pause_K2Node_InputActionEvent_1") {
+	if (func.find("ScramPlayerController_BP_C.InpActEvt_Pause_K2Node") != std::string::npos)
+	{
 		auto settings = GetWorldSettings();
 		auto Player = GetActivePlayerController();
 		if (settings != nullptr && Player != nullptr) {
@@ -1233,6 +1337,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Set Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
 
 					isGameSlowed = true;
+					block = true;
 				}
 				else {
 					ConsoleTools::ConsoleWrite("[Sport Scramble] :  Time Restored!");
@@ -1247,8 +1352,8 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Time Dilation : " + std::to_string(settings->timeDilation));
 					//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Restored Player Time Dilation : " + std::to_string(Player->CustomTimeDilation));
 					isGameSlowed = false;
+					block = true;
 				}
-				return;
 			}
 			else {
 				if (settings->timeDilation != static_cast <float> (1)) {
@@ -1256,38 +1361,30 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 					if (HasSavedSetPlayerDilation) {
 						Player->CustomTimeDilation = static_cast <float> (BackupPlayerTimeDilation);
 						HasSavedSetPlayerDilation = false;
+						block = true;
 					}
 					else {
 						Player->CustomTimeDilation = static_cast <float> (1);
+						block = true;
 					}
 				}
 			}
 		}
 	}
 
-	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.ReceiveTick") {
-		auto instance = static_cast <CG::ATN_Ball_Base_C*> (thiz);
-		auto params = static_cast <CG::ATN_Ball_Base_C_ReceiveTick_Params*> (parms);
-		if (instance != nullptr && params != nullptr) {
-			std::async(std::launch::async, BigBallModeFunc, instance);
-			auto name = instance->GetFullName();
-			//ConsoleTools::ConsoleWrite("[Sport Scramble] :  Ball Hit : " + name);
-		}
+	ReportCustomEvent(func, block, modified);
+	if(block)
+	{
+		return;
 	}
 
-	ReportCustomEvent(func);
-
 	try {
-		if (thiz != nullptr && function != nullptr) {
+		if (thiz != nullptr && function != nullptr ) {
 			oProcessEvent(thiz, function, parms);
 		}
 	}
 	catch (...) {}
 }
-
-
-
-
 
 
 

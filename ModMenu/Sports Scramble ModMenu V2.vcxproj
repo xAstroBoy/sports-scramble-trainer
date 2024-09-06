@@ -69,6 +69,7 @@
   <ItemGroup>
     <ClCompile Include="mem.cpp" />
     <ClCompile Include="SDK\BasicTypes_Package.cpp" />
+    <ClCompile Include="SDK\CenterReturnWall_Package.cpp" />
     <ClCompile Include="SDK\CoreUObject_Package.cpp" />
     <ClCompile Include="SDK\Engine_Package.cpp" />
     <ClCompile Include="SDK\FrontEndManager_Package.cpp" />

@@ -1260,8 +1260,8 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
 	do
 	{
 
-		//std::thread executor(ExecutorThread);
-		//executor.detach();
+		std::thread executor(ExecutorThread);
+		executor.detach();
 
 		std::thread ProcessEventHookThread(StartProcessEventHook);
 		ProcessEventHookThread.detach();

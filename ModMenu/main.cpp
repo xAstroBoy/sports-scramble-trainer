@@ -441,7 +441,7 @@ void ReportCustomEvent(const std::string& funcname) {
 	}
 }
 
-void MaxBoundaries(CG::AScramPlayerBoundary* PlayerBoundaryInstance) {
+void MaxBoundaries(CG::AScramPlayerBoundary_BP_C* PlayerBoundaryInstance) {
 	if (!PlayerBoundaryInstance) {
 		ConsoleTools::ConsoleWrite("Invalid AScramPlayerBoundary instance provided to MaxBoundaries. Exiting function.");
 		return; // Check if the instance is valid
@@ -518,20 +518,18 @@ void MaxBoundaries(CG::AScramPlayerBoundary* PlayerBoundaryInstance) {
 		ConsoleTools::ConsoleWrite("DebugHazardScaleCap is not at maximum (" + std::to_string(PlayerBoundaryInstance->DebugHazardScaleCap) + "). Setting to FLT_MAX.");
 		PlayerBoundaryInstance->DebugHazardScaleCap = FLT_MAX;
 	}
+	PlayerBoundaryInstance->ResetHazardLine();
+	PlayerBoundaryInstance->ResetPlayerAnchor();
+
 }
 
 
-void AdjustPlayerArea(CG::AScramPlayer* instance) {
+void AdjustPlayerArea(CG::AScramPlayer_BP_C* instance) {
 	if (!instance) {
 		ConsoleTools::ConsoleWrite("Invalid instance provided to AdjustPlayerArea. Exiting function.");
 		return; // Check if the instance is valid
 	}
 
-	// Destroy the camera cover if it exists
-	if (instance->mpCameraCover != nullptr) {
-		ConsoleTools::ConsoleWrite("Destroying mpCameraCover actor.");
-		instance->mpCameraCover->K2_DestroyActor();
-	}
 
 	// Check and set OutOfBoundaryTimeLimit to FLT_MAX if not already set
 	if (instance->OutOfBoundaryTimeLimit != FLT_MAX) {
@@ -574,7 +572,11 @@ void AdjustPlayerArea(CG::AScramPlayer* instance) {
 		ConsoleTools::ConsoleWrite("CheckPermittedArea is enabled. Disabling it.");
 		instance->CheckPermittedArea = false;
 	}
+
 }
+
+
+
 
 void AdjustTriggerInstance(CG::AScramPlayerTrigger* instance) {
 	if (!instance) {
@@ -617,7 +619,7 @@ void CreateDebugMenu() {
 }
 
 void PatchPlayerRestrictions() {
-	auto TargetClass = CG::UObject::FindObjects < CG::AScramPlayer >();
+	auto TargetClass = CG::UObject::FindObjects < CG::AScramPlayer_BP_C>();
 	if (!TargetClass.empty()) {
 		for (auto& mods : TargetClass) {
 			if (mods != nullptr) {
@@ -628,18 +630,33 @@ void PatchPlayerRestrictions() {
 }
 
 void DestroyCameraBlocker() {
-	auto TargetClass = CG::UObject::FindObjects < CG::ACameraBlockingVolume >();
+	auto TargetClass = CG::UObject::FindObjects < CG::ACameraBlockingVolume>();
 	if (!TargetClass.empty()) {
 		for (auto& mods : TargetClass) {
 			if (mods != nullptr) {
+				ConsoleTools::ConsoleWrite("Destroyed a Camera Blocker!");
+				mods->K2_DestroyActor();
+			}
+		}
+	}
+}
+void DestroyBlockingVolume() {
+	auto TargetClass = CG::UObject::FindObjects < CG::ABlockingVolume >();
+	if (!TargetClass.empty()) {
+		for (auto& mods : TargetClass) {
+			if (mods != nullptr) {
+				ConsoleTools::ConsoleWrite("Destroyed a Blocking Volume!");
 				mods->K2_DestroyActor();
 			}
 		}
 	}
 }
 
+
+
+
 void FuckCameraCovers() {
-	auto TargetClass = CG::UObject::FindObjects < CG::AScramCameraCover >();
+	auto TargetClass = CG::UObject::FindObjects < CG::AScramCameraCover_BP_C >();
 	if (!TargetClass.empty()) {
 		for (auto& mods : TargetClass) {
 			if (mods != nullptr) {
@@ -662,7 +679,7 @@ void ExpandBoundsToMakeTriggerShutTheFuckUp() {
 	}
 }
 void DieGodFuckingDamnBoundaries() {
-	auto TargetClass = CG::UObject::FindObjects < CG::AScramPlayerBoundary >();
+	auto TargetClass = CG::UObject::FindObjects < CG::AScramPlayerBoundary_BP_C>();
 
 	// Check if any objects were found
 	if (!TargetClass.empty()) {
@@ -809,6 +826,7 @@ void ExecutorThread() {
 	while (true) {
 		try {
 			DestroyCameraBlocker();
+			DestroyBlockingVolume();
 			PatchPlayerRestrictions();
 			DieGodFuckingDamnBoundaries();
 			ExpandBoundsToMakeTriggerShutTheFuckUp();
@@ -976,6 +994,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.PlayerExitBoundary__DelegateSignature") return;
 	if (func == "Function ScramPlayer_BP.ScramPlayer_BP_C.QueuedPlayerOutOfBoundary") return;
 	if (func == "Function SportsScramble.ScramPlayerTrigger.OnPlayerExit") return;
+	if(func == "Function SportsScramble.ScramCameraCover.EnqueueVignette") return;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayNormalHitFX")
 		if (BigBallMode) return;
 	if (func == "Function TN_Ball_Base.TN_Ball_Base_C.PlayChargeSliceBounceFX")
@@ -1001,13 +1020,24 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 		}
 	}
 
-	if (func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos) {
+	if (func.find("ScramSportManagerTennis_Blueprint.ScramSportManagerTennis_Blueprint_C") != std::string::npos)
+	{
 		auto instance = static_cast <CG::AScramSportManagerTennis_Blueprint_C*> (thiz);
-		if (TennisManagerinstance == nullptr) {
+		if (TennisManagerinstance == nullptr)
+		{
 			TennisManagerinstance = instance;
 			ConsoleTools::ConsoleWrite("Tennis Manager Instance Captured!");
 		}
+		else
+		{
+			if (TennisManagerinstance != instance)
+			{
+				ConsoleTools::ConsoleWrite("Tennis Manager Instance Updated!");
+				TennisManagerinstance = instance;
+			}
+		}
 	}
+
 	if (func.find("SportsScramble.ScramBall") != std::string::npos) {
 		auto instance = static_cast <CG::AScramBall*> (thiz);
 		if (instance != nullptr) {
@@ -1029,7 +1059,7 @@ void HkProcessEvent(CG::UObject* thiz, CG::UFunction* function, void* parms) {
 		}
 	}
 	if (func.find("SportsScramble.ScramPlayer") != std::string::npos) {
-		auto instance = static_cast <CG::AScramPlayer*> (thiz);
+		auto instance = static_cast <CG::AScramPlayer_BP_C*> (thiz);
 		if (instance != nullptr) {
 			AdjustPlayerArea(instance);
 		}
@@ -1128,6 +1158,67 @@ uintptr_t GetBaseAddress()
 	return GetBaseAddress(L"SportsScramble-Win64-Shipping.exe");
 }
 
+
+uintptr_t GetOffset(uintptr_t address)
+{
+	return address - GetBaseAddress();
+}
+
+
+void FindProcessEventIndex()
+{
+	int32_t index = 0;
+
+	while (true)
+	{
+		// Get the object by index
+		CG::UObject* SomeObj = CG::UObject::GetGlobalObjects().GetByIndex(index);
+
+		// Check if SomeObj is null
+		if (SomeObj == nullptr)
+		{
+			index++; // Move to the next object index
+			continue; // Skip this iteration and continue the loop
+		}
+
+		// Get the VTable of the object
+		void** VTable = reinterpret_cast<void**>(SomeObj->VfTable);
+
+		// Check if the VTable is null
+		if (VTable == nullptr)
+		{
+			index++; // Move to the next object index
+			continue; // Skip this iteration and continue the loop
+		}
+
+		// Loop through the VTable functions
+		for (int i = 0; i < 0x100; i++)
+		{
+			uintptr_t vFuncAddress = reinterpret_cast<uintptr_t>(VTable[i]);
+
+			// Calculate the offset
+			uintptr_t offset = GetOffset(vFuncAddress);
+
+			// Check if the offset matches the target
+			if (offset == 0x662510)
+			{
+				ConsoleTools::ConsoleWrite("Found matching offset!");
+
+				std::ostringstream oss;
+				oss << "PEIndex: 0x" << std::hex << i;
+				ConsoleTools::ConsoleWrite(oss.str());
+
+				return; // Exit the function after finding the match
+			}
+		}
+
+		// Move to the next object if no match was found
+		index++;
+	}
+}
+
+
+
 void StartProcessEventHook()
 {
 	uintptr_t mBaseAddress = GetBaseAddress();
@@ -1144,6 +1235,7 @@ void StartProcessEventHook()
 	{
 		ConsoleTools::ConsoleWrite("Failed to Hook Object Process Event!");
 	}
+	
 }
 
 DWORD WINAPI MainThread(LPVOID lpReserved)
@@ -1159,8 +1251,13 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
 	bool init_hook = false;
 	do
 	{
-		std::thread executor(ExecutorThread);
-		executor.detach();
+
+		std::thread ProcessEventIndexFinder(FindProcessEventIndex);
+		ProcessEventIndexFinder.detach();
+
+
+		//std::thread executor(ExecutorThread);
+		//executor.detach();
 
 		std::thread ProcessEventHookThread(StartProcessEventHook);
 		ProcessEventHookThread.detach();

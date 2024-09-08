@@ -70,9 +70,11 @@
     <ClCompile Include="mem.cpp" />
     <ClCompile Include="SDK\BasicTypes_Package.cpp" />
     <ClCompile Include="SDK\CenterReturnWall_Package.cpp" />
+    <ClCompile Include="SDK\Challenge_ManagerTennis_LocalHelper_Package.cpp" />
     <ClCompile Include="SDK\CoreUObject_Package.cpp" />
     <ClCompile Include="SDK\Engine_Package.cpp" />
     <ClCompile Include="SDK\FrontEndManager_Package.cpp" />
+    <ClCompile Include="SDK\ManagerTennis_LocalHelper_Package.cpp" />
     <ClCompile Include="SDK\PauseCapsule_Package.cpp" />
     <ClCompile Include="SDK\PauseMenu_Package.cpp" />
     <ClCompile Include="SDK\ScrambleEvent_Base_Package.cpp" />

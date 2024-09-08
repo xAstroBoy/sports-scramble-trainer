@@ -810,22 +810,36 @@ void STOPANNOYINGME() {
 
 
 
-void Set_AI_Score(int score) {
+void Set_AI_Score(int32_t score) {
 	if (TennisManagerinstance != nullptr) {
 		TennisManagerinstance->ScorePlayer2 = score;
-		TennisManagerinstance->PointMade(TennisManagerinstance->ScorePlayer1, score);
+		auto helper = TennisManagerinstance->LocalHelper;
+		if(helper != nullptr)
+		{
+			helper->ScorePlayer2 = score;
+		}
 	}
 }
 
-void Set_Player_Score(int score) {
+void Set_Player_Score(int32_t score) {
 	if (TennisManagerinstance != nullptr) {
 		TennisManagerinstance->ScorePlayer1 = score;
-		TennisManagerinstance->PointMade(score, TennisManagerinstance->ScorePlayer2);
+		auto helper = TennisManagerinstance->LocalHelper;
+		if (helper != nullptr)
+		{
+			helper->ScorePlayer1 = score;
+		}
 	}
 }
 void TennisForceAiServe() {
 	if (TennisManagerinstance != nullptr) {
 		TennisManagerinstance->ServeSwitch(false);
+		auto helper = TennisManagerinstance->LocalHelper;
+		if (helper != nullptr)
+		{
+			helper->SwitchServeMessage(false);
+		}
+
 	}
 }
 
@@ -908,22 +922,11 @@ void FindProcessEventIndex()
 		index++;
 	}
 }
-void SpawnCheatManager(CG::APlayerController* Pc) {
-	if (Pc != nullptr) {
-		if (Pc->CheatManager == nullptr) {
-			if (CG::UCheatManager* Cm = static_cast <CG::UCheatManager*> (Pc->CheatClass->CreateDefaultObject())) {
-				if (Cm != nullptr) {
-					Cm->Outer = Pc;
-					Pc->CheatManager = Cm;
-					//Cm->ReceiveInitCheatManager();
-					//Pc->EnableCheats();
-					ConsoleTools::ConsoleWrite("Spawned " + Cm->GetFullName() + " !");
-					//SpawnConsole();
-				}
-			}
-		}
-	}
-}
+
+
+
+
+
 CG::ATN_Ball_Base_C* Tn_Ball;
 CG::FVector TN_Original_Scale;
 CG::FVector TN_Scaled_Value;
@@ -991,9 +994,125 @@ void BigBallModeFunc(CG::ATN_Ball_Base_C* instance) {
 }
 
 bool AutoCheatManager = true;
+
+
+void InitializeCheatManagerAndConsole(CG::APlayerController* PlayerController, CG::UEngine* Engine)
+{
+	auto statics = CG::UObject::FindObjects<CG::UGameplayStatics>()[0];
+	if (!statics || !Engine || !PlayerController)
+	{
+		ConsoleTools::ConsoleWrite("Failed to retrieve required instances!");
+		return;
+	}
+
+	bool Cheat_spawned = false;
+	bool Console_spawned = false;
+
+	// Spawn CheatManager for the PlayerController
+	if (!PlayerController->CheatManager && PlayerController->CheatClass)
+	{
+		if (auto CheatObject = statics->STATIC_SpawnObject(PlayerController->CheatClass, PlayerController))
+		{
+			PlayerController->CheatManager = static_cast<CG::UCheatManager*>(CheatObject);
+			if (PlayerController->CheatManager)
+			{
+				PlayerController->EnableCheats();
+				ConsoleTools::ConsoleWrite("CheatManager spawned: " + PlayerController->CheatManager->GetFullName());
+				Cheat_spawned = true;
+			}
+		}
+	}
+	else
+	{
+		if (PlayerController->CheatManager)
+		{
+			Cheat_spawned = true;
+		}
+	}
+
+	// Spawn Console for the GameViewport
+	if (Engine->ConsoleClass && Engine->GameViewport && !Engine->GameViewport->ViewportConsole)
+	{
+		if (auto ConsoleObject = statics->STATIC_SpawnObject(Engine->ConsoleClass, Engine->GameViewport))
+		{
+			if (auto ConsoleInstance = static_cast<CG::UConsole*>(ConsoleObject))
+			{
+				Engine->GameViewport->ViewportConsole = ConsoleInstance;
+				ConsoleTools::ConsoleWrite("Console spawned: " + ConsoleInstance->GetFullName());
+				Console_spawned = true;
+			}
+		}
+	}
+	else
+	{
+		if (Engine->GameViewport->ViewportConsole)
+		{
+			Console_spawned = true;
+		}
+	}
+
+	if(Cheat_spawned && Console_spawned)
+	{
+		AutoCheatManager = false;
+	}
+	else
+	{
+		if(!Cheat_spawned)
+		{
+			ConsoleTools::ConsoleWrite("Failed to spawn CheatManager!");
+		}
+		if(!Console_spawned)
+		{
+			ConsoleTools::ConsoleWrite("Failed to spawn ViewPort Console!");
+		}
+		AutoCheatManager = true;
+	}
+}
+
+CG::UEngine* GetEngine(int instance = 0)
+{
+	auto engines = CG::UObject::FindObjects<CG::UEngine>();
+
+	// Adjust index to ensure it's within bounds
+	int adjustedIndex = (instance >= engines.size()) ? engines.size() - 1 : instance;
+
+	if (engines.empty() || adjustedIndex < 0 || adjustedIndex >= engines.size())
+	{
+		ConsoleTools::ConsoleWrite("Instance index is out of bounds.");
+		return nullptr;
+	}
+
+	auto engineInstance = engines[adjustedIndex];
+	if (engineInstance != nullptr)
+	{
+		return engineInstance;
+	}
+
+	ConsoleTools::ConsoleWrite("Found engine instance is nullptr.");
+	return nullptr;
+}
+
+
+
+void InitializeCheatManagerAndConsole()
+{
+	auto engine = GetEngine(3);
+	if(engine != nullptr)
+	{
+		InitializeCheatManagerAndConsole(GetActivePlayerController(), engine);
+	}
+}
+
+
+
+
 void ExecutorThread() {
 	while (true) {
 		try {
+			if (AutoCheatManager)
+			{
+				InitializeCheatManagerAndConsole();
+			}
 			DestroyCameraBlocker();
 			DestroyBlockingVolume();
 			PatchPlayerRestrictions();
@@ -1190,7 +1309,6 @@ bool ends_with(const std::string& mainStr,
 	else
 		return false;
 }
-
 
 
 
@@ -1406,6 +1524,8 @@ void StartProcessEventHook()
 	
 }
 
+
+
 DWORD WINAPI MainThread(LPVOID lpReserved)
 {
 	if (!CG::InitSdk())
@@ -1414,7 +1534,6 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
 		return FALSE;
 	}
 
-	// Console (Used Mainly for Debug Purpose) (not needed)
 	ConsoleTools::ShowConsole();
 	bool init_hook = false;
 	do

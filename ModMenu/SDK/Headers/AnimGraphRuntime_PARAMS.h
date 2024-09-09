@@ -14,17 +14,17 @@
 #include <cstdint>
 #include <vector>
 #include <string>
-#include "BasicTypes_FName.h"
-#include "Engine_FBranchingPointNotifyPayload.h"
 #include "CoreUObject_FVector.h"
 #include "CoreUObject_FTransform.h"
+#include "BasicTypes_FName.h"
 #include "Engine_ENUMS.h"
+#include "Engine_FBranchingPointNotifyPayload.h"
 
 // --------------------------------------------------
 // # Forwards
 // --------------------------------------------------
-namespace CG::Engine { class UAnimMontage; };
 namespace CG::Engine { class USkeletalMeshComponent; };
+namespace CG::Engine { class UAnimMontage; };
 namespace CG::AnimGraphRuntime { class UPlayMontageCallbackProxy; };
 
 #ifdef _MSC_VER
@@ -36,65 +36,6 @@ namespace CG::AnimGraphRuntime
     // --------------------------------------------------
     // # Classes
     // --------------------------------------------------
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayMontageCallbackProxy_OnNotifyEndReceived_Params
-    {
-    public:
-        BasicTypes::FName                                            NotifyName;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::FBranchingPointNotifyPayload                         BranchingPointNotifyPayload;                             //  0x0008(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayMontageCallbackProxy_OnNotifyBeginReceived_Params
-    {
-    public:
-        BasicTypes::FName                                            NotifyName;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::FBranchingPointNotifyPayload                         BranchingPointNotifyPayload;                             //  0x0008(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayMontageCallbackProxy_OnMontageEnded_Params
-    {
-    public:
-        Engine::UAnimMontage*                                        Montage;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bInterrupted;                                            //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayMontageCallbackProxy_OnMontageBlendingOut_Params
-    {
-    public:
-        Engine::UAnimMontage*                                        Montage;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bInterrupted;                                            //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayMontageCallbackProxy_CreateProxyObjectForPlayMontage_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              InSkeletalMeshComponent;                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UAnimMontage*                                        MontageToPlay;                                           //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        PlayRate;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        StartingPosition;                                        //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            StartingSection;                                         //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        AnimGraphRuntime::UPlayMontageCallbackProxy*                 ReturnValue;                                             //  0x0020(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
     /**
      * 
      * Size -> 0x0000
@@ -198,6 +139,65 @@ namespace CG::AnimGraphRuntime
         BasicTypes::FName                                            SocketOrBoneNameFrom;                                    //  0x0008(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         BasicTypes::FName                                            SocketOrBoneNameTo;                                      //  0x0010(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         CoreUObject::FVector                                         ReturnValue;                                             //  0x0018(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayMontageCallbackProxy_OnNotifyEndReceived_Params
+    {
+    public:
+        BasicTypes::FName                                            NotifyName;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::FBranchingPointNotifyPayload                         BranchingPointNotifyPayload;                             //  0x0008(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayMontageCallbackProxy_OnNotifyBeginReceived_Params
+    {
+    public:
+        BasicTypes::FName                                            NotifyName;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::FBranchingPointNotifyPayload                         BranchingPointNotifyPayload;                             //  0x0008(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayMontageCallbackProxy_OnMontageEnded_Params
+    {
+    public:
+        Engine::UAnimMontage*                                        Montage;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bInterrupted;                                            //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayMontageCallbackProxy_OnMontageBlendingOut_Params
+    {
+    public:
+        Engine::UAnimMontage*                                        Montage;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bInterrupted;                                            //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayMontageCallbackProxy_CreateProxyObjectForPlayMontage_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              InSkeletalMeshComponent;                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UAnimMontage*                                        MontageToPlay;                                           //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        PlayRate;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        StartingPosition;                                        //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            StartingSection;                                         //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        AnimGraphRuntime::UPlayMontageCallbackProxy*                 ReturnValue;                                             //  0x0020(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

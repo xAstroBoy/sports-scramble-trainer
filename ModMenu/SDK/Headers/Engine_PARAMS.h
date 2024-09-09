@@ -27,19 +27,14 @@
 #include "Engine_FSoundAttenuationSettings.h"
 #include "Engine_FWalkableSlopeOverride.h"
 #include "CoreUObject_FBox.h"
-#include "CoreUObject_FLinearColor.h"
-#include "Engine_FSkelMeshSkinWeightInfo.h"
 #include "Engine_FPoseSnapshot.h"
 #include "Engine_FMarkerSyncAnimPosition.h"
+#include "CoreUObject_FLinearColor.h"
 #include "Engine_FSplinePoint.h"
+#include "BasicTypes_FString.h"
 #include "BasicTypes_TScriptInterface.h"
 #include "Engine_IBlendableInterface.h"
 #include "Engine_FMinimalViewInfo.h"
-#include "BasicTypes_FString.h"
-#include "BasicTypes_TMap.h"
-#include "BasicTypes_FText.h"
-#include "CoreUObject_FDateTime.h"
-#include "BasicTypes_TSet.h"
 #include "CoreUObject_ENUMS.h"
 #include "CoreUObject_FColor.h"
 #include "Engine_FViewTargetTransitionParams.h"
@@ -48,8 +43,17 @@
 #include "Engine_FUniqueNetIdRepl.h"
 #include "CoreUObject_FVector2D.h"
 #include "Engine_FLatentActionInfo.h"
+#include "BasicTypes_FText.h"
 #include "Engine_FUpdateLevelStreamingLevelStatus.h"
 #include "CoreUObject_FGuid.h"
+#include "Engine_FSkelMeshSkinWeightInfo.h"
+#include "CoreUObject_FPrimaryAssetId.h"
+#include "Engine_FReverbSettings.h"
+#include "Engine_FInteriorSettings.h"
+#include "BasicTypes_TMap.h"
+#include "CoreUObject_FDateTime.h"
+#include "BasicTypes_TSet.h"
+#include "Engine_FCanvasUVTri.h"
 #include "Engine_FVector_NetQuantize10.h"
 #include "Engine_FVector_NetQuantize100.h"
 #include "Engine_FRootMotionSourceGroup.h"
@@ -57,8 +61,6 @@
 #include "Engine_FNavAvoidanceMask.h"
 #include "Engine_FFindFloorResult.h"
 #include "Engine_FNamedCurveValue.h"
-#include "Engine_FTableRowBase.h"
-#include "Engine_FForceFeedbackAttenuationSettings.h"
 #include "Engine_FDialogueContext.h"
 #include "CoreUObject_FIntVector.h"
 #include "Engine_FPredictProjectilePathParams.h"
@@ -66,6 +68,19 @@
 #include "CoreUObject_FIntPoint.h"
 #include "Engine_FInputAxisKeyMapping.h"
 #include "Engine_FInputActionKeyMapping.h"
+#include "BasicTypes_TSoftObjectPtr.h"
+#include "Engine_UWorld.h"
+#include "Engine_FMaterialSpriteElement.h"
+#include "Engine_FTableRowBase.h"
+#include "Engine_FImportanceTexture.h"
+#include "Engine_FPhysicalAnimationData.h"
+#include "CoreUObject_FTimecode.h"
+#include "CoreUObject_FFrameRate.h"
+#include "Engine_FForceFeedbackAttenuationSettings.h"
+#include "Engine_FPostProcessSettings.h"
+#include "BasicTypes_UScriptDelegate.h"
+#include "CoreUObject_FBoxSphereBounds.h"
+#include "CoreUObject_FBox2D.h"
 #include "SlateCore_FPointerEvent.h"
 #include "SlateCore_FInputEvent.h"
 #include "SlateCore_FKeyEvent.h"
@@ -77,25 +92,11 @@
 #include "Engine_FFloatSpringState.h"
 #include "CoreUObject_FMatrix.h"
 #include "CoreUObject_FFrameNumber.h"
-#include "CoreUObject_FFrameRate.h"
 #include "CoreUObject_FQualifiedFrameTime.h"
 #include "CoreUObject_FPlane.h"
-#include "CoreUObject_FBox2D.h"
-#include "Engine_FPostProcessSettings.h"
-#include "Engine_FCanvasUVTri.h"
-#include "Engine_FPhysicalAnimationData.h"
-#include "CoreUObject_FBoxSphereBounds.h"
-#include "BasicTypes_UScriptDelegate.h"
-#include "CoreUObject_FTimecode.h"
-#include "CoreUObject_FPrimaryAssetId.h"
-#include "Engine_FReverbSettings.h"
-#include "Engine_FInteriorSettings.h"
-#include "Engine_FImportanceTexture.h"
-#include "Engine_FMaterialSpriteElement.h"
 #include "Engine_FDrawToRenderTargetContext.h"
 #include "Engine_FUserActivity.h"
 #include "Engine_FGenericStruct.h"
-#include "BasicTypes_TSoftObjectPtr.h"
 #include "CoreUObject_UObject.h"
 #include "BasicTypes_TSoftClassPtr.h"
 #include "CoreUObject_IInterface.h"
@@ -107,7 +108,6 @@
 #include "Engine_FDebugFloatHistory.h"
 #include "CoreUObject_FPolyglotTextData.h"
 #include "Engine_FFormatArgumentData.h"
-#include "Engine_UWorld.h"
 
 // --------------------------------------------------
 // # Forwards
@@ -129,20 +129,12 @@ namespace CG::Engine { class USoundWave; };
 namespace CG::Engine { class USoundSubmix; };
 namespace CG::Engine { class USoundBase; };
 namespace CG::Engine { class UPhysicalMaterial; };
-namespace CG::Engine { class USkeletalMesh; };
-namespace CG::Engine { class UPhysicsAsset; };
-namespace CG::Engine { class USkinnedMeshComponent; };
 namespace CG::Engine { class UAnimationAsset; };
 namespace CG::Engine { class UAnimInstance; };
 namespace CG::ClothingSystemRuntimeInterface { class UClothingSimulationInteractor; };
 namespace CG::Engine { class UAnimSequenceBase; };
 namespace CG::Engine { class UAnimMontage; };
 namespace CG::Engine { class USkeletalMeshComponent; };
-namespace CG::Engine { class APlayerState; };
-namespace CG::Engine { class UStaticMesh; };
-namespace CG::Engine { class UTexture; };
-namespace CG::Engine { class UMovementComponent; };
-namespace CG::Engine { class UTexture2D; };
 namespace CG::Engine { class UPawnMovementComponent; };
 namespace CG::Engine { class UCameraShake; };
 namespace CG::Engine { class UCameraAnimInst; };
@@ -153,25 +145,36 @@ namespace CG::UMG { class UUserWidget; };
 namespace CG::Engine { class UHapticFeedbackEffect_Base; };
 namespace CG::Engine { class ASpectatorPawn; };
 namespace CG::Engine { class AHUD; };
+namespace CG::Engine { class APlayerState; };
 namespace CG::Engine { class UForceFeedbackEffect; };
 namespace CG::Engine { class ULocalMessage; };
 namespace CG::Engine { class UTouchInterface; };
+namespace CG::Engine { class USkeletalMesh; };
+namespace CG::Engine { class UPhysicsAsset; };
+namespace CG::Engine { class USkinnedMeshComponent; };
+namespace CG::Engine { class UStaticMesh; };
+namespace CG::Engine { class UMaterial; };
+namespace CG::Engine { class UTexture; };
+namespace CG::Engine { class UAsyncActionLoadPrimaryAsset; };
+namespace CG::Engine { class UAsyncActionLoadPrimaryAssetClass; };
+namespace CG::Engine { class UAsyncActionLoadPrimaryAssetList; };
+namespace CG::Engine { class UAsyncActionLoadPrimaryAssetClassList; };
+namespace CG::Engine { class UAsyncActionChangePrimaryAssetBundles; };
+namespace CG::Engine { class UMovementComponent; };
+namespace CG::Engine { class UTexture2D; };
+namespace CG::Engine { class UFont; };
 namespace CG::Engine { class UCanvas; };
 namespace CG::Engine { class UCanvasRenderTarget2D; };
 namespace CG::Engine { class ACharacter; };
 namespace CG::Engine { class UCurveLinearColor; };
-namespace CG::Engine { class UDataTable; };
-namespace CG::Engine { class UCurveTable; };
-namespace CG::Engine { class UFont; };
-namespace CG::Engine { class UTextureCube; };
-namespace CG::Engine { class UAssetExportTask; };
+namespace CG::Engine { class UTextureLightProfile; };
+namespace CG::Engine { class UParticleSystem; };
+namespace CG::Engine { class UParticleSystemComponent; };
 namespace CG::Engine { class USoundAttenuation; };
 namespace CG::Engine { class USoundConcurrency; };
 namespace CG::Engine { class UAudioComponent; };
 namespace CG::Engine { class UForceFeedbackAttenuation; };
 namespace CG::Engine { class UForceFeedbackComponent; };
-namespace CG::Engine { class UParticleSystem; };
-namespace CG::Engine { class UParticleSystemComponent; };
 namespace CG::Engine { class UDialogueWave; };
 namespace CG::Engine { class UDecalComponent; };
 namespace CG::Engine { class USoundMix; };
@@ -187,27 +190,24 @@ namespace CG::CoreUObject { class IInterface; };
 namespace CG::Engine { class UBlueprint; };
 namespace CG::Engine { class UGameUserSettings; };
 namespace CG::Engine { class UInputSettings; };
-namespace CG::Engine { class UMaterialParameterCollection; };
-namespace CG::CoreUObject { class UEnum; };
-namespace CG::Engine { class UMaterial; };
-namespace CG::Engine { class UTextureLightProfile; };
-namespace CG::Engine { class UStaticMeshComponent; };
+namespace CG::Engine { class ALevelScriptActor; };
+namespace CG::Engine { class ULevelStreamingDynamic; };
+namespace CG::Engine { class UCurveFloat; };
+namespace CG::Engine { class UDataTable; };
+namespace CG::Engine { class UCurveTable; };
+namespace CG::Engine { class UTextureCube; };
 namespace CG::Engine { class UMaterialInstance; };
+namespace CG::Engine { class UStaticMeshComponent; };
+namespace CG::Engine { class UAssetExportTask; };
 namespace CG::Engine { class USkeletalMeshLODSettings; };
 namespace CG::Engine { class USkeletalMeshSocket; };
 namespace CG::Engine { class UNodeMappingContainer; };
-namespace CG::Engine { class UCurveVector; };
-namespace CG::Engine { class UCurveFloat; };
-namespace CG::Engine { class UAsyncActionLoadPrimaryAsset; };
-namespace CG::Engine { class UAsyncActionLoadPrimaryAssetClass; };
-namespace CG::Engine { class UAsyncActionLoadPrimaryAssetList; };
-namespace CG::Engine { class UAsyncActionLoadPrimaryAssetClassList; };
-namespace CG::Engine { class UAsyncActionChangePrimaryAssetBundles; };
 namespace CG::Engine { class UVOIPTalker; };
+namespace CG::Engine { class UCurveVector; };
+namespace CG::Engine { class UMaterialParameterCollection; };
+namespace CG::CoreUObject { class UEnum; };
 namespace CG::Engine { class UTextureRenderTarget2D; };
 namespace CG::Engine { class ACameraActor; };
-namespace CG::Engine { class ALevelScriptActor; };
-namespace CG::Engine { class ULevelStreamingDynamic; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -218,6 +218,14 @@ namespace CG::Engine
     // --------------------------------------------------
     // # Classes
     // --------------------------------------------------
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UOnlineBlueprintCallProxyBase_Activate_Params
+    {
+    };
+
     /**
      * 
      * Size -> 0x0000
@@ -1595,6 +1603,250 @@ namespace CG::Engine
     public:
         BasicTypes::FName                                            Tag;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_ToggleActive_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_SetTickGroup_Params
+    {
+    public:
+        Engine::ETickingGroup                                        NewTickGroup;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_SetTickableWhenPaused_Params
+    {
+    public:
+        bool                                                         bTickableWhenPaused;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_SetIsReplicated_Params
+    {
+    public:
+        bool                                                         ShouldReplicate;                                         //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_SetComponentTickInterval_Params
+    {
+    public:
+        float                                                        TickInterval;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_SetComponentTickEnabled_Params
+    {
+    public:
+        bool                                                         bEnabled;                                                //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_SetAutoActivate_Params
+    {
+    public:
+        bool                                                         bNewAutoActivate;                                        //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_SetActive_Params
+    {
+    public:
+        bool                                                         bNewActive;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bReset;                                                  //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_RemoveTickPrerequisiteComponent_Params
+    {
+    public:
+        Engine::UActorComponent*                                     PrerequisiteComponent;                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_RemoveTickPrerequisiteActor_Params
+    {
+    public:
+        Engine::AActor*                                              PrerequisiteActor;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_ReceiveTick_Params
+    {
+    public:
+        float                                                        DeltaSeconds;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_ReceiveEndPlay_Params
+    {
+    public:
+        Engine::EEndPlayReason                                       EndPlayReason;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_ReceiveBeginPlay_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_OnRep_IsActive_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_K2_DestroyComponent_Params
+    {
+    public:
+        CoreUObject::UObject*                                        Object;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_IsComponentTickEnabled_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_IsBeingDestroyed_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_IsActive_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_GetOwner_Params
+    {
+    public:
+        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_GetComponentTickInterval_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_Deactivate_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_ComponentHasTag_Params
+    {
+    public:
+        BasicTypes::FName                                            Tag;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_AddTickPrerequisiteComponent_Params
+    {
+    public:
+        Engine::UActorComponent*                                     PrerequisiteComponent;                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_AddTickPrerequisiteActor_Params
+    {
+    public:
+        Engine::AActor*                                              PrerequisiteActor;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorComponent_Activate_Params
+    {
+    public:
+        bool                                                         bReset;                                                  //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -3813,353 +4065,6 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class USkinnedMeshComponent_UnHideBoneByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_TransformToBoneSpace_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         InPosition;                                              //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        InRotation;                                              //  0x0014(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         OutPosition;                                             //  0x0020(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        OutRotation;                                             //  0x002C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_TransformFromBoneSpace_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         InPosition;                                              //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        InRotation;                                              //  0x0014(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         OutPosition;                                             //  0x0020(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        OutRotation;                                             //  0x002C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_ShowMaterialSection_Params
-    {
-    public:
-        int32_t                                                      MaterialID;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bShow;                                                   //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0005(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        int32_t                                                      LODIndex;                                                //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_ShowAllMaterialSections_Params
-    {
-    public:
-        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetVertexColorOverride_LinearColor_Params
-    {
-    public:
-        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::TArray<CoreUObject::FLinearColor>                VertexColors;                                            //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetSkinWeightOverride_Params
-    {
-    public:
-        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0002[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::TArray<Engine::FSkelMeshSkinWeightInfo>          SkinWeights;                                             //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetSkeletalMesh_Params
-    {
-    public:
-        Engine::USkeletalMesh*                                       NewMesh;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bReinitPose;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetRenderStatic_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetPhysicsAsset_Params
-    {
-    public:
-        Engine::UPhysicsAsset*                                       NewPhysicsAsset;                                         //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bForceReInit;                                            //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetMinLOD_Params
-    {
-    public:
-        int32_t                                                      InNewMinLOD;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetMasterPoseComponent_Params
-    {
-    public:
-        Engine::USkinnedMeshComponent*                               NewMasterBoneComponent;                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bForceUpdate;                                            //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetForcedLOD_Params
-    {
-    public:
-        int32_t                                                      InNewForcedLOD;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetCastCapsuleIndirectShadow_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetCastCapsuleDirectShadow_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_SetCapsuleIndirectShadowMinVisibility_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_IsMaterialSectionShown_Params
-    {
-    public:
-        int32_t                                                      MaterialID;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      LODIndex;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_IsBoneHiddenByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_HideBoneByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EPhysBodyOp                                          PhysBodyOption;                                          //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_GetSocketBoneName_Params
-    {
-    public:
-        BasicTypes::FName                                            InSocketName;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_GetRefPosePosition_Params
-    {
-    public:
-        int32_t                                                      BoneIndex;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0004(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_GetParentBone_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_GetNumLODs_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_GetNumBones_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_GetDeltaTransformFromRefPose_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            BaseName;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0010(0x0030)  (Parm, OutParm, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_GetBoneName_Params
-    {
-    public:
-        int32_t                                                      BoneIndex;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0003[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FName                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_GetBoneIndex_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_FindClosestBone_K2_Params
-    {
-    public:
-        CoreUObject::FVector                                         TestLocation;                                            //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         BoneLocation;                                            //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        IgnoreScale;                                             //  0x0018(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bRequirePhysicsAsset;                                    //  0x001C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0004[0x3];                                   //  0x001D(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FName                                            ReturnValue;                                             //  0x0020(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_ClearVertexColorOverride_Params
-    {
-    public:
-        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_ClearSkinWeightOverride_Params
-    {
-    public:
-        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkinnedMeshComponent_BoneIsChildOf_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            ParentBoneName;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
     class USkeletalMeshComponent_UnbindClothFromMasterPoseComponent_Params
     {
     public:
@@ -5674,14 +5579,6 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class UOnlineBlueprintCallProxyBase_Activate_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
     class USplineComponent_UpdateSpline_Params
     {
     };
@@ -6687,6 +6584,76 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
+    class UAnimNotify_Received_Notify_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimNotify_GetNotifyName_Params
+    {
+    public:
+        BasicTypes::FString                                          ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimNotifyState_Received_NotifyTick_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        FrameDeltaTime;                                          //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimNotifyState_Received_NotifyEnd_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimNotifyState_Received_NotifyBegin_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        TotalDuration;                                           //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimNotifyState_GetNotifyName_Params
+    {
+    public:
+        BasicTypes::FString                                          ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
     class UCameraComponent_SetUseFieldOfViewForLOD_Params
     {
     public:
@@ -6804,1417 +6771,6 @@ namespace CG::Engine
     public:
         BasicTypes::TScriptInterface<Engine::IBlendableInterface>    InBlendableObject;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
         float                                                        InWeight;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameInstance_ReceiveShutdown_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameInstance_ReceiveInit_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameInstance_HandleTravelError_Params
-    {
-    public:
-        Engine::ETravelFailure                                       failureType;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameInstance_HandleNetworkError_Params
-    {
-    public:
-        Engine::ENetworkFailure                                      failureType;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bIsServer;                                               //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameInstance_DebugRemovePlayer_Params
-    {
-    public:
-        int32_t                                                      ControllerId;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameInstance_DebugCreatePlayer_Params
-    {
-    public:
-        int32_t                                                      ControllerId;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADefaultPawn_TurnAtRate_Params
-    {
-    public:
-        float                                                        Rate;                                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADefaultPawn_MoveUp_World_Params
-    {
-    public:
-        float                                                        val;                                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADefaultPawn_MoveRight_Params
-    {
-    public:
-        float                                                        val;                                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADefaultPawn_MoveForward_Params
-    {
-    public:
-        float                                                        val;                                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADefaultPawn_LookUpAtRate_Params
-    {
-    public:
-        float                                                        Rate;                                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_ToggleActive_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_SetTickGroup_Params
-    {
-    public:
-        Engine::ETickingGroup                                        NewTickGroup;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_SetTickableWhenPaused_Params
-    {
-    public:
-        bool                                                         bTickableWhenPaused;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_SetIsReplicated_Params
-    {
-    public:
-        bool                                                         ShouldReplicate;                                         //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_SetComponentTickInterval_Params
-    {
-    public:
-        float                                                        TickInterval;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_SetComponentTickEnabled_Params
-    {
-    public:
-        bool                                                         bEnabled;                                                //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_SetAutoActivate_Params
-    {
-    public:
-        bool                                                         bNewAutoActivate;                                        //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_SetActive_Params
-    {
-    public:
-        bool                                                         bNewActive;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bReset;                                                  //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_RemoveTickPrerequisiteComponent_Params
-    {
-    public:
-        Engine::UActorComponent*                                     PrerequisiteComponent;                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_RemoveTickPrerequisiteActor_Params
-    {
-    public:
-        Engine::AActor*                                              PrerequisiteActor;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_ReceiveTick_Params
-    {
-    public:
-        float                                                        DeltaSeconds;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_ReceiveEndPlay_Params
-    {
-    public:
-        Engine::EEndPlayReason                                       EndPlayReason;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_ReceiveBeginPlay_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_OnRep_IsActive_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_K2_DestroyComponent_Params
-    {
-    public:
-        CoreUObject::UObject*                                        Object;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_IsComponentTickEnabled_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_IsBeingDestroyed_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_IsActive_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_GetOwner_Params
-    {
-    public:
-        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_GetComponentTickInterval_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_Deactivate_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_ComponentHasTag_Params
-    {
-    public:
-        BasicTypes::FName                                            Tag;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_AddTickPrerequisiteComponent_Params
-    {
-    public:
-        Engine::UActorComponent*                                     PrerequisiteComponent;                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_AddTickPrerequisiteActor_Params
-    {
-    public:
-        Engine::AActor*                                              PrerequisiteActor;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorComponent_Activate_Params
-    {
-    public:
-        bool                                                         bReset;                                                  //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_StartPlay_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_SpawnDefaultPawnFor_Params
-    {
-    public:
-        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              StartSpot;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::APawn*                                               ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_SpawnDefaultPawnAtTransform_Params
-    {
-    public:
-        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      SpawnTransform;                                          //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        Engine::APawn*                                               ReturnValue;                                             //  0x0040(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_ShouldReset_Params
-    {
-    public:
-        Engine::AActor*                                              ActorToReset;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_ReturnToMainMenuHost_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_RestartPlayerAtTransform_Params
-    {
-    public:
-        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      SpawnTransform;                                          //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_RestartPlayerAtPlayerStart_Params
-    {
-    public:
-        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              StartSpot;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_RestartPlayer_Params
-    {
-    public:
-        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_ResetLevel_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_PlayerCanRestart_Params
-    {
-    public:
-        Engine::APlayerController*                                   Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_MustSpectate_Params
-    {
-    public:
-        Engine::APlayerController*                                   NewPlayerController;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_K2_PostLogin_Params
-    {
-    public:
-        Engine::APlayerController*                                   NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_K2_OnSwapPlayerControllers_Params
-    {
-    public:
-        Engine::APlayerController*                                   OldPC;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::APlayerController*                                   NewPC;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_K2_OnRestartPlayer_Params
-    {
-    public:
-        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_K2_OnLogout_Params
-    {
-    public:
-        Engine::AController*                                         ExitingController;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_K2_OnChangeName_Params
-    {
-    public:
-        Engine::AController*                                         Other;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          NewName;                                                 //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bNameChange;                                             //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_K2_FindPlayerStart_Params
-    {
-    public:
-        Engine::AController*                                         Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          IncomingName;                                            //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_InitStartSpot_Params
-    {
-    public:
-        Engine::AActor*                                              StartSpot;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AController*                                         NewPlayer;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_InitializeHUDForPlayer_Params
-    {
-    public:
-        Engine::APlayerController*                                   NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_HasMatchStarted_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_HandleStartingNewPlayer_Params
-    {
-    public:
-        Engine::APlayerController*                                   NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_GetNumSpectators_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_GetNumPlayers_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_GetDefaultPawnClassForController_Params
-    {
-    public:
-        Engine::AController*                                         InController;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::UObject*                                        ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_FindPlayerStart_Params
-    {
-    public:
-        Engine::AController*                                         Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          IncomingName;                                            //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_ChoosePlayerStart_Params
-    {
-    public:
-        Engine::AController*                                         Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_ChangeName_Params
-    {
-    public:
-        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          NewName;                                                 //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bNameChange;                                             //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameModeBase_CanSpectate_Params
-    {
-    public:
-        Engine::APlayerController*                                   Viewer;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::APlayerState*                                        ViewTarget;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_OnRep_SpectatorClass_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_OnRep_ReplicatedWorldTimeSeconds_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_OnRep_ReplicatedHasBegunPlay_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_OnRep_GameModeClass_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_HasMatchStarted_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_HasBegunPlay_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_GetServerWorldTimeSeconds_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_GetPlayerStartTime_Params
-    {
-    public:
-        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AGameStateBase_GetPlayerRespawnDelay_Params
-    {
-    public:
-        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMeshComponent_SetStaticMesh_Params
-    {
-    public:
-        Engine::UStaticMesh*                                         NewMesh;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMeshComponent_SetReverseCulling_Params
-    {
-    public:
-        bool                                                         ReverseCulling;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMeshComponent_SetForcedLodModel_Params
-    {
-    public:
-        int32_t                                                      NewForcedLodModel;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMeshComponent_SetDistanceFieldSelfShadowBias_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMeshComponent_OnRep_StaticMesh_Params
-    {
-    public:
-        Engine::UStaticMesh*                                         OldStaticMesh;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMeshComponent_GetLocalBounds_Params
-    {
-    public:
-        CoreUObject::FVector                                         Min;                                                     //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Max;                                                     //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_UpdateInstanceTransform_Params
-    {
-    public:
-        int32_t                                                      InstanceIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0xC];                                   //  0x0004(0x000C) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      NewInstanceTransform;                                    //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        bool                                                         bWorldSpace;                                             //  0x0040(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bMarkRenderStateDirty;                                   //  0x0041(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bTeleport;                                               //  0x0042(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0043(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_UpdateInstanceFloatValue_Params
-    {
-    public:
-        int32_t                                                      InstanceIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        FloatValue;                                              //  0x0004(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_SetCullDistances_Params
-    {
-    public:
-        int32_t                                                      StartCullDistance;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      EndCullDistance;                                         //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_RemoveInstance_Params
-    {
-    public:
-        int32_t                                                      InstanceIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0004(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_GetInstanceTransform_Params
-    {
-    public:
-        int32_t                                                      InstanceIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0xC];                                   //  0x0004(0x000C) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      OutInstanceTransform;                                    //  0x0010(0x0030)  (Parm, OutParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        bool                                                         bWorldSpace;                                             //  0x0040(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0041(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_GetInstancesOverlappingSphere_Params
-    {
-    public:
-        CoreUObject::FVector                                         Center;                                                  //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Radius;                                                  //  0x000C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bSphereInWorldSpace;                                     //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0002[0x7];                                   //  0x0011(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::TArray<int32_t>                                  ReturnValue;                                             //  0x0018(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_GetInstancesOverlappingBox_Params
-    {
-    public:
-        CoreUObject::FBox                                            Box;                                                     //  0x0000(0x001C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        bool                                                         bBoxInWorldSpace;                                        //  0x001C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0003[0x3];                                   //  0x001D(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::TArray<int32_t>                                  ReturnValue;                                             //  0x0020(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_GetInstanceCount_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_ClearInstances_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_AddInstanceWorldSpace_Params
-    {
-    public:
-        CoreUObject::FTransform                                      WorldTransform;                                          //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0030(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_AddInstanceWithFloatParam_Params
-    {
-    public:
-        CoreUObject::FTransform                                      InstanceTransform;                                       //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        float                                                        FloatValue;                                              //  0x0030(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0034(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInstancedStaticMeshComponent_AddInstance_Params
-    {
-    public:
-        CoreUObject::FTransform                                      InstanceTransform;                                       //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0030(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHierarchicalInstancedStaticMeshComponent_RemoveInstances_Params
-    {
-    public:
-        BasicTypes::TArray<int32_t>                                  InstancesToRemove;                                       //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceConstant_K2_GetVectorParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceConstant_K2_GetTextureParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTexture*                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceConstant_K2_GetScalarParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ACameraActor_GetAutoActivatePlayerIndex_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAvoidanceManager_RegisterMovementComponent_Params
-    {
-    public:
-        Engine::UMovementComponent*                                  MovementComp;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        AvoidanceWeight;                                         //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x000C(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAvoidanceManager_GetObjectCount_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAvoidanceManager_GetNewAvoidanceUID_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAvoidanceManager_GetAvoidanceVelocityForComponent_Params
-    {
-    public:
-        Engine::UMovementComponent*                                  MovementComp;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBillboardComponent_SetUV_Params
-    {
-    public:
-        int32_t                                                      NewU;                                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NewUL;                                                   //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NewV;                                                    //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NewVL;                                                   //  0x000C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBillboardComponent_SetSpriteAndUV_Params
-    {
-    public:
-        Engine::UTexture2D*                                          NewSprite;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NewU;                                                    //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NewUL;                                                   //  0x000C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NewV;                                                    //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NewVL;                                                   //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBillboardComponent_SetSprite_Params
-    {
-    public:
-        Engine::UTexture2D*                                          NewSprite;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_SetMapPropertyByName_Params
-    {
-    public:
-        CoreUObject::UObject*                                        Object;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            PropertyName;                                            //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TMap<int32_t, int32_t>                           Value;                                                   //  0x0010(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_Map_Values_Params
-    {
-    public:
-        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<int32_t>                                  Values;                                                  //  0x0050(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_Map_Remove_Params
-    {
-    public:
-        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      Key;                                                     //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0054(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_Map_Length_Params
-    {
-    public:
-        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0050(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_Map_Keys_Params
-    {
-    public:
-        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<int32_t>                                  Keys;                                                    //  0x0050(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_Map_Find_Params
-    {
-    public:
-        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      Key;                                                     //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      Value;                                                   //  0x0054(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0058(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_Map_Contains_Params
-    {
-    public:
-        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      Key;                                                     //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0054(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_Map_Clear_Params
-    {
-    public:
-        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintMapLibrary_Map_Add_Params
-    {
-    public:
-        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      Key;                                                     //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      Value;                                                   //  0x0054(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintPlatformLibrary_ScheduleLocalNotificationFromNow_Params
-    {
-    public:
-        int32_t                                                      inSecondsFromNow;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FText                                            Title;                                                   //  0x0008(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FText                                            Body;                                                    //  0x0020(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FText                                            Action;                                                  //  0x0038(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          ActivationEvent;                                         //  0x0050(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintPlatformLibrary_ScheduleLocalNotificationBadgeFromNow_Params
-    {
-    public:
-        int32_t                                                      inSecondsFromNow;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          ActivationEvent;                                         //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintPlatformLibrary_ScheduleLocalNotificationBadgeAtTime_Params
-    {
-    public:
-        CoreUObject::FDateTime                                       FireDateTime;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         LocalTime;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0002[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          ActivationEvent;                                         //  0x0010(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintPlatformLibrary_ScheduleLocalNotificationAtTime_Params
-    {
-    public:
-        CoreUObject::FDateTime                                       FireDateTime;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         LocalTime;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0003[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FText                                            Title;                                                   //  0x0010(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FText                                            Body;                                                    //  0x0028(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FText                                            Action;                                                  //  0x0040(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          ActivationEvent;                                         //  0x0058(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintPlatformLibrary_GetLaunchNotification_Params
-    {
-    public:
-        bool                                                         NotificationLaunchedApp;                                 //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0004[0x7];                                   //  0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          ActivationEvent;                                         //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      FireDate;                                                //  0x0018(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintPlatformLibrary_GetDeviceOrientation_Params
-    {
-    public:
-        Engine::EScreenOrientation                                   ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintPlatformLibrary_ClearAllLocalNotifications_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintPlatformLibrary_CancelLocalNotification_Params
-    {
-    public:
-        BasicTypes::FString                                          ActivationEvent;                                         //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_SetSetPropertyByName_Params
-    {
-    public:
-        CoreUObject::UObject*                                        Object;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            PropertyName;                                            //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TSet<int32_t>                                    Value;                                                   //  0x0010(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_Union_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    A;                                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TSet<int32_t>                                    B;                                                       //  0x0050(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TSet<int32_t>                                    Result;                                                  //  0x00A0(0x0050)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_ToArray_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    A;                                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<int32_t>                                  Result;                                                  //  0x0050(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_RemoveItems_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<int32_t>                                  Items;                                                   //  0x0050(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_Remove_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      Item;                                                    //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0054(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_Length_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0050(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_Intersection_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    A;                                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TSet<int32_t>                                    B;                                                       //  0x0050(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TSet<int32_t>                                    Result;                                                  //  0x00A0(0x0050)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_Difference_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    A;                                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TSet<int32_t>                                    B;                                                       //  0x0050(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TSet<int32_t>                                    Result;                                                  //  0x00A0(0x0050)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_Contains_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      ItemToFind;                                              //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0054(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_Clear_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_AddItems_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<int32_t>                                  NewItems;                                                //  0x0050(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UBlueprintSetLibrary_Set_Add_Params
-    {
-    public:
-        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      NewItem;                                                 //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -10435,6 +8991,2024 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
+    class UGameInstance_ReceiveShutdown_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGameInstance_ReceiveInit_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGameInstance_HandleTravelError_Params
+    {
+    public:
+        Engine::ETravelFailure                                       failureType;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGameInstance_HandleNetworkError_Params
+    {
+    public:
+        Engine::ENetworkFailure                                      failureType;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bIsServer;                                               //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGameInstance_DebugRemovePlayer_Params
+    {
+    public:
+        int32_t                                                      ControllerId;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGameInstance_DebugCreatePlayer_Params
+    {
+    public:
+        int32_t                                                      ControllerId;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_UnHideBoneByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_TransformToBoneSpace_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         InPosition;                                              //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        InRotation;                                              //  0x0014(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         OutPosition;                                             //  0x0020(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        OutRotation;                                             //  0x002C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_TransformFromBoneSpace_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         InPosition;                                              //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        InRotation;                                              //  0x0014(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         OutPosition;                                             //  0x0020(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        OutRotation;                                             //  0x002C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_ShowMaterialSection_Params
+    {
+    public:
+        int32_t                                                      MaterialID;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bShow;                                                   //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0005(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        int32_t                                                      LODIndex;                                                //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_ShowAllMaterialSections_Params
+    {
+    public:
+        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetVertexColorOverride_LinearColor_Params
+    {
+    public:
+        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::TArray<CoreUObject::FLinearColor>                VertexColors;                                            //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetSkinWeightOverride_Params
+    {
+    public:
+        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0002[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::TArray<Engine::FSkelMeshSkinWeightInfo>          SkinWeights;                                             //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetSkeletalMesh_Params
+    {
+    public:
+        Engine::USkeletalMesh*                                       NewMesh;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bReinitPose;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetRenderStatic_Params
+    {
+    public:
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetPhysicsAsset_Params
+    {
+    public:
+        Engine::UPhysicsAsset*                                       NewPhysicsAsset;                                         //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bForceReInit;                                            //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetMinLOD_Params
+    {
+    public:
+        int32_t                                                      InNewMinLOD;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetMasterPoseComponent_Params
+    {
+    public:
+        Engine::USkinnedMeshComponent*                               NewMasterBoneComponent;                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bForceUpdate;                                            //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetForcedLOD_Params
+    {
+    public:
+        int32_t                                                      InNewForcedLOD;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetCastCapsuleIndirectShadow_Params
+    {
+    public:
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetCastCapsuleDirectShadow_Params
+    {
+    public:
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_SetCapsuleIndirectShadowMinVisibility_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_IsMaterialSectionShown_Params
+    {
+    public:
+        int32_t                                                      MaterialID;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      LODIndex;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_IsBoneHiddenByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_HideBoneByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EPhysBodyOp                                          PhysBodyOption;                                          //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_GetSocketBoneName_Params
+    {
+    public:
+        BasicTypes::FName                                            InSocketName;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_GetRefPosePosition_Params
+    {
+    public:
+        int32_t                                                      BoneIndex;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0004(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_GetParentBone_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_GetNumLODs_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_GetNumBones_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_GetDeltaTransformFromRefPose_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            BaseName;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0010(0x0030)  (Parm, OutParm, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_GetBoneName_Params
+    {
+    public:
+        int32_t                                                      BoneIndex;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0003[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FName                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_GetBoneIndex_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_FindClosestBone_K2_Params
+    {
+    public:
+        CoreUObject::FVector                                         TestLocation;                                            //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         BoneLocation;                                            //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        IgnoreScale;                                             //  0x0018(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bRequirePhysicsAsset;                                    //  0x001C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0004[0x3];                                   //  0x001D(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FName                                            ReturnValue;                                             //  0x0020(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_ClearVertexColorOverride_Params
+    {
+    public:
+        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_ClearSkinWeightOverride_Params
+    {
+    public:
+        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkinnedMeshComponent_BoneIsChildOf_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ParentBoneName;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMeshComponent_SetStaticMesh_Params
+    {
+    public:
+        Engine::UStaticMesh*                                         NewMesh;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMeshComponent_SetReverseCulling_Params
+    {
+    public:
+        bool                                                         ReverseCulling;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMeshComponent_SetForcedLodModel_Params
+    {
+    public:
+        int32_t                                                      NewForcedLodModel;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMeshComponent_SetDistanceFieldSelfShadowBias_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMeshComponent_OnRep_StaticMesh_Params
+    {
+    public:
+        Engine::UStaticMesh*                                         OldStaticMesh;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMeshComponent_GetLocalBounds_Params
+    {
+    public:
+        CoreUObject::FVector                                         Min;                                                     //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Max;                                                     //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_UpdateInstanceTransform_Params
+    {
+    public:
+        int32_t                                                      InstanceIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0xC];                                   //  0x0004(0x000C) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      NewInstanceTransform;                                    //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        bool                                                         bWorldSpace;                                             //  0x0040(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bMarkRenderStateDirty;                                   //  0x0041(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bTeleport;                                               //  0x0042(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0043(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_UpdateInstanceFloatValue_Params
+    {
+    public:
+        int32_t                                                      InstanceIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        FloatValue;                                              //  0x0004(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_SetCullDistances_Params
+    {
+    public:
+        int32_t                                                      StartCullDistance;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      EndCullDistance;                                         //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_RemoveInstance_Params
+    {
+    public:
+        int32_t                                                      InstanceIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0004(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_GetInstanceTransform_Params
+    {
+    public:
+        int32_t                                                      InstanceIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0xC];                                   //  0x0004(0x000C) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      OutInstanceTransform;                                    //  0x0010(0x0030)  (Parm, OutParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        bool                                                         bWorldSpace;                                             //  0x0040(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0041(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_GetInstancesOverlappingSphere_Params
+    {
+    public:
+        CoreUObject::FVector                                         Center;                                                  //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Radius;                                                  //  0x000C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bSphereInWorldSpace;                                     //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0002[0x7];                                   //  0x0011(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::TArray<int32_t>                                  ReturnValue;                                             //  0x0018(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_GetInstancesOverlappingBox_Params
+    {
+    public:
+        CoreUObject::FBox                                            Box;                                                     //  0x0000(0x001C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        bool                                                         bBoxInWorldSpace;                                        //  0x001C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0003[0x3];                                   //  0x001D(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::TArray<int32_t>                                  ReturnValue;                                             //  0x0020(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_GetInstanceCount_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_ClearInstances_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_AddInstanceWorldSpace_Params
+    {
+    public:
+        CoreUObject::FTransform                                      WorldTransform;                                          //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0030(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_AddInstanceWithFloatParam_Params
+    {
+    public:
+        CoreUObject::FTransform                                      InstanceTransform;                                       //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        float                                                        FloatValue;                                              //  0x0030(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0034(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInstancedStaticMeshComponent_AddInstance_Params
+    {
+    public:
+        CoreUObject::FTransform                                      InstanceTransform;                                       //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0030(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHierarchicalInstancedStaticMeshComponent_RemoveInstances_Params
+    {
+    public:
+        BasicTypes::TArray<int32_t>                                  InstancesToRemove;                                       //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInterface_SetForceMipLevelsToBeResident_Params
+    {
+    public:
+        bool                                                         OverrideForceMiplevelsToBeResident;                      //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bForceMiplevelsToBeResidentValue;                        //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x2];                                   //  0x0002(0x0002) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        ForceDuration;                                           //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      CinematicTextureGroups;                                  //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInterface_GetPhysicalMaterial_Params
+    {
+    public:
+        Engine::UPhysicalMaterial*                                   ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInterface_GetBaseMaterial_Params
+    {
+    public:
+        Engine::UMaterial*                                           ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceConstant_K2_GetVectorParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceConstant_K2_GetTextureParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTexture*                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceConstant_K2_GetScalarParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_StartPlay_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_SpawnDefaultPawnFor_Params
+    {
+    public:
+        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              StartSpot;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::APawn*                                               ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_SpawnDefaultPawnAtTransform_Params
+    {
+    public:
+        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      SpawnTransform;                                          //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        Engine::APawn*                                               ReturnValue;                                             //  0x0040(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_ShouldReset_Params
+    {
+    public:
+        Engine::AActor*                                              ActorToReset;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_ReturnToMainMenuHost_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_RestartPlayerAtTransform_Params
+    {
+    public:
+        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      SpawnTransform;                                          //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_RestartPlayerAtPlayerStart_Params
+    {
+    public:
+        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              StartSpot;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_RestartPlayer_Params
+    {
+    public:
+        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_ResetLevel_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_PlayerCanRestart_Params
+    {
+    public:
+        Engine::APlayerController*                                   Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_MustSpectate_Params
+    {
+    public:
+        Engine::APlayerController*                                   NewPlayerController;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_K2_PostLogin_Params
+    {
+    public:
+        Engine::APlayerController*                                   NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_K2_OnSwapPlayerControllers_Params
+    {
+    public:
+        Engine::APlayerController*                                   OldPC;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::APlayerController*                                   NewPC;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_K2_OnRestartPlayer_Params
+    {
+    public:
+        Engine::AController*                                         NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_K2_OnLogout_Params
+    {
+    public:
+        Engine::AController*                                         ExitingController;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_K2_OnChangeName_Params
+    {
+    public:
+        Engine::AController*                                         Other;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          NewName;                                                 //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bNameChange;                                             //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_K2_FindPlayerStart_Params
+    {
+    public:
+        Engine::AController*                                         Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          IncomingName;                                            //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_InitStartSpot_Params
+    {
+    public:
+        Engine::AActor*                                              StartSpot;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AController*                                         NewPlayer;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_InitializeHUDForPlayer_Params
+    {
+    public:
+        Engine::APlayerController*                                   NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_HasMatchStarted_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_HandleStartingNewPlayer_Params
+    {
+    public:
+        Engine::APlayerController*                                   NewPlayer;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_GetNumSpectators_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_GetNumPlayers_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_GetDefaultPawnClassForController_Params
+    {
+    public:
+        Engine::AController*                                         InController;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::UObject*                                        ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_FindPlayerStart_Params
+    {
+    public:
+        Engine::AController*                                         Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          IncomingName;                                            //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_ChoosePlayerStart_Params
+    {
+    public:
+        Engine::AController*                                         Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_ChangeName_Params
+    {
+    public:
+        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          NewName;                                                 //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bNameChange;                                             //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameModeBase_CanSpectate_Params
+    {
+    public:
+        Engine::APlayerController*                                   Viewer;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::APlayerState*                                        ViewTarget;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_OnRep_SpectatorClass_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_OnRep_ReplicatedWorldTimeSeconds_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_OnRep_ReplicatedHasBegunPlay_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_OnRep_GameModeClass_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_HasMatchStarted_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_HasBegunPlay_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_GetServerWorldTimeSeconds_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_GetPlayerStartTime_Params
+    {
+    public:
+        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AGameStateBase_GetPlayerRespawnDelay_Params
+    {
+    public:
+        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ACameraActor_GetAutoActivatePlayerIndex_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAmbientSound_Stop_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAmbientSound_Play_Params
+    {
+    public:
+        float                                                        StartTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAmbientSound_FadeOut_Params
+    {
+    public:
+        float                                                        FadeOutDuration;                                         //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        FadeVolumeLevel;                                         //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAmbientSound_FadeIn_Params
+    {
+    public:
+        float                                                        FadeInDuration;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        FadeVolumeLevel;                                         //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAmbientSound_AdjustVolume_Params
+    {
+    public:
+        float                                                        AdjustVolumeDuration;                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        AdjustVolumeLevel;                                       //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSequenceBase_GetPlayLength_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncActionLoadPrimaryAsset_AsyncLoadPrimaryAsset_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FPrimaryAssetId                                 PrimaryAsset;                                            //  0x0008(0x0010)  (Parm, ZeroConstructor, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        LoadBundles;                                             //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::UAsyncActionLoadPrimaryAsset*                        ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncActionLoadPrimaryAssetClass_AsyncLoadPrimaryAssetClass_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FPrimaryAssetId                                 PrimaryAsset;                                            //  0x0008(0x0010)  (Parm, ZeroConstructor, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        LoadBundles;                                             //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::UAsyncActionLoadPrimaryAssetClass*                   ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncActionLoadPrimaryAssetList_AsyncLoadPrimaryAssetList_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<CoreUObject::FPrimaryAssetId>             PrimaryAssetList;                                        //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        LoadBundles;                                             //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::UAsyncActionLoadPrimaryAssetList*                    ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncActionLoadPrimaryAssetClassList_AsyncLoadPrimaryAssetClassList_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<CoreUObject::FPrimaryAssetId>             PrimaryAssetList;                                        //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        LoadBundles;                                             //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::UAsyncActionLoadPrimaryAssetClassList*               ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncActionChangePrimaryAssetBundles_AsyncChangeBundleStateForPrimaryAssetList_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<CoreUObject::FPrimaryAssetId>             PrimaryAssetList;                                        //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        AddBundles;                                              //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        RemoveBundles;                                           //  0x0028(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::UAsyncActionChangePrimaryAssetBundles*               ReturnValue;                                             //  0x0038(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncActionChangePrimaryAssetBundles_AsyncChangeBundleStateForMatchingPrimaryAssets_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        NewBundles;                                              //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        OldBundles;                                              //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::UAsyncActionChangePrimaryAssetBundles*               ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_StartPrecompute_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetSunMultiplier_Params
+    {
+    public:
+        float                                                        NewSunMultiplier;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetStartDistance_Params
+    {
+    public:
+        float                                                        NewStartDistance;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetPrecomputeParams_Params
+    {
+    public:
+        float                                                        DensityHeight;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      MaxScatteringOrder;                                      //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      InscatterAltitudeSampleNum;                              //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetFogMultiplier_Params
+    {
+    public:
+        float                                                        NewFogMultiplier;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetDistanceScale_Params
+    {
+    public:
+        float                                                        NewDistanceScale;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetDistanceOffset_Params
+    {
+    public:
+        float                                                        NewDistanceOffset;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetDensityOffset_Params
+    {
+    public:
+        float                                                        NewDensityOffset;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetDensityMultiplier_Params
+    {
+    public:
+        float                                                        NewDensityMultiplier;                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetDefaultLightColor_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    NewLightColor;                                           //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetDefaultBrightness_Params
+    {
+    public:
+        float                                                        NewBrightness;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_SetAltitudeScale_Params
+    {
+    public:
+        float                                                        NewAltitudeScale;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_DisableSunDisk_Params
+    {
+    public:
+        bool                                                         NewSunDisk;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAtmosphericFogComponent_DisableGroundScattering_Params
+    {
+    public:
+        bool                                                         NewGroundScattering;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAudioVolume_SetReverbSettings_Params
+    {
+    public:
+        Engine::FReverbSettings                                      NewReverbSettings;                                       //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAudioVolume_SetPriority_Params
+    {
+    public:
+        float                                                        NewPriority;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAudioVolume_SetInteriorSettings_Params
+    {
+    public:
+        Engine::FInteriorSettings                                    NewInteriorSettings;                                     //  0x0000(0x0024)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAudioVolume_SetEnabled_Params
+    {
+    public:
+        bool                                                         bNewEnabled;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AAudioVolume_OnRep_bEnabled_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAvoidanceManager_RegisterMovementComponent_Params
+    {
+    public:
+        Engine::UMovementComponent*                                  MovementComp;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        AvoidanceWeight;                                         //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x000C(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAvoidanceManager_GetObjectCount_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAvoidanceManager_GetNewAvoidanceUID_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAvoidanceManager_GetAvoidanceVelocityForComponent_Params
+    {
+    public:
+        Engine::UMovementComponent*                                  MovementComp;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBillboardComponent_SetUV_Params
+    {
+    public:
+        int32_t                                                      NewU;                                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NewUL;                                                   //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NewV;                                                    //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NewVL;                                                   //  0x000C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBillboardComponent_SetSpriteAndUV_Params
+    {
+    public:
+        Engine::UTexture2D*                                          NewSprite;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NewU;                                                    //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NewUL;                                                   //  0x000C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NewV;                                                    //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NewVL;                                                   //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBillboardComponent_SetSprite_Params
+    {
+    public:
+        Engine::UTexture2D*                                          NewSprite;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_SetMapPropertyByName_Params
+    {
+    public:
+        CoreUObject::UObject*                                        Object;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            PropertyName;                                            //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TMap<int32_t, int32_t>                           Value;                                                   //  0x0010(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_Map_Values_Params
+    {
+    public:
+        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<int32_t>                                  Values;                                                  //  0x0050(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_Map_Remove_Params
+    {
+    public:
+        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      Key;                                                     //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0054(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_Map_Length_Params
+    {
+    public:
+        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0050(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_Map_Keys_Params
+    {
+    public:
+        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<int32_t>                                  Keys;                                                    //  0x0050(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_Map_Find_Params
+    {
+    public:
+        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      Key;                                                     //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      Value;                                                   //  0x0054(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0058(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_Map_Contains_Params
+    {
+    public:
+        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      Key;                                                     //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0054(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_Map_Clear_Params
+    {
+    public:
+        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintMapLibrary_Map_Add_Params
+    {
+    public:
+        BasicTypes::TMap<int32_t, int32_t>                           TargetMap;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      Key;                                                     //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      Value;                                                   //  0x0054(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintPlatformLibrary_ScheduleLocalNotificationFromNow_Params
+    {
+    public:
+        int32_t                                                      inSecondsFromNow;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FText                                            Title;                                                   //  0x0008(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FText                                            Body;                                                    //  0x0020(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FText                                            Action;                                                  //  0x0038(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          ActivationEvent;                                         //  0x0050(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintPlatformLibrary_ScheduleLocalNotificationBadgeFromNow_Params
+    {
+    public:
+        int32_t                                                      inSecondsFromNow;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          ActivationEvent;                                         //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintPlatformLibrary_ScheduleLocalNotificationBadgeAtTime_Params
+    {
+    public:
+        CoreUObject::FDateTime                                       FireDateTime;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         LocalTime;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0002[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          ActivationEvent;                                         //  0x0010(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintPlatformLibrary_ScheduleLocalNotificationAtTime_Params
+    {
+    public:
+        CoreUObject::FDateTime                                       FireDateTime;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         LocalTime;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0003[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FText                                            Title;                                                   //  0x0010(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FText                                            Body;                                                    //  0x0028(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FText                                            Action;                                                  //  0x0040(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          ActivationEvent;                                         //  0x0058(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintPlatformLibrary_GetLaunchNotification_Params
+    {
+    public:
+        bool                                                         NotificationLaunchedApp;                                 //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0004[0x7];                                   //  0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          ActivationEvent;                                         //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      FireDate;                                                //  0x0018(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintPlatformLibrary_GetDeviceOrientation_Params
+    {
+    public:
+        Engine::EScreenOrientation                                   ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintPlatformLibrary_ClearAllLocalNotifications_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintPlatformLibrary_CancelLocalNotification_Params
+    {
+    public:
+        BasicTypes::FString                                          ActivationEvent;                                         //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_SetSetPropertyByName_Params
+    {
+    public:
+        CoreUObject::UObject*                                        Object;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            PropertyName;                                            //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TSet<int32_t>                                    Value;                                                   //  0x0010(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_Union_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    A;                                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TSet<int32_t>                                    B;                                                       //  0x0050(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TSet<int32_t>                                    Result;                                                  //  0x00A0(0x0050)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_ToArray_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    A;                                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<int32_t>                                  Result;                                                  //  0x0050(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_RemoveItems_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<int32_t>                                  Items;                                                   //  0x0050(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_Remove_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      Item;                                                    //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0054(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_Length_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0050(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_Intersection_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    A;                                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TSet<int32_t>                                    B;                                                       //  0x0050(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TSet<int32_t>                                    Result;                                                  //  0x00A0(0x0050)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_Difference_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    A;                                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TSet<int32_t>                                    B;                                                       //  0x0050(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TSet<int32_t>                                    Result;                                                  //  0x00A0(0x0050)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_Contains_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      ItemToFind;                                              //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0054(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_Clear_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_AddItems_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<int32_t>                                  NewItems;                                                //  0x0050(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UBlueprintSetLibrary_Set_Add_Params
+    {
+    public:
+        BasicTypes::TSet<int32_t>                                    TargetSet;                                               //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      NewItem;                                                 //  0x0050(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_TextSize_Params
+    {
+    public:
+        Engine::UFont*                                               RenderFont;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          RenderText;                                              //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       Scale;                                                   //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0020(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_StrLen_Params
+    {
+    public:
+        Engine::UFont*                                               RenderFont;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          RenderText;                                              //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_Project_Params
+    {
+    public:
+        CoreUObject::FVector                                         WorldLocation;                                           //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawTriangle_Params
+    {
+    public:
+        Engine::UTexture*                                            RenderTexture;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<Engine::FCanvasUVTri>                     Triangles;                                               //  0x0008(0x0010)  (Parm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawTexture_Params
+    {
+    public:
+        Engine::UTexture*                                            RenderTexture;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenSize;                                              //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       CoordinatePosition;                                      //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       CoordinateSize;                                          //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0028(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EBlendMode                                           BlendMode;                                               //  0x0038(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0039(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        Rotation;                                                //  0x003C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       PivotPoint;                                              //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawText_Params
+    {
+    public:
+        Engine::UFont*                                               RenderFont;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          RenderText;                                              //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       Scale;                                                   //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0028(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Kerning;                                                 //  0x0038(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ShadowColor;                                             //  0x003C(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ShadowOffset;                                            //  0x004C(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bCentreX;                                                //  0x0054(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bCentreY;                                                //  0x0055(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bOutlined;                                               //  0x0056(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x1];                                   //  0x0057(0x0001) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FLinearColor                                    OutlineColor;                                            //  0x0058(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawPolygon_Params
+    {
+    public:
+        Engine::UTexture*                                            RenderTexture;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       Radius;                                                  //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NumberOfSides;                                           //  0x0018(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x001C(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawMaterialTriangle_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  RenderMaterial;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<Engine::FCanvasUVTri>                     Triangles;                                               //  0x0008(0x0010)  (Parm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawMaterial_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  RenderMaterial;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenSize;                                              //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       CoordinatePosition;                                      //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       CoordinateSize;                                          //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Rotation;                                                //  0x0028(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       PivotPoint;                                              //  0x002C(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawLine_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       ScreenPositionA;                                         //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPositionB;                                         //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Thickness;                                               //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0014(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawBox_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenSize;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Thickness;                                               //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0014(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_DrawBorder_Params
+    {
+    public:
+        Engine::UTexture*                                            BorderTexture;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTexture*                                            BackgroundTexture;                                       //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTexture*                                            LeftBorderTexture;                                       //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTexture*                                            RightBorderTexture;                                      //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTexture*                                            TopBorderTexture;                                        //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTexture*                                            BottomBorderTexture;                                     //  0x0028(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0030(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenSize;                                              //  0x0038(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       CoordinatePosition;                                      //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       CoordinateSize;                                          //  0x0048(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0050(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       BorderScale;                                             //  0x0060(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       BackgroundScale;                                         //  0x0068(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Rotation;                                                //  0x0070(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       PivotPoint;                                              //  0x0074(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       CornerSize;                                              //  0x007C(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCanvas_K2_Deproject_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         WorldOrigin;                                             //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         WorldDirection;                                          //  0x0014(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
     class UCanvasRenderTarget2D_UpdateResource_Params
     {
     };
@@ -12421,6 +12995,32 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
+    class UGameViewportClient_SSSwapControllers_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGameViewportClient_ShowTitleSafeArea_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGameViewportClient_SetConsoleTarget_Params
+    {
+    public:
+        int32_t                                                      PlayerIndex;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
     class UCurveBase_GetValueRange_Params
     {
     public:
@@ -12437,39 +13037,6 @@ namespace CG::Engine
     public:
         float                                                        MinTime;                                                 //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         float                                                        MaxTime;                                                 //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCurveFloat_GetFloatValue_Params
-    {
-    public:
-        float                                                        InTime;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCurveLinearColor_GetLinearColorValue_Params
-    {
-    public:
-        float                                                        InTime;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0004(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCurveLinearColor_GetClampedLinearColorValue_Params
-    {
-    public:
-        float                                                        InTime;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0004(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -12544,140 +13111,6 @@ namespace CG::Engine
     public:
         float                                                        InTime;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         CoreUObject::FVector                                         ReturnValue;                                             //  0x0004(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDataTableFunctionLibrary_GetDataTableRowNames_Params
-    {
-    public:
-        Engine::UDataTable*                                          Table;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        OutRowNames;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDataTableFunctionLibrary_GetDataTableRowFromName_Params
-    {
-    public:
-        Engine::UDataTable*                                          Table;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            RowName;                                                 //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::FTableRowBase                                        OutRow;                                                  //  0x0010(0x0008)  (Parm, OutParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDataTableFunctionLibrary_GetDataTableColumnAsString_Params
-    {
-    public:
-        Engine::UDataTable*                                          DataTable;                                               //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            PropertyName;                                            //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FString>                      ReturnValue;                                             //  0x0010(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDataTableFunctionLibrary_EvaluateCurveTableRow_Params
-    {
-    public:
-        Engine::UCurveTable*                                         CurveTable;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            RowName;                                                 //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        InXY;                                                    //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EEvaluateCurveTableResult                            OutResult;                                               //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0015(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        OutXY;                                                   //  0x0018(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x001C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          ContextString;                                           //  0x0020(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDataTableFunctionLibrary_DoesDataTableRowExist_Params
-    {
-    public:
-        Engine::UDataTable*                                          Table;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            RowName;                                                 //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADebugCameraController_ToggleDisplay_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADebugCameraController_ShowDebugSelectedInfo_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADebugCameraController_SetPawnMovementSpeedScale_Params
-    {
-    public:
-        float                                                        NewSpeedScale;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADebugCameraController_ReceiveOnDeactivate_Params
-    {
-    public:
-        Engine::APlayerController*                                   RestoredPC;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADebugCameraController_ReceiveOnActorSelected_Params
-    {
-    public:
-        Engine::AActor*                                              NewSelectedActor;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         SelectHitLocation;                                       //  0x0008(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         SelectHitNormal;                                         //  0x0014(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::FHitResult                                           Hit;                                                     //  0x0020(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADebugCameraController_ReceiveOnActivate_Params
-    {
-    public:
-        Engine::APlayerController*                                   OriginalPC;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADebugCameraController_GetSelectedActor_Params
-    {
-    public:
-        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -13187,106 +13620,7 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class USphereComponent_SetSphereRadius_Params
-    {
-    public:
-        float                                                        InSphereRadius;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateOverlaps;                                         //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USphereComponent_GetUnscaledSphereRadius_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USphereComponent_GetShapeScale_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USphereComponent_GetScaledSphereRadius_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AExponentialHeightFog_OnRep_bEnabled_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExponentialHeightFogComponent_SetVolumetricFogScatteringDistribution_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExponentialHeightFogComponent_SetVolumetricFogExtinctionScale_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExponentialHeightFogComponent_SetVolumetricFogEmissive_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    NewValue;                                                //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExponentialHeightFogComponent_SetVolumetricFogDistance_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExponentialHeightFogComponent_SetVolumetricFogAlbedo_Params
-    {
-    public:
-        CoreUObject::FColor                                          NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExponentialHeightFogComponent_SetVolumetricFog_Params
+    class ULightComponentBase_SetCastVolumetricShadow_Params
     {
     public:
         bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -13296,180 +13630,451 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetStartDistance_Params
+    class ULightComponentBase_SetCastShadows_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetNonDirectionalInscatteringColorDistance_Params
+    class ULightComponentBase_GetLightColor_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetInscatteringTextureTint_Params
+    class ULightComponent_SetVolumetricScatteringIntensity_Params
     {
     public:
-        CoreUObject::FLinearColor                                    Value;                                                   //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetInscatteringColorCubemapAngle_Params
+    class ULightComponent_SetTransmission_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetInscatteringColorCubemap_Params
+    class ULightComponent_SetTemperature_Params
     {
     public:
-        Engine::UTextureCube*                                        Value;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewTemperature;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetFullyDirectionalInscatteringColorDistance_Params
+    class ULightComponent_SetShadowBias_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetFogMaxOpacity_Params
+    class ULightComponent_SetLightFunctionScale_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         NewLightFunctionScale;                                   //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetFogInscatteringColor_Params
+    class ULightComponent_SetLightFunctionMaterial_Params
     {
     public:
-        CoreUObject::FLinearColor                                    Value;                                                   //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UMaterialInterface*                                  NewLightFunctionMaterial;                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetFogHeightFalloff_Params
+    class ULightComponent_SetLightFunctionFadeDistance_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewLightFunctionFadeDistance;                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetFogDensity_Params
+    class ULightComponent_SetLightFunctionDisabledBrightness_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetFogCutoffDistance_Params
+    class ULightComponent_SetLightColor_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    NewLightColor;                                           //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bSRGB;                                                   //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetDirectionalInscatteringStartDistance_Params
+    class ULightComponent_SetIntensity_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetDirectionalInscatteringExponent_Params
+    class ULightComponent_SetIndirectLightingIntensity_Params
     {
     public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExponentialHeightFogComponent_SetDirectionalInscatteringColor_Params
+    class ULightComponent_SetIESTexture_Params
     {
     public:
-        CoreUObject::FLinearColor                                    Value;                                                   //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTextureLightProfile*                                NewValue;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExporter_ScriptRunAssetExportTask_Params
+    class ULightComponent_SetForceCachedShadowsForMovablePrimitives_Params
     {
     public:
-        Engine::UAssetExportTask*                                    Task;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExporter_RunAssetExportTasks_Params
+    class ULightComponent_SetEnableLightShaftBloom_Params
     {
     public:
-        BasicTypes::TArray<Engine::UAssetExportTask*>                ExportTasks;                                             //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UExporter_RunAssetExportTask_Params
+    class ULightComponent_SetBloomTint_Params
     {
     public:
-        Engine::UAssetExportTask*                                    Task;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FColor                                          NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UForceFeedbackComponent_Stop_Params
+    class ULightComponent_SetBloomThreshold_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULightComponent_SetBloomScale_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULightComponent_SetAffectTranslucentLighting_Params
+    {
+    public:
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULightComponent_SetAffectDynamicIndirectLighting_Params
+    {
+    public:
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetShadowDistanceFadeoutFraction_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetOcclusionMaskDarkness_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetLightShaftOverrideDirection_Params
+    {
+    public:
+        CoreUObject::FVector                                         NewValue;                                                //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetEnableLightShaftOcclusion_Params
+    {
+    public:
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetDynamicShadowDistanceStationaryLight_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetDynamicShadowDistanceMovableLight_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetDynamicShadowCascades_Params
+    {
+    public:
+        int32_t                                                      NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetCascadeTransitionFraction_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDirectionalLightComponent_SetCascadeDistributionExponent_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADecalActor_SetDecalMaterial_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  NewDecalMaterial;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADecalActor_GetDecalMaterial_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADecalActor_CreateDynamicMaterialInstance_Params
+    {
+    public:
+        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_SetSortOrder_Params
+    {
+    public:
+        int32_t                                                      Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_SetFadeScreenSize_Params
+    {
+    public:
+        float                                                        NewFadeScreenSize;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_SetFadeOut_Params
+    {
+    public:
+        float                                                        StartDelay;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Duration;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         DestroyOwnerAfterFade;                                   //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_SetFadeIn_Params
+    {
+    public:
+        float                                                        StartDelay;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Duaration;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_SetDecalMaterial_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  NewDecalMaterial;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_GetFadeStartDelay_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_GetFadeInStartDelay_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_GetFadeInDuration_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_GetFadeDuration_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_GetDecalMaterial_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDecalComponent_CreateDynamicMaterialInstance_Params
+    {
+    public:
+        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AEmitter_ToggleActive_Params
     {
     };
 
@@ -13477,51 +14082,119 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class UForceFeedbackComponent_SetIntensityMultiplier_Params
+    class AEmitter_SetVectorParameter_Params
     {
     public:
-        float                                                        NewIntensityMultiplier;                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Param;                                                   //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UForceFeedbackComponent_SetForceFeedbackEffect_Params
+    class AEmitter_SetTemplate_Params
     {
     public:
-        Engine::UForceFeedbackEffect*                                NewForceFeedbackEffect;                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UParticleSystem*                                     NewTemplate;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UForceFeedbackComponent_Play_Params
+    class AEmitter_SetMaterialParameter_Params
     {
     public:
-        float                                                        StartTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UMaterialInterface*                                  Param;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UForceFeedbackComponent_BP_GetAttenuationSettingsToApply_Params
+    class AEmitter_SetFloatParameter_Params
     {
     public:
-        Engine::FForceFeedbackAttenuationSettings                    OutAttenuationSettings;                                  //  0x0000(0x00A0)  (Parm, OutParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x00A0(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Param;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UForceFeedbackComponent_AdjustAttenuation_Params
+    class AEmitter_SetColorParameter_Params
     {
     public:
-        Engine::FForceFeedbackAttenuationSettings                    InAttenuationSettings;                                   //  0x0000(0x00A0)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    Param;                                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AEmitter_SetActorParameter_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              Param;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AEmitter_OnRep_bCurrentlyActive_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AEmitter_OnParticleSystemFinished_Params
+    {
+    public:
+        Engine::UParticleSystemComponent*                            FinishedComponent;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AEmitter_IsActive_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AEmitter_Deactivate_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AEmitter_Activate_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimMontage_GetDefaultBlendOutTime_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -15851,127 +16524,33 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class UAnimMontage_GetDefaultBlendOutTime_Params
+    class UCurveFloat_GetFloatValue_Params
     {
     public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InTime;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class AEmitter_ToggleActive_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_SetVectorParameter_Params
+    class UCurveLinearColor_GetLinearColorValue_Params
     {
     public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Param;                                                   //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InTime;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0004(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class AEmitter_SetTemplate_Params
+    class UCurveLinearColor_GetClampedLinearColorValue_Params
     {
     public:
-        Engine::UParticleSystem*                                     NewTemplate;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_SetMaterialParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UMaterialInterface*                                  Param;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_SetFloatParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Param;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_SetColorParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    Param;                                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_SetActorParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              Param;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_OnRep_bCurrentlyActive_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_OnParticleSystemFinished_Params
-    {
-    public:
-        Engine::UParticleSystemComponent*                            FinishedComponent;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_IsActive_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_Deactivate_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AEmitter_Activate_Params
-    {
+        float                                                        InTime;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0004(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -16193,27 +16772,406 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class UHealthSnapshotBlueprintLibrary_StopPerformanceSnapshots_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHealthSnapshotBlueprintLibrary_StartPerformanceSnapshots_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHealthSnapshotBlueprintLibrary_LogPerformanceSnapshot_Params
+    class UCameraAnimInst_Stop_Params
     {
     public:
-        BasicTypes::FString                                          SnapshotTitle;                                           //  0x0000(0x0010)  (ConstParm, Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bResetStats;                                             //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bImmediate;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraAnimInst_SetScale_Params
+    {
+    public:
+        float                                                        NewDuration;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraAnimInst_SetDuration_Params
+    {
+    public:
+        float                                                        NewDuration;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UWorld_HandleTimelineScrubbed_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_ShouldBeLoaded_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_SetShouldBeVisible_Params
+    {
+    public:
+        bool                                                         bInShouldBeVisible;                                      //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_SetShouldBeLoaded_Params
+    {
+    public:
+        bool                                                         bInShouldBeLoaded;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_SetLevelLODIndex_Params
+    {
+    public:
+        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_IsStreamingStatePending_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_IsLevelVisible_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_IsLevelLoaded_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_GetWorldAssetPackageFName_Params
+    {
+    public:
+        BasicTypes::FName                                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_GetLevelScriptActor_Params
+    {
+    public:
+        Engine::ALevelScriptActor*                                   ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreaming_CreateInstance_Params
+    {
+    public:
+        BasicTypes::FString                                          UniqueInstanceName;                                      //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::ULevelStreaming*                                     ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreamingDynamic_LoadLevelInstanceBySoftObjectPtr_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TSoftObjectPtr<Engine::UWorld>                   Level;                                                   //  0x0008(0x0024)  (Parm, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Location;                                                //  0x0030(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        Rotation;                                                //  0x003C(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        bool                                                         bOutSuccess;                                             //  0x0048(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0049(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::ULevelStreamingDynamic*                              ReturnValue;                                             //  0x0050(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULevelStreamingDynamic_LoadLevelInstance_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          LevelName;                                               //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Location;                                                //  0x0018(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        Rotation;                                                //  0x0024(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        bool                                                         bOutSuccess;                                             //  0x0030(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x7];                                   //  0x0031(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::ULevelStreamingDynamic*                              ReturnValue;                                             //  0x0038(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialBillboardComponent_SetElements_Params
+    {
+    public:
+        BasicTypes::TArray<Engine::FMaterialSpriteElement>           NewElements;                                             //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialBillboardComponent_AddElement_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  Material;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UCurveFloat*                                         DistanceToOpacityCurve;                                  //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bSizeIsInScreenSpace;                                    //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0011(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        BaseSizeX;                                               //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        BaseSizeY;                                               //  0x0018(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x001C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::UCurveFloat*                                         DistanceToSizeCurve;                                     //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADefaultPawn_TurnAtRate_Params
+    {
+    public:
+        float                                                        Rate;                                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADefaultPawn_MoveUp_World_Params
+    {
+    public:
+        float                                                        val;                                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADefaultPawn_MoveRight_Params
+    {
+    public:
+        float                                                        val;                                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADefaultPawn_MoveForward_Params
+    {
+    public:
+        float                                                        val;                                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADefaultPawn_LookUpAtRate_Params
+    {
+    public:
+        float                                                        Rate;                                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDataTableFunctionLibrary_GetDataTableRowNames_Params
+    {
+    public:
+        Engine::UDataTable*                                          Table;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FName>                        OutRowNames;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDataTableFunctionLibrary_GetDataTableRowFromName_Params
+    {
+    public:
+        Engine::UDataTable*                                          Table;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            RowName;                                                 //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::FTableRowBase                                        OutRow;                                                  //  0x0010(0x0008)  (Parm, OutParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDataTableFunctionLibrary_GetDataTableColumnAsString_Params
+    {
+    public:
+        Engine::UDataTable*                                          DataTable;                                               //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            PropertyName;                                            //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FString>                      ReturnValue;                                             //  0x0010(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDataTableFunctionLibrary_EvaluateCurveTableRow_Params
+    {
+    public:
+        Engine::UCurveTable*                                         CurveTable;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            RowName;                                                 //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InXY;                                                    //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EEvaluateCurveTableResult                            OutResult;                                               //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0015(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        OutXY;                                                   //  0x0018(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x001C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          ContextString;                                           //  0x0020(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDataTableFunctionLibrary_DoesDataTableRowExist_Params
+    {
+    public:
+        Engine::UDataTable*                                          Table;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            RowName;                                                 //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADebugCameraController_ToggleDisplay_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADebugCameraController_ShowDebugSelectedInfo_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADebugCameraController_SetPawnMovementSpeedScale_Params
+    {
+    public:
+        float                                                        NewSpeedScale;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADebugCameraController_ReceiveOnDeactivate_Params
+    {
+    public:
+        Engine::APlayerController*                                   RestoredPC;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADebugCameraController_ReceiveOnActorSelected_Params
+    {
+    public:
+        Engine::AActor*                                              NewSelectedActor;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         SelectHitLocation;                                       //  0x0008(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         SelectHitNormal;                                         //  0x0014(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::FHitResult                                           Hit;                                                     //  0x0020(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADebugCameraController_ReceiveOnActivate_Params
+    {
+    public:
+        Engine::APlayerController*                                   OriginalPC;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADebugCameraController_GetSelectedActor_Params
+    {
+    public:
+        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULocalLightComponent_SetAttenuationRadius_Params
+    {
+    public:
+        float                                                        NewRadius;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULocalLightComponent_GetUnitsConversionFactor_Params
+    {
+    public:
+        Engine::ELightUnits                                          SrcUnits;                                                //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::ELightUnits                                          TargetUnits;                                             //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x2];                                   //  0x0002(0x0002) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        CosHalfConeAngle;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -16512,6 +17470,4199 @@ namespace CG::Engine
     public:
         CoreUObject::FGuid                                           InGuid;                                                  //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         BasicTypes::FString                                          ReturnValue;                                             //  0x0010(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USphereComponent_SetSphereRadius_Params
+    {
+    public:
+        float                                                        InSphereRadius;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateOverlaps;                                         //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USphereComponent_GetUnscaledSphereRadius_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USphereComponent_GetShapeScale_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USphereComponent_GetScaledSphereRadius_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInterpToMovementComponent_StopSimulating_Params
+    {
+    public:
+        Engine::FHitResult                                           HitResult;                                               //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInterpToMovementComponent_RestartMovement_Params
+    {
+    public:
+        float                                                        InitialDirection;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInterpToMovementComponent_OnInterpToWaitEndDelegate__DelegateSignature_Params
+    {
+    public:
+        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInterpToMovementComponent_OnInterpToWaitBeginDelegate__DelegateSignature_Params
+    {
+    public:
+        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInterpToMovementComponent_OnInterpToStopDelegate__DelegateSignature_Params
+    {
+    public:
+        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInterpToMovementComponent_OnInterpToReverseDelegate__DelegateSignature_Params
+    {
+    public:
+        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInterpToMovementComponent_OnInterpToResetDelegate__DelegateSignature_Params
+    {
+    public:
+        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInterpToMovementComponent_FinaliseControlPoints_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_RandomSobolFloat_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      Dimension;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Seed;                                                    //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x000C(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_RandomSobolCell3D_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NumCells;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Cell;                                                    //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Seed;                                                    //  0x0014(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0020(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_RandomSobolCell2D_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NumCells;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       Cell;                                                    //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       Seed;                                                    //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_NextSobolFloat_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      Dimension;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        PreviousValue;                                           //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x000C(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_NextSobolCell3D_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NumCells;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         PreviousValue;                                           //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0014(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_NextSobolCell2D_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NumCells;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       PreviousValue;                                           //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_MakeImportanceTexture_Params
+    {
+    public:
+        Engine::UTexture2D*                                          Texture;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EImportanceWeight                                    WeightingFunc;                                           //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::FImportanceTexture                                   ReturnValue;                                             //  0x0010(0x0050)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_ImportanceSample_Params
+    {
+    public:
+        Engine::FImportanceTexture                                   Texture;                                                 //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       Rand;                                                    //  0x0050(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      Samples;                                                 //  0x0058(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Intensity;                                               //  0x005C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       SamplePosition;                                          //  0x0060(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    SampleColor;                                             //  0x0068(0x0010)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        SampleIntensity;                                         //  0x0078(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        SampleSize;                                              //  0x007C(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImportanceSamplingLibrary_BreakImportanceTexture_Params
+    {
+    public:
+        Engine::FImportanceTexture                                   ImportanceTexture;                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::UTexture2D*                                          Texture;                                                 //  0x0050(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EImportanceWeight                                    WeightingFunc;                                           //  0x0058(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystem_ContainsEmitterType_Params
+    {
+    public:
+        CoreUObject::UObject*                                        TypeData;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetVectorParameter_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Param;                                                   //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetTrailSourceData_Params
+    {
+    public:
+        BasicTypes::FName                                            InFirstSocketName;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            InSecondSocketName;                                      //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::ETrailWidthMode                                      InWidthMode;                                             //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0011(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        InWidth;                                                 //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetTemplate_Params
+    {
+    public:
+        Engine::UParticleSystem*                                     NewTemplate;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetMaterialParameter_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UMaterialInterface*                                  Param;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetFloatParameter_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Param;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetEmitterEnable_Params
+    {
+    public:
+        BasicTypes::FName                                            EmitterName;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bNewEnableState;                                         //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetColorParameter_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    Param;                                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetBeamTargetTangent_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         NewTangentPoint;                                         //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      TargetIndex;                                             //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetBeamTargetStrength_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewTargetStrength;                                       //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      TargetIndex;                                             //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetBeamTargetPoint_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         NewTargetPoint;                                          //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      TargetIndex;                                             //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetBeamSourceTangent_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         NewTangentPoint;                                         //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      SourceIndex;                                             //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetBeamSourceStrength_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        NewSourceStrength;                                       //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      SourceIndex;                                             //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetBeamSourcePoint_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         NewSourcePoint;                                          //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      SourceIndex;                                             //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetBeamEndPoint_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         NewEndPoint;                                             //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetAutoAttachParams_Params
+    {
+    public:
+        Engine::USceneComponent*                                     Parent;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SocketName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EAttachLocation                                      LocationType;                                            //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetAutoAttachmentParameters_Params
+    {
+    public:
+        Engine::USceneComponent*                                     Parent;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SocketName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EAttachmentRule                                      LocationRule;                                            //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EAttachmentRule                                      RotationRule;                                            //  0x0011(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EAttachmentRule                                      ScaleRule;                                               //  0x0012(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_SetActorParameter_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              Param;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_ReleaseToPool_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetNumActiveParticles_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetNamedMaterial_Params
+    {
+    public:
+        BasicTypes::FName                                            InName;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UMaterialInterface*                                  ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetBeamTargetTangent_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      TargetIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         OutTangentPoint;                                         //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetBeamTargetStrength_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      TargetIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        OutTargetStrength;                                       //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x000C(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetBeamTargetPoint_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      TargetIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         OutTargetPoint;                                          //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetBeamSourceTangent_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      SourceIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         OutTangentPoint;                                         //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetBeamSourceStrength_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      SourceIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        OutSourceStrength;                                       //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x000C(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetBeamSourcePoint_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      SourceIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         OutSourcePoint;                                          //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GetBeamEndPoint_Params
+    {
+    public:
+        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         OutEndPoint;                                             //  0x0004(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_GenerateParticleEvent_Params
+    {
+    public:
+        BasicTypes::FName                                            InEventName;                                             //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InEmitterTime;                                           //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         InLocation;                                              //  0x000C(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         InDirection;                                             //  0x0018(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         InVelocity;                                              //  0x0024(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_EndTrails_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_CreateNamedDynamicMaterialInstance_Params
+    {
+    public:
+        BasicTypes::FName                                            InName;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UMaterialInterface*                                  SourceMaterial;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UParticleSystemComponent_BeginTrails_Params
+    {
+    public:
+        BasicTypes::FName                                            InFirstSocketName;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            InSecondSocketName;                                      //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::ETrailWidthMode                                      InWidthMode;                                             //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0011(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        InWidth;                                                 //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPawnNoiseEmitterComponent_MakeNoise_Params
+    {
+    public:
+        Engine::AActor*                                              NoiseMaker;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Loudness;                                                //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         NoiseLocation;                                           //  0x000C(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicalAnimationComponent_SetStrengthMultiplyer_Params
+    {
+    public:
+        float                                                        InStrengthMultiplyer;                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicalAnimationComponent_SetSkeletalMeshComponent_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              InSkeletalMeshComponent;                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicalAnimationComponent_GetBodyTargetTransform_Params
+    {
+    public:
+        BasicTypes::FName                                            BodyName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0010(0x0030)  (Parm, OutParm, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicalAnimationComponent_ApplyPhysicalAnimationSettingsBelow_Params
+    {
+    public:
+        BasicTypes::FName                                            BodyName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::FPhysicalAnimationData                               PhysicalAnimationData;                                   //  0x0008(0x0028)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+        bool                                                         bIncludeSelf;                                            //  0x0030(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicalAnimationComponent_ApplyPhysicalAnimationSettings_Params
+    {
+    public:
+        BasicTypes::FName                                            BodyName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::FPhysicalAnimationData                               PhysicalAnimationData;                                   //  0x0008(0x0028)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicalAnimationComponent_ApplyPhysicalAnimationProfileBelow_Params
+    {
+    public:
+        BasicTypes::FName                                            BodyName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ProfileName;                                             //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bIncludeSelf;                                            //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bClearNotFound;                                          //  0x0011(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlatformEventsComponent_SupportsConvertibleLaptops_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlatformEventsComponent_PlatformEventDelegate__DelegateSignature_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlatformEventsComponent_IsInTabletMode_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlatformEventsComponent_IsInLaptopMode_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlatformInterfaceWebResponse_GetNumHeaders_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlatformInterfaceWebResponse_GetHeaderValue_Params
+    {
+    public:
+        BasicTypes::FString                                          HeaderName;                                              //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          ReturnValue;                                             //  0x0010(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlatformInterfaceWebResponse_GetHeader_Params
+    {
+    public:
+        int32_t                                                      HeaderIndex;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          Header;                                                  //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          Value;                                                   //  0x0018(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayerInput_SetMouseSensitivity_Params
+    {
+    public:
+        float                                                        SensitivityX;                                            //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        SensitivityY;                                            //  0x0004(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayerInput_SetBind_Params
+    {
+    public:
+        BasicTypes::FName                                            BindName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          Command;                                                 //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayerInput_InvertAxisKey_Params
+    {
+    public:
+        InputCore::FKey                                              AxisKey;                                                 //  0x0000(0x0018)  (ConstParm, Parm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayerInput_InvertAxis_Params
+    {
+    public:
+        BasicTypes::FName                                            AxisName;                                                //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPlayerInput_ClearSmoothing_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_SetBoneTransformByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      InTransform;                                             //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0040(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_SetBoneScaleByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         InScale3D;                                               //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0014(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_SetBoneRotationByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        InRotation;                                              //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0014(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_SetBoneLocationByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         InLocation;                                              //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0014(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_ResetBoneTransformByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_GetBoneTransformByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0010(0x0030)  (Parm, OutParm, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_GetBoneScaleByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0002[0x3];                                   //  0x0009(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_GetBoneRotationByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0003[0x3];                                   //  0x0009(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FRotator                                        ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_GetBoneLocationByName_Params
+    {
+    public:
+        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0004[0x3];                                   //  0x0009(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPoseableMeshComponent_CopyPoseFromSkeletalComponent_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              InComponentToCopy;                                       //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPostProcessComponent_AddOrUpdateBlendable_Params
+    {
+    public:
+        BasicTypes::TScriptInterface<Engine::IBlendableInterface>    InBlendableObject;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
+        float                                                        InWeight;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APostProcessVolume_AddOrUpdateBlendable_Params
+    {
+    public:
+        BasicTypes::TScriptInterface<Engine::IBlendableInterface>    InBlendableObject;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
+        float                                                        InWeight;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlayerState_ReceiveOverrideWith_Params
+    {
+    public:
+        Engine::APlayerState*                                        OldPlayerState;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlayerState_ReceiveCopyProperties_Params
+    {
+    public:
+        Engine::APlayerState*                                        NewPlayerState;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlayerState_OnRep_UniqueId_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlayerState_OnRep_Score_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlayerState_OnRep_PlayerName_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlayerState_OnRep_PlayerId_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlayerState_OnRep_bIsInactive_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlayerState_GetPlayerName_Params
+    {
+    public:
+        BasicTypes::FString                                          ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APointLight_SetRadius_Params
+    {
+    public:
+        float                                                        NewRadius;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APointLight_SetLightFalloffExponent_Params
+    {
+    public:
+        float                                                        NewLightFalloffExponent;                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPointLightComponent_SetSourceRadius_Params
+    {
+    public:
+        float                                                        bNewValue;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPointLightComponent_SetSourceLength_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPointLightComponent_SetSoftSourceRadius_Params
+    {
+    public:
+        float                                                        bNewValue;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPointLightComponent_SetLightFalloffExponent_Params
+    {
+    public:
+        float                                                        NewLightFalloffExponent;                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetVolumetricScatteringIntensity_Params
+    {
+    public:
+        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetOcclusionTint_Params
+    {
+    public:
+        CoreUObject::FColor                                          InTint;                                                  //  0x0000(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetOcclusionExponent_Params
+    {
+    public:
+        float                                                        InOcclusionExponent;                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetOcclusionContrast_Params
+    {
+    public:
+        float                                                        InOcclusionContrast;                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetMinOcclusion_Params
+    {
+    public:
+        float                                                        InMinOcclusion;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetLowerHemisphereColor_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    InLowerHemisphereColor;                                  //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetLightColor_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    NewLightColor;                                           //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetIntensity_Params
+    {
+    public:
+        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetIndirectLightingIntensity_Params
+    {
+    public:
+        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetCubemapBlend_Params
+    {
+    public:
+        Engine::UTextureCube*                                        SourceCubemap;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTextureCube*                                        DestinationCubemap;                                      //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InBlendFraction;                                         //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_SetCubemap_Params
+    {
+    public:
+        Engine::UTextureCube*                                        NewCubemap;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkyLightComponent_RecaptureSky_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimNotifyState_Trail_OverridePSTemplate_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UParticleSystem*                                     ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_StopAnim_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetReverse_Params
+    {
+    public:
+        bool                                                         bInReverse;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetPreviewCurveOverride_Params
+    {
+    public:
+        BasicTypes::FName                                            PoseName;                                                //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Value;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bRemoveIfZero;                                           //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetPositionWithPreviousTime_Params
+    {
+    public:
+        float                                                        InPosition;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InPreviousTime;                                          //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bFireNotifies;                                           //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetPosition_Params
+    {
+    public:
+        float                                                        InPosition;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bFireNotifies;                                           //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetPlayRate_Params
+    {
+    public:
+        float                                                        InPlayRate;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetPlaying_Params
+    {
+    public:
+        bool                                                         bIsPlaying;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetLooping_Params
+    {
+    public:
+        bool                                                         bIsLooping;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetBlendSpaceInput_Params
+    {
+    public:
+        CoreUObject::FVector                                         InBlendInput;                                            //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_SetAnimationAsset_Params
+    {
+    public:
+        Engine::UAnimationAsset*                                     NewAsset;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bIsLooping;                                              //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0009(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        InPlayRate;                                              //  0x000C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_PlayAnim_Params
+    {
+    public:
+        bool                                                         bIsLooping;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        InPlayRate;                                              //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InStartPosition;                                         //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_GetLength_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAnimSingleNodeInstance_GetAnimationAsset_Params
+    {
+    public:
+        Engine::UAnimationAsset*                                     ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UArrowComponent_SetArrowColor_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    NewColor;                                                //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_SetVectorParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    Value;                                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_SetTextureParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTexture*                                            Value;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_SetScalarParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Value;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_K2_InterpolateMaterialInstanceParams_Params
+    {
+    public:
+        Engine::UMaterialInstance*                                   SourceA;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UMaterialInstance*                                   SourceB;                                                 //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Alpha;                                                   //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_K2_GetVectorParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_K2_GetTextureParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UTexture*                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_K2_GetScalarParameterValue_Params
+    {
+    public:
+        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_K2_CopyMaterialInstanceParameters_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  Source;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bQuickParametersOnly;                                    //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_CopyParameterOverrides_Params
+    {
+    public:
+        Engine::UMaterialInstance*                                   MaterialInstance;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMaterialInstanceDynamic_CopyInterpParameters_Params
+    {
+    public:
+        Engine::UMaterialInstance*                                   Source;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMatineeActor_Stop_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMatineeActor_SetPosition_Params
+    {
+    public:
+        float                                                        NewPosition;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bJump;                                                   //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMatineeActor_SetLoopingState_Params
+    {
+    public:
+        bool                                                         bNewLooping;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMatineeActor_Reverse_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMatineeActor_Play_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMatineeActor_Pause_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMatineeActor_EnableGroupByName_Params
+    {
+    public:
+        BasicTypes::FString                                          GroupName;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnable;                                                 //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMatineeActor_ChangePlaybackDirection_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_StopSimulating_Params
+    {
+    public:
+        Engine::FHitResult                                           HitResult;                                               //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_SetVelocityInLocalSpace_Params
+    {
+    public:
+        CoreUObject::FVector                                         NewVelocity;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_SetInterpolatedComponent_Params
+    {
+    public:
+        Engine::USceneComponent*                                     Component;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_ResetInterpolation_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_OnProjectileStopDelegate__DelegateSignature_Params
+    {
+    public:
+        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_OnProjectileBounceDelegate__DelegateSignature_Params
+    {
+    public:
+        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ImpactVelocity;                                          //  0x0088(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_MoveInterpolationTarget_Params
+    {
+    public:
+        CoreUObject::FVector                                         NewLocation;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        NewRotation;                                             //  0x000C(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_LimitVelocity_Params
+    {
+    public:
+        CoreUObject::FVector                                         NewVelocity;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_IsVelocityUnderSimulationThreshold_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProjectileMovementComponent_IsInterpolationComplete_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ARadialForceActor_ToggleForce_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ARadialForceActor_FireImpulse_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ARadialForceActor_EnableForce_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ARadialForceActor_DisableForce_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URadialForceComponent_RemoveObjectTypeToAffect_Params
+    {
+    public:
+        Engine::EObjectTypeQuery                                     ObjectType;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URadialForceComponent_FireImpulse_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URadialForceComponent_AddObjectTypeToAffect_Params
+    {
+    public:
+        Engine::EObjectTypeQuery                                     ObjectType;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URectLightComponent_SetSourceWidth_Params
+    {
+    public:
+        float                                                        bNewValue;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URectLightComponent_SetSourceHeight_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimecodeProvider_GetTimecode_Params
+    {
+    public:
+        CoreUObject::FTimecode                                       ReturnValue;                                             //  0x0000(0x0014)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimecodeProvider_GetSynchronizationState_Params
+    {
+    public:
+        Engine::ETimecodeProviderSynchronizationState                ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimecodeProvider_GetFrameRate_Params
+    {
+    public:
+        CoreUObject::FFrameRate                                      ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USystemTimeTimecodeProvider_SetFrameRate_Params
+    {
+    public:
+        CoreUObject::FFrameRate                                      InFrameRate;                                             //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMeshVertexPainterKismetLibrary_RemovePaintedVertices_Params
+    {
+    public:
+        Engine::UStaticMeshComponent*                                StaticMeshComponent;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMeshVertexPainterKismetLibrary_PaintVerticesSingleColor_Params
+    {
+    public:
+        Engine::UStaticMeshComponent*                                StaticMeshComponent;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    FillColor;                                               //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bConvertToSRGB;                                          //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMeshVertexPainterKismetLibrary_PaintVerticesLerpAlongAxis_Params
+    {
+    public:
+        Engine::UStaticMeshComponent*                                StaticMeshComponent;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    StartColor;                                              //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    EndColor;                                                //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EVertexPaintAxis                                     Axis;                                                    //  0x0028(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bConvertToSRGB;                                          //  0x0029(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AExponentialHeightFog_OnRep_bEnabled_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetVolumetricFogScatteringDistribution_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetVolumetricFogExtinctionScale_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetVolumetricFogEmissive_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    NewValue;                                                //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetVolumetricFogDistance_Params
+    {
+    public:
+        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetVolumetricFogAlbedo_Params
+    {
+    public:
+        CoreUObject::FColor                                          NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetVolumetricFog_Params
+    {
+    public:
+        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetStartDistance_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetNonDirectionalInscatteringColorDistance_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetInscatteringTextureTint_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    Value;                                                   //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetInscatteringColorCubemapAngle_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetInscatteringColorCubemap_Params
+    {
+    public:
+        Engine::UTextureCube*                                        Value;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetFullyDirectionalInscatteringColorDistance_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetFogMaxOpacity_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetFogInscatteringColor_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    Value;                                                   //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetFogHeightFalloff_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetFogDensity_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetFogCutoffDistance_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetDirectionalInscatteringStartDistance_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetDirectionalInscatteringExponent_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExponentialHeightFogComponent_SetDirectionalInscatteringColor_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    Value;                                                   //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExporter_ScriptRunAssetExportTask_Params
+    {
+    public:
+        Engine::UAssetExportTask*                                    Task;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExporter_RunAssetExportTasks_Params
+    {
+    public:
+        BasicTypes::TArray<Engine::UAssetExportTask*>                ExportTasks;                                             //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExporter_RunAssetExportTask_Params
+    {
+    public:
+        Engine::UAssetExportTask*                                    Task;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UForceFeedbackComponent_Stop_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UForceFeedbackComponent_SetIntensityMultiplier_Params
+    {
+    public:
+        float                                                        NewIntensityMultiplier;                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UForceFeedbackComponent_SetForceFeedbackEffect_Params
+    {
+    public:
+        Engine::UForceFeedbackEffect*                                NewForceFeedbackEffect;                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UForceFeedbackComponent_Play_Params
+    {
+    public:
+        float                                                        StartTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UForceFeedbackComponent_BP_GetAttenuationSettingsToApply_Params
+    {
+    public:
+        Engine::FForceFeedbackAttenuationSettings                    OutAttenuationSettings;                                  //  0x0000(0x00A0)  (Parm, OutParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x00A0(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UForceFeedbackComponent_AdjustAttenuation_Params
+    {
+    public:
+        Engine::FForceFeedbackAttenuationSettings                    InAttenuationSettings;                                   //  0x0000(0x00A0)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraModifier_IsDisabled_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraModifier_GetViewTarget_Params
+    {
+    public:
+        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraModifier_EnableModifier_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraModifier_DisableModifier_Params
+    {
+    public:
+        bool                                                         bImmediate;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraModifier_BlueprintModifyPostProcess_Params
+    {
+    public:
+        float                                                        DeltaTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        PostProcessBlendWeight;                                  //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::FPostProcessSettings                                 PostProcessSettings;                                     //  0x0010(0x04E0)  (Parm, OutParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraModifier_BlueprintModifyCamera_Params
+    {
+    public:
+        float                                                        DeltaTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ViewLocation;                                            //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        ViewRotation;                                            //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        float                                                        FOV;                                                     //  0x001C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         NewViewLocation;                                         //  0x0020(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        NewViewRotation;                                         //  0x002C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        float                                                        NewFOV;                                                  //  0x0038(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraShake_ReceiveStopShake_Params
+    {
+    public:
+        bool                                                         bImmediately;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraShake_ReceivePlayShake_Params
+    {
+    public:
+        float                                                        Scale;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraShake_ReceiveIsFinished_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UCameraShake_BlueprintUpdateCameraShake_Params
+    {
+    public:
+        float                                                        DeltaTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Alpha;                                                   //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::FMinimalViewInfo                                     POV;                                                     //  0x0010(0x0530)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::FMinimalViewInfo                                     ModifiedPOV;                                             //  0x0540(0x0530)  (Parm, OutParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USoundSubmix_StopRecordingOutput_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::EAudioRecordingExportType                            ExportType;                                              //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          Name;                                                    //  0x0010(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          Path;                                                    //  0x0020(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::USoundWave*                                          ExistingSoundWaveToOverwrite;                            //  0x0030(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USoundSubmix_StopEnvelopeFollowing_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USoundSubmix_StartRecordingOutput_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ExpectedDuration;                                        //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USoundSubmix_StartEnvelopeFollowing_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USoundSubmix_AddEnvelopeFollowerDelegate_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::UScriptDelegate                                  OnSubmixEnvelopeBP;                                      //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_UpdateMesh_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetStartTangent_Params
+    {
+    public:
+        CoreUObject::FVector                                         StartTangent;                                            //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetStartScale_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       StartScale;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetStartRoll_Params
+    {
+    public:
+        float                                                        StartRoll;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetStartPosition_Params
+    {
+    public:
+        CoreUObject::FVector                                         StartPos;                                                //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetStartOffset_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       StartOffset;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetStartAndEnd_Params
+    {
+    public:
+        CoreUObject::FVector                                         StartPos;                                                //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         StartTangent;                                            //  0x000C(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         EndPos;                                                  //  0x0018(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         EndTangent;                                              //  0x0024(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0030(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetSplineUpDir_Params
+    {
+    public:
+        CoreUObject::FVector                                         InSplineUpDir;                                           //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetForwardAxis_Params
+    {
+    public:
+        Engine::ESplineMeshAxis                                      InForwardAxis;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetEndTangent_Params
+    {
+    public:
+        CoreUObject::FVector                                         EndTangent;                                              //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetEndScale_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       EndScale;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetEndRoll_Params
+    {
+    public:
+        float                                                        EndRoll;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetEndPosition_Params
+    {
+    public:
+        CoreUObject::FVector                                         EndPos;                                                  //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetEndOffset_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       EndOffset;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetBoundaryMin_Params
+    {
+    public:
+        float                                                        InBoundaryMin;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_SetBoundaryMax_Params
+    {
+    public:
+        float                                                        InBoundaryMax;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUpdateMesh;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetStartTangent_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetStartScale_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetStartRoll_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetStartPosition_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetStartOffset_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetSplineUpDir_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetForwardAxis_Params
+    {
+    public:
+        Engine::ESplineMeshAxis                                      ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetEndTangent_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetEndScale_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetEndRoll_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetEndPosition_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetEndOffset_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetBoundaryMin_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USplineMeshComponent_GetBoundaryMax_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USpotLightComponent_SetOuterConeAngle_Params
+    {
+    public:
+        float                                                        NewOuterConeAngle;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USpotLightComponent_SetInnerConeAngle_Params
+    {
+    public:
+        float                                                        NewInnerConeAngle;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USpringArmComponent_IsCollisionFixApplied_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USpringArmComponent_GetUnfixedCameraPosition_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USpringArmComponent_GetTargetRotation_Params
+    {
+    public:
+        CoreUObject::FRotator                                        ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMesh_GetNumSections_Params
+    {
+    public:
+        int32_t                                                      InLOD;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMesh_GetNumLODs_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMesh_GetMaterialIndex_Params
+    {
+    public:
+        BasicTypes::FName                                            MaterialSlotName;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMesh_GetMaterial_Params
+    {
+    public:
+        int32_t                                                      MaterialIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::UMaterialInterface*                                  ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMesh_GetBounds_Params
+    {
+    public:
+        CoreUObject::FBoxSphereBounds                                ReturnValue;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStaticMesh_GetBoundingBox_Params
+    {
+    public:
+        CoreUObject::FBox                                            ReturnValue;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent2D_CaptureScene_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent2D_AddOrUpdateBlendable_Params
+    {
+    public:
+        BasicTypes::TScriptInterface<Engine::IBlendableInterface>    InBlendableObject;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
+        float                                                        InWeight;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponentCube_CaptureScene_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ASceneCaptureCube_OnInterpToggle_Params
+    {
+    public:
+        bool                                                         bEnable;                                                 //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_SetLODSettings_Params
+    {
+    public:
+        Engine::USkeletalMeshLODSettings*                            InLODSettings;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_NumSockets_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_IsSectionUsingCloth_Params
+    {
+    public:
+        int32_t                                                      InSectionIndex;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bCheckCorrespondingSections;                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0005(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_GetSocketByIndex_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::USkeletalMeshSocket*                                 ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_GetNodeMappingContainer_Params
+    {
+    public:
+        Engine::UBlueprint*                                          SourceAsset;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UNodeMappingContainer*                               ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_GetImportedBounds_Params
+    {
+    public:
+        CoreUObject::FBoxSphereBounds                                ReturnValue;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_GetBounds_Params
+    {
+    public:
+        CoreUObject::FBoxSphereBounds                                ReturnValue;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_FindSocketAndIndex_Params
+    {
+    public:
+        BasicTypes::FName                                            InSocketName;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      OutIndex;                                                //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x000C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::USkeletalMeshSocket*                                 ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMesh_FindSocket_Params
+    {
+    public:
+        BasicTypes::FName                                            InSocketName;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::USkeletalMeshSocket*                                 ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ASkeletalMeshActor_OnRep_ReplicatedPhysAsset_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ASkeletalMeshActor_OnRep_ReplicatedMesh_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ASkeletalMeshActor_OnRep_ReplicatedMaterial1_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ASkeletalMeshActor_OnRep_ReplicatedMaterial0_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMeshSocket_InitializeSocketFromLocation_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              SkelComp;                                                //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         WorldLocation;                                           //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         WorldNormal;                                             //  0x0014(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USkeletalMeshSocket_GetSocketLocation_Params
+    {
+    public:
+        Engine::USkeletalMeshComponent*                              SkelComp;                                                //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ASkyLight_OnRep_bEnabled_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVectorFieldComponent_SetIntensity_Params
+    {
+    public:
+        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVisualLoggerKismetLibrary_RedirectVislog_Params
+    {
+    public:
+        CoreUObject::UObject*                                        SourceOwner;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::UObject*                                        DestinationOwner;                                        //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVisualLoggerKismetLibrary_LogText_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          Text;                                                    //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            LogCategory;                                             //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bAddToMessageLog;                                        //  0x0020(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVisualLoggerKismetLibrary_LogSegment_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         SegmentStart;                                            //  0x0008(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         SegmentEnd;                                              //  0x0014(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          Text;                                                    //  0x0020(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ObjectColor;                                             //  0x0030(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Thickness;                                               //  0x0040(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0044(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FName                                            CategoryName;                                            //  0x0048(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bAddToMessageLog;                                        //  0x0050(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVisualLoggerKismetLibrary_LogLocation_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0014(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          Text;                                                    //  0x0018(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ObjectColor;                                             //  0x0028(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Radius;                                                  //  0x0038(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0002[0x4];                                   //  0x003C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FName                                            LogCategory;                                             //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bAddToMessageLog;                                        //  0x0048(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVisualLoggerKismetLibrary_LogBox_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FBox                                            BoxShape;                                                //  0x0008(0x001C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0003[0x4];                                   //  0x0024(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          Text;                                                    //  0x0028(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FLinearColor                                    ObjectColor;                                             //  0x0038(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            LogCategory;                                             //  0x0048(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bAddToMessageLog;                                        //  0x0050(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVisualLoggerKismetLibrary_EnableRecording_Params
+    {
+    public:
+        bool                                                         bEnabled;                                                //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVOIPTalker_RegisterWithPlayerState_Params
+    {
+    public:
+        Engine::APlayerState*                                        OwningState;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVOIPTalker_GetVoiceLevel_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVOIPTalker_CreateTalkerForPlayer_Params
+    {
+    public:
+        Engine::APlayerState*                                        OwningState;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UVOIPTalker*                                         ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVOIPTalker_BPOnTalkingEnd_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVOIPTalker_BPOnTalkingBegin_Params
+    {
+    public:
+        Engine::UAudioComponent*                                     AudioComponent;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVOIPStatics_SetMicThreshold_Params
+    {
+    public:
+        float                                                        InThreshold;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UWindDirectionalSourceComponent_SetWindType_Params
+    {
+    public:
+        Engine::EWindSourceType                                      InNewType;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UWindDirectionalSourceComponent_SetStrength_Params
+    {
+    public:
+        float                                                        InNewStrength;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UWindDirectionalSourceComponent_SetSpeed_Params
+    {
+    public:
+        float                                                        InNewSpeed;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UWindDirectionalSourceComponent_SetRadius_Params
+    {
+    public:
+        float                                                        InNewRadius;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UWindDirectionalSourceComponent_SetMinimumGustAmount_Params
+    {
+    public:
+        float                                                        InNewMinGust;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UWindDirectionalSourceComponent_SetMaximumGustAmount_Params
+    {
+    public:
+        float                                                        InNewMaxGust;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AWorldSettings_OnRep_WorldGravityZ_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetOrientationDriveTwistAndSwing_Params
+    {
+    public:
+        bool                                                         bEnableTwistDrive;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnableSwingDrive;                                       //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetOrientationDriveSLERP_Params
+    {
+    public:
+        bool                                                         bEnableSLERP;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearZLimit_Params
+    {
+    public:
+        Engine::ELinearConstraintMotion                              ConstraintType;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        LimitSize;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearYLimit_Params
+    {
+    public:
+        Engine::ELinearConstraintMotion                              ConstraintType;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        LimitSize;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearXLimit_Params
+    {
+    public:
+        Engine::ELinearConstraintMotion                              ConstraintType;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0002[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        LimitSize;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearVelocityTarget_Params
+    {
+    public:
+        CoreUObject::FVector                                         InVelTarget;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearVelocityDrive_Params
+    {
+    public:
+        bool                                                         bEnableDriveX;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnableDriveY;                                           //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnableDriveZ;                                           //  0x0002(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearPositionTarget_Params
+    {
+    public:
+        CoreUObject::FVector                                         InPosTarget;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearPositionDrive_Params
+    {
+    public:
+        bool                                                         bEnableDriveX;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnableDriveY;                                           //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnableDriveZ;                                           //  0x0002(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearDriveParams_Params
+    {
+    public:
+        float                                                        PositionStrength;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        VelocityStrength;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InForceLimit;                                            //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetLinearBreakable_Params
+    {
+    public:
+        bool                                                         bLinearBreakable;                                        //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0003[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        LinearBreakThreshold;                                    //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetDisableCollision_Params
+    {
+    public:
+        bool                                                         bDisableCollision;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetConstraintReferencePosition_Params
+    {
+    public:
+        Engine::EConstraintFrame                                     Frame;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0004[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FVector                                         RefPosition;                                             //  0x0004(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetConstraintReferenceOrientation_Params
+    {
+    public:
+        Engine::EConstraintFrame                                     Frame;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0005[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FVector                                         PriAxis;                                                 //  0x0004(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         SecAxis;                                                 //  0x0010(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetConstraintReferenceFrame_Params
+    {
+    public:
+        Engine::EConstraintFrame                                     Frame;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0006[0xF];                                   //  0x0001(0x000F) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      RefFrame;                                                //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetConstrainedComponents_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 Component1;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            BoneName1;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UPrimitiveComponent*                                 Component2;                                              //  0x0010(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            BoneName2;                                               //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularVelocityTarget_Params
+    {
+    public:
+        CoreUObject::FVector                                         InVelTarget;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularVelocityDriveTwistAndSwing_Params
+    {
+    public:
+        bool                                                         bEnableTwistDrive;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnableSwingDrive;                                       //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularVelocityDriveSLERP_Params
+    {
+    public:
+        bool                                                         bEnableSLERP;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularVelocityDrive_Params
+    {
+    public:
+        bool                                                         bEnableSwingDrive;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnableTwistDrive;                                       //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularTwistLimit_Params
+    {
+    public:
+        Engine::EAngularConstraintMotion                             ConstraintType;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0007[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        TwistLimitAngle;                                         //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularSwing2Limit_Params
+    {
+    public:
+        Engine::EAngularConstraintMotion                             MotionType;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0008[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        Swing2LimitAngle;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularSwing1Limit_Params
+    {
+    public:
+        Engine::EAngularConstraintMotion                             MotionType;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0009[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        Swing1LimitAngle;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularOrientationTarget_Params
+    {
+    public:
+        CoreUObject::FRotator                                        InPosTarget;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularOrientationDrive_Params
+    {
+    public:
+        bool                                                         bEnableSwingDrive;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bEnableTwistDrive;                                       //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularDriveParams_Params
+    {
+    public:
+        float                                                        PositionStrength;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        VelocityStrength;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InForceLimit;                                            //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularDriveMode_Params
+    {
+    public:
+        Engine::EAngularDriveMode                                    DriveMode;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_SetAngularBreakable_Params
+    {
+    public:
+        bool                                                         bAngularBreakable;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0010[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        AngularBreakThreshold;                                   //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_IsBroken_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_GetCurrentTwist_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_GetCurrentSwing2_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_GetCurrentSwing1_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_GetConstraintForce_Params
+    {
+    public:
+        CoreUObject::FVector                                         OutLinearForce;                                          //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         OutAngularForce;                                         //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsConstraintComponent_BreakConstraint_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetYScale_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetXScale_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetWorldSize_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetVertSpacingAdjust_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetVerticalAlignment_Params
+    {
+    public:
+        Engine::EVerticalTextAligment                                Value;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetTextRenderColor_Params
+    {
+    public:
+        CoreUObject::FColor                                          Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetTextMaterial_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  Material;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetText_Params
+    {
+    public:
+        BasicTypes::FString                                          Value;                                                   //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetHorizSpacingAdjust_Params
+    {
+    public:
+        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetHorizontalAlignment_Params
+    {
+    public:
+        Engine::EHorizTextAligment                                   Value;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_SetFont_Params
+    {
+    public:
+        Engine::UFont*                                               Value;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_K2_SetText_Params
+    {
+    public:
+        BasicTypes::FText                                            Value;                                                   //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_GetTextWorldSize_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTextRenderComponent_GetTextLocalSize_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_Stop_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetVectorCurve_Params
+    {
+    public:
+        Engine::UCurveVector*                                        NewVectorCurve;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            VectorTrackName;                                         //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetTimelineLengthMode_Params
+    {
+    public:
+        Engine::ETimelineLengthMode                                  NewLengthMode;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetTimelineLength_Params
+    {
+    public:
+        float                                                        NewLength;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetPlayRate_Params
+    {
+    public:
+        float                                                        NewRate;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetPlaybackPosition_Params
+    {
+    public:
+        float                                                        NewPosition;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bFireEvents;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bFireUpdate;                                             //  0x0005(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetNewTime_Params
+    {
+    public:
+        float                                                        NewTime;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetLooping_Params
+    {
+    public:
+        bool                                                         bNewLooping;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetLinearColorCurve_Params
+    {
+    public:
+        Engine::UCurveLinearColor*                                   NewLinearColorCurve;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            LinearColorTrackName;                                    //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetIgnoreTimeDilation_Params
+    {
+    public:
+        bool                                                         bNewIgnoreTimeDilation;                                  //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_SetFloatCurve_Params
+    {
+    public:
+        Engine::UCurveFloat*                                         NewFloatCurve;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            FloatTrackName;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_ReverseFromEnd_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_Reverse_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_PlayFromStart_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_Play_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_OnRep_Timeline_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_IsReversing_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_IsPlaying_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_IsLooping_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_GetTimeLineLength_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_GetPlayRate_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_GetPlaybackPosition_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimelineComponent_GetIgnoreTimeDilation_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_SetUVRect_Params
+    {
+    public:
+        CoreUObject::FBox2D                                          InUVRect;                                                //  0x0000(0x0014)  (Parm, ZeroConstructor, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_SetTexture_Params
+    {
+    public:
+        Engine::UTexture*                                            InTexture;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_SetQuadSize_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       InQuadSize;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_SetPriority_Params
+    {
+    public:
+        int32_t                                                      InPriority;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_MarkTextureForUpdate_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_GetUVRect_Params
+    {
+    public:
+        CoreUObject::FBox2D                                          ReturnValue;                                             //  0x0000(0x0014)  (Parm, OutParm, ZeroConstructor, ReturnParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_GetTexture_Params
+    {
+    public:
+        Engine::UTexture*                                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_GetQuadSize_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerComponent_GetPriority_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerFunctionLibrary_ShowSplashScreen_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerFunctionLibrary_SetSplashScreen_Params
+    {
+    public:
+        Engine::UTexture*                                            Texture;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       Scale;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Offset;                                                  //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bShowLoadingMovie;                                       //  0x001C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bShowOnSet;                                              //  0x001D(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerFunctionLibrary_HideSplashScreen_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UStereoLayerFunctionLibrary_EnableAutoLoadingSplashScreen_Params
+    {
+    public:
+        bool                                                         InAutoShowEnabled;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_SetTargetRotation_Params
+    {
+    public:
+        CoreUObject::FRotator                                        NewRotation;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_SetTargetLocationAndRotation_Params
+    {
+    public:
+        CoreUObject::FVector                                         NewLocation;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        NewRotation;                                             //  0x000C(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_SetTargetLocation_Params
+    {
+    public:
+        CoreUObject::FVector                                         NewLocation;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_SetLinearStiffness_Params
+    {
+    public:
+        float                                                        NewLinearStiffness;                                      //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_SetLinearDamping_Params
+    {
+    public:
+        float                                                        NewLinearDamping;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_SetInterpolationSpeed_Params
+    {
+    public:
+        float                                                        NewInterpolationSpeed;                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_SetAngularStiffness_Params
+    {
+    public:
+        float                                                        NewAngularStiffness;                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_SetAngularDamping_Params
+    {
+    public:
+        float                                                        NewAngularDamping;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_ReleaseComponent_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_GrabComponentAtLocationWithRotation_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 Component;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            InBoneName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Location;                                                //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        Rotation;                                                //  0x001C(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_GrabComponentAtLocation_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 Component;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            InBoneName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         GrabLocation;                                            //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_GrabComponent_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 Component;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            InBoneName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         GrabLocation;                                            //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bConstrainRotation;                                      //  0x001C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_GetTargetLocationAndRotation_Params
+    {
+    public:
+        CoreUObject::FVector                                         TargetLocation;                                          //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        TargetRotation;                                          //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsHandleComponent_GetGrabbedComponent_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 ReturnValue;                                             //  0x0000(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsSpringComponent_GetSpringRestingPoint_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsSpringComponent_GetSpringDirection_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsSpringComponent_GetSpringCurrentEndPoint_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPhysicsSpringComponent_GetNormalizedCompressionScalar_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -16940,6 +22091,209 @@ namespace CG::Engine
      * Size -> 0x0000
      */
     class UKismetInputLibrary_CalibrateTilt_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTwitterIntegrationBase_TwitterRequest_Params
+    {
+    public:
+        BasicTypes::FString                                          URL;                                                     //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<BasicTypes::FString>                      ParamKeysAndValues;                                      //  0x0010(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        Engine::ETwitterRequestMethod                                RequestMethod;                                           //  0x0020(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0021(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        int32_t                                                      AccountIndex;                                            //  0x0024(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0028(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTwitterIntegrationBase_ShowTweetUI_Params
+    {
+    public:
+        BasicTypes::FString                                          InitialMessage;                                          //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          URL;                                                     //  0x0010(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          Picture;                                                 //  0x0020(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0030(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTwitterIntegrationBase_Init_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTwitterIntegrationBase_GetNumAccounts_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTwitterIntegrationBase_GetAccountName_Params
+    {
+    public:
+        int32_t                                                      AccountIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTwitterIntegrationBase_CanShowTweetUI_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTwitterIntegrationBase_AuthorizeAccounts_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHealthSnapshotBlueprintLibrary_StopPerformanceSnapshots_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHealthSnapshotBlueprintLibrary_StartPerformanceSnapshots_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHealthSnapshotBlueprintLibrary_LogPerformanceSnapshot_Params
+    {
+    public:
+        BasicTypes::FString                                          SnapshotTitle;                                           //  0x0000(0x0010)  (ConstParm, Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bResetStats;                                             //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class APlanarReflection_OnInterpToggle_Params
+    {
+    public:
+        bool                                                         bEnable;                                                 //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_ShowOnlyComponent_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 InComponent;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_ShowOnlyActorComponents_Params
+    {
+    public:
+        Engine::AActor*                                              InActor;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_SetCaptureSortPriority_Params
+    {
+    public:
+        int32_t                                                      NewCaptureSortPriority;                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_RemoveShowOnlyComponent_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 InComponent;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_RemoveShowOnlyActorComponents_Params
+    {
+    public:
+        Engine::AActor*                                              InActor;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_HideComponent_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 InComponent;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_HideActorComponents_Params
+    {
+    public:
+        Engine::AActor*                                              InActor;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_ClearShowOnlyComponents_Params
+    {
+    public:
+        Engine::UPrimitiveComponent*                                 InComponent;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USceneCaptureComponent_ClearHiddenComponents_Params
     {
     };
 
@@ -22119,5241 +27473,6 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class UMaterialInterface_SetForceMipLevelsToBeResident_Params
-    {
-    public:
-        bool                                                         OverrideForceMiplevelsToBeResident;                      //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bForceMiplevelsToBeResidentValue;                        //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x2];                                   //  0x0002(0x0002) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        ForceDuration;                                           //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      CinematicTextureGroups;                                  //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInterface_GetPhysicalMaterial_Params
-    {
-    public:
-        Engine::UPhysicalMaterial*                                   ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInterface_GetBaseMaterial_Params
-    {
-    public:
-        Engine::UMaterial*                                           ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULocalLightComponent_SetAttenuationRadius_Params
-    {
-    public:
-        float                                                        NewRadius;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULocalLightComponent_GetUnitsConversionFactor_Params
-    {
-    public:
-        Engine::ELightUnits                                          SrcUnits;                                                //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::ELightUnits                                          TargetUnits;                                             //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x2];                                   //  0x0002(0x0002) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        CosHalfConeAngle;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponentBase_SetCastVolumetricShadow_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponentBase_SetCastShadows_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponentBase_GetLightColor_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetVolumetricScatteringIntensity_Params
-    {
-    public:
-        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetTransmission_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetTemperature_Params
-    {
-    public:
-        float                                                        NewTemperature;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetShadowBias_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetLightFunctionScale_Params
-    {
-    public:
-        CoreUObject::FVector                                         NewLightFunctionScale;                                   //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetLightFunctionMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  NewLightFunctionMaterial;                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetLightFunctionFadeDistance_Params
-    {
-    public:
-        float                                                        NewLightFunctionFadeDistance;                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetLightFunctionDisabledBrightness_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetLightColor_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    NewLightColor;                                           //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bSRGB;                                                   //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetIntensity_Params
-    {
-    public:
-        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetIndirectLightingIntensity_Params
-    {
-    public:
-        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetIESTexture_Params
-    {
-    public:
-        Engine::UTextureLightProfile*                                NewValue;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetForceCachedShadowsForMovablePrimitives_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetEnableLightShaftBloom_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetBloomTint_Params
-    {
-    public:
-        CoreUObject::FColor                                          NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetBloomThreshold_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetBloomScale_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetAffectTranslucentLighting_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULightComponent_SetAffectDynamicIndirectLighting_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetShadowDistanceFadeoutFraction_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetOcclusionMaskDarkness_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetLightShaftOverrideDirection_Params
-    {
-    public:
-        CoreUObject::FVector                                         NewValue;                                                //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetEnableLightShaftOcclusion_Params
-    {
-    public:
-        bool                                                         bNewValue;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetDynamicShadowDistanceStationaryLight_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetDynamicShadowDistanceMovableLight_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetDynamicShadowCascades_Params
-    {
-    public:
-        int32_t                                                      NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetCascadeTransitionFraction_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDirectionalLightComponent_SetCascadeDistributionExponent_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInterpToMovementComponent_StopSimulating_Params
-    {
-    public:
-        Engine::FHitResult                                           HitResult;                                               //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInterpToMovementComponent_RestartMovement_Params
-    {
-    public:
-        float                                                        InitialDirection;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInterpToMovementComponent_OnInterpToWaitEndDelegate__DelegateSignature_Params
-    {
-    public:
-        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInterpToMovementComponent_OnInterpToWaitBeginDelegate__DelegateSignature_Params
-    {
-    public:
-        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInterpToMovementComponent_OnInterpToStopDelegate__DelegateSignature_Params
-    {
-    public:
-        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInterpToMovementComponent_OnInterpToReverseDelegate__DelegateSignature_Params
-    {
-    public:
-        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInterpToMovementComponent_OnInterpToResetDelegate__DelegateSignature_Params
-    {
-    public:
-        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-        float                                                        Time;                                                    //  0x0088(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInterpToMovementComponent_FinaliseControlPoints_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraAnimInst_Stop_Params
-    {
-    public:
-        bool                                                         bImmediate;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraAnimInst_SetScale_Params
-    {
-    public:
-        float                                                        NewDuration;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraAnimInst_SetDuration_Params
-    {
-    public:
-        float                                                        NewDuration;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraModifier_IsDisabled_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraModifier_GetViewTarget_Params
-    {
-    public:
-        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraModifier_EnableModifier_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraModifier_DisableModifier_Params
-    {
-    public:
-        bool                                                         bImmediate;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraModifier_BlueprintModifyPostProcess_Params
-    {
-    public:
-        float                                                        DeltaTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        PostProcessBlendWeight;                                  //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::FPostProcessSettings                                 PostProcessSettings;                                     //  0x0010(0x04E0)  (Parm, OutParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraModifier_BlueprintModifyCamera_Params
-    {
-    public:
-        float                                                        DeltaTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ViewLocation;                                            //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        ViewRotation;                                            //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        float                                                        FOV;                                                     //  0x001C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         NewViewLocation;                                         //  0x0020(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        NewViewRotation;                                         //  0x002C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        float                                                        NewFOV;                                                  //  0x0038(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraShake_ReceiveStopShake_Params
-    {
-    public:
-        bool                                                         bImmediately;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraShake_ReceivePlayShake_Params
-    {
-    public:
-        float                                                        Scale;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraShake_ReceiveIsFinished_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCameraShake_BlueprintUpdateCameraShake_Params
-    {
-    public:
-        float                                                        DeltaTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Alpha;                                                   //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::FMinimalViewInfo                                     POV;                                                     //  0x0010(0x0530)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::FMinimalViewInfo                                     ModifiedPOV;                                             //  0x0540(0x0530)  (Parm, OutParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_TextSize_Params
-    {
-    public:
-        Engine::UFont*                                               RenderFont;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          RenderText;                                              //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       Scale;                                                   //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0020(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_StrLen_Params
-    {
-    public:
-        Engine::UFont*                                               RenderFont;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          RenderText;                                              //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_Project_Params
-    {
-    public:
-        CoreUObject::FVector                                         WorldLocation;                                           //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawTriangle_Params
-    {
-    public:
-        Engine::UTexture*                                            RenderTexture;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<Engine::FCanvasUVTri>                     Triangles;                                               //  0x0008(0x0010)  (Parm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawTexture_Params
-    {
-    public:
-        Engine::UTexture*                                            RenderTexture;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenSize;                                              //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       CoordinatePosition;                                      //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       CoordinateSize;                                          //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0028(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EBlendMode                                           BlendMode;                                               //  0x0038(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0039(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        Rotation;                                                //  0x003C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       PivotPoint;                                              //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawText_Params
-    {
-    public:
-        Engine::UFont*                                               RenderFont;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          RenderText;                                              //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       Scale;                                                   //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0028(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Kerning;                                                 //  0x0038(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    ShadowColor;                                             //  0x003C(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ShadowOffset;                                            //  0x004C(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bCentreX;                                                //  0x0054(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bCentreY;                                                //  0x0055(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bOutlined;                                               //  0x0056(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x1];                                   //  0x0057(0x0001) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FLinearColor                                    OutlineColor;                                            //  0x0058(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawPolygon_Params
-    {
-    public:
-        Engine::UTexture*                                            RenderTexture;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       Radius;                                                  //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NumberOfSides;                                           //  0x0018(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x001C(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawMaterialTriangle_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  RenderMaterial;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<Engine::FCanvasUVTri>                     Triangles;                                               //  0x0008(0x0010)  (Parm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  RenderMaterial;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenSize;                                              //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       CoordinatePosition;                                      //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       CoordinateSize;                                          //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Rotation;                                                //  0x0028(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       PivotPoint;                                              //  0x002C(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawLine_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ScreenPositionA;                                         //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPositionB;                                         //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Thickness;                                               //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0014(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawBox_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenSize;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Thickness;                                               //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0014(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_DrawBorder_Params
-    {
-    public:
-        Engine::UTexture*                                            BorderTexture;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTexture*                                            BackgroundTexture;                                       //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTexture*                                            LeftBorderTexture;                                       //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTexture*                                            RightBorderTexture;                                      //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTexture*                                            TopBorderTexture;                                        //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTexture*                                            BottomBorderTexture;                                     //  0x0028(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0030(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenSize;                                              //  0x0038(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       CoordinatePosition;                                      //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       CoordinateSize;                                          //  0x0048(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    RenderColor;                                             //  0x0050(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       BorderScale;                                             //  0x0060(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       BackgroundScale;                                         //  0x0068(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Rotation;                                                //  0x0070(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       PivotPoint;                                              //  0x0074(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       CornerSize;                                              //  0x007C(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UCanvas_K2_Deproject_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         WorldOrigin;                                             //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         WorldDirection;                                          //  0x0014(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMeshVertexPainterKismetLibrary_RemovePaintedVertices_Params
-    {
-    public:
-        Engine::UStaticMeshComponent*                                StaticMeshComponent;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMeshVertexPainterKismetLibrary_PaintVerticesSingleColor_Params
-    {
-    public:
-        Engine::UStaticMeshComponent*                                StaticMeshComponent;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    FillColor;                                               //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bConvertToSRGB;                                          //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMeshVertexPainterKismetLibrary_PaintVerticesLerpAlongAxis_Params
-    {
-    public:
-        Engine::UStaticMeshComponent*                                StaticMeshComponent;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    StartColor;                                              //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    EndColor;                                                //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EVertexPaintAxis                                     Axis;                                                    //  0x0028(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bConvertToSRGB;                                          //  0x0029(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADecalActor_SetDecalMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  NewDecalMaterial;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADecalActor_GetDecalMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADecalActor_CreateDynamicMaterialInstance_Params
-    {
-    public:
-        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_SetSortOrder_Params
-    {
-    public:
-        int32_t                                                      Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_SetFadeScreenSize_Params
-    {
-    public:
-        float                                                        NewFadeScreenSize;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_SetFadeOut_Params
-    {
-    public:
-        float                                                        StartDelay;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Duration;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         DestroyOwnerAfterFade;                                   //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_SetFadeIn_Params
-    {
-    public:
-        float                                                        StartDelay;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Duaration;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_SetDecalMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  NewDecalMaterial;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_GetFadeStartDelay_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_GetFadeInStartDelay_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_GetFadeInDuration_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_GetFadeDuration_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_GetDecalMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDecalComponent_CreateDynamicMaterialInstance_Params
-    {
-    public:
-        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystem_ContainsEmitterType_Params
-    {
-    public:
-        CoreUObject::UObject*                                        TypeData;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetVectorParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Param;                                                   //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetTrailSourceData_Params
-    {
-    public:
-        BasicTypes::FName                                            InFirstSocketName;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            InSecondSocketName;                                      //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::ETrailWidthMode                                      InWidthMode;                                             //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0011(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        InWidth;                                                 //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetTemplate_Params
-    {
-    public:
-        Engine::UParticleSystem*                                     NewTemplate;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetMaterialParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UMaterialInterface*                                  Param;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetFloatParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Param;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetEmitterEnable_Params
-    {
-    public:
-        BasicTypes::FName                                            EmitterName;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bNewEnableState;                                         //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetColorParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    Param;                                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetBeamTargetTangent_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         NewTangentPoint;                                         //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      TargetIndex;                                             //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetBeamTargetStrength_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        NewTargetStrength;                                       //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      TargetIndex;                                             //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetBeamTargetPoint_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         NewTargetPoint;                                          //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      TargetIndex;                                             //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetBeamSourceTangent_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         NewTangentPoint;                                         //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      SourceIndex;                                             //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetBeamSourceStrength_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        NewSourceStrength;                                       //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      SourceIndex;                                             //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetBeamSourcePoint_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         NewSourcePoint;                                          //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      SourceIndex;                                             //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetBeamEndPoint_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         NewEndPoint;                                             //  0x0004(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetAutoAttachParams_Params
-    {
-    public:
-        Engine::USceneComponent*                                     Parent;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SocketName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EAttachLocation                                      LocationType;                                            //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetAutoAttachmentParameters_Params
-    {
-    public:
-        Engine::USceneComponent*                                     Parent;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SocketName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EAttachmentRule                                      LocationRule;                                            //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EAttachmentRule                                      RotationRule;                                            //  0x0011(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EAttachmentRule                                      ScaleRule;                                               //  0x0012(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_SetActorParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              Param;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_ReleaseToPool_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetNumActiveParticles_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetNamedMaterial_Params
-    {
-    public:
-        BasicTypes::FName                                            InName;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UMaterialInterface*                                  ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetBeamTargetTangent_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      TargetIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         OutTangentPoint;                                         //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetBeamTargetStrength_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      TargetIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        OutTargetStrength;                                       //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x000C(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetBeamTargetPoint_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      TargetIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         OutTargetPoint;                                          //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetBeamSourceTangent_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      SourceIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         OutTangentPoint;                                         //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetBeamSourceStrength_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      SourceIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        OutSourceStrength;                                       //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x000C(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetBeamSourcePoint_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      SourceIndex;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         OutSourcePoint;                                          //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GetBeamEndPoint_Params
-    {
-    public:
-        int32_t                                                      EmitterIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         OutEndPoint;                                             //  0x0004(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_GenerateParticleEvent_Params
-    {
-    public:
-        BasicTypes::FName                                            InEventName;                                             //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        InEmitterTime;                                           //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         InLocation;                                              //  0x000C(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         InDirection;                                             //  0x0018(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         InVelocity;                                              //  0x0024(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_EndTrails_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_CreateNamedDynamicMaterialInstance_Params
-    {
-    public:
-        BasicTypes::FName                                            InName;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UMaterialInterface*                                  SourceMaterial;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UParticleSystemComponent_BeginTrails_Params
-    {
-    public:
-        BasicTypes::FName                                            InFirstSocketName;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            InSecondSocketName;                                      //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::ETrailWidthMode                                      InWidthMode;                                             //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0011(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        InWidth;                                                 //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPawnNoiseEmitterComponent_MakeNoise_Params
-    {
-    public:
-        Engine::AActor*                                              NoiseMaker;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Loudness;                                                //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         NoiseLocation;                                           //  0x000C(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicalAnimationComponent_SetStrengthMultiplyer_Params
-    {
-    public:
-        float                                                        InStrengthMultiplyer;                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicalAnimationComponent_SetSkeletalMeshComponent_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              InSkeletalMeshComponent;                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicalAnimationComponent_GetBodyTargetTransform_Params
-    {
-    public:
-        BasicTypes::FName                                            BodyName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0010(0x0030)  (Parm, OutParm, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicalAnimationComponent_ApplyPhysicalAnimationSettingsBelow_Params
-    {
-    public:
-        BasicTypes::FName                                            BodyName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::FPhysicalAnimationData                               PhysicalAnimationData;                                   //  0x0008(0x0028)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-        bool                                                         bIncludeSelf;                                            //  0x0030(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicalAnimationComponent_ApplyPhysicalAnimationSettings_Params
-    {
-    public:
-        BasicTypes::FName                                            BodyName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::FPhysicalAnimationData                               PhysicalAnimationData;                                   //  0x0008(0x0028)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicalAnimationComponent_ApplyPhysicalAnimationProfileBelow_Params
-    {
-    public:
-        BasicTypes::FName                                            BodyName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            ProfileName;                                             //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bIncludeSelf;                                            //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bClearNotFound;                                          //  0x0011(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimNotify_Received_Notify_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimNotify_GetNotifyName_Params
-    {
-    public:
-        BasicTypes::FString                                          ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimNotifyState_Received_NotifyTick_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        FrameDeltaTime;                                          //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimNotifyState_Received_NotifyEnd_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimNotifyState_Received_NotifyBegin_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        TotalDuration;                                           //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0014(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimNotifyState_GetNotifyName_Params
-    {
-    public:
-        BasicTypes::FString                                          ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameViewportClient_SSSwapControllers_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameViewportClient_ShowTitleSafeArea_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameViewportClient_SetConsoleTarget_Params
-    {
-    public:
-        int32_t                                                      PlayerIndex;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APostProcessVolume_AddOrUpdateBlendable_Params
-    {
-    public:
-        BasicTypes::TScriptInterface<Engine::IBlendableInterface>    InBlendableObject;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
-        float                                                        InWeight;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ARadialForceActor_ToggleForce_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ARadialForceActor_FireImpulse_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ARadialForceActor_EnableForce_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ARadialForceActor_DisableForce_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URadialForceComponent_RemoveObjectTypeToAffect_Params
-    {
-    public:
-        Engine::EObjectTypeQuery                                     ObjectType;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URadialForceComponent_FireImpulse_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URadialForceComponent_AddObjectTypeToAffect_Params
-    {
-    public:
-        Engine::EObjectTypeQuery                                     ObjectType;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URectLightComponent_SetSourceWidth_Params
-    {
-    public:
-        float                                                        bNewValue;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URectLightComponent_SetSourceHeight_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_SetVectorParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    Value;                                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_SetTextureParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTexture*                                            Value;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_SetScalarParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Value;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_K2_InterpolateMaterialInstanceParams_Params
-    {
-    public:
-        Engine::UMaterialInstance*                                   SourceA;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UMaterialInstance*                                   SourceB;                                                 //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Alpha;                                                   //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_K2_GetVectorParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_K2_GetTextureParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTexture*                                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_K2_GetScalarParameterValue_Params
-    {
-    public:
-        BasicTypes::FName                                            ParameterName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_K2_CopyMaterialInstanceParameters_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  Source;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bQuickParametersOnly;                                    //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_CopyParameterOverrides_Params
-    {
-    public:
-        Engine::UMaterialInstance*                                   MaterialInstance;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialInstanceDynamic_CopyInterpParameters_Params
-    {
-    public:
-        Engine::UMaterialInstance*                                   Source;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMatineeActor_Stop_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMatineeActor_SetPosition_Params
-    {
-    public:
-        float                                                        NewPosition;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bJump;                                                   //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMatineeActor_SetLoopingState_Params
-    {
-    public:
-        bool                                                         bNewLooping;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMatineeActor_Reverse_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMatineeActor_Play_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMatineeActor_Pause_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMatineeActor_EnableGroupByName_Params
-    {
-    public:
-        BasicTypes::FString                                          GroupName;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnable;                                                 //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMatineeActor_ChangePlaybackDirection_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_SetLODSettings_Params
-    {
-    public:
-        Engine::USkeletalMeshLODSettings*                            InLODSettings;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_NumSockets_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_IsSectionUsingCloth_Params
-    {
-    public:
-        int32_t                                                      InSectionIndex;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bCheckCorrespondingSections;                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0005(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_GetSocketByIndex_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::USkeletalMeshSocket*                                 ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_GetNodeMappingContainer_Params
-    {
-    public:
-        Engine::UBlueprint*                                          SourceAsset;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UNodeMappingContainer*                               ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_GetImportedBounds_Params
-    {
-    public:
-        CoreUObject::FBoxSphereBounds                                ReturnValue;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_GetBounds_Params
-    {
-    public:
-        CoreUObject::FBoxSphereBounds                                ReturnValue;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_FindSocketAndIndex_Params
-    {
-    public:
-        BasicTypes::FName                                            InSocketName;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      OutIndex;                                                //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x000C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::USkeletalMeshSocket*                                 ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMesh_FindSocket_Params
-    {
-    public:
-        BasicTypes::FName                                            InSocketName;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::USkeletalMeshSocket*                                 ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ASkeletalMeshActor_OnRep_ReplicatedPhysAsset_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ASkeletalMeshActor_OnRep_ReplicatedMesh_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ASkeletalMeshActor_OnRep_ReplicatedMaterial1_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ASkeletalMeshActor_OnRep_ReplicatedMaterial0_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMeshSocket_InitializeSocketFromLocation_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              SkelComp;                                                //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         WorldLocation;                                           //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         WorldNormal;                                             //  0x0014(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkeletalMeshSocket_GetSocketLocation_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              SkelComp;                                                //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0008(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ASkyLight_OnRep_bEnabled_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetVolumetricScatteringIntensity_Params
-    {
-    public:
-        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetOcclusionTint_Params
-    {
-    public:
-        CoreUObject::FColor                                          InTint;                                                  //  0x0000(0x0004)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetOcclusionExponent_Params
-    {
-    public:
-        float                                                        InOcclusionExponent;                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetOcclusionContrast_Params
-    {
-    public:
-        float                                                        InOcclusionContrast;                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetMinOcclusion_Params
-    {
-    public:
-        float                                                        InMinOcclusion;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetLowerHemisphereColor_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    InLowerHemisphereColor;                                  //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetLightColor_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    NewLightColor;                                           //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetIntensity_Params
-    {
-    public:
-        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetIndirectLightingIntensity_Params
-    {
-    public:
-        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetCubemapBlend_Params
-    {
-    public:
-        Engine::UTextureCube*                                        SourceCubemap;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UTextureCube*                                        DestinationCubemap;                                      //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        InBlendFraction;                                         //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_SetCubemap_Params
-    {
-    public:
-        Engine::UTextureCube*                                        NewCubemap;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USkyLightComponent_RecaptureSky_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USoundSubmix_StopRecordingOutput_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EAudioRecordingExportType                            ExportType;                                              //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          Name;                                                    //  0x0010(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          Path;                                                    //  0x0020(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::USoundWave*                                          ExistingSoundWaveToOverwrite;                            //  0x0030(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USoundSubmix_StopEnvelopeFollowing_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USoundSubmix_StartRecordingOutput_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ExpectedDuration;                                        //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USoundSubmix_StartEnvelopeFollowing_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USoundSubmix_AddEnvelopeFollowerDelegate_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::UScriptDelegate                                  OnSubmixEnvelopeBP;                                      //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_UpdateMesh_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetStartTangent_Params
-    {
-    public:
-        CoreUObject::FVector                                         StartTangent;                                            //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetStartScale_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       StartScale;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetStartRoll_Params
-    {
-    public:
-        float                                                        StartRoll;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetStartPosition_Params
-    {
-    public:
-        CoreUObject::FVector                                         StartPos;                                                //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetStartOffset_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       StartOffset;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetStartAndEnd_Params
-    {
-    public:
-        CoreUObject::FVector                                         StartPos;                                                //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         StartTangent;                                            //  0x000C(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         EndPos;                                                  //  0x0018(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         EndTangent;                                              //  0x0024(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0030(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetSplineUpDir_Params
-    {
-    public:
-        CoreUObject::FVector                                         InSplineUpDir;                                           //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetForwardAxis_Params
-    {
-    public:
-        Engine::ESplineMeshAxis                                      InForwardAxis;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetEndTangent_Params
-    {
-    public:
-        CoreUObject::FVector                                         EndTangent;                                              //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetEndScale_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       EndScale;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetEndRoll_Params
-    {
-    public:
-        float                                                        EndRoll;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetEndPosition_Params
-    {
-    public:
-        CoreUObject::FVector                                         EndPos;                                                  //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetEndOffset_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       EndOffset;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetBoundaryMin_Params
-    {
-    public:
-        float                                                        InBoundaryMin;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_SetBoundaryMax_Params
-    {
-    public:
-        float                                                        InBoundaryMax;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUpdateMesh;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetStartTangent_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetStartScale_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetStartRoll_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetStartPosition_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetStartOffset_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetSplineUpDir_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetForwardAxis_Params
-    {
-    public:
-        Engine::ESplineMeshAxis                                      ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetEndTangent_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetEndScale_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetEndRoll_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetEndPosition_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetEndOffset_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetBoundaryMin_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USplineMeshComponent_GetBoundaryMax_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USpotLightComponent_SetOuterConeAngle_Params
-    {
-    public:
-        float                                                        NewOuterConeAngle;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USpotLightComponent_SetInnerConeAngle_Params
-    {
-    public:
-        float                                                        NewInnerConeAngle;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USpringArmComponent_IsCollisionFixApplied_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USpringArmComponent_GetUnfixedCameraPosition_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USpringArmComponent_GetTargetRotation_Params
-    {
-    public:
-        CoreUObject::FRotator                                        ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMesh_GetNumSections_Params
-    {
-    public:
-        int32_t                                                      InLOD;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMesh_GetNumLODs_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMesh_GetMaterialIndex_Params
-    {
-    public:
-        BasicTypes::FName                                            MaterialSlotName;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMesh_GetMaterial_Params
-    {
-    public:
-        int32_t                                                      MaterialIndex;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::UMaterialInterface*                                  ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMesh_GetBounds_Params
-    {
-    public:
-        CoreUObject::FBoxSphereBounds                                ReturnValue;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStaticMesh_GetBoundingBox_Params
-    {
-    public:
-        CoreUObject::FBox                                            ReturnValue;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_SetUVRect_Params
-    {
-    public:
-        CoreUObject::FBox2D                                          InUVRect;                                                //  0x0000(0x0014)  (Parm, ZeroConstructor, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_SetTexture_Params
-    {
-    public:
-        Engine::UTexture*                                            InTexture;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_SetQuadSize_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       InQuadSize;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_SetPriority_Params
-    {
-    public:
-        int32_t                                                      InPriority;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_MarkTextureForUpdate_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_GetUVRect_Params
-    {
-    public:
-        CoreUObject::FBox2D                                          ReturnValue;                                             //  0x0000(0x0014)  (Parm, OutParm, ZeroConstructor, ReturnParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_GetTexture_Params
-    {
-    public:
-        Engine::UTexture*                                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_GetQuadSize_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerComponent_GetPriority_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerFunctionLibrary_ShowSplashScreen_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerFunctionLibrary_SetSplashScreen_Params
-    {
-    public:
-        Engine::UTexture*                                            Texture;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       Scale;                                                   //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Offset;                                                  //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bShowLoadingMovie;                                       //  0x001C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bShowOnSet;                                              //  0x001D(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerFunctionLibrary_HideSplashScreen_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UStereoLayerFunctionLibrary_EnableAutoLoadingSplashScreen_Params
-    {
-    public:
-        bool                                                         InAutoShowEnabled;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimecodeProvider_GetTimecode_Params
-    {
-    public:
-        CoreUObject::FTimecode                                       ReturnValue;                                             //  0x0000(0x0014)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimecodeProvider_GetSynchronizationState_Params
-    {
-    public:
-        Engine::ETimecodeProviderSynchronizationState                ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimecodeProvider_GetFrameRate_Params
-    {
-    public:
-        CoreUObject::FFrameRate                                      ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USystemTimeTimecodeProvider_SetFrameRate_Params
-    {
-    public:
-        CoreUObject::FFrameRate                                      InFrameRate;                                             //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetYScale_Params
-    {
-    public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetXScale_Params
-    {
-    public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetWorldSize_Params
-    {
-    public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetVertSpacingAdjust_Params
-    {
-    public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetVerticalAlignment_Params
-    {
-    public:
-        Engine::EVerticalTextAligment                                Value;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetTextRenderColor_Params
-    {
-    public:
-        CoreUObject::FColor                                          Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetTextMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  Material;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetText_Params
-    {
-    public:
-        BasicTypes::FString                                          Value;                                                   //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetHorizSpacingAdjust_Params
-    {
-    public:
-        float                                                        Value;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetHorizontalAlignment_Params
-    {
-    public:
-        Engine::EHorizTextAligment                                   Value;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_SetFont_Params
-    {
-    public:
-        Engine::UFont*                                               Value;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_K2_SetText_Params
-    {
-    public:
-        BasicTypes::FText                                            Value;                                                   //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_GetTextWorldSize_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTextRenderComponent_GetTextLocalSize_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_Stop_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetVectorCurve_Params
-    {
-    public:
-        Engine::UCurveVector*                                        NewVectorCurve;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            VectorTrackName;                                         //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetTimelineLengthMode_Params
-    {
-    public:
-        Engine::ETimelineLengthMode                                  NewLengthMode;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetTimelineLength_Params
-    {
-    public:
-        float                                                        NewLength;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetPlayRate_Params
-    {
-    public:
-        float                                                        NewRate;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetPlaybackPosition_Params
-    {
-    public:
-        float                                                        NewPosition;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bFireEvents;                                             //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bFireUpdate;                                             //  0x0005(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetNewTime_Params
-    {
-    public:
-        float                                                        NewTime;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetLooping_Params
-    {
-    public:
-        bool                                                         bNewLooping;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetLinearColorCurve_Params
-    {
-    public:
-        Engine::UCurveLinearColor*                                   NewLinearColorCurve;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            LinearColorTrackName;                                    //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetIgnoreTimeDilation_Params
-    {
-    public:
-        bool                                                         bNewIgnoreTimeDilation;                                  //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_SetFloatCurve_Params
-    {
-    public:
-        Engine::UCurveFloat*                                         NewFloatCurve;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            FloatTrackName;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_ReverseFromEnd_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_Reverse_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_PlayFromStart_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_Play_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_OnRep_Timeline_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_IsReversing_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_IsPlaying_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_IsLooping_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_GetTimeLineLength_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_GetPlayRate_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_GetPlaybackPosition_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTimelineComponent_GetIgnoreTimeDilation_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimNotifyState_Trail_OverridePSTemplate_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              MeshComp;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UAnimSequenceBase*                                   Animation;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UParticleSystem*                                     ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_StopAnim_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetReverse_Params
-    {
-    public:
-        bool                                                         bInReverse;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetPreviewCurveOverride_Params
-    {
-    public:
-        BasicTypes::FName                                            PoseName;                                                //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Value;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bRemoveIfZero;                                           //  0x000C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetPositionWithPreviousTime_Params
-    {
-    public:
-        float                                                        InPosition;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        InPreviousTime;                                          //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bFireNotifies;                                           //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetPosition_Params
-    {
-    public:
-        float                                                        InPosition;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bFireNotifies;                                           //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetPlayRate_Params
-    {
-    public:
-        float                                                        InPlayRate;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetPlaying_Params
-    {
-    public:
-        bool                                                         bIsPlaying;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetLooping_Params
-    {
-    public:
-        bool                                                         bIsLooping;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetBlendSpaceInput_Params
-    {
-    public:
-        CoreUObject::FVector                                         InBlendInput;                                            //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_SetAnimationAsset_Params
-    {
-    public:
-        Engine::UAnimationAsset*                                     NewAsset;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bIsLooping;                                              //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0009(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        InPlayRate;                                              //  0x000C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_PlayAnim_Params
-    {
-    public:
-        bool                                                         bIsLooping;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        InPlayRate;                                              //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        InStartPosition;                                         //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_GetLength_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSingleNodeInstance_GetAnimationAsset_Params
-    {
-    public:
-        Engine::UAnimationAsset*                                     ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UArrowComponent_SetArrowColor_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    NewColor;                                                //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAsyncActionLoadPrimaryAsset_AsyncLoadPrimaryAsset_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FPrimaryAssetId                                 PrimaryAsset;                                            //  0x0008(0x0010)  (Parm, ZeroConstructor, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        LoadBundles;                                             //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::UAsyncActionLoadPrimaryAsset*                        ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAsyncActionLoadPrimaryAssetClass_AsyncLoadPrimaryAssetClass_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FPrimaryAssetId                                 PrimaryAsset;                                            //  0x0008(0x0010)  (Parm, ZeroConstructor, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        LoadBundles;                                             //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::UAsyncActionLoadPrimaryAssetClass*                   ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAsyncActionLoadPrimaryAssetList_AsyncLoadPrimaryAssetList_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<CoreUObject::FPrimaryAssetId>             PrimaryAssetList;                                        //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        LoadBundles;                                             //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::UAsyncActionLoadPrimaryAssetList*                    ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAsyncActionLoadPrimaryAssetClassList_AsyncLoadPrimaryAssetClassList_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<CoreUObject::FPrimaryAssetId>             PrimaryAssetList;                                        //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        LoadBundles;                                             //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::UAsyncActionLoadPrimaryAssetClassList*               ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAsyncActionChangePrimaryAssetBundles_AsyncChangeBundleStateForPrimaryAssetList_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<CoreUObject::FPrimaryAssetId>             PrimaryAssetList;                                        //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        AddBundles;                                              //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        RemoveBundles;                                           //  0x0028(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::UAsyncActionChangePrimaryAssetBundles*               ReturnValue;                                             //  0x0038(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAsyncActionChangePrimaryAssetBundles_AsyncChangeBundleStateForMatchingPrimaryAssets_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        NewBundles;                                              //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FName>                        OldBundles;                                              //  0x0018(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::UAsyncActionChangePrimaryAssetBundles*               ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_StartPrecompute_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetSunMultiplier_Params
-    {
-    public:
-        float                                                        NewSunMultiplier;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetStartDistance_Params
-    {
-    public:
-        float                                                        NewStartDistance;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetPrecomputeParams_Params
-    {
-    public:
-        float                                                        DensityHeight;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      MaxScatteringOrder;                                      //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      InscatterAltitudeSampleNum;                              //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetFogMultiplier_Params
-    {
-    public:
-        float                                                        NewFogMultiplier;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetDistanceScale_Params
-    {
-    public:
-        float                                                        NewDistanceScale;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetDistanceOffset_Params
-    {
-    public:
-        float                                                        NewDistanceOffset;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetDensityOffset_Params
-    {
-    public:
-        float                                                        NewDensityOffset;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetDensityMultiplier_Params
-    {
-    public:
-        float                                                        NewDensityMultiplier;                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetDefaultLightColor_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    NewLightColor;                                           //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetDefaultBrightness_Params
-    {
-    public:
-        float                                                        NewBrightness;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_SetAltitudeScale_Params
-    {
-    public:
-        float                                                        NewAltitudeScale;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_DisableSunDisk_Params
-    {
-    public:
-        bool                                                         NewSunDisk;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAtmosphericFogComponent_DisableGroundScattering_Params
-    {
-    public:
-        bool                                                         NewGroundScattering;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAudioVolume_SetReverbSettings_Params
-    {
-    public:
-        Engine::FReverbSettings                                      NewReverbSettings;                                       //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAudioVolume_SetPriority_Params
-    {
-    public:
-        float                                                        NewPriority;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAudioVolume_SetInteriorSettings_Params
-    {
-    public:
-        Engine::FInteriorSettings                                    NewInteriorSettings;                                     //  0x0000(0x0024)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAudioVolume_SetEnabled_Params
-    {
-    public:
-        bool                                                         bNewEnabled;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAudioVolume_OnRep_bEnabled_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVisualLoggerKismetLibrary_RedirectVislog_Params
-    {
-    public:
-        CoreUObject::UObject*                                        SourceOwner;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::UObject*                                        DestinationOwner;                                        //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVisualLoggerKismetLibrary_LogText_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          Text;                                                    //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            LogCategory;                                             //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bAddToMessageLog;                                        //  0x0020(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVisualLoggerKismetLibrary_LogSegment_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         SegmentStart;                                            //  0x0008(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         SegmentEnd;                                              //  0x0014(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          Text;                                                    //  0x0020(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    ObjectColor;                                             //  0x0030(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Thickness;                                               //  0x0040(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0044(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FName                                            CategoryName;                                            //  0x0048(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bAddToMessageLog;                                        //  0x0050(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVisualLoggerKismetLibrary_LogLocation_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0014(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          Text;                                                    //  0x0018(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    ObjectColor;                                             //  0x0028(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Radius;                                                  //  0x0038(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0002[0x4];                                   //  0x003C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FName                                            LogCategory;                                             //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bAddToMessageLog;                                        //  0x0048(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVisualLoggerKismetLibrary_LogBox_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FBox                                            BoxShape;                                                //  0x0008(0x001C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0003[0x4];                                   //  0x0024(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          Text;                                                    //  0x0028(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    ObjectColor;                                             //  0x0038(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            LogCategory;                                             //  0x0048(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bAddToMessageLog;                                        //  0x0050(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVisualLoggerKismetLibrary_EnableRecording_Params
-    {
-    public:
-        bool                                                         bEnabled;                                                //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVOIPTalker_RegisterWithPlayerState_Params
-    {
-    public:
-        Engine::APlayerState*                                        OwningState;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVOIPTalker_GetVoiceLevel_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVOIPTalker_CreateTalkerForPlayer_Params
-    {
-    public:
-        Engine::APlayerState*                                        OwningState;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UVOIPTalker*                                         ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVOIPTalker_BPOnTalkingEnd_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVOIPTalker_BPOnTalkingBegin_Params
-    {
-    public:
-        Engine::UAudioComponent*                                     AudioComponent;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVOIPStatics_SetMicThreshold_Params
-    {
-    public:
-        float                                                        InThreshold;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWindDirectionalSourceComponent_SetWindType_Params
-    {
-    public:
-        Engine::EWindSourceType                                      InNewType;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWindDirectionalSourceComponent_SetStrength_Params
-    {
-    public:
-        float                                                        InNewStrength;                                           //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWindDirectionalSourceComponent_SetSpeed_Params
-    {
-    public:
-        float                                                        InNewSpeed;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWindDirectionalSourceComponent_SetRadius_Params
-    {
-    public:
-        float                                                        InNewRadius;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWindDirectionalSourceComponent_SetMinimumGustAmount_Params
-    {
-    public:
-        float                                                        InNewMinGust;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWindDirectionalSourceComponent_SetMaximumGustAmount_Params
-    {
-    public:
-        float                                                        InNewMaxGust;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AWorldSettings_OnRep_WorldGravityZ_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlatformEventsComponent_SupportsConvertibleLaptops_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlatformEventsComponent_PlatformEventDelegate__DelegateSignature_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlatformEventsComponent_IsInTabletMode_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlatformEventsComponent_IsInLaptopMode_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlatformInterfaceWebResponse_GetNumHeaders_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlatformInterfaceWebResponse_GetHeaderValue_Params
-    {
-    public:
-        BasicTypes::FString                                          HeaderName;                                              //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          ReturnValue;                                             //  0x0010(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlatformInterfaceWebResponse_GetHeader_Params
-    {
-    public:
-        int32_t                                                      HeaderIndex;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          Header;                                                  //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          Value;                                                   //  0x0018(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayerInput_SetMouseSensitivity_Params
-    {
-    public:
-        float                                                        SensitivityX;                                            //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        SensitivityY;                                            //  0x0004(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayerInput_SetBind_Params
-    {
-    public:
-        BasicTypes::FName                                            BindName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          Command;                                                 //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayerInput_InvertAxisKey_Params
-    {
-    public:
-        InputCore::FKey                                              AxisKey;                                                 //  0x0000(0x0018)  (ConstParm, Parm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayerInput_InvertAxis_Params
-    {
-    public:
-        BasicTypes::FName                                            AxisName;                                                //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPlayerInput_ClearSmoothing_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlayerState_ReceiveOverrideWith_Params
-    {
-    public:
-        Engine::APlayerState*                                        OldPlayerState;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlayerState_ReceiveCopyProperties_Params
-    {
-    public:
-        Engine::APlayerState*                                        NewPlayerState;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlayerState_OnRep_UniqueId_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlayerState_OnRep_Score_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlayerState_OnRep_PlayerName_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlayerState_OnRep_PlayerId_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlayerState_OnRep_bIsInactive_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlayerState_GetPlayerName_Params
-    {
-    public:
-        BasicTypes::FString                                          ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APointLight_SetRadius_Params
-    {
-    public:
-        float                                                        NewRadius;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APointLight_SetLightFalloffExponent_Params
-    {
-    public:
-        float                                                        NewLightFalloffExponent;                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPointLightComponent_SetSourceRadius_Params
-    {
-    public:
-        float                                                        bNewValue;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPointLightComponent_SetSourceLength_Params
-    {
-    public:
-        float                                                        NewValue;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPointLightComponent_SetSoftSourceRadius_Params
-    {
-    public:
-        float                                                        bNewValue;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPointLightComponent_SetLightFalloffExponent_Params
-    {
-    public:
-        float                                                        NewLightFalloffExponent;                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UNavigationSystem_SimpleMoveToLocation_Params
-    {
-    public:
-        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Goal;                                                    //  0x0008(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UNavigationSystem_SimpleMoveToActor_Params
-    {
-    public:
-        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              Goal;                                                    //  0x0008(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAmbientSound_Stop_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAmbientSound_Play_Params
-    {
-    public:
-        float                                                        StartTime;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAmbientSound_FadeOut_Params
-    {
-    public:
-        float                                                        FadeOutDuration;                                         //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        FadeVolumeLevel;                                         //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAmbientSound_FadeIn_Params
-    {
-    public:
-        float                                                        FadeInDuration;                                          //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        FadeVolumeLevel;                                         //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AAmbientSound_AdjustVolume_Params
-    {
-    public:
-        float                                                        AdjustVolumeDuration;                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        AdjustVolumeLevel;                                       //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAnimSequenceBase_GetPlayLength_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_StopSimulating_Params
-    {
-    public:
-        Engine::FHitResult                                           HitResult;                                               //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_SetVelocityInLocalSpace_Params
-    {
-    public:
-        CoreUObject::FVector                                         NewVelocity;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_SetInterpolatedComponent_Params
-    {
-    public:
-        Engine::USceneComponent*                                     Component;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_ResetInterpolation_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_OnProjectileStopDelegate__DelegateSignature_Params
-    {
-    public:
-        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_OnProjectileBounceDelegate__DelegateSignature_Params
-    {
-    public:
-        Engine::FHitResult                                           ImpactResult;                                            //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, ContainsInstancedReference, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ImpactVelocity;                                          //  0x0088(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_MoveInterpolationTarget_Params
-    {
-    public:
-        CoreUObject::FVector                                         NewLocation;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        NewRotation;                                             //  0x000C(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_LimitVelocity_Params
-    {
-    public:
-        CoreUObject::FVector                                         NewVelocity;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_IsVelocityUnderSimulationThreshold_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UProjectileMovementComponent_IsInterpolationComplete_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_RandomSobolFloat_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      Dimension;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Seed;                                                    //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x000C(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_RandomSobolCell3D_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NumCells;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Cell;                                                    //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Seed;                                                    //  0x0014(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0020(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_RandomSobolCell2D_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NumCells;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       Cell;                                                    //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       Seed;                                                    //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_NextSobolFloat_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      Dimension;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        PreviousValue;                                           //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x000C(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_NextSobolCell3D_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NumCells;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         PreviousValue;                                           //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0014(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_NextSobolCell2D_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NumCells;                                                //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       PreviousValue;                                           //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_MakeImportanceTexture_Params
-    {
-    public:
-        Engine::UTexture2D*                                          Texture;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EImportanceWeight                                    WeightingFunc;                                           //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::FImportanceTexture                                   ReturnValue;                                             //  0x0010(0x0050)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_ImportanceSample_Params
-    {
-    public:
-        Engine::FImportanceTexture                                   Texture;                                                 //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       Rand;                                                    //  0x0050(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      Samples;                                                 //  0x0058(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Intensity;                                               //  0x005C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       SamplePosition;                                          //  0x0060(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FLinearColor                                    SampleColor;                                             //  0x0068(0x0010)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        SampleIntensity;                                         //  0x0078(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        SampleSize;                                              //  0x007C(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImportanceSamplingLibrary_BreakImportanceTexture_Params
-    {
-    public:
-        Engine::FImportanceTexture                                   ImportanceTexture;                                       //  0x0000(0x0050)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::UTexture2D*                                          Texture;                                                 //  0x0050(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EImportanceWeight                                    WeightingFunc;                                           //  0x0058(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_SetBoneTransformByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      InTransform;                                             //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0040(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_SetBoneScaleByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         InScale3D;                                               //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0014(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_SetBoneRotationByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        InRotation;                                              //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0014(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_SetBoneLocationByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         InLocation;                                              //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0014(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_ResetBoneTransformByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_GetBoneTransformByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0010(0x0030)  (Parm, OutParm, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_GetBoneScaleByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0002[0x3];                                   //  0x0009(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_GetBoneRotationByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0003[0x3];                                   //  0x0009(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FRotator                                        ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_GetBoneLocationByName_Params
-    {
-    public:
-        BasicTypes::FName                                            BoneName;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::EBoneSpaces                                          BoneSpace;                                               //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0004[0x3];                                   //  0x0009(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPoseableMeshComponent_CopyPoseFromSkeletalComponent_Params
-    {
-    public:
-        Engine::USkeletalMeshComponent*                              InComponentToCopy;                                       //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPostProcessComponent_AddOrUpdateBlendable_Params
-    {
-    public:
-        BasicTypes::TScriptInterface<Engine::IBlendableInterface>    InBlendableObject;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
-        float                                                        InWeight;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTwitterIntegrationBase_TwitterRequest_Params
-    {
-    public:
-        BasicTypes::FString                                          URL;                                                     //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<BasicTypes::FString>                      ParamKeysAndValues;                                      //  0x0010(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        Engine::ETwitterRequestMethod                                RequestMethod;                                           //  0x0020(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0021(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        int32_t                                                      AccountIndex;                                            //  0x0024(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0028(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTwitterIntegrationBase_ShowTweetUI_Params
-    {
-    public:
-        BasicTypes::FString                                          InitialMessage;                                          //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          URL;                                                     //  0x0010(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          Picture;                                                 //  0x0020(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0030(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTwitterIntegrationBase_Init_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTwitterIntegrationBase_GetNumAccounts_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTwitterIntegrationBase_GetAccountName_Params
-    {
-    public:
-        int32_t                                                      AccountIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTwitterIntegrationBase_CanShowTweetUI_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UTwitterIntegrationBase_AuthorizeAccounts_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVectorFieldComponent_SetIntensity_Params
-    {
-    public:
-        float                                                        NewIntensity;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetOrientationDriveTwistAndSwing_Params
-    {
-    public:
-        bool                                                         bEnableTwistDrive;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnableSwingDrive;                                       //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetOrientationDriveSLERP_Params
-    {
-    public:
-        bool                                                         bEnableSLERP;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearZLimit_Params
-    {
-    public:
-        Engine::ELinearConstraintMotion                              ConstraintType;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        LimitSize;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearYLimit_Params
-    {
-    public:
-        Engine::ELinearConstraintMotion                              ConstraintType;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        LimitSize;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearXLimit_Params
-    {
-    public:
-        Engine::ELinearConstraintMotion                              ConstraintType;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0002[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        LimitSize;                                               //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearVelocityTarget_Params
-    {
-    public:
-        CoreUObject::FVector                                         InVelTarget;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearVelocityDrive_Params
-    {
-    public:
-        bool                                                         bEnableDriveX;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnableDriveY;                                           //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnableDriveZ;                                           //  0x0002(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearPositionTarget_Params
-    {
-    public:
-        CoreUObject::FVector                                         InPosTarget;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearPositionDrive_Params
-    {
-    public:
-        bool                                                         bEnableDriveX;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnableDriveY;                                           //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnableDriveZ;                                           //  0x0002(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearDriveParams_Params
-    {
-    public:
-        float                                                        PositionStrength;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        VelocityStrength;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        InForceLimit;                                            //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetLinearBreakable_Params
-    {
-    public:
-        bool                                                         bLinearBreakable;                                        //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0003[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        LinearBreakThreshold;                                    //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetDisableCollision_Params
-    {
-    public:
-        bool                                                         bDisableCollision;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetConstraintReferencePosition_Params
-    {
-    public:
-        Engine::EConstraintFrame                                     Frame;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0004[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FVector                                         RefPosition;                                             //  0x0004(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetConstraintReferenceOrientation_Params
-    {
-    public:
-        Engine::EConstraintFrame                                     Frame;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0005[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FVector                                         PriAxis;                                                 //  0x0004(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         SecAxis;                                                 //  0x0010(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetConstraintReferenceFrame_Params
-    {
-    public:
-        Engine::EConstraintFrame                                     Frame;                                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0006[0xF];                                   //  0x0001(0x000F) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      RefFrame;                                                //  0x0010(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetConstrainedComponents_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 Component1;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            BoneName1;                                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UPrimitiveComponent*                                 Component2;                                              //  0x0010(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            BoneName2;                                               //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularVelocityTarget_Params
-    {
-    public:
-        CoreUObject::FVector                                         InVelTarget;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularVelocityDriveTwistAndSwing_Params
-    {
-    public:
-        bool                                                         bEnableTwistDrive;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnableSwingDrive;                                       //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularVelocityDriveSLERP_Params
-    {
-    public:
-        bool                                                         bEnableSLERP;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularVelocityDrive_Params
-    {
-    public:
-        bool                                                         bEnableSwingDrive;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnableTwistDrive;                                       //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularTwistLimit_Params
-    {
-    public:
-        Engine::EAngularConstraintMotion                             ConstraintType;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0007[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        TwistLimitAngle;                                         //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularSwing2Limit_Params
-    {
-    public:
-        Engine::EAngularConstraintMotion                             MotionType;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0008[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        Swing2LimitAngle;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularSwing1Limit_Params
-    {
-    public:
-        Engine::EAngularConstraintMotion                             MotionType;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0009[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        Swing1LimitAngle;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularOrientationTarget_Params
-    {
-    public:
-        CoreUObject::FRotator                                        InPosTarget;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularOrientationDrive_Params
-    {
-    public:
-        bool                                                         bEnableSwingDrive;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bEnableTwistDrive;                                       //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularDriveParams_Params
-    {
-    public:
-        float                                                        PositionStrength;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        VelocityStrength;                                        //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        InForceLimit;                                            //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularDriveMode_Params
-    {
-    public:
-        Engine::EAngularDriveMode                                    DriveMode;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_SetAngularBreakable_Params
-    {
-    public:
-        bool                                                         bAngularBreakable;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0010[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        AngularBreakThreshold;                                   //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_IsBroken_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_GetCurrentTwist_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_GetCurrentSwing2_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_GetCurrentSwing1_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_GetConstraintForce_Params
-    {
-    public:
-        CoreUObject::FVector                                         OutLinearForce;                                          //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         OutAngularForce;                                         //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsConstraintComponent_BreakConstraint_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_SetTargetRotation_Params
-    {
-    public:
-        CoreUObject::FRotator                                        NewRotation;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_SetTargetLocationAndRotation_Params
-    {
-    public:
-        CoreUObject::FVector                                         NewLocation;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        NewRotation;                                             //  0x000C(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_SetTargetLocation_Params
-    {
-    public:
-        CoreUObject::FVector                                         NewLocation;                                             //  0x0000(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_SetLinearStiffness_Params
-    {
-    public:
-        float                                                        NewLinearStiffness;                                      //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_SetLinearDamping_Params
-    {
-    public:
-        float                                                        NewLinearDamping;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_SetInterpolationSpeed_Params
-    {
-    public:
-        float                                                        NewInterpolationSpeed;                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_SetAngularStiffness_Params
-    {
-    public:
-        float                                                        NewAngularStiffness;                                     //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_SetAngularDamping_Params
-    {
-    public:
-        float                                                        NewAngularDamping;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_ReleaseComponent_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_GrabComponentAtLocationWithRotation_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 Component;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            InBoneName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Location;                                                //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        Rotation;                                                //  0x001C(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_GrabComponentAtLocation_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 Component;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            InBoneName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         GrabLocation;                                            //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_GrabComponent_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 Component;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            InBoneName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         GrabLocation;                                            //  0x0010(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bConstrainRotation;                                      //  0x001C(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_GetTargetLocationAndRotation_Params
-    {
-    public:
-        CoreUObject::FVector                                         TargetLocation;                                          //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        TargetRotation;                                          //  0x000C(0x000C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsHandleComponent_GetGrabbedComponent_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 ReturnValue;                                             //  0x0000(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsSpringComponent_GetSpringRestingPoint_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsSpringComponent_GetSpringDirection_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsSpringComponent_GetSpringCurrentEndPoint_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPhysicsSpringComponent_GetNormalizedCompressionScalar_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class APlanarReflection_OnInterpToggle_Params
-    {
-    public:
-        bool                                                         bEnable;                                                 //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_ShowOnlyComponent_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 InComponent;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_ShowOnlyActorComponents_Params
-    {
-    public:
-        Engine::AActor*                                              InActor;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_SetCaptureSortPriority_Params
-    {
-    public:
-        int32_t                                                      NewCaptureSortPriority;                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_RemoveShowOnlyComponent_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 InComponent;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_RemoveShowOnlyActorComponents_Params
-    {
-    public:
-        Engine::AActor*                                              InActor;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_HideComponent_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 InComponent;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_HideActorComponents_Params
-    {
-    public:
-        Engine::AActor*                                              InActor;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_ClearShowOnlyComponents_Params
-    {
-    public:
-        Engine::UPrimitiveComponent*                                 InComponent;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent_ClearHiddenComponents_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialBillboardComponent_SetElements_Params
-    {
-    public:
-        BasicTypes::TArray<Engine::FMaterialSpriteElement>           NewElements;                                             //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMaterialBillboardComponent_AddElement_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  Material;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::UCurveFloat*                                         DistanceToOpacityCurve;                                  //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bSizeIsInScreenSpace;                                    //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0011(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        BaseSizeX;                                               //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        BaseSizeY;                                               //  0x0018(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x001C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::UCurveFloat*                                         DistanceToSizeCurve;                                     //  0x0020(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent2D_CaptureScene_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponent2D_AddOrUpdateBlendable_Params
-    {
-    public:
-        BasicTypes::TScriptInterface<Engine::IBlendableInterface>    InBlendableObject;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
-        float                                                        InWeight;                                                //  0x0010(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USceneCaptureComponentCube_CaptureScene_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ASceneCaptureCube_OnInterpToggle_Params
-    {
-    public:
-        bool                                                         bEnable;                                                 //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
     class UKismetRenderingLibrary_RenderTargetCreateStaticTexture2DEditorOnly_Params
     {
     public:
@@ -32134,141 +32253,22 @@ namespace CG::Engine
      * 
      * Size -> 0x0000
      */
-    class UWorld_HandleTimelineScrubbed_Params
+    class UNavigationSystem_SimpleMoveToLocation_Params
     {
+    public:
+        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Goal;                                                    //  0x0008(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class ULevelStreaming_ShouldBeLoaded_Params
+    class UNavigationSystem_SimpleMoveToActor_Params
     {
     public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_SetShouldBeVisible_Params
-    {
-    public:
-        bool                                                         bInShouldBeVisible;                                      //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_SetShouldBeLoaded_Params
-    {
-    public:
-        bool                                                         bInShouldBeLoaded;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_SetLevelLODIndex_Params
-    {
-    public:
-        int32_t                                                      LODIndex;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_IsStreamingStatePending_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_IsLevelVisible_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_IsLevelLoaded_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_GetWorldAssetPackageFName_Params
-    {
-    public:
-        BasicTypes::FName                                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_GetLevelScriptActor_Params
-    {
-    public:
-        Engine::ALevelScriptActor*                                   ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreaming_CreateInstance_Params
-    {
-    public:
-        BasicTypes::FString                                          UniqueInstanceName;                                      //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::ULevelStreaming*                                     ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreamingDynamic_LoadLevelInstanceBySoftObjectPtr_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TSoftObjectPtr<Engine::UWorld>                   Level;                                                   //  0x0008(0x0024)  (Parm, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Location;                                                //  0x0030(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        Rotation;                                                //  0x003C(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        bool                                                         bOutSuccess;                                             //  0x0048(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0049(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::ULevelStreamingDynamic*                              ReturnValue;                                             //  0x0050(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULevelStreamingDynamic_LoadLevelInstance_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          LevelName;                                               //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Location;                                                //  0x0018(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        Rotation;                                                //  0x0024(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        bool                                                         bOutSuccess;                                             //  0x0030(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x7];                                   //  0x0031(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::ULevelStreamingDynamic*                              ReturnValue;                                             //  0x0038(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AController*                                         Controller;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              Goal;                                                    //  0x0008(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

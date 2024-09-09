@@ -20,11 +20,11 @@
 #include "Headers/SlateCore_ENUMS.h"
 #include "Headers/SlateCore_UFontBulkData.h"
 #include "Headers/SlateCore_IFontFaceInterface.h"
+#include "Headers/SlateCore_IFontProviderInterface.h"
 #include "Headers/SlateCore_USlateTypes.h"
+#include "Headers/SlateCore_ISlateWidgetStyleContainerInterface.h"
 #include "Headers/SlateCore_USlateWidgetStyleAsset.h"
 #include "Headers/SlateCore_USlateWidgetStyleContainerBase.h"
-#include "Headers/SlateCore_ISlateWidgetStyleContainerInterface.h"
-#include "Headers/SlateCore_IFontProviderInterface.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

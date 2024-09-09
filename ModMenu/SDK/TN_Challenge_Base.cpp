@@ -1292,10 +1292,10 @@ namespace CG::TN_Challenge_Base
      * Parameters:
      *         TennisScrambleTarget::ATennisScrambleTarget_C*     TargetActor                                                (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
      *         ScrambleEvent_Base::AScrambleEvent_Base_C*         EventClass                                                 (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-     *         int32_t                                            TargetID                                                   (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+     *         int32_t                                            TargetId                                                   (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
      *         void                                               ReturnValue
      */
-    void ATN_Challenge_Base_C::TN_TNG_ScrambleTargetHit(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetID)
+    void ATN_Challenge_Base_C::TN_TNG_ScrambleTargetHit(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetId)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
@@ -1304,7 +1304,7 @@ namespace CG::TN_Challenge_Base
         ATN_Challenge_Base_C_TN_TNG_ScrambleTargetHit_Params params {};
         params.TargetActor = TargetActor;
         params.EventClass = EventClass;
-        params.TargetID = TargetID;
+        params.TargetId = TargetId;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

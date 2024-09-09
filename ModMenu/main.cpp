@@ -734,9 +734,7 @@ void InitializeCheatManagerAndConsole(CG::Engine::APlayerController* PlayerContr
 
 CG::Engine::UEngine* GetEngine(int instance = 0)
 {
-	auto engines = CG::CoreUObject::UObject::FindObjects <CG::Engine::UEngine>();
-
-	// Adjust index to ensure it's within bounds
+	auto engines = CG::CoreUObject::UObject::FindObjects<CG::Engine::UEngine>();
 	int adjustedIndex = (instance >= engines.size()) ? engines.size() - 1 : instance;
 
 	if (engines.empty() || adjustedIndex < 0 || adjustedIndex >= engines.size())

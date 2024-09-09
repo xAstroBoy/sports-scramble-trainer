@@ -185,7 +185,7 @@ namespace CG::TN_Challenge_Base
         void TN_CHG_WallTargetHit(Engine::AActor* PayloadActor, Engine::AActor* BallTargetActor, int32_t RegionHit);
         void TN_TNG_BallGrabbed(SportsScramble::AScramBall* Ball);
         void BallShotTypeChange(SportsScramble::ETennisShotType ShotType);
-        void TN_TNG_ScrambleTargetHit(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetID);
+        void TN_TNG_ScrambleTargetHit(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetId);
         void ChangeBallClass(SportsScramble::AScramBall* BallClass);
         void EndOfGame();
         void TN_CHG_TimerExpired();

@@ -22,16 +22,6 @@ namespace CG::OculusHMD
     // # Enums
     // --------------------------------------------------
     /**
-     * Enum /Script/OculusHMD.EBoundaryType
-     */
-    enum class EBoundaryType : uint8_t
-    {
-        Boundary_Outer    = 0,
-        Boundary_PlayArea = 1,
-        Boundary_MAX      = 2
-    };
-
-    /**
      * Enum /Script/OculusHMD.ETiledMultiResLevel
      */
     enum class ETiledMultiResLevel : uint8_t
@@ -56,6 +46,16 @@ namespace CG::OculusHMD
         DeviceObjectZero = 5,
         All              = 6,
         MAX              = 7
+    };
+
+    /**
+     * Enum /Script/OculusHMD.EBoundaryType
+     */
+    enum class EBoundaryType : uint8_t
+    {
+        Boundary_Outer    = 0,
+        Boundary_PlayArea = 1,
+        Boundary_MAX      = 2
     };
 
 }

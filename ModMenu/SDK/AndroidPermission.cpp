@@ -18,8 +18,8 @@
 #include "Headers/BasicTypes.h"
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/AndroidPermission_PARAMS.h"
-#include "Headers/AndroidPermission_UAndroidPermissionCallbackProxy.h"
 #include "Headers/AndroidPermission_UAndroidPermissionFunctionLibrary.h"
+#include "Headers/AndroidPermission_UAndroidPermissionCallbackProxy.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

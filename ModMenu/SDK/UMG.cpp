@@ -20,6 +20,8 @@
 #include "Headers/UMG_ENUMS.h"
 #include "Headers/UMG_PARAMS.h"
 #include "Headers/UMG_UVisual.h"
+#include "Headers/UMG_UWidget.h"
+#include "Headers/UMG_UUserWidget.h"
 #include "Headers/UMG_UAsyncTaskDownloadImage.h"
 #include "Headers/UMG_UPanelWidget.h"
 #include "Headers/UMG_UContentWidget.h"
@@ -61,33 +63,12 @@
 #include "Headers/UMG_UListViewBase.h"
 #include "Headers/UMG_UListView.h"
 #include "Headers/UMG_UListViewDesignerPreviewItem.h"
-#include "Headers/UMG_UMenuAnchor.h"
-#include "Headers/UMG_UMouseCursorBinding.h"
-#include "Headers/UMG_UMovieScene2DTransformSection.h"
-#include "Headers/UMG_UMovieScene2DTransformTrack.h"
-#include "Headers/UMG_UMovieSceneMarginSection.h"
-#include "Headers/UMG_UMovieSceneMarginTrack.h"
-#include "Headers/UMG_UNamedSlot.h"
-#include "Headers/UMG_INamedSlotInterface.h"
-#include "Headers/UMG_UNativeWidgetHost.h"
 #include "Headers/UMG_UOverlay.h"
 #include "Headers/UMG_UOverlaySlot.h"
 #include "Headers/UMG_UProgressBar.h"
 #include "Headers/UMG_URetainerBox.h"
 #include "Headers/UMG_URichTextBlock.h"
 #include "Headers/UMG_URichTextBlockDecorator.h"
-#include "Headers/UMG_URichTextBlockImageDecorator.h"
-#include "Headers/UMG_USafeZone.h"
-#include "Headers/UMG_USafeZoneSlot.h"
-#include "Headers/UMG_UScaleBox.h"
-#include "Headers/UMG_UScaleBoxSlot.h"
-#include "Headers/UMG_UScrollBar.h"
-#include "Headers/UMG_UScrollBox.h"
-#include "Headers/UMG_UScrollBoxSlot.h"
-#include "Headers/UMG_USizeBox.h"
-#include "Headers/UMG_USizeBoxSlot.h"
-#include "Headers/UMG_USlateBlueprintLibrary.h"
-#include "Headers/UMG_USlateVectorArtData.h"
 #include "Headers/UMG_USlider.h"
 #include "Headers/UMG_USpacer.h"
 #include "Headers/UMG_USpinBox.h"
@@ -97,25 +78,6 @@
 #include "Headers/UMG_UTileView.h"
 #include "Headers/UMG_UTreeView.h"
 #include "Headers/UMG_UUMGSequencePlayer.h"
-#include "Headers/UMG_UMovieSceneWidgetMaterialTrack.h"
-#include "Headers/UMG_UTextLayoutWidget.h"
-#include "Headers/UMG_UMultiLineEditableText.h"
-#include "Headers/UMG_UMultiLineEditableTextBox.h"
-#include "Headers/UMG_UWidgetBlueprintGeneratedClass.h"
-#include "Headers/UMG_UWidgetBlueprintLibrary.h"
-#include "Headers/UMG_UWidgetComponent.h"
-#include "Headers/UMG_UWidgetInteractionComponent.h"
-#include "Headers/UMG_UWidgetLayoutLibrary.h"
-#include "Headers/UMG_UWidgetNavigation.h"
-#include "Headers/UMG_UWidgetSwitcher.h"
-#include "Headers/UMG_UWidgetSwitcherSlot.h"
-#include "Headers/UMG_UWidgetTree.h"
-#include "Headers/UMG_UWindowTitleBarArea.h"
-#include "Headers/UMG_UWindowTitleBarAreaSlot.h"
-#include "Headers/UMG_UWrapBox.h"
-#include "Headers/UMG_UWrapBoxSlot.h"
-#include "Headers/UMG_UWidget.h"
-#include "Headers/UMG_UUserWidget.h"
 #include "Headers/UMG_UUniformGridPanel.h"
 #include "Headers/UMG_UUniformGridSlot.h"
 #include "Headers/UMG_UVerticalBox.h"
@@ -124,6 +86,44 @@
 #include "Headers/UMG_UVisibilityBinding.h"
 #include "Headers/UMG_UWidgetAnimation.h"
 #include "Headers/UMG_UWidgetBinding.h"
+#include "Headers/UMG_UWidgetBlueprintGeneratedClass.h"
+#include "Headers/UMG_UWidgetBlueprintLibrary.h"
+#include "Headers/UMG_UWindowTitleBarAreaSlot.h"
+#include "Headers/UMG_UWrapBox.h"
+#include "Headers/UMG_UWrapBoxSlot.h"
+#include "Headers/UMG_UScaleBoxSlot.h"
+#include "Headers/UMG_UScrollBar.h"
+#include "Headers/UMG_UScrollBox.h"
+#include "Headers/UMG_UScrollBoxSlot.h"
+#include "Headers/UMG_USizeBox.h"
+#include "Headers/UMG_USizeBoxSlot.h"
+#include "Headers/UMG_USlateBlueprintLibrary.h"
+#include "Headers/UMG_USlateVectorArtData.h"
+#include "Headers/UMG_UMenuAnchor.h"
+#include "Headers/UMG_URichTextBlockImageDecorator.h"
+#include "Headers/UMG_USafeZone.h"
+#include "Headers/UMG_USafeZoneSlot.h"
+#include "Headers/UMG_UScaleBox.h"
+#include "Headers/UMG_UWidgetComponent.h"
+#include "Headers/UMG_UWidgetInteractionComponent.h"
+#include "Headers/UMG_UWidgetLayoutLibrary.h"
+#include "Headers/UMG_UWidgetNavigation.h"
+#include "Headers/UMG_UWidgetSwitcher.h"
+#include "Headers/UMG_UWidgetSwitcherSlot.h"
+#include "Headers/UMG_UWidgetTree.h"
+#include "Headers/UMG_UWindowTitleBarArea.h"
+#include "Headers/UMG_UMouseCursorBinding.h"
+#include "Headers/UMG_UMovieScene2DTransformSection.h"
+#include "Headers/UMG_UMovieScene2DTransformTrack.h"
+#include "Headers/UMG_UMovieSceneMarginSection.h"
+#include "Headers/UMG_UMovieSceneMarginTrack.h"
+#include "Headers/UMG_UMovieSceneWidgetMaterialTrack.h"
+#include "Headers/UMG_UTextLayoutWidget.h"
+#include "Headers/UMG_UMultiLineEditableText.h"
+#include "Headers/UMG_UMultiLineEditableTextBox.h"
+#include "Headers/UMG_UNamedSlot.h"
+#include "Headers/UMG_INamedSlotInterface.h"
+#include "Headers/UMG_UNativeWidgetHost.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -134,6 +134,3226 @@ namespace CG::UMG
     // --------------------------------------------------
     // # Structs functions
     // --------------------------------------------------
+    /**
+     * Function:
+     *         RVA    -> 0x01005680
+     *         Name   -> Function /Script/UMG.Widget.SetVisibility
+     *         Flags  -> (Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::ESlateVisibility                              InVisibility                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetVisibility(UMG::ESlateVisibility InVisibility)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetVisibility");
+        
+        UWidget_SetVisibility_Params params {};
+        params.InVisibility = InVisibility;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010054E0
+     *         Name   -> Function /Script/UMG.Widget.SetUserFocus
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetUserFocus(Engine::APlayerController* PlayerController)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetUserFocus");
+        
+        UWidget_SetUserFocus_Params params {};
+        params.PlayerController = PlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01005400
+     *         Name   -> Function /Script/UMG.Widget.SetToolTipText
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FText                                  InToolTipText                                              (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetToolTipText(const BasicTypes::FText& InToolTipText)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetToolTipText");
+        
+        UWidget_SetToolTipText_Params params {};
+        params.InToolTipText = InToolTipText;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01005380
+     *         Name   -> Function /Script/UMG.Widget.SetToolTip
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidget*                                      Widget                                                     (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetToolTip(UMG::UWidget* Widget)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetToolTip");
+        
+        UWidget_SetToolTip_Params params {};
+        params.Widget = Widget;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01005300
+     *         Name   -> Function /Script/UMG.Widget.SetRenderTranslation
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             Translation                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetRenderTranslation(const CoreUObject::FVector2D& Translation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderTranslation");
+        
+        UWidget_SetRenderTranslation_Params params {};
+        params.Translation = Translation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01005280
+     *         Name   -> Function /Script/UMG.Widget.SetRenderTransformPivot
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             Pivot                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetRenderTransformPivot(const CoreUObject::FVector2D& Pivot)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderTransformPivot");
+        
+        UWidget_SetRenderTransformPivot_Params params {};
+        params.Pivot = Pivot;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010051A0
+     *         Name   -> Function /Script/UMG.Widget.SetRenderTransform
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::FWidgetTransform                              InTransform                                                (Parm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetRenderTransform(const UMG::FWidgetTransform& InTransform)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderTransform");
+        
+        UWidget_SetRenderTransform_Params params {};
+        params.InTransform = InTransform;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01005120
+     *         Name   -> Function /Script/UMG.Widget.SetRenderShear
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             Shear                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetRenderShear(const CoreUObject::FVector2D& Shear)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderShear");
+        
+        UWidget_SetRenderShear_Params params {};
+        params.Shear = Shear;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010050A0
+     *         Name   -> Function /Script/UMG.Widget.SetRenderScale
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             Scale                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetRenderScale(const CoreUObject::FVector2D& Scale)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderScale");
+        
+        UWidget_SetRenderScale_Params params {};
+        params.Scale = Scale;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01005020
+     *         Name   -> Function /Script/UMG.Widget.SetRenderOpacity
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InOpacity                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetRenderOpacity(float InOpacity)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderOpacity");
+        
+        UWidget_SetRenderOpacity_Params params {};
+        params.InOpacity = InOpacity;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01004FA0
+     *         Name   -> Function /Script/UMG.Widget.SetRenderAngle
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              Angle                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetRenderAngle(float Angle)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderAngle");
+        
+        UWidget_SetRenderAngle_Params params {};
+        params.Angle = Angle;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01004E90
+     *         Name   -> Function /Script/UMG.Widget.SetNavigationRule
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EUINavigation                           Direction                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SlateCore::EUINavigationRule                       Rule                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  WidgetToFocus                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetNavigationRule(SlateCore::EUINavigation Direction, SlateCore::EUINavigationRule Rule, const BasicTypes::FName& WidgetToFocus)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetNavigationRule");
+        
+        UWidget_SetNavigationRule_Params params {};
+        params.Direction = Direction;
+        params.Rule = Rule;
+        params.WidgetToFocus = WidgetToFocus;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01004CE0
+     *         Name   -> Function /Script/UMG.Widget.SetKeyboardFocus
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetKeyboardFocus()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetKeyboardFocus");
+        
+        UWidget_SetKeyboardFocus_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01004C50
+     *         Name   -> Function /Script/UMG.Widget.SetIsEnabled
+     *         Flags  -> (Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bInIsEnabled                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetIsEnabled(bool bInIsEnabled)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetIsEnabled");
+        
+        UWidget_SetIsEnabled_Params params {};
+        params.bInIsEnabled = bInIsEnabled;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010045A0
+     *         Name   -> Function /Script/UMG.Widget.SetCursor
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::EMouseCursor                          InCursor                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetCursor(CoreUObject::EMouseCursor InCursor)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetCursor");
+        
+        UWidget_SetCursor_Params params {};
+        params.InCursor = InCursor;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01004520
+     *         Name   -> Function /Script/UMG.Widget.SetClipping
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EWidgetClipping                         InClipping                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetClipping(SlateCore::EWidgetClipping InClipping)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetClipping");
+        
+        UWidget_SetClipping_Params params {};
+        params.InClipping = InClipping;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010042A0
+     *         Name   -> Function /Script/UMG.Widget.SetAllNavigationRules
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EUINavigationRule                       Rule                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  WidgetToFocus                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::SetAllNavigationRules(SlateCore::EUINavigationRule Rule, const BasicTypes::FName& WidgetToFocus)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetAllNavigationRules");
+        
+        UWidget_SetAllNavigationRules_Params params {};
+        params.Rule = Rule;
+        params.WidgetToFocus = WidgetToFocus;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01004260
+     *         Name   -> Function /Script/UMG.Widget.ResetCursor
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UWidget::ResetCursor()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.ResetCursor");
+        
+        UWidget_ResetCursor_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01004240
+     *         Name   -> Function /Script/UMG.Widget.RemoveFromParent
+     *         Flags  -> (Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UWidget::RemoveFromParent()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.RemoveFromParent");
+        
+        UWidget_RemoveFromParent_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.OnReply__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UWidget::OnReply__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.OnReply__DelegateSignature");
+        
+        UWidget_OnReply__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.OnPointerEvent__DelegateSignature
+     *         Flags  -> (Public, Delegate, HasOutParms)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UWidget::OnPointerEvent__DelegateSignature(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.OnPointerEvent__DelegateSignature");
+        
+        UWidget_OnPointerEvent__DelegateSignature_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.MouseEvent = MouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010039E0
+     *         Name   -> Function /Script/UMG.Widget.IsVisible
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::IsVisible()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.IsVisible");
+        
+        UWidget_IsVisible_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010039B0
+     *         Name   -> Function /Script/UMG.Widget.IsHovered
+     *         Flags  -> (Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::IsHovered()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.IsHovered");
+        
+        UWidget_IsHovered_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003960
+     *         Name   -> Function /Script/UMG.Widget.InvalidateLayoutAndVolatility
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UWidget::InvalidateLayoutAndVolatility()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.InvalidateLayoutAndVolatility");
+        
+        UWidget_InvalidateLayoutAndVolatility_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010038D0
+     *         Name   -> Function /Script/UMG.Widget.HasUserFocusedDescendants
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::HasUserFocusedDescendants(Engine::APlayerController* PlayerController)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasUserFocusedDescendants");
+        
+        UWidget_HasUserFocusedDescendants_Params params {};
+        params.PlayerController = PlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003840
+     *         Name   -> Function /Script/UMG.Widget.HasUserFocus
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::HasUserFocus(Engine::APlayerController* PlayerController)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasUserFocus");
+        
+        UWidget_HasUserFocus_Params params {};
+        params.PlayerController = PlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003780
+     *         Name   -> Function /Script/UMG.Widget.HasMouseCaptureByUser
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         int32_t                                            UserIndex                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            PointerIndex                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::HasMouseCaptureByUser(int32_t UserIndex, int32_t PointerIndex)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasMouseCaptureByUser");
+        
+        UWidget_HasMouseCaptureByUser_Params params {};
+        params.UserIndex = UserIndex;
+        params.PointerIndex = PointerIndex;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003750
+     *         Name   -> Function /Script/UMG.Widget.HasMouseCapture
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::HasMouseCapture()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasMouseCapture");
+        
+        UWidget_HasMouseCapture_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003720
+     *         Name   -> Function /Script/UMG.Widget.HasKeyboardFocus
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::HasKeyboardFocus()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasKeyboardFocus");
+        
+        UWidget_HasKeyboardFocus_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010036F0
+     *         Name   -> Function /Script/UMG.Widget.HasFocusedDescendants
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::HasFocusedDescendants()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasFocusedDescendants");
+        
+        UWidget_HasFocusedDescendants_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010036C0
+     *         Name   -> Function /Script/UMG.Widget.HasAnyUserFocus
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::HasAnyUserFocus()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasAnyUserFocus");
+        
+        UWidget_HasAnyUserFocus_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetWidget__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         UMG::UWidget*                                      ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::UWidget* UWidget::GetWidget__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetWidget__DelegateSignature");
+        
+        UWidget_GetWidget__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003620
+     *         Name   -> Function /Script/UMG.Widget.GetVisibility
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         UMG::ESlateVisibility                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::ESlateVisibility UWidget::GetVisibility()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetVisibility");
+        
+        UWidget_GetVisibility_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetText__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         BasicTypes::FText                                  ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    BasicTypes::FText UWidget::GetText__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetText__DelegateSignature");
+        
+        UWidget_GetText__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetSlateVisibility__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         UMG::ESlateVisibility                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::ESlateVisibility UWidget::GetSlateVisibility__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetSlateVisibility__DelegateSignature");
+        
+        UWidget_GetSlateVisibility__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetSlateColor__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         SlateCore::FSlateColor                             ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    SlateCore::FSlateColor UWidget::GetSlateColor__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetSlateColor__DelegateSignature");
+        
+        UWidget_GetSlateColor__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetSlateBrush__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         SlateCore::FSlateBrush                             ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    SlateCore::FSlateBrush UWidget::GetSlateBrush__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetSlateBrush__DelegateSignature");
+        
+        UWidget_GetSlateBrush__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003340
+     *         Name   -> Function /Script/UMG.Widget.GetRenderOpacity
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UWidget::GetRenderOpacity()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetRenderOpacity");
+        
+        UWidget_GetRenderOpacity_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003310
+     *         Name   -> Function /Script/UMG.Widget.GetParent
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         UMG::UPanelWidget*                                 ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::UPanelWidget* UWidget::GetParent()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetParent");
+        
+        UWidget_GetParent_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010032E0
+     *         Name   -> Function /Script/UMG.Widget.GetOwningPlayer
+     *         Flags  -> (BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         Engine::APlayerController*                         ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    Engine::APlayerController* UWidget::GetOwningPlayer()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetOwningPlayer");
+        
+        UWidget_GetOwningPlayer_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010032B0
+     *         Name   -> Function /Script/UMG.Widget.GetOwningLocalPlayer
+     *         Flags  -> (BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         Engine::ULocalPlayer*                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    Engine::ULocalPlayer* UWidget::GetOwningLocalPlayer()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetOwningLocalPlayer");
+        
+        UWidget_GetOwningLocalPlayer_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetMouseCursor__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         CoreUObject::EMouseCursor                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::EMouseCursor UWidget::GetMouseCursor__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetMouseCursor__DelegateSignature");
+        
+        UWidget_GetMouseCursor__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetLinearColor__DelegateSignature
+     *         Flags  -> (Public, Delegate, HasDefaults)
+     * Parameters:
+     *         CoreUObject::FLinearColor                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FLinearColor UWidget::GetLinearColor__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetLinearColor__DelegateSignature");
+        
+        UWidget_GetLinearColor__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010030F0
+     *         Name   -> Function /Script/UMG.Widget.GetIsEnabled
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::GetIsEnabled()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetIsEnabled");
+        
+        UWidget_GetIsEnabled_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetInt32__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    int32_t UWidget::GetInt32__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetInt32__DelegateSignature");
+        
+        UWidget_GetInt32__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetFloat__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UWidget::GetFloat__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetFloat__DelegateSignature");
+        
+        UWidget_GetFloat__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01002A90
+     *         Name   -> Function /Script/UMG.Widget.GetDesiredSize
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector2D UWidget::GetDesiredSize()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetDesiredSize");
+        
+        UWidget_GetDesiredSize_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01002A60
+     *         Name   -> Function /Script/UMG.Widget.GetClipping
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         SlateCore::EWidgetClipping                         ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    SlateCore::EWidgetClipping UWidget::GetClipping()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetClipping");
+        
+        UWidget_GetClipping_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetCheckBoxState__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         SlateCore::ECheckBoxState                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    SlateCore::ECheckBoxState UWidget::GetCheckBoxState__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetCheckBoxState__DelegateSignature");
+        
+        UWidget_GetCheckBoxState__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01002A20
+     *         Name   -> Function /Script/UMG.Widget.GetCachedGeometry
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         SlateCore::FGeometry                               ReturnValue                                                (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     */
+    SlateCore::FGeometry UWidget::GetCachedGeometry()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetCachedGeometry");
+        
+        UWidget_GetCachedGeometry_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GetBool__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UWidget::GetBool__DelegateSignature()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetBool__DelegateSignature");
+        
+        UWidget_GetBool__DelegateSignature_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GenerateWidgetForString__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         BasicTypes::FString                                Item                                                       (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         UMG::UWidget*                                      ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::UWidget* UWidget::GenerateWidgetForString__DelegateSignature(const BasicTypes::FString& Item)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GenerateWidgetForString__DelegateSignature");
+        
+        UWidget_GenerateWidgetForString__DelegateSignature_Params params {};
+        params.Item = Item;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.Widget.GenerateWidgetForObject__DelegateSignature
+     *         Flags  -> (Public, Delegate)
+     * Parameters:
+     *         CoreUObject::UObject*                              Item                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         UMG::UWidget*                                      ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::UWidget* UWidget::GenerateWidgetForObject__DelegateSignature(CoreUObject::UObject* Item)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GenerateWidgetForObject__DelegateSignature");
+        
+        UWidget_GenerateWidgetForObject__DelegateSignature_Params params {};
+        params.Item = Item;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01002220
+     *         Name   -> Function /Script/UMG.Widget.ForceVolatile
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bForce                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWidget::ForceVolatile(bool bForce)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.ForceVolatile");
+        
+        UWidget_ForceVolatile_Params params {};
+        params.bForce = bForce;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01002200
+     *         Name   -> Function /Script/UMG.Widget.ForceLayoutPrepass
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UWidget::ForceLayoutPrepass()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.ForceLayoutPrepass");
+        
+        UWidget_ForceLayoutPrepass_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFE310
+     *         Name   -> Function /Script/UMG.UserWidget.UnregisterInputComponent
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::UnregisterInputComponent()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.UnregisterInputComponent");
+        
+        UUserWidget_UnregisterInputComponent_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.Tick
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         float                                              InDeltaTime                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::Tick(const SlateCore::FGeometry& MyGeometry, float InDeltaTime)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.Tick");
+        
+        UUserWidget_Tick_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InDeltaTime = InDeltaTime;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFE240
+     *         Name   -> Function /Script/UMG.UserWidget.StopListeningForInputAction
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FName                                  ActionName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::EInputEvent                                EventType                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::StopListeningForInputAction(const BasicTypes::FName& ActionName, Engine::EInputEvent EventType)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopListeningForInputAction");
+        
+        UUserWidget_StopListeningForInputAction_Params params {};
+        params.ActionName = ActionName;
+        params.EventType = EventType;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFE220
+     *         Name   -> Function /Script/UMG.UserWidget.StopListeningForAllInputActions
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::StopListeningForAllInputActions()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopListeningForAllInputActions");
+        
+        UUserWidget_StopListeningForAllInputActions_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFE200
+     *         Name   -> Function /Script/UMG.UserWidget.StopAnimationsAndLatentActions
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::StopAnimationsAndLatentActions()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopAnimationsAndLatentActions");
+        
+        UUserWidget_StopAnimationsAndLatentActions_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFE180
+     *         Name   -> Function /Script/UMG.UserWidget.StopAnimation
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::StopAnimation(UMG::UWidgetAnimation* InAnimation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopAnimation");
+        
+        UUserWidget_StopAnimation_Params params {};
+        params.InAnimation = InAnimation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFE160
+     *         Name   -> Function /Script/UMG.UserWidget.StopAllAnimations
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::StopAllAnimations()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopAllAnimations");
+        
+        UUserWidget_StopAllAnimations_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFDA40
+     *         Name   -> Function /Script/UMG.UserWidget.SetPositionInViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             Position                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bRemoveDPIScale                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetPositionInViewport(const CoreUObject::FVector2D& Position, bool bRemoveDPIScale)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetPositionInViewport");
+        
+        UUserWidget_SetPositionInViewport_Params params {};
+        params.Position = Position;
+        params.bRemoveDPIScale = bRemoveDPIScale;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFD970
+     *         Name   -> Function /Script/UMG.UserWidget.SetPlaybackSpeed
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              PlaybackSpeed                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetPlaybackSpeed(UMG::UWidgetAnimation* InAnimation, float PlaybackSpeed)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetPlaybackSpeed");
+        
+        UUserWidget_SetPlaybackSpeed_Params params {};
+        params.InAnimation = InAnimation;
+        params.PlaybackSpeed = PlaybackSpeed;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFD8E0
+     *         Name   -> Function /Script/UMG.UserWidget.SetPadding
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetPadding(const SlateCore::FMargin& InPadding)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetPadding");
+        
+        UUserWidget_SetPadding_Params params {};
+        params.InPadding = InPadding;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFD860
+     *         Name   -> Function /Script/UMG.UserWidget.SetOwningPlayer
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::APlayerController*                         LocalPlayerController                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetOwningPlayer(Engine::APlayerController* LocalPlayerController)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetOwningPlayer");
+        
+        UUserWidget_SetOwningPlayer_Params params {};
+        params.LocalPlayerController = LocalPlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFD6A0
+     *         Name   -> Function /Script/UMG.UserWidget.SetNumLoopsToPlay
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            NumLoopsToPlay                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetNumLoopsToPlay(UMG::UWidgetAnimation* InAnimation, int32_t NumLoopsToPlay)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetNumLoopsToPlay");
+        
+        UUserWidget_SetNumLoopsToPlay_Params params {};
+        params.InAnimation = InAnimation;
+        params.NumLoopsToPlay = NumLoopsToPlay;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFD0C0
+     *         Name   -> Function /Script/UMG.UserWidget.SetInputActionPriority
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         int32_t                                            NewPriority                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetInputActionPriority(int32_t NewPriority)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetInputActionPriority");
+        
+        UUserWidget_SetInputActionPriority_Params params {};
+        params.NewPriority = NewPriority;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFD030
+     *         Name   -> Function /Script/UMG.UserWidget.SetInputActionBlocking
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bShouldBlock                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetInputActionBlocking(bool bShouldBlock)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetInputActionBlocking");
+        
+        UUserWidget_SetInputActionBlocking_Params params {};
+        params.bShouldBlock = bShouldBlock;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFCE20
+     *         Name   -> Function /Script/UMG.UserWidget.SetForegroundColor
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::FSlateColor                             InForegroundColor                                          (Parm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetForegroundColor(const SlateCore::FSlateColor& InForegroundColor)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetForegroundColor");
+        
+        UUserWidget_SetForegroundColor_Params params {};
+        params.InForegroundColor = InForegroundColor;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFCA80
+     *         Name   -> Function /Script/UMG.UserWidget.SetDesiredSizeInViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             Size                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetDesiredSizeInViewport(const CoreUObject::FVector2D& Size)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetDesiredSizeInViewport");
+        
+        UUserWidget_SetDesiredSizeInViewport_Params params {};
+        params.Size = Size;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC980
+     *         Name   -> Function /Script/UMG.UserWidget.SetColorAndOpacity
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FLinearColor                          InColorAndOpacity                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetColorAndOpacity(const CoreUObject::FLinearColor& InColorAndOpacity)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetColorAndOpacity");
+        
+        UUserWidget_SetColorAndOpacity_Params params {};
+        params.InColorAndOpacity = InColorAndOpacity;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC5B0
+     *         Name   -> Function /Script/UMG.UserWidget.SetAnchorsInViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Slate::FAnchors                                    Anchors                                                    (Parm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetAnchorsInViewport(const Slate::FAnchors& Anchors)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetAnchorsInViewport");
+        
+        UUserWidget_SetAnchorsInViewport_Params params {};
+        params.Anchors = Anchors;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC530
+     *         Name   -> Function /Script/UMG.UserWidget.SetAlignmentInViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             Alignment                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::SetAlignmentInViewport(const CoreUObject::FVector2D& Alignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetAlignmentInViewport");
+        
+        UUserWidget_SetAlignmentInViewport_Params params {};
+        params.Alignment = Alignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC4B0
+     *         Name   -> Function /Script/UMG.UserWidget.ReverseAnimation
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::ReverseAnimation(UMG::UWidgetAnimation* InAnimation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.ReverseAnimation");
+        
+        UUserWidget_ReverseAnimation_Params params {};
+        params.InAnimation = InAnimation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC490
+     *         Name   -> Function /Script/UMG.UserWidget.RemoveFromViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::RemoveFromViewport()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.RemoveFromViewport");
+        
+        UUserWidget_RemoveFromViewport_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC470
+     *         Name   -> Function /Script/UMG.UserWidget.RegisterInputComponent
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::RegisterInputComponent()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.RegisterInputComponent");
+        
+        UUserWidget_RegisterInputComponent_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.PreConstruct
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         bool                                               IsDesignTime                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::PreConstruct(bool IsDesignTime)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PreConstruct");
+        
+        UUserWidget_PreConstruct_Params params {};
+        params.IsDesignTime = IsDesignTime;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC3F0
+     *         Name   -> Function /Script/UMG.UserWidget.PlaySound
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::USoundBase*                                SoundToPlay                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::PlaySound(Engine::USoundBase* SoundToPlay)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PlaySound");
+        
+        UUserWidget_PlaySound_Params params {};
+        params.SoundToPlay = SoundToPlay;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC240
+     *         Name   -> Function /Script/UMG.UserWidget.PlayAnimationTo
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              StartAtTime                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              EndAtTime                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            NumLoopsToPlay                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         UMG::EUMGSequencePlayMode                          PlayMode                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              PlaybackSpeed                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::PlayAnimationTo(UMG::UWidgetAnimation* InAnimation, float StartAtTime, float EndAtTime, int32_t NumLoopsToPlay, UMG::EUMGSequencePlayMode PlayMode, float PlaybackSpeed)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PlayAnimationTo");
+        
+        UUserWidget_PlayAnimationTo_Params params {};
+        params.InAnimation = InAnimation;
+        params.StartAtTime = StartAtTime;
+        params.EndAtTime = EndAtTime;
+        params.NumLoopsToPlay = NumLoopsToPlay;
+        params.PlayMode = PlayMode;
+        params.PlaybackSpeed = PlaybackSpeed;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC0B0
+     *         Name   -> Function /Script/UMG.UserWidget.PlayAnimation
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              StartAtTime                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            NumLoopsToPlay                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         UMG::EUMGSequencePlayMode                          PlayMode                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              PlaybackSpeed                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::PlayAnimation(UMG::UWidgetAnimation* InAnimation, float StartAtTime, int32_t NumLoopsToPlay, UMG::EUMGSequencePlayMode PlayMode, float PlaybackSpeed)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PlayAnimation");
+        
+        UUserWidget_PlayAnimation_Params params {};
+        params.InAnimation = InAnimation;
+        params.StartAtTime = StartAtTime;
+        params.NumLoopsToPlay = NumLoopsToPlay;
+        params.PlayMode = PlayMode;
+        params.PlaybackSpeed = PlaybackSpeed;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFC010
+     *         Name   -> Function /Script/UMG.UserWidget.PauseAnimation
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UUserWidget::PauseAnimation(UMG::UWidgetAnimation* InAnimation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PauseAnimation");
+        
+        UUserWidget_PauseAnimation_Params params {};
+        params.InAnimation = InAnimation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnTouchStarted
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           InTouchEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnTouchStarted(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& InTouchEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchStarted");
+        
+        UUserWidget_OnTouchStarted_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InTouchEvent = InTouchEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnTouchMoved
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           InTouchEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnTouchMoved(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& InTouchEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchMoved");
+        
+        UUserWidget_OnTouchMoved_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InTouchEvent = InTouchEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnTouchGesture
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           GestureEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnTouchGesture(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& GestureEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchGesture");
+        
+        UUserWidget_OnTouchGesture_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.GestureEvent = GestureEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnTouchForceChanged
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           InTouchEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnTouchForceChanged(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& InTouchEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchForceChanged");
+        
+        UUserWidget_OnTouchForceChanged_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InTouchEvent = InTouchEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnTouchEnded
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           InTouchEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnTouchEnded(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& InTouchEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchEnded");
+        
+        UUserWidget_OnTouchEnded_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InTouchEvent = InTouchEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnRemovedFromFocusPath
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FFocusEvent                             InFocusEvent                                               (Parm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnRemovedFromFocusPath(const SlateCore::FFocusEvent& InFocusEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnRemovedFromFocusPath");
+        
+        UUserWidget_OnRemovedFromFocusPath_Params params {};
+        params.InFocusEvent = InFocusEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnPreviewMouseButtonDown
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnPreviewMouseButtonDown(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnPreviewMouseButtonDown");
+        
+        UUserWidget_OnPreviewMouseButtonDown_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.MouseEvent = MouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnPreviewKeyDown
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FKeyEvent                               InKeyEvent                                                 (Parm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnPreviewKeyDown(const SlateCore::FGeometry& MyGeometry, const SlateCore::FKeyEvent& InKeyEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnPreviewKeyDown");
+        
+        UUserWidget_OnPreviewKeyDown_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InKeyEvent = InKeyEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnPaint
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent, Const)
+     * Parameters:
+     *         UMG::FPaintContext                                 Context                                                    (Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnPaint(UMG::FPaintContext* Context)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnPaint");
+        
+        UUserWidget_OnPaint_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (Context != nullptr)
+            *Context = params.Context;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMouseWheel
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnMouseWheel(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseWheel");
+        
+        UUserWidget_OnMouseWheel_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.MouseEvent = MouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMouseMove
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnMouseMove(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseMove");
+        
+        UUserWidget_OnMouseMove_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.MouseEvent = MouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMouseLeave
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnMouseLeave(const SlateCore::FPointerEvent& MouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseLeave");
+        
+        UUserWidget_OnMouseLeave_Params params {};
+        params.MouseEvent = MouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMouseEnter
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnMouseEnter(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseEnter");
+        
+        UUserWidget_OnMouseEnter_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.MouseEvent = MouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMouseCaptureLost
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnMouseCaptureLost()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseCaptureLost");
+        
+        UUserWidget_OnMouseCaptureLost_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMouseButtonUp
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnMouseButtonUp(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseButtonUp");
+        
+        UUserWidget_OnMouseButtonUp_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.MouseEvent = MouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMouseButtonDown
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnMouseButtonDown(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseButtonDown");
+        
+        UUserWidget_OnMouseButtonDown_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.MouseEvent = MouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMouseButtonDoubleClick
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               InMyGeometry                                               (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           InMouseEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnMouseButtonDoubleClick(const SlateCore::FGeometry& InMyGeometry, const SlateCore::FPointerEvent& InMouseEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseButtonDoubleClick");
+        
+        UUserWidget_OnMouseButtonDoubleClick_Params params {};
+        params.InMyGeometry = InMyGeometry;
+        params.InMouseEvent = InMouseEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnMotionDetected
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FMotionEvent                            InMotionEvent                                              (Parm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnMotionDetected(const SlateCore::FGeometry& MyGeometry, const SlateCore::FMotionEvent& InMotionEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMotionDetected");
+        
+        UUserWidget_OnMotionDetected_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InMotionEvent = InMotionEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnKeyUp
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FKeyEvent                               InKeyEvent                                                 (Parm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnKeyUp(const SlateCore::FGeometry& MyGeometry, const SlateCore::FKeyEvent& InKeyEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnKeyUp");
+        
+        UUserWidget_OnKeyUp_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InKeyEvent = InKeyEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnKeyDown
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FKeyEvent                               InKeyEvent                                                 (Parm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnKeyDown(const SlateCore::FGeometry& MyGeometry, const SlateCore::FKeyEvent& InKeyEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnKeyDown");
+        
+        UUserWidget_OnKeyDown_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InKeyEvent = InKeyEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnKeyChar
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FCharacterEvent                         InCharacterEvent                                           (Parm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnKeyChar(const SlateCore::FGeometry& MyGeometry, const SlateCore::FCharacterEvent& InCharacterEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnKeyChar");
+        
+        UUserWidget_OnKeyChar_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InCharacterEvent = InCharacterEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnInitialized
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnInitialized()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnInitialized");
+        
+        UUserWidget_OnInitialized_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnFocusReceived
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FFocusEvent                             InFocusEvent                                               (Parm, NoDestructor, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnFocusReceived(const SlateCore::FGeometry& MyGeometry, const SlateCore::FFocusEvent& InFocusEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnFocusReceived");
+        
+        UUserWidget_OnFocusReceived_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InFocusEvent = InFocusEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnFocusLost
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FFocusEvent                             InFocusEvent                                               (Parm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnFocusLost(const SlateCore::FFocusEvent& InFocusEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnFocusLost");
+        
+        UUserWidget_OnFocusLost_Params params {};
+        params.InFocusEvent = InFocusEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnDrop
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           PointerEvent                                               (Parm, NativeAccessSpecifierPublic)
+     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::OnDrop(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDrop");
+        
+        UUserWidget_OnDrop_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.PointerEvent = PointerEvent;
+        params.Operation = Operation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnDragOver
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           PointerEvent                                               (Parm, NativeAccessSpecifierPublic)
+     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::OnDragOver(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragOver");
+        
+        UUserWidget_OnDragOver_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.PointerEvent = PointerEvent;
+        params.Operation = Operation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnDragLeave
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FPointerEvent                           PointerEvent                                               (Parm, NativeAccessSpecifierPublic)
+     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnDragLeave(const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragLeave");
+        
+        UUserWidget_OnDragLeave_Params params {};
+        params.PointerEvent = PointerEvent;
+        params.Operation = Operation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnDragEnter
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           PointerEvent                                               (Parm, NativeAccessSpecifierPublic)
+     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnDragEnter(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragEnter");
+        
+        UUserWidget_OnDragEnter_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.PointerEvent = PointerEvent;
+        params.Operation = Operation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnDragDetected
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FPointerEvent                           PointerEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnDragDetected(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation** Operation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragDetected");
+        
+        UUserWidget_OnDragDetected_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.PointerEvent = PointerEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (Operation != nullptr)
+            *Operation = params.Operation;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnDragCancelled
+     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FPointerEvent                           PointerEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnDragCancelled(const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragCancelled");
+        
+        UUserWidget_OnDragCancelled_Params params {};
+        params.PointerEvent = PointerEvent;
+        params.Operation = Operation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFBF80
+     *         Name   -> Function /Script/UMG.UserWidget.OnAnimationStarted
+     *         Flags  -> (BlueprintCosmetic, Native, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             Animation                                                  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnAnimationStarted(UMG::UWidgetAnimation* Animation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnAnimationStarted");
+        
+        UUserWidget_OnAnimationStarted_Params params {};
+        params.Animation = Animation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFBEF0
+     *         Name   -> Function /Script/UMG.UserWidget.OnAnimationFinished
+     *         Flags  -> (BlueprintCosmetic, Native, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             Animation                                                  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnAnimationFinished(UMG::UWidgetAnimation* Animation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnAnimationFinished");
+        
+        UUserWidget_OnAnimationFinished_Params params {};
+        params.Animation = Animation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnAnalogValueChanged
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         SlateCore::FAnalogInputEvent                       InAnalogInputEvent                                         (Parm, NativeAccessSpecifierPublic)
+     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    UMG::FEventReply UUserWidget::OnAnalogValueChanged(const SlateCore::FGeometry& MyGeometry, const SlateCore::FAnalogInputEvent& InAnalogInputEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnAnalogValueChanged");
+        
+        UUserWidget_OnAnalogValueChanged_Params params {};
+        params.MyGeometry = MyGeometry;
+        params.InAnalogInputEvent = InAnalogInputEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.OnAddedToFocusPath
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SlateCore::FFocusEvent                             InFocusEvent                                               (Parm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::OnAddedToFocusPath(const SlateCore::FFocusEvent& InFocusEvent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnAddedToFocusPath");
+        
+        UUserWidget_OnAddedToFocusPath_Params params {};
+        params.InFocusEvent = InFocusEvent;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFBD80
+     *         Name   -> Function /Script/UMG.UserWidget.ListenForInputAction
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FName                                  ActionName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::EInputEvent                                EventType                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bConsume                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::UScriptDelegate                        Callback                                                   (Parm, ZeroConstructor, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::ListenForInputAction(const BasicTypes::FName& ActionName, Engine::EInputEvent EventType, bool bConsume, const BasicTypes::UScriptDelegate& Callback)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.ListenForInputAction");
+        
+        UUserWidget_ListenForInputAction_Params params {};
+        params.ActionName = ActionName;
+        params.EventType = EventType;
+        params.bConsume = bConsume;
+        params.Callback = Callback;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFBD50
+     *         Name   -> Function /Script/UMG.UserWidget.IsPlayingAnimation
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::IsPlayingAnimation()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsPlayingAnimation");
+        
+        UUserWidget_IsPlayingAnimation_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFBCC0
+     *         Name   -> Function /Script/UMG.UserWidget.IsListeningForInputAction
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         BasicTypes::FName                                  ActionName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::IsListeningForInputAction(const BasicTypes::FName& ActionName)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsListeningForInputAction");
+        
+        UUserWidget_IsListeningForInputAction_Params params {};
+        params.ActionName = ActionName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB850
+     *         Name   -> Function /Script/UMG.UserWidget.IsInViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::IsInViewport()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsInViewport");
+        
+        UUserWidget_IsInViewport_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.IsInteractable
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::IsInteractable()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsInteractable");
+        
+        UUserWidget_IsInteractable_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFBC90
+     *         Name   -> Function /Script/UMG.UserWidget.IsAnyAnimationPlaying
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::IsAnyAnimationPlaying()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsAnyAnimationPlaying");
+        
+        UUserWidget_IsAnyAnimationPlaying_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFBC00
+     *         Name   -> Function /Script/UMG.UserWidget.IsAnimationPlayingForward
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::IsAnimationPlayingForward(UMG::UWidgetAnimation* InAnimation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsAnimationPlayingForward");
+        
+        UUserWidget_IsAnimationPlayingForward_Params params {};
+        params.InAnimation = InAnimation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFBB70
+     *         Name   -> Function /Script/UMG.UserWidget.IsAnimationPlaying
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::IsAnimationPlaying(UMG::UWidgetAnimation* InAnimation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsAnimationPlaying");
+        
+        UUserWidget_IsAnimationPlaying_Params params {};
+        params.InAnimation = InAnimation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB940
+     *         Name   -> Function /Script/UMG.UserWidget.GetOwningPlayerPawn
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         Engine::APawn*                                     ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    Engine::APawn* UUserWidget::GetOwningPlayerPawn()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetOwningPlayerPawn");
+        
+        UUserWidget_GetOwningPlayerPawn_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB850
+     *         Name   -> Function /Script/UMG.UserWidget.GetIsVisible
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::GetIsVisible()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetIsVisible");
+        
+        UUserWidget_GetIsVisible_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB750
+     *         Name   -> Function /Script/UMG.UserWidget.GetAnimationCurrentTime
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UUserWidget::GetAnimationCurrentTime(UMG::UWidgetAnimation* InAnimation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetAnimationCurrentTime");
+        
+        UUserWidget_GetAnimationCurrentTime_Params params {};
+        params.InAnimation = InAnimation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB710
+     *         Name   -> Function /Script/UMG.UserWidget.GetAnchorsInViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         Slate::FAnchors                                    ReturnValue                                                (Parm, OutParm, ReturnParm, NoDestructor, NativeAccessSpecifierPublic)
+     */
+    Slate::FAnchors UUserWidget::GetAnchorsInViewport()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetAnchorsInViewport");
+        
+        UUserWidget_GetAnchorsInViewport_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB6D0
+     *         Name   -> Function /Script/UMG.UserWidget.GetAlignmentInViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector2D UUserWidget::GetAlignmentInViewport()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetAlignmentInViewport");
+        
+        UUserWidget_GetAlignmentInViewport_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.Destruct
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::Destruct()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.Destruct");
+        
+        UUserWidget_Destruct_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/UMG.UserWidget.Construct
+     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::Construct()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.Construct");
+        
+        UUserWidget_Construct_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB5F0
+     *         Name   -> Function /Script/UMG.UserWidget.CancelLatentActions
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::CancelLatentActions()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.CancelLatentActions");
+        
+        UUserWidget_CancelLatentActions_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB570
+     *         Name   -> Function /Script/UMG.UserWidget.AddToViewport
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         int32_t                                            ZOrder                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UUserWidget::AddToViewport(int32_t ZOrder)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.AddToViewport");
+        
+        UUserWidget_AddToViewport_Params params {};
+        params.ZOrder = ZOrder;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FFB4E0
+     *         Name   -> Function /Script/UMG.UserWidget.AddToPlayerScreen
+     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         int32_t                                            ZOrder                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UUserWidget::AddToPlayerScreen(int32_t ZOrder)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.AddToPlayerScreen");
+        
+        UUserWidget_AddToPlayerScreen_Params params {};
+        params.ZOrder = ZOrder;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
     /**
      * Function:
      *         RVA    -> 0x00FE48E0
@@ -4697,188 +7917,6 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x00FEFF80
-     *         Name   -> Function /Script/UMG.MenuAnchor.ToggleOpen
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               bFocusOnOpen                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UMenuAnchor::ToggleOpen(bool bFocusOnOpen)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.ToggleOpen");
-        
-        UMenuAnchor_ToggleOpen_Params params {};
-        params.bFocusOnOpen = bFocusOnOpen;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEFF50
-     *         Name   -> Function /Script/UMG.MenuAnchor.ShouldOpenDueToClick
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UMenuAnchor::ShouldOpenDueToClick()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.ShouldOpenDueToClick");
-        
-        UMenuAnchor_ShouldOpenDueToClick_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEF8C0
-     *         Name   -> Function /Script/UMG.MenuAnchor.Open
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               bFocusMenu                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UMenuAnchor::Open(bool bFocusMenu)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.Open");
-        
-        UMenuAnchor_Open_Params params {};
-        params.bFocusMenu = bFocusMenu;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEF7E0
-     *         Name   -> Function /Script/UMG.MenuAnchor.IsOpen
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UMenuAnchor::IsOpen()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.IsOpen");
-        
-        UMenuAnchor_IsOpen_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEF730
-     *         Name   -> Function /Script/UMG.MenuAnchor.HasOpenSubMenus
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UMenuAnchor::HasOpenSubMenus()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.HasOpenSubMenus");
-        
-        UMenuAnchor_HasOpenSubMenus_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEF540
-     *         Name   -> Function /Script/UMG.MenuAnchor.GetMenuPosition
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector2D UMenuAnchor::GetMenuPosition()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.GetMenuPosition");
-        
-        UMenuAnchor_GetMenuPosition_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEF2E0
-     *         Name   -> Function /Script/UMG.MenuAnchor.Close
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UMenuAnchor::Close()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.Close");
-        
-        UMenuAnchor_Close_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEF700
-     *         Name   -> Function /Script/UMG.MouseCursorBinding.GetValue
-     *         Flags  -> (Final, Native, Public, Const)
-     * Parameters:
-     *         CoreUObject::EMouseCursor                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::EMouseCursor UMouseCursorBinding::GetValue()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MouseCursorBinding.GetValue");
-        
-        UMouseCursorBinding_GetValue_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
      *         RVA    -> 0x00FF2E60
      *         Name   -> Function /Script/UMG.Overlay.AddChildToOverlay
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
@@ -5195,1233 +8233,6 @@ namespace CG::UMG
         
         URichTextBlock_GetDecoratorByClass_Params params {};
         params.DecoratorClass = DecoratorClass;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4E20
-     *         Name   -> Function /Script/UMG.SafeZone.SetSidesToPad
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               InPadLeft                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               InPadRight                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               InPadTop                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               InPadBottom                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USafeZone::SetSidesToPad(bool InPadLeft, bool InPadRight, bool InPadTop, bool InPadBottom)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SafeZone.SetSidesToPad");
-        
-        USafeZone_SetSidesToPad_Params params {};
-        params.InPadLeft = InPadLeft;
-        params.InPadRight = InPadRight;
-        params.InPadTop = InPadTop;
-        params.InPadBottom = InPadBottom;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF52B0
-     *         Name   -> Function /Script/UMG.ScaleBox.SetUserSpecifiedScale
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InUserSpecifiedScale                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScaleBox::SetUserSpecifiedScale(float InUserSpecifiedScale)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBox.SetUserSpecifiedScale");
-        
-        UScaleBox_SetUserSpecifiedScale_Params params {};
-        params.InUserSpecifiedScale = InUserSpecifiedScale;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF50D0
-     *         Name   -> Function /Script/UMG.ScaleBox.SetStretchDirection
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Slate::EStretchDirection                           InStretchDirection                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScaleBox::SetStretchDirection(Slate::EStretchDirection InStretchDirection)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBox.SetStretchDirection");
-        
-        UScaleBox_SetStretchDirection_Params params {};
-        params.InStretchDirection = InStretchDirection;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF5050
-     *         Name   -> Function /Script/UMG.ScaleBox.SetStretch
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Slate::EStretch                                    InStretch                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScaleBox::SetStretch(Slate::EStretch InStretch)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBox.SetStretch");
-        
-        UScaleBox_SetStretch_Params params {};
-        params.InStretch = InStretch;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF44F0
-     *         Name   -> Function /Script/UMG.ScaleBox.SetIgnoreInheritedScale
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               bInIgnoreInheritedScale                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScaleBox::SetIgnoreInheritedScale(bool bInIgnoreInheritedScale)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBox.SetIgnoreInheritedScale");
-        
-        UScaleBox_SetIgnoreInheritedScale_Params params {};
-        params.bInIgnoreInheritedScale = bInIgnoreInheritedScale;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FE6C80
-     *         Name   -> Function /Script/UMG.ScaleBoxSlot.SetVerticalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScaleBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBoxSlot.SetVerticalAlignment");
-        
-        UScaleBoxSlot_SetVerticalAlignment_Params params {};
-        params.InVerticalAlignment = InVerticalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF49A0
-     *         Name   -> Function /Script/UMG.ScaleBoxSlot.SetPadding
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScaleBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBoxSlot.SetPadding");
-        
-        UScaleBoxSlot_SetPadding_Params params {};
-        params.InPadding = InPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FE5DA0
-     *         Name   -> Function /Script/UMG.ScaleBoxSlot.SetHorizontalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScaleBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBoxSlot.SetHorizontalAlignment");
-        
-        UScaleBoxSlot_SetHorizontalAlignment_Params params {};
-        params.InHorizontalAlignment = InHorizontalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4F90
-     *         Name   -> Function /Script/UMG.ScrollBar.SetState
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InOffsetFraction                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              InThumbSizeFraction                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBar::SetState(float InOffsetFraction, float InThumbSizeFraction)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBar.SetState");
-        
-        UScrollBar_SetState_Params params {};
-        params.InOffsetFraction = InOffsetFraction;
-        params.InThumbSizeFraction = InThumbSizeFraction;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4D10
-     *         Name   -> Function /Script/UMG.ScrollBox.SetScrollOffset
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              NewScrollOffset                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::SetScrollOffset(float NewScrollOffset)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetScrollOffset");
-        
-        UScrollBox_SetScrollOffset_Params params {};
-        params.NewScrollOffset = NewScrollOffset;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4C90
-     *         Name   -> Function /Script/UMG.ScrollBox.SetScrollBarVisibility
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::ESlateVisibility                              NewScrollBarVisibility                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::SetScrollBarVisibility(UMG::ESlateVisibility NewScrollBarVisibility)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetScrollBarVisibility");
-        
-        UScrollBox_SetScrollBarVisibility_Params params {};
-        params.NewScrollBarVisibility = NewScrollBarVisibility;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4D90
-     *         Name   -> Function /Script/UMG.ScrollBox.SetScrollbarThickness
-     *         Flags  -> (Final, Native, Public, HasOutParms, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             NewScrollbarThickness                                      (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::SetScrollbarThickness(const CoreUObject::FVector2D& NewScrollbarThickness)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetScrollbarThickness");
-        
-        UScrollBox_SetScrollbarThickness_Params params {};
-        params.NewScrollbarThickness = NewScrollbarThickness;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4890
-     *         Name   -> Function /Script/UMG.ScrollBox.SetOrientation
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EOrientation                            NewOrientation                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::SetOrientation(SlateCore::EOrientation NewOrientation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetOrientation");
-        
-        UScrollBox_SetOrientation_Params params {};
-        params.NewOrientation = NewOrientation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF41E0
-     *         Name   -> Function /Script/UMG.ScrollBox.SetAlwaysShowScrollbar
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               NewAlwaysShowScrollbar                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::SetAlwaysShowScrollbar(bool NewAlwaysShowScrollbar)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetAlwaysShowScrollbar");
-        
-        UScrollBox_SetAlwaysShowScrollbar_Params params {};
-        params.NewAlwaysShowScrollbar = NewAlwaysShowScrollbar;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4150
-     *         Name   -> Function /Script/UMG.ScrollBox.SetAllowOverscroll
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               NewAllowOverscroll                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::SetAllowOverscroll(bool NewAllowOverscroll)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetAllowOverscroll");
-        
-        UScrollBox_SetAllowOverscroll_Params params {};
-        params.NewAllowOverscroll = NewAllowOverscroll;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4050
-     *         Name   -> Function /Script/UMG.ScrollBox.ScrollWidgetIntoView
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidget*                                      WidgetToFind                                               (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               AnimateScroll                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Slate::EDescendantScrollDestination                ScrollDestination                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::ScrollWidgetIntoView(UMG::UWidget* WidgetToFind, bool AnimateScroll, Slate::EDescendantScrollDestination ScrollDestination)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.ScrollWidgetIntoView");
-        
-        UScrollBox_ScrollWidgetIntoView_Params params {};
-        params.WidgetToFind = WidgetToFind;
-        params.AnimateScroll = AnimateScroll;
-        params.ScrollDestination = ScrollDestination;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4030
-     *         Name   -> Function /Script/UMG.ScrollBox.ScrollToStart
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::ScrollToStart()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.ScrollToStart");
-        
-        UScrollBox_ScrollToStart_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4010
-     *         Name   -> Function /Script/UMG.ScrollBox.ScrollToEnd
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UScrollBox::ScrollToEnd()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.ScrollToEnd");
-        
-        UScrollBox_ScrollToEnd_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3680
-     *         Name   -> Function /Script/UMG.ScrollBox.GetViewOffsetFraction
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UScrollBox::GetViewOffsetFraction()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.GetViewOffsetFraction");
-        
-        UScrollBox_GetViewOffsetFraction_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3650
-     *         Name   -> Function /Script/UMG.ScrollBox.GetScrollOffset
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UScrollBox::GetScrollOffset()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.GetScrollOffset");
-        
-        UScrollBox_GetScrollOffset_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF53B0
-     *         Name   -> Function /Script/UMG.ScrollBoxSlot.SetVerticalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBoxSlot.SetVerticalAlignment");
-        
-        UScrollBoxSlot_SetVerticalAlignment_Params params {};
-        params.InVerticalAlignment = InVerticalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4A30
-     *         Name   -> Function /Script/UMG.ScrollBoxSlot.SetPadding
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBoxSlot.SetPadding");
-        
-        UScrollBoxSlot_SetPadding_Params params {};
-        params.InPadding = InPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4470
-     *         Name   -> Function /Script/UMG.ScrollBoxSlot.SetHorizontalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScrollBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBoxSlot.SetHorizontalAlignment");
-        
-        UScrollBoxSlot_SetHorizontalAlignment_Params params {};
-        params.InHorizontalAlignment = InHorizontalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF5430
-     *         Name   -> Function /Script/UMG.SizeBox.SetWidthOverride
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InWidthOverride                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBox::SetWidthOverride(float InWidthOverride)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetWidthOverride");
-        
-        USizeBox_SetWidthOverride_Params params {};
-        params.InWidthOverride = InWidthOverride;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4810
-     *         Name   -> Function /Script/UMG.SizeBox.SetMinDesiredWidth
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InMinDesiredWidth                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBox::SetMinDesiredWidth(float InMinDesiredWidth)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMinDesiredWidth");
-        
-        USizeBox_SetMinDesiredWidth_Params params {};
-        params.InMinDesiredWidth = InMinDesiredWidth;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4790
-     *         Name   -> Function /Script/UMG.SizeBox.SetMinDesiredHeight
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InMinDesiredHeight                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBox::SetMinDesiredHeight(float InMinDesiredHeight)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMinDesiredHeight");
-        
-        USizeBox_SetMinDesiredHeight_Params params {};
-        params.InMinDesiredHeight = InMinDesiredHeight;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4710
-     *         Name   -> Function /Script/UMG.SizeBox.SetMaxDesiredWidth
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InMaxDesiredWidth                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBox::SetMaxDesiredWidth(float InMaxDesiredWidth)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMaxDesiredWidth");
-        
-        USizeBox_SetMaxDesiredWidth_Params params {};
-        params.InMaxDesiredWidth = InMaxDesiredWidth;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4690
-     *         Name   -> Function /Script/UMG.SizeBox.SetMaxDesiredHeight
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InMaxDesiredHeight                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBox::SetMaxDesiredHeight(float InMaxDesiredHeight)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMaxDesiredHeight");
-        
-        USizeBox_SetMaxDesiredHeight_Params params {};
-        params.InMaxDesiredHeight = InMaxDesiredHeight;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4610
-     *         Name   -> Function /Script/UMG.SizeBox.SetMaxAspectRatio
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InMaxAspectRatio                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBox::SetMaxAspectRatio(float InMaxAspectRatio)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMaxAspectRatio");
-        
-        USizeBox_SetMaxAspectRatio_Params params {};
-        params.InMaxAspectRatio = InMaxAspectRatio;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4370
-     *         Name   -> Function /Script/UMG.SizeBox.SetHeightOverride
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InHeightOverride                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBox::SetHeightOverride(float InHeightOverride)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetHeightOverride");
-        
-        USizeBox_SetHeightOverride_Params params {};
-        params.InHeightOverride = InHeightOverride;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2FD0
-     *         Name   -> Function /Script/UMG.SizeBox.ClearWidthOverride
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void USizeBox::ClearWidthOverride()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearWidthOverride");
-        
-        USizeBox_ClearWidthOverride_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2FB0
-     *         Name   -> Function /Script/UMG.SizeBox.ClearMinDesiredWidth
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void USizeBox::ClearMinDesiredWidth()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMinDesiredWidth");
-        
-        USizeBox_ClearMinDesiredWidth_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2F90
-     *         Name   -> Function /Script/UMG.SizeBox.ClearMinDesiredHeight
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void USizeBox::ClearMinDesiredHeight()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMinDesiredHeight");
-        
-        USizeBox_ClearMinDesiredHeight_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2F70
-     *         Name   -> Function /Script/UMG.SizeBox.ClearMaxDesiredWidth
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void USizeBox::ClearMaxDesiredWidth()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMaxDesiredWidth");
-        
-        USizeBox_ClearMaxDesiredWidth_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2F50
-     *         Name   -> Function /Script/UMG.SizeBox.ClearMaxDesiredHeight
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void USizeBox::ClearMaxDesiredHeight()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMaxDesiredHeight");
-        
-        USizeBox_ClearMaxDesiredHeight_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2F30
-     *         Name   -> Function /Script/UMG.SizeBox.ClearMaxAspectRatio
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void USizeBox::ClearMaxAspectRatio()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMaxAspectRatio");
-        
-        USizeBox_ClearMaxAspectRatio_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2F10
-     *         Name   -> Function /Script/UMG.SizeBox.ClearHeightOverride
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void USizeBox::ClearHeightOverride()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearHeightOverride");
-        
-        USizeBox_ClearHeightOverride_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FE6C80
-     *         Name   -> Function /Script/UMG.SizeBoxSlot.SetVerticalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBoxSlot.SetVerticalAlignment");
-        
-        USizeBoxSlot_SetVerticalAlignment_Params params {};
-        params.InVerticalAlignment = InVerticalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF4AC0
-     *         Name   -> Function /Script/UMG.SizeBoxSlot.SetPadding
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBoxSlot.SetPadding");
-        
-        USizeBoxSlot_SetPadding_Params params {};
-        params.InPadding = InPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FE5DA0
-     *         Name   -> Function /Script/UMG.SizeBoxSlot.SetHorizontalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USizeBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBoxSlot.SetHorizontalAlignment");
-        
-        USizeBoxSlot_SetHorizontalAlignment_Params params {};
-        params.InHorizontalAlignment = InHorizontalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3E90
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.ScreenToWidgetLocal
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ScreenPosition                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             LocalCoordinate                                            (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USlateBlueprintLibrary::STATIC_ScreenToWidgetLocal(CoreUObject::UObject* WorldContextObject, const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& ScreenPosition, CoreUObject::FVector2D* LocalCoordinate)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.ScreenToWidgetLocal");
-        
-        USlateBlueprintLibrary_ScreenToWidgetLocal_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.Geometry = Geometry;
-        params.ScreenPosition = ScreenPosition;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (LocalCoordinate != nullptr)
-            *LocalCoordinate = params.LocalCoordinate;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3D90
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.ScreenToWidgetAbsolute
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ScreenPosition                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             AbsoluteCoordinate                                         (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USlateBlueprintLibrary::STATIC_ScreenToWidgetAbsolute(CoreUObject::UObject* WorldContextObject, const CoreUObject::FVector2D& ScreenPosition, CoreUObject::FVector2D* AbsoluteCoordinate)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.ScreenToWidgetAbsolute");
-        
-        USlateBlueprintLibrary_ScreenToWidgetAbsolute_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.ScreenPosition = ScreenPosition;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (AbsoluteCoordinate != nullptr)
-            *AbsoluteCoordinate = params.AbsoluteCoordinate;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3C90
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.ScreenToViewport
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ScreenPosition                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ViewportPosition                                           (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USlateBlueprintLibrary::STATIC_ScreenToViewport(CoreUObject::UObject* WorldContextObject, const CoreUObject::FVector2D& ScreenPosition, CoreUObject::FVector2D* ViewportPosition)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.ScreenToViewport");
-        
-        USlateBlueprintLibrary_ScreenToViewport_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.ScreenPosition = ScreenPosition;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (ViewportPosition != nullptr)
-            *ViewportPosition = params.ViewportPosition;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3970
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.LocalToViewport
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             LocalCoordinate                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             PixelPosition                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ViewportPosition                                           (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USlateBlueprintLibrary::STATIC_LocalToViewport(CoreUObject::UObject* WorldContextObject, const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& LocalCoordinate, CoreUObject::FVector2D* PixelPosition, CoreUObject::FVector2D* ViewportPosition)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.LocalToViewport");
-        
-        USlateBlueprintLibrary_LocalToViewport_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.Geometry = Geometry;
-        params.LocalCoordinate = LocalCoordinate;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (PixelPosition != nullptr)
-            *PixelPosition = params.PixelPosition;
-        if (ViewportPosition != nullptr)
-            *ViewportPosition = params.ViewportPosition;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3870
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.LocalToAbsolute
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             LocalCoordinate                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector2D USlateBlueprintLibrary::STATIC_LocalToAbsolute(const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& LocalCoordinate)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.LocalToAbsolute");
-        
-        USlateBlueprintLibrary_LocalToAbsolute_Params params {};
-        params.Geometry = Geometry;
-        params.LocalCoordinate = LocalCoordinate;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3770
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.IsUnderLocation
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             AbsoluteCoordinate                                         (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool USlateBlueprintLibrary::STATIC_IsUnderLocation(const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& AbsoluteCoordinate)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.IsUnderLocation");
-        
-        USlateBlueprintLibrary_IsUnderLocation_Params params {};
-        params.Geometry = Geometry;
-        params.AbsoluteCoordinate = AbsoluteCoordinate;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF3590
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.GetLocalSize
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector2D USlateBlueprintLibrary::STATIC_GetLocalSize(const SlateCore::FGeometry& Geometry)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.GetLocalSize");
-        
-        USlateBlueprintLibrary_GetLocalSize_Params params {};
-        params.Geometry = Geometry;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF32C0
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.GetAbsoluteSize
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector2D USlateBlueprintLibrary::STATIC_GetAbsoluteSize(const SlateCore::FGeometry& Geometry)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.GetAbsoluteSize");
-        
-        USlateBlueprintLibrary_GetAbsoluteSize_Params params {};
-        params.Geometry = Geometry;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2FF0
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.EqualEqual_SlateBrush
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SlateCore::FSlateBrush                             A                                                          (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         SlateCore::FSlateBrush                             B                                                          (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool USlateBlueprintLibrary::STATIC_EqualEqual_SlateBrush(const SlateCore::FSlateBrush& A, const SlateCore::FSlateBrush& B)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.EqualEqual_SlateBrush");
-        
-        USlateBlueprintLibrary_EqualEqual_SlateBrush_Params params {};
-        params.A = A;
-        params.B = B;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2C80
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.AbsoluteToViewport
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             AbsoluteDesktopCoordinate                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             PixelPosition                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ViewportPosition                                           (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USlateBlueprintLibrary::STATIC_AbsoluteToViewport(CoreUObject::UObject* WorldContextObject, const CoreUObject::FVector2D& AbsoluteDesktopCoordinate, CoreUObject::FVector2D* PixelPosition, CoreUObject::FVector2D* ViewportPosition)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.AbsoluteToViewport");
-        
-        USlateBlueprintLibrary_AbsoluteToViewport_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.AbsoluteDesktopCoordinate = AbsoluteDesktopCoordinate;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (PixelPosition != nullptr)
-            *PixelPosition = params.PixelPosition;
-        if (ViewportPosition != nullptr)
-            *ViewportPosition = params.ViewportPosition;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FF2B80
-     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.AbsoluteToLocal
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             AbsoluteCoordinate                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector2D USlateBlueprintLibrary::STATIC_AbsoluteToLocal(const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& AbsoluteCoordinate)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.AbsoluteToLocal");
-        
-        USlateBlueprintLibrary_AbsoluteToLocal_Params params {};
-        params.Geometry = Geometry;
-        params.AbsoluteCoordinate = AbsoluteCoordinate;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7549,21 +9360,21 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x00FEFDB0
-     *         Name   -> Function /Script/UMG.MultiLineEditableText.SetText
+     *         RVA    -> 0x00FFDE00
+     *         Name   -> Function /Script/UMG.UniformGridPanel.SetSlotPadding
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::FText                                  InText                                                     (Parm, NativeAccessSpecifierPublic)
+     *         SlateCore::FMargin                                 InSlotPadding                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void UMultiLineEditableText::SetText(const BasicTypes::FText& InText)
+    void UUniformGridPanel::SetSlotPadding(const SlateCore::FMargin& InSlotPadding)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableText.SetText");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridPanel.SetSlotPadding");
         
-        UMultiLineEditableText_SetText_Params params {};
-        params.InText = InText;
+        UUniformGridPanel_SetSlotPadding_Params params {};
+        params.InSlotPadding = InSlotPadding;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7572,21 +9383,21 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x00FEFB90
-     *         Name   -> Function /Script/UMG.MultiLineEditableText.SetIsReadOnly
+     *         RVA    -> 0x00FFD4A0
+     *         Name   -> Function /Script/UMG.UniformGridPanel.SetMinDesiredSlotWidth
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         bool                                               bReadOnly                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              InMinDesiredSlotWidth                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void UMultiLineEditableText::SetIsReadOnly(bool bReadOnly)
+    void UUniformGridPanel::SetMinDesiredSlotWidth(float InMinDesiredSlotWidth)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableText.SetIsReadOnly");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridPanel.SetMinDesiredSlotWidth");
         
-        UMultiLineEditableText_SetIsReadOnly_Params params {};
-        params.bReadOnly = bReadOnly;
+        UUniformGridPanel_SetMinDesiredSlotWidth_Params params {};
+        params.InMinDesiredSlotWidth = InMinDesiredSlotWidth;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7595,23 +9406,21 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.MultiLineEditableText.OnMultiLineEditableTextCommittedEvent__DelegateSignature
-     *         Flags  -> (MulticastDelegate, Public, Delegate, HasOutParms)
+     *         RVA    -> 0x00FFD420
+     *         Name   -> Function /Script/UMG.UniformGridPanel.SetMinDesiredSlotHeight
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::FText                                  Text                                                       (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         SlateCore::ETextCommit                             CommitMethod                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              InMinDesiredSlotHeight                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void UMultiLineEditableText::OnMultiLineEditableTextCommittedEvent__DelegateSignature(const BasicTypes::FText& Text, SlateCore::ETextCommit CommitMethod)
+    void UUniformGridPanel::SetMinDesiredSlotHeight(float InMinDesiredSlotHeight)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.MultiLineEditableText.OnMultiLineEditableTextCommittedEvent__DelegateSignature");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridPanel.SetMinDesiredSlotHeight");
         
-        UMultiLineEditableText_OnMultiLineEditableTextCommittedEvent__DelegateSignature_Params params {};
-        params.Text = Text;
-        params.CommitMethod = CommitMethod;
+        UUniformGridPanel_SetMinDesiredSlotHeight_Params params {};
+        params.InMinDesiredSlotHeight = InMinDesiredSlotHeight;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7620,42 +9429,21 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.MultiLineEditableText.OnMultiLineEditableTextChangedEvent__DelegateSignature
-     *         Flags  -> (MulticastDelegate, Public, Delegate, HasOutParms)
+     *         RVA    -> 0x00FFB450
+     *         Name   -> Function /Script/UMG.UniformGridPanel.AddChildToUniformGrid
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::FText                                  Text                                                       (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
+     *         UMG::UWidget*                                      Content                                                    (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         UMG::UUniformGridSlot*                             ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    void UMultiLineEditableText::OnMultiLineEditableTextChangedEvent__DelegateSignature(const BasicTypes::FText& Text)
+    UMG::UUniformGridSlot* UUniformGridPanel::AddChildToUniformGrid(UMG::UWidget* Content)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.MultiLineEditableText.OnMultiLineEditableTextChangedEvent__DelegateSignature");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridPanel.AddChildToUniformGrid");
         
-        UMultiLineEditableText_OnMultiLineEditableTextChangedEvent__DelegateSignature_Params params {};
-        params.Text = Text;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEF5B0
-     *         Name   -> Function /Script/UMG.MultiLineEditableText.GetText
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         BasicTypes::FText                                  ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    BasicTypes::FText UMultiLineEditableText::GetText()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableText.GetText");
-        
-        UMultiLineEditableText_GetText_Params params {};
+        UUniformGridPanel_AddChildToUniformGrid_Params params {};
+        params.Content = Content;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7666,21 +9454,21 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x00FEFE80
-     *         Name   -> Function /Script/UMG.MultiLineEditableTextBox.SetText
+     *         RVA    -> 0x00FFE0E0
+     *         Name   -> Function /Script/UMG.UniformGridSlot.SetVerticalAlignment
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::FText                                  InText                                                     (Parm, NativeAccessSpecifierPublic)
+     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void UMultiLineEditableTextBox::SetText(const BasicTypes::FText& InText)
+    void UUniformGridSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableTextBox.SetText");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridSlot.SetVerticalAlignment");
         
-        UMultiLineEditableTextBox_SetText_Params params {};
-        params.InText = InText;
+        UUniformGridSlot_SetVerticalAlignment_Params params {};
+        params.InVerticalAlignment = InVerticalAlignment;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7689,21 +9477,21 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x00FEFC20
-     *         Name   -> Function /Script/UMG.MultiLineEditableTextBox.SetIsReadOnly
+     *         RVA    -> 0x00FFDB00
+     *         Name   -> Function /Script/UMG.UniformGridSlot.SetRow
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         bool                                               bReadOnly                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            InRow                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void UMultiLineEditableTextBox::SetIsReadOnly(bool bReadOnly)
+    void UUniformGridSlot::SetRow(int32_t InRow)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableTextBox.SetIsReadOnly");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridSlot.SetRow");
         
-        UMultiLineEditableTextBox_SetIsReadOnly_Params params {};
-        params.bReadOnly = bReadOnly;
+        UUniformGridSlot_SetRow_Params params {};
+        params.InRow = InRow;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7712,21 +9500,21 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x00FEFAC0
-     *         Name   -> Function /Script/UMG.MultiLineEditableTextBox.SetError
+     *         RVA    -> 0x00FFCF20
+     *         Name   -> Function /Script/UMG.UniformGridSlot.SetHorizontalAlignment
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::FText                                  InError                                                    (Parm, NativeAccessSpecifierPublic)
+     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void UMultiLineEditableTextBox::SetError(const BasicTypes::FText& InError)
+    void UUniformGridSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableTextBox.SetError");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridSlot.SetHorizontalAlignment");
         
-        UMultiLineEditableTextBox_SetError_Params params {};
-        params.InError = InError;
+        UUniformGridSlot_SetHorizontalAlignment_Params params {};
+        params.InHorizontalAlignment = InHorizontalAlignment;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7735,23 +9523,21 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.MultiLineEditableTextBox.OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature
-     *         Flags  -> (MulticastDelegate, Public, Delegate, HasOutParms)
+     *         RVA    -> 0x00FFCA00
+     *         Name   -> Function /Script/UMG.UniformGridSlot.SetColumn
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::FText                                  Text                                                       (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         SlateCore::ETextCommit                             CommitMethod                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            InColumn                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void UMultiLineEditableTextBox::OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature(const BasicTypes::FText& Text, SlateCore::ETextCommit CommitMethod)
+    void UUniformGridSlot::SetColumn(int32_t InColumn)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.MultiLineEditableTextBox.OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridSlot.SetColumn");
         
-        UMultiLineEditableTextBox_OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature_Params params {};
-        params.Text = Text;
-        params.CommitMethod = CommitMethod;
+        UUniformGridSlot_SetColumn_Params params {};
+        params.InColumn = InColumn;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7760,21 +9546,46 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.MultiLineEditableTextBox.OnMultiLineEditableTextBoxChangedEvent__DelegateSignature
-     *         Flags  -> (MulticastDelegate, Public, Delegate, HasOutParms)
+     *         RVA    -> 0x01000BD0
+     *         Name   -> Function /Script/UMG.VerticalBox.AddChildToVerticalBox
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::FText                                  Text                                                       (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
+     *         UMG::UWidget*                                      Content                                                    (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         UMG::UVerticalBoxSlot*                             ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    void UMultiLineEditableTextBox::OnMultiLineEditableTextBoxChangedEvent__DelegateSignature(const BasicTypes::FText& Text)
+    UMG::UVerticalBoxSlot* UVerticalBox::AddChildToVerticalBox(UMG::UWidget* Content)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.MultiLineEditableTextBox.OnMultiLineEditableTextBoxChangedEvent__DelegateSignature");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBox.AddChildToVerticalBox");
         
-        UMultiLineEditableTextBox_OnMultiLineEditableTextBoxChangedEvent__DelegateSignature_Params params {};
-        params.Text = Text;
+        UVerticalBox_AddChildToVerticalBox_Params params {};
+        params.Content = Content;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEBA30
+     *         Name   -> Function /Script/UMG.VerticalBoxSlot.SetVerticalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UVerticalBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBoxSlot.SetVerticalAlignment");
+        
+        UVerticalBoxSlot_SetVerticalAlignment_Params params {};
+        params.InVerticalAlignment = InVerticalAlignment;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7783,19 +9594,297 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x00FEF640
-     *         Name   -> Function /Script/UMG.MultiLineEditableTextBox.GetText
+     *         RVA    -> 0x00FEB6F0
+     *         Name   -> Function /Script/UMG.VerticalBoxSlot.SetSize
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::FSlateChildSize                               InSize                                                     (Parm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UVerticalBoxSlot::SetSize(const UMG::FSlateChildSize& InSize)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBoxSlot.SetSize");
+        
+        UVerticalBoxSlot_SetSize_Params params {};
+        params.InSize = InSize;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEB3A0
+     *         Name   -> Function /Script/UMG.VerticalBoxSlot.SetPadding
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UVerticalBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBoxSlot.SetPadding");
+        
+        UVerticalBoxSlot_SetPadding_Params params {};
+        params.InPadding = InPadding;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEAC90
+     *         Name   -> Function /Script/UMG.VerticalBoxSlot.SetHorizontalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UVerticalBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBoxSlot.SetHorizontalAlignment");
+        
+        UVerticalBoxSlot_SetHorizontalAlignment_Params params {};
+        params.InHorizontalAlignment = InHorizontalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010059B0
+     *         Name   -> Function /Script/UMG.Viewport.Spawn
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::AActor*                                    ActorClass                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::AActor*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    Engine::AActor* UViewport::Spawn(Engine::AActor* ActorClass)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.Spawn");
+        
+        UViewport_Spawn_Params params {};
+        params.ActorClass = ActorClass;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010055F0
+     *         Name   -> Function /Script/UMG.Viewport.SetViewRotation
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FRotator                              Rotation                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UViewport::SetViewRotation(const CoreUObject::FRotator& Rotation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.SetViewRotation");
+        
+        UViewport_SetViewRotation_Params params {};
+        params.Rotation = Rotation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01005560
+     *         Name   -> Function /Script/UMG.Viewport.SetViewLocation
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UViewport::SetViewLocation(const CoreUObject::FVector& Location)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.SetViewLocation");
+        
+        UViewport_SetViewLocation_Params params {};
+        params.Location = Location;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010035B0
+     *         Name   -> Function /Script/UMG.Viewport.GetViewRotation
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         CoreUObject::FRotator                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FRotator UViewport::GetViewRotation()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.GetViewRotation");
+        
+        UViewport_GetViewRotation_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010035F0
+     *         Name   -> Function /Script/UMG.Viewport.GetViewportWorld
      *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
      * Parameters:
-     *         BasicTypes::FText                                  ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     *         Engine::UWorld*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    BasicTypes::FText UMultiLineEditableTextBox::GetText()
+    Engine::UWorld* UViewport::GetViewportWorld()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableTextBox.GetText");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.GetViewportWorld");
         
-        UMultiLineEditableTextBox_GetText_Params params {};
+        UViewport_GetViewportWorld_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003570
+     *         Name   -> Function /Script/UMG.Viewport.GetViewLocation
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         CoreUObject::FVector                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector UViewport::GetViewLocation()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.GetViewLocation");
+        
+        UViewport_GetViewLocation_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003510
+     *         Name   -> Function /Script/UMG.VisibilityBinding.GetValue
+     *         Flags  -> (Final, Native, Public, Const)
+     * Parameters:
+     *         UMG::ESlateVisibility                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::ESlateVisibility UVisibilityBinding::GetValue()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VisibilityBinding.GetValue");
+        
+        UVisibilityBinding_GetValue_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010034E0
+     *         Name   -> Function /Script/UMG.WidgetAnimation.GetStartTime
+     *         Flags  -> (Final, RequiredAPI, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UWidgetAnimation::GetStartTime()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WidgetAnimation.GetStartTime");
+        
+        UWidgetAnimation_GetStartTime_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01002C90
+     *         Name   -> Function /Script/UMG.WidgetAnimation.GetEndTime
+     *         Flags  -> (Final, RequiredAPI, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UWidgetAnimation::GetEndTime()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WidgetAnimation.GetEndTime");
+        
+        UWidgetAnimation_GetEndTime_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01003540
+     *         Name   -> Function /Script/UMG.WidgetBinding.GetValue
+     *         Flags  -> (Final, Native, Public, Const)
+     * Parameters:
+     *         UMG::UWidget*                                      ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::UWidget* UWidgetBinding::GetValue()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WidgetBinding.GetValue");
+        
+        UWidgetBinding_GetValue_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -9295,6 +11384,1624 @@ namespace CG::UMG
 
     /**
      * Function:
+     *         RVA    -> 0x01009380
+     *         Name   -> Function /Script/UMG.WindowTitleBarAreaSlot.SetVerticalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWindowTitleBarAreaSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WindowTitleBarAreaSlot.SetVerticalAlignment");
+        
+        UWindowTitleBarAreaSlot_SetVerticalAlignment_Params params {};
+        params.InVerticalAlignment = InVerticalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01009170
+     *         Name   -> Function /Script/UMG.WindowTitleBarAreaSlot.SetPadding
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWindowTitleBarAreaSlot::SetPadding(const SlateCore::FMargin& InPadding)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WindowTitleBarAreaSlot.SetPadding");
+        
+        UWindowTitleBarAreaSlot_SetPadding_Params params {};
+        params.InPadding = InPadding;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01008E40
+     *         Name   -> Function /Script/UMG.WindowTitleBarAreaSlot.SetHorizontalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWindowTitleBarAreaSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WindowTitleBarAreaSlot.SetHorizontalAlignment");
+        
+        UWindowTitleBarAreaSlot_SetHorizontalAlignment_Params params {};
+        params.InHorizontalAlignment = InHorizontalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01008EC0
+     *         Name   -> Function /Script/UMG.WrapBox.SetInnerSlotPadding
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWrapBox::SetInnerSlotPadding(const CoreUObject::FVector2D& InPadding)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBox.SetInnerSlotPadding");
+        
+        UWrapBox_SetInnerSlotPadding_Params params {};
+        params.InPadding = InPadding;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01007930
+     *         Name   -> Function /Script/UMG.WrapBox.AddChildWrapBox
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidget*                                      Content                                                    (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         UMG::UWrapBoxSlot*                                 ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    UMG::UWrapBoxSlot* UWrapBox::AddChildWrapBox(UMG::UWidget* Content)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBox.AddChildWrapBox");
+        
+        UWrapBox_AddChildWrapBox_Params params {};
+        params.Content = Content;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01009C50
+     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetVerticalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWrapBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetVerticalAlignment");
+        
+        UWrapBoxSlot_SetVerticalAlignment_Params params {};
+        params.InVerticalAlignment = InVerticalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01009BC0
+     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetPadding
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWrapBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetPadding");
+        
+        UWrapBoxSlot_SetPadding_Params params {};
+        params.InPadding = InPadding;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01009B40
+     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetHorizontalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWrapBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetHorizontalAlignment");
+        
+        UWrapBoxSlot_SetHorizontalAlignment_Params params {};
+        params.InHorizontalAlignment = InHorizontalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01009AC0
+     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetFillSpanWhenLessThan
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InFillSpanWhenLessThan                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWrapBoxSlot::SetFillSpanWhenLessThan(float InFillSpanWhenLessThan)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetFillSpanWhenLessThan");
+        
+        UWrapBoxSlot_SetFillSpanWhenLessThan_Params params {};
+        params.InFillSpanWhenLessThan = InFillSpanWhenLessThan;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x01009A30
+     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetFillEmptySpace
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               InbFillEmptySpace                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UWrapBoxSlot::SetFillEmptySpace(bool InbFillEmptySpace)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetFillEmptySpace");
+        
+        UWrapBoxSlot_SetFillEmptySpace_Params params {};
+        params.InbFillEmptySpace = InbFillEmptySpace;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FE6C80
+     *         Name   -> Function /Script/UMG.ScaleBoxSlot.SetVerticalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScaleBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBoxSlot.SetVerticalAlignment");
+        
+        UScaleBoxSlot_SetVerticalAlignment_Params params {};
+        params.InVerticalAlignment = InVerticalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF49A0
+     *         Name   -> Function /Script/UMG.ScaleBoxSlot.SetPadding
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScaleBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBoxSlot.SetPadding");
+        
+        UScaleBoxSlot_SetPadding_Params params {};
+        params.InPadding = InPadding;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FE5DA0
+     *         Name   -> Function /Script/UMG.ScaleBoxSlot.SetHorizontalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScaleBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBoxSlot.SetHorizontalAlignment");
+        
+        UScaleBoxSlot_SetHorizontalAlignment_Params params {};
+        params.InHorizontalAlignment = InHorizontalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4F90
+     *         Name   -> Function /Script/UMG.ScrollBar.SetState
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InOffsetFraction                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              InThumbSizeFraction                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBar::SetState(float InOffsetFraction, float InThumbSizeFraction)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBar.SetState");
+        
+        UScrollBar_SetState_Params params {};
+        params.InOffsetFraction = InOffsetFraction;
+        params.InThumbSizeFraction = InThumbSizeFraction;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4D10
+     *         Name   -> Function /Script/UMG.ScrollBox.SetScrollOffset
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              NewScrollOffset                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::SetScrollOffset(float NewScrollOffset)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetScrollOffset");
+        
+        UScrollBox_SetScrollOffset_Params params {};
+        params.NewScrollOffset = NewScrollOffset;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4C90
+     *         Name   -> Function /Script/UMG.ScrollBox.SetScrollBarVisibility
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::ESlateVisibility                              NewScrollBarVisibility                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::SetScrollBarVisibility(UMG::ESlateVisibility NewScrollBarVisibility)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetScrollBarVisibility");
+        
+        UScrollBox_SetScrollBarVisibility_Params params {};
+        params.NewScrollBarVisibility = NewScrollBarVisibility;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4D90
+     *         Name   -> Function /Script/UMG.ScrollBox.SetScrollbarThickness
+     *         Flags  -> (Final, Native, Public, HasOutParms, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector2D                             NewScrollbarThickness                                      (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::SetScrollbarThickness(const CoreUObject::FVector2D& NewScrollbarThickness)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetScrollbarThickness");
+        
+        UScrollBox_SetScrollbarThickness_Params params {};
+        params.NewScrollbarThickness = NewScrollbarThickness;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4890
+     *         Name   -> Function /Script/UMG.ScrollBox.SetOrientation
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EOrientation                            NewOrientation                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::SetOrientation(SlateCore::EOrientation NewOrientation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetOrientation");
+        
+        UScrollBox_SetOrientation_Params params {};
+        params.NewOrientation = NewOrientation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF41E0
+     *         Name   -> Function /Script/UMG.ScrollBox.SetAlwaysShowScrollbar
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               NewAlwaysShowScrollbar                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::SetAlwaysShowScrollbar(bool NewAlwaysShowScrollbar)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetAlwaysShowScrollbar");
+        
+        UScrollBox_SetAlwaysShowScrollbar_Params params {};
+        params.NewAlwaysShowScrollbar = NewAlwaysShowScrollbar;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4150
+     *         Name   -> Function /Script/UMG.ScrollBox.SetAllowOverscroll
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               NewAllowOverscroll                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::SetAllowOverscroll(bool NewAllowOverscroll)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.SetAllowOverscroll");
+        
+        UScrollBox_SetAllowOverscroll_Params params {};
+        params.NewAllowOverscroll = NewAllowOverscroll;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4050
+     *         Name   -> Function /Script/UMG.ScrollBox.ScrollWidgetIntoView
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         UMG::UWidget*                                      WidgetToFind                                               (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               AnimateScroll                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Slate::EDescendantScrollDestination                ScrollDestination                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::ScrollWidgetIntoView(UMG::UWidget* WidgetToFind, bool AnimateScroll, Slate::EDescendantScrollDestination ScrollDestination)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.ScrollWidgetIntoView");
+        
+        UScrollBox_ScrollWidgetIntoView_Params params {};
+        params.WidgetToFind = WidgetToFind;
+        params.AnimateScroll = AnimateScroll;
+        params.ScrollDestination = ScrollDestination;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4030
+     *         Name   -> Function /Script/UMG.ScrollBox.ScrollToStart
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::ScrollToStart()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.ScrollToStart");
+        
+        UScrollBox_ScrollToStart_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4010
+     *         Name   -> Function /Script/UMG.ScrollBox.ScrollToEnd
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UScrollBox::ScrollToEnd()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.ScrollToEnd");
+        
+        UScrollBox_ScrollToEnd_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3680
+     *         Name   -> Function /Script/UMG.ScrollBox.GetViewOffsetFraction
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UScrollBox::GetViewOffsetFraction()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.GetViewOffsetFraction");
+        
+        UScrollBox_GetViewOffsetFraction_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3650
+     *         Name   -> Function /Script/UMG.ScrollBox.GetScrollOffset
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UScrollBox::GetScrollOffset()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBox.GetScrollOffset");
+        
+        UScrollBox_GetScrollOffset_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF53B0
+     *         Name   -> Function /Script/UMG.ScrollBoxSlot.SetVerticalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBoxSlot.SetVerticalAlignment");
+        
+        UScrollBoxSlot_SetVerticalAlignment_Params params {};
+        params.InVerticalAlignment = InVerticalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4A30
+     *         Name   -> Function /Script/UMG.ScrollBoxSlot.SetPadding
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBoxSlot.SetPadding");
+        
+        UScrollBoxSlot_SetPadding_Params params {};
+        params.InPadding = InPadding;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4470
+     *         Name   -> Function /Script/UMG.ScrollBoxSlot.SetHorizontalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScrollBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScrollBoxSlot.SetHorizontalAlignment");
+        
+        UScrollBoxSlot_SetHorizontalAlignment_Params params {};
+        params.InHorizontalAlignment = InHorizontalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF5430
+     *         Name   -> Function /Script/UMG.SizeBox.SetWidthOverride
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InWidthOverride                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBox::SetWidthOverride(float InWidthOverride)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetWidthOverride");
+        
+        USizeBox_SetWidthOverride_Params params {};
+        params.InWidthOverride = InWidthOverride;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4810
+     *         Name   -> Function /Script/UMG.SizeBox.SetMinDesiredWidth
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InMinDesiredWidth                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBox::SetMinDesiredWidth(float InMinDesiredWidth)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMinDesiredWidth");
+        
+        USizeBox_SetMinDesiredWidth_Params params {};
+        params.InMinDesiredWidth = InMinDesiredWidth;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4790
+     *         Name   -> Function /Script/UMG.SizeBox.SetMinDesiredHeight
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InMinDesiredHeight                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBox::SetMinDesiredHeight(float InMinDesiredHeight)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMinDesiredHeight");
+        
+        USizeBox_SetMinDesiredHeight_Params params {};
+        params.InMinDesiredHeight = InMinDesiredHeight;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4710
+     *         Name   -> Function /Script/UMG.SizeBox.SetMaxDesiredWidth
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InMaxDesiredWidth                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBox::SetMaxDesiredWidth(float InMaxDesiredWidth)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMaxDesiredWidth");
+        
+        USizeBox_SetMaxDesiredWidth_Params params {};
+        params.InMaxDesiredWidth = InMaxDesiredWidth;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4690
+     *         Name   -> Function /Script/UMG.SizeBox.SetMaxDesiredHeight
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InMaxDesiredHeight                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBox::SetMaxDesiredHeight(float InMaxDesiredHeight)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMaxDesiredHeight");
+        
+        USizeBox_SetMaxDesiredHeight_Params params {};
+        params.InMaxDesiredHeight = InMaxDesiredHeight;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4610
+     *         Name   -> Function /Script/UMG.SizeBox.SetMaxAspectRatio
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InMaxAspectRatio                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBox::SetMaxAspectRatio(float InMaxAspectRatio)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetMaxAspectRatio");
+        
+        USizeBox_SetMaxAspectRatio_Params params {};
+        params.InMaxAspectRatio = InMaxAspectRatio;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4370
+     *         Name   -> Function /Script/UMG.SizeBox.SetHeightOverride
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InHeightOverride                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBox::SetHeightOverride(float InHeightOverride)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.SetHeightOverride");
+        
+        USizeBox_SetHeightOverride_Params params {};
+        params.InHeightOverride = InHeightOverride;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2FD0
+     *         Name   -> Function /Script/UMG.SizeBox.ClearWidthOverride
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void USizeBox::ClearWidthOverride()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearWidthOverride");
+        
+        USizeBox_ClearWidthOverride_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2FB0
+     *         Name   -> Function /Script/UMG.SizeBox.ClearMinDesiredWidth
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void USizeBox::ClearMinDesiredWidth()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMinDesiredWidth");
+        
+        USizeBox_ClearMinDesiredWidth_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2F90
+     *         Name   -> Function /Script/UMG.SizeBox.ClearMinDesiredHeight
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void USizeBox::ClearMinDesiredHeight()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMinDesiredHeight");
+        
+        USizeBox_ClearMinDesiredHeight_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2F70
+     *         Name   -> Function /Script/UMG.SizeBox.ClearMaxDesiredWidth
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void USizeBox::ClearMaxDesiredWidth()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMaxDesiredWidth");
+        
+        USizeBox_ClearMaxDesiredWidth_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2F50
+     *         Name   -> Function /Script/UMG.SizeBox.ClearMaxDesiredHeight
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void USizeBox::ClearMaxDesiredHeight()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMaxDesiredHeight");
+        
+        USizeBox_ClearMaxDesiredHeight_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2F30
+     *         Name   -> Function /Script/UMG.SizeBox.ClearMaxAspectRatio
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void USizeBox::ClearMaxAspectRatio()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearMaxAspectRatio");
+        
+        USizeBox_ClearMaxAspectRatio_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2F10
+     *         Name   -> Function /Script/UMG.SizeBox.ClearHeightOverride
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void USizeBox::ClearHeightOverride()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBox.ClearHeightOverride");
+        
+        USizeBox_ClearHeightOverride_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FE6C80
+     *         Name   -> Function /Script/UMG.SizeBoxSlot.SetVerticalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBoxSlot.SetVerticalAlignment");
+        
+        USizeBoxSlot_SetVerticalAlignment_Params params {};
+        params.InVerticalAlignment = InVerticalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4AC0
+     *         Name   -> Function /Script/UMG.SizeBoxSlot.SetPadding
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBoxSlot.SetPadding");
+        
+        USizeBoxSlot_SetPadding_Params params {};
+        params.InPadding = InPadding;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FE5DA0
+     *         Name   -> Function /Script/UMG.SizeBoxSlot.SetHorizontalAlignment
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USizeBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SizeBoxSlot.SetHorizontalAlignment");
+        
+        USizeBoxSlot_SetHorizontalAlignment_Params params {};
+        params.InHorizontalAlignment = InHorizontalAlignment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3E90
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.ScreenToWidgetLocal
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ScreenPosition                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             LocalCoordinate                                            (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USlateBlueprintLibrary::STATIC_ScreenToWidgetLocal(CoreUObject::UObject* WorldContextObject, const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& ScreenPosition, CoreUObject::FVector2D* LocalCoordinate)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.ScreenToWidgetLocal");
+        
+        USlateBlueprintLibrary_ScreenToWidgetLocal_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.Geometry = Geometry;
+        params.ScreenPosition = ScreenPosition;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (LocalCoordinate != nullptr)
+            *LocalCoordinate = params.LocalCoordinate;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3D90
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.ScreenToWidgetAbsolute
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ScreenPosition                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             AbsoluteCoordinate                                         (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USlateBlueprintLibrary::STATIC_ScreenToWidgetAbsolute(CoreUObject::UObject* WorldContextObject, const CoreUObject::FVector2D& ScreenPosition, CoreUObject::FVector2D* AbsoluteCoordinate)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.ScreenToWidgetAbsolute");
+        
+        USlateBlueprintLibrary_ScreenToWidgetAbsolute_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.ScreenPosition = ScreenPosition;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (AbsoluteCoordinate != nullptr)
+            *AbsoluteCoordinate = params.AbsoluteCoordinate;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3C90
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.ScreenToViewport
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ScreenPosition                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ViewportPosition                                           (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USlateBlueprintLibrary::STATIC_ScreenToViewport(CoreUObject::UObject* WorldContextObject, const CoreUObject::FVector2D& ScreenPosition, CoreUObject::FVector2D* ViewportPosition)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.ScreenToViewport");
+        
+        USlateBlueprintLibrary_ScreenToViewport_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.ScreenPosition = ScreenPosition;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (ViewportPosition != nullptr)
+            *ViewportPosition = params.ViewportPosition;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3970
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.LocalToViewport
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             LocalCoordinate                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             PixelPosition                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ViewportPosition                                           (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USlateBlueprintLibrary::STATIC_LocalToViewport(CoreUObject::UObject* WorldContextObject, const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& LocalCoordinate, CoreUObject::FVector2D* PixelPosition, CoreUObject::FVector2D* ViewportPosition)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.LocalToViewport");
+        
+        USlateBlueprintLibrary_LocalToViewport_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.Geometry = Geometry;
+        params.LocalCoordinate = LocalCoordinate;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (PixelPosition != nullptr)
+            *PixelPosition = params.PixelPosition;
+        if (ViewportPosition != nullptr)
+            *ViewportPosition = params.ViewportPosition;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3870
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.LocalToAbsolute
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             LocalCoordinate                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector2D USlateBlueprintLibrary::STATIC_LocalToAbsolute(const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& LocalCoordinate)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.LocalToAbsolute");
+        
+        USlateBlueprintLibrary_LocalToAbsolute_Params params {};
+        params.Geometry = Geometry;
+        params.LocalCoordinate = LocalCoordinate;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3770
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.IsUnderLocation
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             AbsoluteCoordinate                                         (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool USlateBlueprintLibrary::STATIC_IsUnderLocation(const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& AbsoluteCoordinate)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.IsUnderLocation");
+        
+        USlateBlueprintLibrary_IsUnderLocation_Params params {};
+        params.Geometry = Geometry;
+        params.AbsoluteCoordinate = AbsoluteCoordinate;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF3590
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.GetLocalSize
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector2D USlateBlueprintLibrary::STATIC_GetLocalSize(const SlateCore::FGeometry& Geometry)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.GetLocalSize");
+        
+        USlateBlueprintLibrary_GetLocalSize_Params params {};
+        params.Geometry = Geometry;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF32C0
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.GetAbsoluteSize
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector2D USlateBlueprintLibrary::STATIC_GetAbsoluteSize(const SlateCore::FGeometry& Geometry)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.GetAbsoluteSize");
+        
+        USlateBlueprintLibrary_GetAbsoluteSize_Params params {};
+        params.Geometry = Geometry;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2FF0
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.EqualEqual_SlateBrush
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SlateCore::FSlateBrush                             A                                                          (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         SlateCore::FSlateBrush                             B                                                          (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool USlateBlueprintLibrary::STATIC_EqualEqual_SlateBrush(const SlateCore::FSlateBrush& A, const SlateCore::FSlateBrush& B)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.EqualEqual_SlateBrush");
+        
+        USlateBlueprintLibrary_EqualEqual_SlateBrush_Params params {};
+        params.A = A;
+        params.B = B;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2C80
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.AbsoluteToViewport
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             AbsoluteDesktopCoordinate                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             PixelPosition                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ViewportPosition                                           (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USlateBlueprintLibrary::STATIC_AbsoluteToViewport(CoreUObject::UObject* WorldContextObject, const CoreUObject::FVector2D& AbsoluteDesktopCoordinate, CoreUObject::FVector2D* PixelPosition, CoreUObject::FVector2D* ViewportPosition)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.AbsoluteToViewport");
+        
+        USlateBlueprintLibrary_AbsoluteToViewport_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.AbsoluteDesktopCoordinate = AbsoluteDesktopCoordinate;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (PixelPosition != nullptr)
+            *PixelPosition = params.PixelPosition;
+        if (ViewportPosition != nullptr)
+            *ViewportPosition = params.ViewportPosition;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF2B80
+     *         Name   -> Function /Script/UMG.SlateBlueprintLibrary.AbsoluteToLocal
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SlateCore::FGeometry                               Geometry                                                   (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             AbsoluteCoordinate                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector2D USlateBlueprintLibrary::STATIC_AbsoluteToLocal(const SlateCore::FGeometry& Geometry, const CoreUObject::FVector2D& AbsoluteCoordinate)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SlateBlueprintLibrary.AbsoluteToLocal");
+        
+        USlateBlueprintLibrary_AbsoluteToLocal_Params params {};
+        params.Geometry = Geometry;
+        params.AbsoluteCoordinate = AbsoluteCoordinate;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEFF80
+     *         Name   -> Function /Script/UMG.MenuAnchor.ToggleOpen
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bFocusOnOpen                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMenuAnchor::ToggleOpen(bool bFocusOnOpen)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.ToggleOpen");
+        
+        UMenuAnchor_ToggleOpen_Params params {};
+        params.bFocusOnOpen = bFocusOnOpen;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEFF50
+     *         Name   -> Function /Script/UMG.MenuAnchor.ShouldOpenDueToClick
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UMenuAnchor::ShouldOpenDueToClick()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.ShouldOpenDueToClick");
+        
+        UMenuAnchor_ShouldOpenDueToClick_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEF8C0
+     *         Name   -> Function /Script/UMG.MenuAnchor.Open
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bFocusMenu                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMenuAnchor::Open(bool bFocusMenu)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.Open");
+        
+        UMenuAnchor_Open_Params params {};
+        params.bFocusMenu = bFocusMenu;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEF7E0
+     *         Name   -> Function /Script/UMG.MenuAnchor.IsOpen
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UMenuAnchor::IsOpen()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.IsOpen");
+        
+        UMenuAnchor_IsOpen_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEF730
+     *         Name   -> Function /Script/UMG.MenuAnchor.HasOpenSubMenus
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UMenuAnchor::HasOpenSubMenus()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.HasOpenSubMenus");
+        
+        UMenuAnchor_HasOpenSubMenus_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEF540
+     *         Name   -> Function /Script/UMG.MenuAnchor.GetMenuPosition
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector2D UMenuAnchor::GetMenuPosition()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.GetMenuPosition");
+        
+        UMenuAnchor_GetMenuPosition_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEF2E0
+     *         Name   -> Function /Script/UMG.MenuAnchor.Close
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void UMenuAnchor::Close()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MenuAnchor.Close");
+        
+        UMenuAnchor_Close_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF4E20
+     *         Name   -> Function /Script/UMG.SafeZone.SetSidesToPad
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               InPadLeft                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               InPadRight                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               InPadTop                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               InPadBottom                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USafeZone::SetSidesToPad(bool InPadLeft, bool InPadRight, bool InPadTop, bool InPadBottom)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.SafeZone.SetSidesToPad");
+        
+        USafeZone_SetSidesToPad_Params params {};
+        params.InPadLeft = InPadLeft;
+        params.InPadRight = InPadRight;
+        params.InPadTop = InPadTop;
+        params.InPadBottom = InPadBottom;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF52B0
+     *         Name   -> Function /Script/UMG.ScaleBox.SetUserSpecifiedScale
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              InUserSpecifiedScale                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScaleBox::SetUserSpecifiedScale(float InUserSpecifiedScale)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBox.SetUserSpecifiedScale");
+        
+        UScaleBox_SetUserSpecifiedScale_Params params {};
+        params.InUserSpecifiedScale = InUserSpecifiedScale;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF50D0
+     *         Name   -> Function /Script/UMG.ScaleBox.SetStretchDirection
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Slate::EStretchDirection                           InStretchDirection                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScaleBox::SetStretchDirection(Slate::EStretchDirection InStretchDirection)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBox.SetStretchDirection");
+        
+        UScaleBox_SetStretchDirection_Params params {};
+        params.InStretchDirection = InStretchDirection;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF5050
+     *         Name   -> Function /Script/UMG.ScaleBox.SetStretch
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Slate::EStretch                                    InStretch                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScaleBox::SetStretch(Slate::EStretch InStretch)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBox.SetStretch");
+        
+        UScaleBox_SetStretch_Params params {};
+        params.InStretch = InStretch;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FF44F0
+     *         Name   -> Function /Script/UMG.ScaleBox.SetIgnoreInheritedScale
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bInIgnoreInheritedScale                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScaleBox::SetIgnoreInheritedScale(bool bInIgnoreInheritedScale)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.ScaleBox.SetIgnoreInheritedScale");
+        
+        UScaleBox_SetIgnoreInheritedScale_Params params {};
+        params.bInIgnoreInheritedScale = bInIgnoreInheritedScale;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
      *         RVA    -> 0x01009400
      *         Name   -> Function /Script/UMG.WidgetComponent.SetWidget
      *         Flags  -> (Native, Public, BlueprintCallable)
@@ -10590,3983 +14297,276 @@ namespace CG::UMG
 
     /**
      * Function:
-     *         RVA    -> 0x01009380
-     *         Name   -> Function /Script/UMG.WindowTitleBarAreaSlot.SetVerticalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWindowTitleBarAreaSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WindowTitleBarAreaSlot.SetVerticalAlignment");
-        
-        UWindowTitleBarAreaSlot_SetVerticalAlignment_Params params {};
-        params.InVerticalAlignment = InVerticalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01009170
-     *         Name   -> Function /Script/UMG.WindowTitleBarAreaSlot.SetPadding
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWindowTitleBarAreaSlot::SetPadding(const SlateCore::FMargin& InPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WindowTitleBarAreaSlot.SetPadding");
-        
-        UWindowTitleBarAreaSlot_SetPadding_Params params {};
-        params.InPadding = InPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01008E40
-     *         Name   -> Function /Script/UMG.WindowTitleBarAreaSlot.SetHorizontalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWindowTitleBarAreaSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WindowTitleBarAreaSlot.SetHorizontalAlignment");
-        
-        UWindowTitleBarAreaSlot_SetHorizontalAlignment_Params params {};
-        params.InHorizontalAlignment = InHorizontalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01008EC0
-     *         Name   -> Function /Script/UMG.WrapBox.SetInnerSlotPadding
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWrapBox::SetInnerSlotPadding(const CoreUObject::FVector2D& InPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBox.SetInnerSlotPadding");
-        
-        UWrapBox_SetInnerSlotPadding_Params params {};
-        params.InPadding = InPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01007930
-     *         Name   -> Function /Script/UMG.WrapBox.AddChildWrapBox
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidget*                                      Content                                                    (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         UMG::UWrapBoxSlot*                                 ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::UWrapBoxSlot* UWrapBox::AddChildWrapBox(UMG::UWidget* Content)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBox.AddChildWrapBox");
-        
-        UWrapBox_AddChildWrapBox_Params params {};
-        params.Content = Content;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01009C50
-     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetVerticalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWrapBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetVerticalAlignment");
-        
-        UWrapBoxSlot_SetVerticalAlignment_Params params {};
-        params.InVerticalAlignment = InVerticalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01009BC0
-     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetPadding
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWrapBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetPadding");
-        
-        UWrapBoxSlot_SetPadding_Params params {};
-        params.InPadding = InPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01009B40
-     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetHorizontalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWrapBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetHorizontalAlignment");
-        
-        UWrapBoxSlot_SetHorizontalAlignment_Params params {};
-        params.InHorizontalAlignment = InHorizontalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01009AC0
-     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetFillSpanWhenLessThan
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InFillSpanWhenLessThan                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWrapBoxSlot::SetFillSpanWhenLessThan(float InFillSpanWhenLessThan)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetFillSpanWhenLessThan");
-        
-        UWrapBoxSlot_SetFillSpanWhenLessThan_Params params {};
-        params.InFillSpanWhenLessThan = InFillSpanWhenLessThan;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01009A30
-     *         Name   -> Function /Script/UMG.WrapBoxSlot.SetFillEmptySpace
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               InbFillEmptySpace                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWrapBoxSlot::SetFillEmptySpace(bool InbFillEmptySpace)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WrapBoxSlot.SetFillEmptySpace");
-        
-        UWrapBoxSlot_SetFillEmptySpace_Params params {};
-        params.InbFillEmptySpace = InbFillEmptySpace;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01005680
-     *         Name   -> Function /Script/UMG.Widget.SetVisibility
-     *         Flags  -> (Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::ESlateVisibility                              InVisibility                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetVisibility(UMG::ESlateVisibility InVisibility)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetVisibility");
-        
-        UWidget_SetVisibility_Params params {};
-        params.InVisibility = InVisibility;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010054E0
-     *         Name   -> Function /Script/UMG.Widget.SetUserFocus
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetUserFocus(Engine::APlayerController* PlayerController)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetUserFocus");
-        
-        UWidget_SetUserFocus_Params params {};
-        params.PlayerController = PlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01005400
-     *         Name   -> Function /Script/UMG.Widget.SetToolTipText
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FText                                  InToolTipText                                              (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetToolTipText(const BasicTypes::FText& InToolTipText)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetToolTipText");
-        
-        UWidget_SetToolTipText_Params params {};
-        params.InToolTipText = InToolTipText;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01005380
-     *         Name   -> Function /Script/UMG.Widget.SetToolTip
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidget*                                      Widget                                                     (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetToolTip(UMG::UWidget* Widget)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetToolTip");
-        
-        UWidget_SetToolTip_Params params {};
-        params.Widget = Widget;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01005300
-     *         Name   -> Function /Script/UMG.Widget.SetRenderTranslation
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             Translation                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetRenderTranslation(const CoreUObject::FVector2D& Translation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderTranslation");
-        
-        UWidget_SetRenderTranslation_Params params {};
-        params.Translation = Translation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01005280
-     *         Name   -> Function /Script/UMG.Widget.SetRenderTransformPivot
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             Pivot                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetRenderTransformPivot(const CoreUObject::FVector2D& Pivot)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderTransformPivot");
-        
-        UWidget_SetRenderTransformPivot_Params params {};
-        params.Pivot = Pivot;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010051A0
-     *         Name   -> Function /Script/UMG.Widget.SetRenderTransform
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::FWidgetTransform                              InTransform                                                (Parm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetRenderTransform(const UMG::FWidgetTransform& InTransform)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderTransform");
-        
-        UWidget_SetRenderTransform_Params params {};
-        params.InTransform = InTransform;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01005120
-     *         Name   -> Function /Script/UMG.Widget.SetRenderShear
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             Shear                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetRenderShear(const CoreUObject::FVector2D& Shear)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderShear");
-        
-        UWidget_SetRenderShear_Params params {};
-        params.Shear = Shear;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010050A0
-     *         Name   -> Function /Script/UMG.Widget.SetRenderScale
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             Scale                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetRenderScale(const CoreUObject::FVector2D& Scale)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderScale");
-        
-        UWidget_SetRenderScale_Params params {};
-        params.Scale = Scale;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01005020
-     *         Name   -> Function /Script/UMG.Widget.SetRenderOpacity
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InOpacity                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetRenderOpacity(float InOpacity)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderOpacity");
-        
-        UWidget_SetRenderOpacity_Params params {};
-        params.InOpacity = InOpacity;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01004FA0
-     *         Name   -> Function /Script/UMG.Widget.SetRenderAngle
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              Angle                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetRenderAngle(float Angle)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetRenderAngle");
-        
-        UWidget_SetRenderAngle_Params params {};
-        params.Angle = Angle;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01004E90
-     *         Name   -> Function /Script/UMG.Widget.SetNavigationRule
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EUINavigation                           Direction                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SlateCore::EUINavigationRule                       Rule                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  WidgetToFocus                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetNavigationRule(SlateCore::EUINavigation Direction, SlateCore::EUINavigationRule Rule, const BasicTypes::FName& WidgetToFocus)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetNavigationRule");
-        
-        UWidget_SetNavigationRule_Params params {};
-        params.Direction = Direction;
-        params.Rule = Rule;
-        params.WidgetToFocus = WidgetToFocus;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01004CE0
-     *         Name   -> Function /Script/UMG.Widget.SetKeyboardFocus
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetKeyboardFocus()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetKeyboardFocus");
-        
-        UWidget_SetKeyboardFocus_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01004C50
-     *         Name   -> Function /Script/UMG.Widget.SetIsEnabled
-     *         Flags  -> (Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               bInIsEnabled                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetIsEnabled(bool bInIsEnabled)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetIsEnabled");
-        
-        UWidget_SetIsEnabled_Params params {};
-        params.bInIsEnabled = bInIsEnabled;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010045A0
-     *         Name   -> Function /Script/UMG.Widget.SetCursor
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::EMouseCursor                          InCursor                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetCursor(CoreUObject::EMouseCursor InCursor)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetCursor");
-        
-        UWidget_SetCursor_Params params {};
-        params.InCursor = InCursor;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01004520
-     *         Name   -> Function /Script/UMG.Widget.SetClipping
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EWidgetClipping                         InClipping                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetClipping(SlateCore::EWidgetClipping InClipping)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetClipping");
-        
-        UWidget_SetClipping_Params params {};
-        params.InClipping = InClipping;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010042A0
-     *         Name   -> Function /Script/UMG.Widget.SetAllNavigationRules
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EUINavigationRule                       Rule                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  WidgetToFocus                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::SetAllNavigationRules(SlateCore::EUINavigationRule Rule, const BasicTypes::FName& WidgetToFocus)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.SetAllNavigationRules");
-        
-        UWidget_SetAllNavigationRules_Params params {};
-        params.Rule = Rule;
-        params.WidgetToFocus = WidgetToFocus;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01004260
-     *         Name   -> Function /Script/UMG.Widget.ResetCursor
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UWidget::ResetCursor()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.ResetCursor");
-        
-        UWidget_ResetCursor_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01004240
-     *         Name   -> Function /Script/UMG.Widget.RemoveFromParent
-     *         Flags  -> (Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UWidget::RemoveFromParent()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.RemoveFromParent");
-        
-        UWidget_RemoveFromParent_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.OnReply__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UWidget::OnReply__DelegateSignature()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.OnReply__DelegateSignature");
-        
-        UWidget_OnReply__DelegateSignature_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.OnPointerEvent__DelegateSignature
-     *         Flags  -> (Public, Delegate, HasOutParms)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UWidget::OnPointerEvent__DelegateSignature(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.OnPointerEvent__DelegateSignature");
-        
-        UWidget_OnPointerEvent__DelegateSignature_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.MouseEvent = MouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010039E0
-     *         Name   -> Function /Script/UMG.Widget.IsVisible
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::IsVisible()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.IsVisible");
-        
-        UWidget_IsVisible_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010039B0
-     *         Name   -> Function /Script/UMG.Widget.IsHovered
-     *         Flags  -> (Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::IsHovered()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.IsHovered");
-        
-        UWidget_IsHovered_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003960
-     *         Name   -> Function /Script/UMG.Widget.InvalidateLayoutAndVolatility
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UWidget::InvalidateLayoutAndVolatility()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.InvalidateLayoutAndVolatility");
-        
-        UWidget_InvalidateLayoutAndVolatility_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010038D0
-     *         Name   -> Function /Script/UMG.Widget.HasUserFocusedDescendants
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::HasUserFocusedDescendants(Engine::APlayerController* PlayerController)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasUserFocusedDescendants");
-        
-        UWidget_HasUserFocusedDescendants_Params params {};
-        params.PlayerController = PlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003840
-     *         Name   -> Function /Script/UMG.Widget.HasUserFocus
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::HasUserFocus(Engine::APlayerController* PlayerController)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasUserFocus");
-        
-        UWidget_HasUserFocus_Params params {};
-        params.PlayerController = PlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003780
-     *         Name   -> Function /Script/UMG.Widget.HasMouseCaptureByUser
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         int32_t                                            UserIndex                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            PointerIndex                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::HasMouseCaptureByUser(int32_t UserIndex, int32_t PointerIndex)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasMouseCaptureByUser");
-        
-        UWidget_HasMouseCaptureByUser_Params params {};
-        params.UserIndex = UserIndex;
-        params.PointerIndex = PointerIndex;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003750
-     *         Name   -> Function /Script/UMG.Widget.HasMouseCapture
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::HasMouseCapture()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasMouseCapture");
-        
-        UWidget_HasMouseCapture_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003720
-     *         Name   -> Function /Script/UMG.Widget.HasKeyboardFocus
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::HasKeyboardFocus()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasKeyboardFocus");
-        
-        UWidget_HasKeyboardFocus_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010036F0
-     *         Name   -> Function /Script/UMG.Widget.HasFocusedDescendants
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::HasFocusedDescendants()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasFocusedDescendants");
-        
-        UWidget_HasFocusedDescendants_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010036C0
-     *         Name   -> Function /Script/UMG.Widget.HasAnyUserFocus
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::HasAnyUserFocus()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.HasAnyUserFocus");
-        
-        UWidget_HasAnyUserFocus_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetWidget__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         UMG::UWidget*                                      ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::UWidget* UWidget::GetWidget__DelegateSignature()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetWidget__DelegateSignature");
-        
-        UWidget_GetWidget__DelegateSignature_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003620
-     *         Name   -> Function /Script/UMG.Widget.GetVisibility
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         UMG::ESlateVisibility                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::ESlateVisibility UWidget::GetVisibility()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetVisibility");
-        
-        UWidget_GetVisibility_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetText__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         BasicTypes::FText                                  ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    BasicTypes::FText UWidget::GetText__DelegateSignature()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetText__DelegateSignature");
-        
-        UWidget_GetText__DelegateSignature_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetSlateVisibility__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         UMG::ESlateVisibility                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::ESlateVisibility UWidget::GetSlateVisibility__DelegateSignature()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetSlateVisibility__DelegateSignature");
-        
-        UWidget_GetSlateVisibility__DelegateSignature_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetSlateColor__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         SlateCore::FSlateColor                             ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    SlateCore::FSlateColor UWidget::GetSlateColor__DelegateSignature()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetSlateColor__DelegateSignature");
-        
-        UWidget_GetSlateColor__DelegateSignature_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetSlateBrush__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         SlateCore::FSlateBrush                             ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    SlateCore::FSlateBrush UWidget::GetSlateBrush__DelegateSignature()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetSlateBrush__DelegateSignature");
-        
-        UWidget_GetSlateBrush__DelegateSignature_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003340
-     *         Name   -> Function /Script/UMG.Widget.GetRenderOpacity
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UWidget::GetRenderOpacity()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetRenderOpacity");
-        
-        UWidget_GetRenderOpacity_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003310
-     *         Name   -> Function /Script/UMG.Widget.GetParent
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         UMG::UPanelWidget*                                 ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::UPanelWidget* UWidget::GetParent()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetParent");
-        
-        UWidget_GetParent_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010032E0
-     *         Name   -> Function /Script/UMG.Widget.GetOwningPlayer
-     *         Flags  -> (BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Engine::APlayerController*                         ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    Engine::APlayerController* UWidget::GetOwningPlayer()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetOwningPlayer");
-        
-        UWidget_GetOwningPlayer_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010032B0
-     *         Name   -> Function /Script/UMG.Widget.GetOwningLocalPlayer
-     *         Flags  -> (BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Engine::ULocalPlayer*                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    Engine::ULocalPlayer* UWidget::GetOwningLocalPlayer()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetOwningLocalPlayer");
-        
-        UWidget_GetOwningLocalPlayer_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetMouseCursor__DelegateSignature
-     *         Flags  -> (Public, Delegate)
+     *         RVA    -> 0x00FEF700
+     *         Name   -> Function /Script/UMG.MouseCursorBinding.GetValue
+     *         Flags  -> (Final, Native, Public, Const)
      * Parameters:
      *         CoreUObject::EMouseCursor                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    CoreUObject::EMouseCursor UWidget::GetMouseCursor__DelegateSignature()
+    CoreUObject::EMouseCursor UMouseCursorBinding::GetValue()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetMouseCursor__DelegateSignature");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MouseCursorBinding.GetValue");
         
-        UWidget_GetMouseCursor__DelegateSignature_Params params {};
+        UMouseCursorBinding_GetValue_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
         
         return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEFDB0
+     *         Name   -> Function /Script/UMG.MultiLineEditableText.SetText
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FText                                  InText                                                     (Parm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMultiLineEditableText::SetText(const BasicTypes::FText& InText)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableText.SetText");
+        
+        UMultiLineEditableText_SetText_Params params {};
+        params.InText = InText;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEFB90
+     *         Name   -> Function /Script/UMG.MultiLineEditableText.SetIsReadOnly
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bReadOnly                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMultiLineEditableText::SetIsReadOnly(bool bReadOnly)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableText.SetIsReadOnly");
+        
+        UMultiLineEditableText_SetIsReadOnly_Params params {};
+        params.bReadOnly = bReadOnly;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
     }
 
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetLinearColor__DelegateSignature
-     *         Flags  -> (Public, Delegate, HasDefaults)
+     *         Name   -> DelegateFunction /Script/UMG.MultiLineEditableText.OnMultiLineEditableTextCommittedEvent__DelegateSignature
+     *         Flags  -> (MulticastDelegate, Public, Delegate, HasOutParms)
      * Parameters:
-     *         CoreUObject::FLinearColor                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FText                                  Text                                                       (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         SlateCore::ETextCommit                             CommitMethod                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
      */
-    CoreUObject::FLinearColor UWidget::GetLinearColor__DelegateSignature()
+    void UMultiLineEditableText::OnMultiLineEditableTextCommittedEvent__DelegateSignature(const BasicTypes::FText& Text, SlateCore::ETextCommit CommitMethod)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetLinearColor__DelegateSignature");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.MultiLineEditableText.OnMultiLineEditableTextCommittedEvent__DelegateSignature");
         
-        UWidget_GetLinearColor__DelegateSignature_Params params {};
+        UMultiLineEditableText_OnMultiLineEditableTextCommittedEvent__DelegateSignature_Params params {};
+        params.Text = Text;
+        params.CommitMethod = CommitMethod;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
     }
 
     /**
      * Function:
-     *         RVA    -> 0x010030F0
-     *         Name   -> Function /Script/UMG.Widget.GetIsEnabled
+     *         RVA    -> 0x006628B0
+     *         Name   -> DelegateFunction /Script/UMG.MultiLineEditableText.OnMultiLineEditableTextChangedEvent__DelegateSignature
+     *         Flags  -> (MulticastDelegate, Public, Delegate, HasOutParms)
+     * Parameters:
+     *         BasicTypes::FText                                  Text                                                       (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMultiLineEditableText::OnMultiLineEditableTextChangedEvent__DelegateSignature(const BasicTypes::FText& Text)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.MultiLineEditableText.OnMultiLineEditableTextChangedEvent__DelegateSignature");
+        
+        UMultiLineEditableText_OnMultiLineEditableTextChangedEvent__DelegateSignature_Params params {};
+        params.Text = Text;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEF5B0
+     *         Name   -> Function /Script/UMG.MultiLineEditableText.GetText
      *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
      * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FText                                  ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
      */
-    bool UWidget::GetIsEnabled()
+    BasicTypes::FText UMultiLineEditableText::GetText()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetIsEnabled");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableText.GetText");
         
-        UWidget_GetIsEnabled_Params params {};
+        UMultiLineEditableText_GetText_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
         
         return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEFE80
+     *         Name   -> Function /Script/UMG.MultiLineEditableTextBox.SetText
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FText                                  InText                                                     (Parm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMultiLineEditableTextBox::SetText(const BasicTypes::FText& InText)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableTextBox.SetText");
+        
+        UMultiLineEditableTextBox_SetText_Params params {};
+        params.InText = InText;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEFC20
+     *         Name   -> Function /Script/UMG.MultiLineEditableTextBox.SetIsReadOnly
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bReadOnly                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMultiLineEditableTextBox::SetIsReadOnly(bool bReadOnly)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableTextBox.SetIsReadOnly");
+        
+        UMultiLineEditableTextBox_SetIsReadOnly_Params params {};
+        params.bReadOnly = bReadOnly;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00FEFAC0
+     *         Name   -> Function /Script/UMG.MultiLineEditableTextBox.SetError
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FText                                  InError                                                    (Parm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMultiLineEditableTextBox::SetError(const BasicTypes::FText& InError)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableTextBox.SetError");
+        
+        UMultiLineEditableTextBox_SetError_Params params {};
+        params.InError = InError;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
     }
 
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetInt32__DelegateSignature
-     *         Flags  -> (Public, Delegate)
+     *         Name   -> DelegateFunction /Script/UMG.MultiLineEditableTextBox.OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature
+     *         Flags  -> (MulticastDelegate, Public, Delegate, HasOutParms)
      * Parameters:
-     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FText                                  Text                                                       (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         SlateCore::ETextCommit                             CommitMethod                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
      */
-    int32_t UWidget::GetInt32__DelegateSignature()
+    void UMultiLineEditableTextBox::OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature(const BasicTypes::FText& Text, SlateCore::ETextCommit CommitMethod)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetInt32__DelegateSignature");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.MultiLineEditableTextBox.OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature");
         
-        UWidget_GetInt32__DelegateSignature_Params params {};
+        UMultiLineEditableTextBox_OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature_Params params {};
+        params.Text = Text;
+        params.CommitMethod = CommitMethod;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
     }
 
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetFloat__DelegateSignature
-     *         Flags  -> (Public, Delegate)
+     *         Name   -> DelegateFunction /Script/UMG.MultiLineEditableTextBox.OnMultiLineEditableTextBoxChangedEvent__DelegateSignature
+     *         Flags  -> (MulticastDelegate, Public, Delegate, HasOutParms)
      * Parameters:
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FText                                  Text                                                       (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
      */
-    float UWidget::GetFloat__DelegateSignature()
+    void UMultiLineEditableTextBox::OnMultiLineEditableTextBoxChangedEvent__DelegateSignature(const BasicTypes::FText& Text)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetFloat__DelegateSignature");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.MultiLineEditableTextBox.OnMultiLineEditableTextBoxChangedEvent__DelegateSignature");
         
-        UWidget_GetFloat__DelegateSignature_Params params {};
+        UMultiLineEditableTextBox_OnMultiLineEditableTextBoxChangedEvent__DelegateSignature_Params params {};
+        params.Text = Text;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
     }
 
     /**
      * Function:
-     *         RVA    -> 0x01002A90
-     *         Name   -> Function /Script/UMG.Widget.GetDesiredSize
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector2D UWidget::GetDesiredSize()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetDesiredSize");
-        
-        UWidget_GetDesiredSize_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01002A60
-     *         Name   -> Function /Script/UMG.Widget.GetClipping
+     *         RVA    -> 0x00FEF640
+     *         Name   -> Function /Script/UMG.MultiLineEditableTextBox.GetText
      *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
      * Parameters:
-     *         SlateCore::EWidgetClipping                         ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FText                                  ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
      */
-    SlateCore::EWidgetClipping UWidget::GetClipping()
+    BasicTypes::FText UMultiLineEditableTextBox::GetText()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetClipping");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.MultiLineEditableTextBox.GetText");
         
-        UWidget_GetClipping_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetCheckBoxState__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         SlateCore::ECheckBoxState                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    SlateCore::ECheckBoxState UWidget::GetCheckBoxState__DelegateSignature()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetCheckBoxState__DelegateSignature");
-        
-        UWidget_GetCheckBoxState__DelegateSignature_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01002A20
-     *         Name   -> Function /Script/UMG.Widget.GetCachedGeometry
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         SlateCore::FGeometry                               ReturnValue                                                (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     */
-    SlateCore::FGeometry UWidget::GetCachedGeometry()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.GetCachedGeometry");
-        
-        UWidget_GetCachedGeometry_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GetBool__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UWidget::GetBool__DelegateSignature()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GetBool__DelegateSignature");
-        
-        UWidget_GetBool__DelegateSignature_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GenerateWidgetForString__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         BasicTypes::FString                                Item                                                       (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         UMG::UWidget*                                      ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::UWidget* UWidget::GenerateWidgetForString__DelegateSignature(const BasicTypes::FString& Item)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GenerateWidgetForString__DelegateSignature");
-        
-        UWidget_GenerateWidgetForString__DelegateSignature_Params params {};
-        params.Item = Item;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> DelegateFunction /Script/UMG.Widget.GenerateWidgetForObject__DelegateSignature
-     *         Flags  -> (Public, Delegate)
-     * Parameters:
-     *         CoreUObject::UObject*                              Item                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         UMG::UWidget*                                      ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::UWidget* UWidget::GenerateWidgetForObject__DelegateSignature(CoreUObject::UObject* Item)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("DelegateFunction /Script/UMG.Widget.GenerateWidgetForObject__DelegateSignature");
-        
-        UWidget_GenerateWidgetForObject__DelegateSignature_Params params {};
-        params.Item = Item;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01002220
-     *         Name   -> Function /Script/UMG.Widget.ForceVolatile
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               bForce                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UWidget::ForceVolatile(bool bForce)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.ForceVolatile");
-        
-        UWidget_ForceVolatile_Params params {};
-        params.bForce = bForce;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01002200
-     *         Name   -> Function /Script/UMG.Widget.ForceLayoutPrepass
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UWidget::ForceLayoutPrepass()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Widget.ForceLayoutPrepass");
-        
-        UWidget_ForceLayoutPrepass_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFE310
-     *         Name   -> Function /Script/UMG.UserWidget.UnregisterInputComponent
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::UnregisterInputComponent()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.UnregisterInputComponent");
-        
-        UUserWidget_UnregisterInputComponent_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.Tick
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         float                                              InDeltaTime                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::Tick(const SlateCore::FGeometry& MyGeometry, float InDeltaTime)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.Tick");
-        
-        UUserWidget_Tick_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InDeltaTime = InDeltaTime;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFE240
-     *         Name   -> Function /Script/UMG.UserWidget.StopListeningForInputAction
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FName                                  ActionName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::EInputEvent                                EventType                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::StopListeningForInputAction(const BasicTypes::FName& ActionName, Engine::EInputEvent EventType)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopListeningForInputAction");
-        
-        UUserWidget_StopListeningForInputAction_Params params {};
-        params.ActionName = ActionName;
-        params.EventType = EventType;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFE220
-     *         Name   -> Function /Script/UMG.UserWidget.StopListeningForAllInputActions
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::StopListeningForAllInputActions()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopListeningForAllInputActions");
-        
-        UUserWidget_StopListeningForAllInputActions_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFE200
-     *         Name   -> Function /Script/UMG.UserWidget.StopAnimationsAndLatentActions
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::StopAnimationsAndLatentActions()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopAnimationsAndLatentActions");
-        
-        UUserWidget_StopAnimationsAndLatentActions_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFE180
-     *         Name   -> Function /Script/UMG.UserWidget.StopAnimation
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::StopAnimation(UMG::UWidgetAnimation* InAnimation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopAnimation");
-        
-        UUserWidget_StopAnimation_Params params {};
-        params.InAnimation = InAnimation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFE160
-     *         Name   -> Function /Script/UMG.UserWidget.StopAllAnimations
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::StopAllAnimations()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.StopAllAnimations");
-        
-        UUserWidget_StopAllAnimations_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFDA40
-     *         Name   -> Function /Script/UMG.UserWidget.SetPositionInViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             Position                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bRemoveDPIScale                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetPositionInViewport(const CoreUObject::FVector2D& Position, bool bRemoveDPIScale)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetPositionInViewport");
-        
-        UUserWidget_SetPositionInViewport_Params params {};
-        params.Position = Position;
-        params.bRemoveDPIScale = bRemoveDPIScale;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFD970
-     *         Name   -> Function /Script/UMG.UserWidget.SetPlaybackSpeed
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              PlaybackSpeed                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetPlaybackSpeed(UMG::UWidgetAnimation* InAnimation, float PlaybackSpeed)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetPlaybackSpeed");
-        
-        UUserWidget_SetPlaybackSpeed_Params params {};
-        params.InAnimation = InAnimation;
-        params.PlaybackSpeed = PlaybackSpeed;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFD8E0
-     *         Name   -> Function /Script/UMG.UserWidget.SetPadding
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetPadding(const SlateCore::FMargin& InPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetPadding");
-        
-        UUserWidget_SetPadding_Params params {};
-        params.InPadding = InPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFD860
-     *         Name   -> Function /Script/UMG.UserWidget.SetOwningPlayer
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::APlayerController*                         LocalPlayerController                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetOwningPlayer(Engine::APlayerController* LocalPlayerController)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetOwningPlayer");
-        
-        UUserWidget_SetOwningPlayer_Params params {};
-        params.LocalPlayerController = LocalPlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFD6A0
-     *         Name   -> Function /Script/UMG.UserWidget.SetNumLoopsToPlay
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            NumLoopsToPlay                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetNumLoopsToPlay(UMG::UWidgetAnimation* InAnimation, int32_t NumLoopsToPlay)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetNumLoopsToPlay");
-        
-        UUserWidget_SetNumLoopsToPlay_Params params {};
-        params.InAnimation = InAnimation;
-        params.NumLoopsToPlay = NumLoopsToPlay;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFD0C0
-     *         Name   -> Function /Script/UMG.UserWidget.SetInputActionPriority
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            NewPriority                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetInputActionPriority(int32_t NewPriority)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetInputActionPriority");
-        
-        UUserWidget_SetInputActionPriority_Params params {};
-        params.NewPriority = NewPriority;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFD030
-     *         Name   -> Function /Script/UMG.UserWidget.SetInputActionBlocking
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         bool                                               bShouldBlock                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetInputActionBlocking(bool bShouldBlock)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetInputActionBlocking");
-        
-        UUserWidget_SetInputActionBlocking_Params params {};
-        params.bShouldBlock = bShouldBlock;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFCE20
-     *         Name   -> Function /Script/UMG.UserWidget.SetForegroundColor
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FSlateColor                             InForegroundColor                                          (Parm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetForegroundColor(const SlateCore::FSlateColor& InForegroundColor)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetForegroundColor");
-        
-        UUserWidget_SetForegroundColor_Params params {};
-        params.InForegroundColor = InForegroundColor;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFCA80
-     *         Name   -> Function /Script/UMG.UserWidget.SetDesiredSizeInViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             Size                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetDesiredSizeInViewport(const CoreUObject::FVector2D& Size)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetDesiredSizeInViewport");
-        
-        UUserWidget_SetDesiredSizeInViewport_Params params {};
-        params.Size = Size;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC980
-     *         Name   -> Function /Script/UMG.UserWidget.SetColorAndOpacity
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FLinearColor                          InColorAndOpacity                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetColorAndOpacity(const CoreUObject::FLinearColor& InColorAndOpacity)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetColorAndOpacity");
-        
-        UUserWidget_SetColorAndOpacity_Params params {};
-        params.InColorAndOpacity = InColorAndOpacity;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC5B0
-     *         Name   -> Function /Script/UMG.UserWidget.SetAnchorsInViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Slate::FAnchors                                    Anchors                                                    (Parm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetAnchorsInViewport(const Slate::FAnchors& Anchors)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetAnchorsInViewport");
-        
-        UUserWidget_SetAnchorsInViewport_Params params {};
-        params.Anchors = Anchors;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC530
-     *         Name   -> Function /Script/UMG.UserWidget.SetAlignmentInViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector2D                             Alignment                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::SetAlignmentInViewport(const CoreUObject::FVector2D& Alignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.SetAlignmentInViewport");
-        
-        UUserWidget_SetAlignmentInViewport_Params params {};
-        params.Alignment = Alignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC4B0
-     *         Name   -> Function /Script/UMG.UserWidget.ReverseAnimation
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::ReverseAnimation(UMG::UWidgetAnimation* InAnimation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.ReverseAnimation");
-        
-        UUserWidget_ReverseAnimation_Params params {};
-        params.InAnimation = InAnimation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC490
-     *         Name   -> Function /Script/UMG.UserWidget.RemoveFromViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::RemoveFromViewport()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.RemoveFromViewport");
-        
-        UUserWidget_RemoveFromViewport_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC470
-     *         Name   -> Function /Script/UMG.UserWidget.RegisterInputComponent
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::RegisterInputComponent()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.RegisterInputComponent");
-        
-        UUserWidget_RegisterInputComponent_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.PreConstruct
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         bool                                               IsDesignTime                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::PreConstruct(bool IsDesignTime)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PreConstruct");
-        
-        UUserWidget_PreConstruct_Params params {};
-        params.IsDesignTime = IsDesignTime;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC3F0
-     *         Name   -> Function /Script/UMG.UserWidget.PlaySound
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::USoundBase*                                SoundToPlay                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::PlaySound(Engine::USoundBase* SoundToPlay)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PlaySound");
-        
-        UUserWidget_PlaySound_Params params {};
-        params.SoundToPlay = SoundToPlay;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC240
-     *         Name   -> Function /Script/UMG.UserWidget.PlayAnimationTo
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              StartAtTime                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              EndAtTime                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            NumLoopsToPlay                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         UMG::EUMGSequencePlayMode                          PlayMode                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              PlaybackSpeed                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::PlayAnimationTo(UMG::UWidgetAnimation* InAnimation, float StartAtTime, float EndAtTime, int32_t NumLoopsToPlay, UMG::EUMGSequencePlayMode PlayMode, float PlaybackSpeed)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PlayAnimationTo");
-        
-        UUserWidget_PlayAnimationTo_Params params {};
-        params.InAnimation = InAnimation;
-        params.StartAtTime = StartAtTime;
-        params.EndAtTime = EndAtTime;
-        params.NumLoopsToPlay = NumLoopsToPlay;
-        params.PlayMode = PlayMode;
-        params.PlaybackSpeed = PlaybackSpeed;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC0B0
-     *         Name   -> Function /Script/UMG.UserWidget.PlayAnimation
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              StartAtTime                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            NumLoopsToPlay                                             (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         UMG::EUMGSequencePlayMode                          PlayMode                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              PlaybackSpeed                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::PlayAnimation(UMG::UWidgetAnimation* InAnimation, float StartAtTime, int32_t NumLoopsToPlay, UMG::EUMGSequencePlayMode PlayMode, float PlaybackSpeed)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PlayAnimation");
-        
-        UUserWidget_PlayAnimation_Params params {};
-        params.InAnimation = InAnimation;
-        params.StartAtTime = StartAtTime;
-        params.NumLoopsToPlay = NumLoopsToPlay;
-        params.PlayMode = PlayMode;
-        params.PlaybackSpeed = PlaybackSpeed;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFC010
-     *         Name   -> Function /Script/UMG.UserWidget.PauseAnimation
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UUserWidget::PauseAnimation(UMG::UWidgetAnimation* InAnimation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.PauseAnimation");
-        
-        UUserWidget_PauseAnimation_Params params {};
-        params.InAnimation = InAnimation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnTouchStarted
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           InTouchEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnTouchStarted(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& InTouchEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchStarted");
-        
-        UUserWidget_OnTouchStarted_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InTouchEvent = InTouchEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnTouchMoved
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           InTouchEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnTouchMoved(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& InTouchEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchMoved");
-        
-        UUserWidget_OnTouchMoved_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InTouchEvent = InTouchEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnTouchGesture
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           GestureEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnTouchGesture(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& GestureEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchGesture");
-        
-        UUserWidget_OnTouchGesture_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.GestureEvent = GestureEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnTouchForceChanged
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           InTouchEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnTouchForceChanged(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& InTouchEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchForceChanged");
-        
-        UUserWidget_OnTouchForceChanged_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InTouchEvent = InTouchEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnTouchEnded
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           InTouchEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnTouchEnded(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& InTouchEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnTouchEnded");
-        
-        UUserWidget_OnTouchEnded_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InTouchEvent = InTouchEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnRemovedFromFocusPath
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FFocusEvent                             InFocusEvent                                               (Parm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnRemovedFromFocusPath(const SlateCore::FFocusEvent& InFocusEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnRemovedFromFocusPath");
-        
-        UUserWidget_OnRemovedFromFocusPath_Params params {};
-        params.InFocusEvent = InFocusEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnPreviewMouseButtonDown
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnPreviewMouseButtonDown(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnPreviewMouseButtonDown");
-        
-        UUserWidget_OnPreviewMouseButtonDown_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.MouseEvent = MouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnPreviewKeyDown
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FKeyEvent                               InKeyEvent                                                 (Parm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnPreviewKeyDown(const SlateCore::FGeometry& MyGeometry, const SlateCore::FKeyEvent& InKeyEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnPreviewKeyDown");
-        
-        UUserWidget_OnPreviewKeyDown_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InKeyEvent = InKeyEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnPaint
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent, Const)
-     * Parameters:
-     *         UMG::FPaintContext                                 Context                                                    (Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnPaint(UMG::FPaintContext* Context)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnPaint");
-        
-        UUserWidget_OnPaint_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (Context != nullptr)
-            *Context = params.Context;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMouseWheel
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnMouseWheel(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseWheel");
-        
-        UUserWidget_OnMouseWheel_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.MouseEvent = MouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMouseMove
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnMouseMove(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseMove");
-        
-        UUserWidget_OnMouseMove_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.MouseEvent = MouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMouseLeave
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnMouseLeave(const SlateCore::FPointerEvent& MouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseLeave");
-        
-        UUserWidget_OnMouseLeave_Params params {};
-        params.MouseEvent = MouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMouseEnter
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnMouseEnter(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseEnter");
-        
-        UUserWidget_OnMouseEnter_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.MouseEvent = MouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMouseCaptureLost
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnMouseCaptureLost()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseCaptureLost");
-        
-        UUserWidget_OnMouseCaptureLost_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMouseButtonUp
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnMouseButtonUp(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseButtonUp");
-        
-        UUserWidget_OnMouseButtonUp_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.MouseEvent = MouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMouseButtonDown
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           MouseEvent                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnMouseButtonDown(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& MouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseButtonDown");
-        
-        UUserWidget_OnMouseButtonDown_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.MouseEvent = MouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMouseButtonDoubleClick
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               InMyGeometry                                               (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           InMouseEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnMouseButtonDoubleClick(const SlateCore::FGeometry& InMyGeometry, const SlateCore::FPointerEvent& InMouseEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMouseButtonDoubleClick");
-        
-        UUserWidget_OnMouseButtonDoubleClick_Params params {};
-        params.InMyGeometry = InMyGeometry;
-        params.InMouseEvent = InMouseEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnMotionDetected
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FMotionEvent                            InMotionEvent                                              (Parm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnMotionDetected(const SlateCore::FGeometry& MyGeometry, const SlateCore::FMotionEvent& InMotionEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnMotionDetected");
-        
-        UUserWidget_OnMotionDetected_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InMotionEvent = InMotionEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnKeyUp
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FKeyEvent                               InKeyEvent                                                 (Parm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnKeyUp(const SlateCore::FGeometry& MyGeometry, const SlateCore::FKeyEvent& InKeyEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnKeyUp");
-        
-        UUserWidget_OnKeyUp_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InKeyEvent = InKeyEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnKeyDown
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FKeyEvent                               InKeyEvent                                                 (Parm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnKeyDown(const SlateCore::FGeometry& MyGeometry, const SlateCore::FKeyEvent& InKeyEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnKeyDown");
-        
-        UUserWidget_OnKeyDown_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InKeyEvent = InKeyEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnKeyChar
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FCharacterEvent                         InCharacterEvent                                           (Parm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnKeyChar(const SlateCore::FGeometry& MyGeometry, const SlateCore::FCharacterEvent& InCharacterEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnKeyChar");
-        
-        UUserWidget_OnKeyChar_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InCharacterEvent = InCharacterEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnInitialized
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnInitialized()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnInitialized");
-        
-        UUserWidget_OnInitialized_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnFocusReceived
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FFocusEvent                             InFocusEvent                                               (Parm, NoDestructor, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnFocusReceived(const SlateCore::FGeometry& MyGeometry, const SlateCore::FFocusEvent& InFocusEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnFocusReceived");
-        
-        UUserWidget_OnFocusReceived_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InFocusEvent = InFocusEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnFocusLost
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FFocusEvent                             InFocusEvent                                               (Parm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnFocusLost(const SlateCore::FFocusEvent& InFocusEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnFocusLost");
-        
-        UUserWidget_OnFocusLost_Params params {};
-        params.InFocusEvent = InFocusEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnDrop
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           PointerEvent                                               (Parm, NativeAccessSpecifierPublic)
-     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::OnDrop(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDrop");
-        
-        UUserWidget_OnDrop_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.PointerEvent = PointerEvent;
-        params.Operation = Operation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnDragOver
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           PointerEvent                                               (Parm, NativeAccessSpecifierPublic)
-     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::OnDragOver(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragOver");
-        
-        UUserWidget_OnDragOver_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.PointerEvent = PointerEvent;
-        params.Operation = Operation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnDragLeave
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FPointerEvent                           PointerEvent                                               (Parm, NativeAccessSpecifierPublic)
-     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnDragLeave(const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragLeave");
-        
-        UUserWidget_OnDragLeave_Params params {};
-        params.PointerEvent = PointerEvent;
-        params.Operation = Operation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnDragEnter
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           PointerEvent                                               (Parm, NativeAccessSpecifierPublic)
-     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnDragEnter(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragEnter");
-        
-        UUserWidget_OnDragEnter_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.PointerEvent = PointerEvent;
-        params.Operation = Operation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnDragDetected
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FPointerEvent                           PointerEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnDragDetected(const SlateCore::FGeometry& MyGeometry, const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation** Operation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragDetected");
-        
-        UUserWidget_OnDragDetected_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.PointerEvent = PointerEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (Operation != nullptr)
-            *Operation = params.Operation;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnDragCancelled
-     *         Flags  -> (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FPointerEvent                           PointerEvent                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         UMG::UDragDropOperation*                           Operation                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnDragCancelled(const SlateCore::FPointerEvent& PointerEvent, UMG::UDragDropOperation* Operation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnDragCancelled");
-        
-        UUserWidget_OnDragCancelled_Params params {};
-        params.PointerEvent = PointerEvent;
-        params.Operation = Operation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFBF80
-     *         Name   -> Function /Script/UMG.UserWidget.OnAnimationStarted
-     *         Flags  -> (BlueprintCosmetic, Native, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             Animation                                                  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnAnimationStarted(UMG::UWidgetAnimation* Animation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnAnimationStarted");
-        
-        UUserWidget_OnAnimationStarted_Params params {};
-        params.Animation = Animation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFBEF0
-     *         Name   -> Function /Script/UMG.UserWidget.OnAnimationFinished
-     *         Flags  -> (BlueprintCosmetic, Native, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             Animation                                                  (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnAnimationFinished(UMG::UWidgetAnimation* Animation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnAnimationFinished");
-        
-        UUserWidget_OnAnimationFinished_Params params {};
-        params.Animation = Animation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnAnalogValueChanged
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FGeometry                               MyGeometry                                                 (Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         SlateCore::FAnalogInputEvent                       InAnalogInputEvent                                         (Parm, NativeAccessSpecifierPublic)
-     *         UMG::FEventReply                                   ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    UMG::FEventReply UUserWidget::OnAnalogValueChanged(const SlateCore::FGeometry& MyGeometry, const SlateCore::FAnalogInputEvent& InAnalogInputEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnAnalogValueChanged");
-        
-        UUserWidget_OnAnalogValueChanged_Params params {};
-        params.MyGeometry = MyGeometry;
-        params.InAnalogInputEvent = InAnalogInputEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.OnAddedToFocusPath
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         SlateCore::FFocusEvent                             InFocusEvent                                               (Parm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::OnAddedToFocusPath(const SlateCore::FFocusEvent& InFocusEvent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.OnAddedToFocusPath");
-        
-        UUserWidget_OnAddedToFocusPath_Params params {};
-        params.InFocusEvent = InFocusEvent;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFBD80
-     *         Name   -> Function /Script/UMG.UserWidget.ListenForInputAction
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FName                                  ActionName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::EInputEvent                                EventType                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bConsume                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::UScriptDelegate                        Callback                                                   (Parm, ZeroConstructor, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::ListenForInputAction(const BasicTypes::FName& ActionName, Engine::EInputEvent EventType, bool bConsume, const BasicTypes::UScriptDelegate& Callback)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.ListenForInputAction");
-        
-        UUserWidget_ListenForInputAction_Params params {};
-        params.ActionName = ActionName;
-        params.EventType = EventType;
-        params.bConsume = bConsume;
-        params.Callback = Callback;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFBD50
-     *         Name   -> Function /Script/UMG.UserWidget.IsPlayingAnimation
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::IsPlayingAnimation()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsPlayingAnimation");
-        
-        UUserWidget_IsPlayingAnimation_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFBCC0
-     *         Name   -> Function /Script/UMG.UserWidget.IsListeningForInputAction
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         BasicTypes::FName                                  ActionName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::IsListeningForInputAction(const BasicTypes::FName& ActionName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsListeningForInputAction");
-        
-        UUserWidget_IsListeningForInputAction_Params params {};
-        params.ActionName = ActionName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB850
-     *         Name   -> Function /Script/UMG.UserWidget.IsInViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::IsInViewport()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsInViewport");
-        
-        UUserWidget_IsInViewport_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.IsInteractable
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::IsInteractable()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsInteractable");
-        
-        UUserWidget_IsInteractable_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFBC90
-     *         Name   -> Function /Script/UMG.UserWidget.IsAnyAnimationPlaying
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::IsAnyAnimationPlaying()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsAnyAnimationPlaying");
-        
-        UUserWidget_IsAnyAnimationPlaying_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFBC00
-     *         Name   -> Function /Script/UMG.UserWidget.IsAnimationPlayingForward
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::IsAnimationPlayingForward(UMG::UWidgetAnimation* InAnimation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsAnimationPlayingForward");
-        
-        UUserWidget_IsAnimationPlayingForward_Params params {};
-        params.InAnimation = InAnimation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFBB70
-     *         Name   -> Function /Script/UMG.UserWidget.IsAnimationPlaying
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::IsAnimationPlaying(UMG::UWidgetAnimation* InAnimation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.IsAnimationPlaying");
-        
-        UUserWidget_IsAnimationPlaying_Params params {};
-        params.InAnimation = InAnimation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB940
-     *         Name   -> Function /Script/UMG.UserWidget.GetOwningPlayerPawn
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Engine::APawn*                                     ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    Engine::APawn* UUserWidget::GetOwningPlayerPawn()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetOwningPlayerPawn");
-        
-        UUserWidget_GetOwningPlayerPawn_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB850
-     *         Name   -> Function /Script/UMG.UserWidget.GetIsVisible
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::GetIsVisible()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetIsVisible");
-        
-        UUserWidget_GetIsVisible_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB750
-     *         Name   -> Function /Script/UMG.UserWidget.GetAnimationCurrentTime
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         UMG::UWidgetAnimation*                             InAnimation                                                (ConstParm, Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UUserWidget::GetAnimationCurrentTime(UMG::UWidgetAnimation* InAnimation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetAnimationCurrentTime");
-        
-        UUserWidget_GetAnimationCurrentTime_Params params {};
-        params.InAnimation = InAnimation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB710
-     *         Name   -> Function /Script/UMG.UserWidget.GetAnchorsInViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Slate::FAnchors                                    ReturnValue                                                (Parm, OutParm, ReturnParm, NoDestructor, NativeAccessSpecifierPublic)
-     */
-    Slate::FAnchors UUserWidget::GetAnchorsInViewport()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetAnchorsInViewport");
-        
-        UUserWidget_GetAnchorsInViewport_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB6D0
-     *         Name   -> Function /Script/UMG.UserWidget.GetAlignmentInViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         CoreUObject::FVector2D                             ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector2D UUserWidget::GetAlignmentInViewport()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.GetAlignmentInViewport");
-        
-        UUserWidget_GetAlignmentInViewport_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.Destruct
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::Destruct()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.Destruct");
-        
-        UUserWidget_Destruct_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/UMG.UserWidget.Construct
-     *         Flags  -> (BlueprintCosmetic, Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::Construct()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.Construct");
-        
-        UUserWidget_Construct_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB5F0
-     *         Name   -> Function /Script/UMG.UserWidget.CancelLatentActions
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::CancelLatentActions()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.CancelLatentActions");
-        
-        UUserWidget_CancelLatentActions_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB570
-     *         Name   -> Function /Script/UMG.UserWidget.AddToViewport
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            ZOrder                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUserWidget::AddToViewport(int32_t ZOrder)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.AddToViewport");
-        
-        UUserWidget_AddToViewport_Params params {};
-        params.ZOrder = ZOrder;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB4E0
-     *         Name   -> Function /Script/UMG.UserWidget.AddToPlayerScreen
-     *         Flags  -> (Final, BlueprintCosmetic, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            ZOrder                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UUserWidget::AddToPlayerScreen(int32_t ZOrder)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UserWidget.AddToPlayerScreen");
-        
-        UUserWidget_AddToPlayerScreen_Params params {};
-        params.ZOrder = ZOrder;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFDE00
-     *         Name   -> Function /Script/UMG.UniformGridPanel.SetSlotPadding
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FMargin                                 InSlotPadding                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUniformGridPanel::SetSlotPadding(const SlateCore::FMargin& InSlotPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridPanel.SetSlotPadding");
-        
-        UUniformGridPanel_SetSlotPadding_Params params {};
-        params.InSlotPadding = InSlotPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFD4A0
-     *         Name   -> Function /Script/UMG.UniformGridPanel.SetMinDesiredSlotWidth
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InMinDesiredSlotWidth                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUniformGridPanel::SetMinDesiredSlotWidth(float InMinDesiredSlotWidth)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridPanel.SetMinDesiredSlotWidth");
-        
-        UUniformGridPanel_SetMinDesiredSlotWidth_Params params {};
-        params.InMinDesiredSlotWidth = InMinDesiredSlotWidth;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFD420
-     *         Name   -> Function /Script/UMG.UniformGridPanel.SetMinDesiredSlotHeight
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              InMinDesiredSlotHeight                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUniformGridPanel::SetMinDesiredSlotHeight(float InMinDesiredSlotHeight)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridPanel.SetMinDesiredSlotHeight");
-        
-        UUniformGridPanel_SetMinDesiredSlotHeight_Params params {};
-        params.InMinDesiredSlotHeight = InMinDesiredSlotHeight;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFB450
-     *         Name   -> Function /Script/UMG.UniformGridPanel.AddChildToUniformGrid
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidget*                                      Content                                                    (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         UMG::UUniformGridSlot*                             ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::UUniformGridSlot* UUniformGridPanel::AddChildToUniformGrid(UMG::UWidget* Content)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridPanel.AddChildToUniformGrid");
-        
-        UUniformGridPanel_AddChildToUniformGrid_Params params {};
-        params.Content = Content;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFE0E0
-     *         Name   -> Function /Script/UMG.UniformGridSlot.SetVerticalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUniformGridSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridSlot.SetVerticalAlignment");
-        
-        UUniformGridSlot_SetVerticalAlignment_Params params {};
-        params.InVerticalAlignment = InVerticalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFDB00
-     *         Name   -> Function /Script/UMG.UniformGridSlot.SetRow
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            InRow                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUniformGridSlot::SetRow(int32_t InRow)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridSlot.SetRow");
-        
-        UUniformGridSlot_SetRow_Params params {};
-        params.InRow = InRow;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFCF20
-     *         Name   -> Function /Script/UMG.UniformGridSlot.SetHorizontalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUniformGridSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridSlot.SetHorizontalAlignment");
-        
-        UUniformGridSlot_SetHorizontalAlignment_Params params {};
-        params.InHorizontalAlignment = InHorizontalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FFCA00
-     *         Name   -> Function /Script/UMG.UniformGridSlot.SetColumn
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            InColumn                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UUniformGridSlot::SetColumn(int32_t InColumn)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.UniformGridSlot.SetColumn");
-        
-        UUniformGridSlot_SetColumn_Params params {};
-        params.InColumn = InColumn;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01000BD0
-     *         Name   -> Function /Script/UMG.VerticalBox.AddChildToVerticalBox
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::UWidget*                                      Content                                                    (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         UMG::UVerticalBoxSlot*                             ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::UVerticalBoxSlot* UVerticalBox::AddChildToVerticalBox(UMG::UWidget* Content)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBox.AddChildToVerticalBox");
-        
-        UVerticalBox_AddChildToVerticalBox_Params params {};
-        params.Content = Content;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEBA30
-     *         Name   -> Function /Script/UMG.VerticalBoxSlot.SetVerticalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EVerticalAlignment                      InVerticalAlignment                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UVerticalBoxSlot::SetVerticalAlignment(SlateCore::EVerticalAlignment InVerticalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBoxSlot.SetVerticalAlignment");
-        
-        UVerticalBoxSlot_SetVerticalAlignment_Params params {};
-        params.InVerticalAlignment = InVerticalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEB6F0
-     *         Name   -> Function /Script/UMG.VerticalBoxSlot.SetSize
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         UMG::FSlateChildSize                               InSize                                                     (Parm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UVerticalBoxSlot::SetSize(const UMG::FSlateChildSize& InSize)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBoxSlot.SetSize");
-        
-        UVerticalBoxSlot_SetSize_Params params {};
-        params.InSize = InSize;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEB3A0
-     *         Name   -> Function /Script/UMG.VerticalBoxSlot.SetPadding
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::FMargin                                 InPadding                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UVerticalBoxSlot::SetPadding(const SlateCore::FMargin& InPadding)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBoxSlot.SetPadding");
-        
-        UVerticalBoxSlot_SetPadding_Params params {};
-        params.InPadding = InPadding;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00FEAC90
-     *         Name   -> Function /Script/UMG.VerticalBoxSlot.SetHorizontalAlignment
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         SlateCore::EHorizontalAlignment                    InHorizontalAlignment                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UVerticalBoxSlot::SetHorizontalAlignment(SlateCore::EHorizontalAlignment InHorizontalAlignment)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VerticalBoxSlot.SetHorizontalAlignment");
-        
-        UVerticalBoxSlot_SetHorizontalAlignment_Params params {};
-        params.InHorizontalAlignment = InHorizontalAlignment;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010059B0
-     *         Name   -> Function /Script/UMG.Viewport.Spawn
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::AActor*                                    ActorClass                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::AActor*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    Engine::AActor* UViewport::Spawn(Engine::AActor* ActorClass)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.Spawn");
-        
-        UViewport_Spawn_Params params {};
-        params.ActorClass = ActorClass;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010055F0
-     *         Name   -> Function /Script/UMG.Viewport.SetViewRotation
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FRotator                              Rotation                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UViewport::SetViewRotation(const CoreUObject::FRotator& Rotation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.SetViewRotation");
-        
-        UViewport_SetViewRotation_Params params {};
-        params.Rotation = Rotation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01005560
-     *         Name   -> Function /Script/UMG.Viewport.SetViewLocation
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UViewport::SetViewLocation(const CoreUObject::FVector& Location)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.SetViewLocation");
-        
-        UViewport_SetViewLocation_Params params {};
-        params.Location = Location;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010035B0
-     *         Name   -> Function /Script/UMG.Viewport.GetViewRotation
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         CoreUObject::FRotator                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FRotator UViewport::GetViewRotation()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.GetViewRotation");
-        
-        UViewport_GetViewRotation_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010035F0
-     *         Name   -> Function /Script/UMG.Viewport.GetViewportWorld
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Engine::UWorld*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    Engine::UWorld* UViewport::GetViewportWorld()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.GetViewportWorld");
-        
-        UViewport_GetViewportWorld_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003570
-     *         Name   -> Function /Script/UMG.Viewport.GetViewLocation
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         CoreUObject::FVector                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector UViewport::GetViewLocation()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.Viewport.GetViewLocation");
-        
-        UViewport_GetViewLocation_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003510
-     *         Name   -> Function /Script/UMG.VisibilityBinding.GetValue
-     *         Flags  -> (Final, Native, Public, Const)
-     * Parameters:
-     *         UMG::ESlateVisibility                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::ESlateVisibility UVisibilityBinding::GetValue()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.VisibilityBinding.GetValue");
-        
-        UVisibilityBinding_GetValue_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010034E0
-     *         Name   -> Function /Script/UMG.WidgetAnimation.GetStartTime
-     *         Flags  -> (Final, RequiredAPI, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UWidgetAnimation::GetStartTime()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WidgetAnimation.GetStartTime");
-        
-        UWidgetAnimation_GetStartTime_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01002C90
-     *         Name   -> Function /Script/UMG.WidgetAnimation.GetEndTime
-     *         Flags  -> (Final, RequiredAPI, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UWidgetAnimation::GetEndTime()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WidgetAnimation.GetEndTime");
-        
-        UWidgetAnimation_GetEndTime_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x01003540
-     *         Name   -> Function /Script/UMG.WidgetBinding.GetValue
-     *         Flags  -> (Final, Native, Public, Const)
-     * Parameters:
-     *         UMG::UWidget*                                      ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    UMG::UWidget* UWidgetBinding::GetValue()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/UMG.WidgetBinding.GetValue");
-        
-        UWidgetBinding_GetValue_Params params {};
+        UMultiLineEditableTextBox_GetText_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

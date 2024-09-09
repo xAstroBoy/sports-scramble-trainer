@@ -23,8 +23,8 @@
 #include "Headers/AnimGraphRuntime_UAnimNotify_PlayMontageNotify.h"
 #include "Headers/AnimGraphRuntime_UAnimNotify_PlayMontageNotifyWindow.h"
 #include "Headers/AnimGraphRuntime_UAnimSequencerInstance.h"
-#include "Headers/AnimGraphRuntime_UPlayMontageCallbackProxy.h"
 #include "Headers/AnimGraphRuntime_UKismetAnimationLibrary.h"
+#include "Headers/AnimGraphRuntime_UPlayMontageCallbackProxy.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -35,139 +35,6 @@ namespace CG::AnimGraphRuntime
     // --------------------------------------------------
     // # Structs functions
     // --------------------------------------------------
-    /**
-     * Function:
-     *         RVA    -> 0x00EEF870
-     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnNotifyEndReceived
-     *         Flags  -> (Final, Native, Protected, HasOutParms)
-     * Parameters:
-     *         BasicTypes::FName                                  NotifyName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::FBranchingPointNotifyPayload               BranchingPointNotifyPayload                                (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UPlayMontageCallbackProxy::OnNotifyEndReceived(const BasicTypes::FName& NotifyName, const Engine::FBranchingPointNotifyPayload& BranchingPointNotifyPayload)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnNotifyEndReceived");
-        
-        UPlayMontageCallbackProxy_OnNotifyEndReceived_Params params {};
-        params.NotifyName = NotifyName;
-        params.BranchingPointNotifyPayload = BranchingPointNotifyPayload;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00EEF790
-     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnNotifyBeginReceived
-     *         Flags  -> (Final, Native, Protected, HasOutParms)
-     * Parameters:
-     *         BasicTypes::FName                                  NotifyName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::FBranchingPointNotifyPayload               BranchingPointNotifyPayload                                (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UPlayMontageCallbackProxy::OnNotifyBeginReceived(const BasicTypes::FName& NotifyName, const Engine::FBranchingPointNotifyPayload& BranchingPointNotifyPayload)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnNotifyBeginReceived");
-        
-        UPlayMontageCallbackProxy_OnNotifyBeginReceived_Params params {};
-        params.NotifyName = NotifyName;
-        params.BranchingPointNotifyPayload = BranchingPointNotifyPayload;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00EEF6C0
-     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnMontageEnded
-     *         Flags  -> (Final, Native, Protected)
-     * Parameters:
-     *         Engine::UAnimMontage*                              Montage                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bInterrupted                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UPlayMontageCallbackProxy::OnMontageEnded(Engine::UAnimMontage* Montage, bool bInterrupted)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnMontageEnded");
-        
-        UPlayMontageCallbackProxy_OnMontageEnded_Params params {};
-        params.Montage = Montage;
-        params.bInterrupted = bInterrupted;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00EEF5F0
-     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnMontageBlendingOut
-     *         Flags  -> (Final, Native, Protected)
-     * Parameters:
-     *         Engine::UAnimMontage*                              Montage                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bInterrupted                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UPlayMontageCallbackProxy::OnMontageBlendingOut(Engine::UAnimMontage* Montage, bool bInterrupted)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnMontageBlendingOut");
-        
-        UPlayMontageCallbackProxy_OnMontageBlendingOut_Params params {};
-        params.Montage = Montage;
-        params.bInterrupted = bInterrupted;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00EEE740
-     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.CreateProxyObjectForPlayMontage
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::USkeletalMeshComponent*                    InSkeletalMeshComponent                                    (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::UAnimMontage*                              MontageToPlay                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              PlayRate                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              StartingPosition                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  StartingSection                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         AnimGraphRuntime::UPlayMontageCallbackProxy*       ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    AnimGraphRuntime::UPlayMontageCallbackProxy* UPlayMontageCallbackProxy::STATIC_CreateProxyObjectForPlayMontage(Engine::USkeletalMeshComponent* InSkeletalMeshComponent, Engine::UAnimMontage* MontageToPlay, float PlayRate, float StartingPosition, const BasicTypes::FName& StartingSection)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.CreateProxyObjectForPlayMontage");
-        
-        UPlayMontageCallbackProxy_CreateProxyObjectForPlayMontage_Params params {};
-        params.InSkeletalMeshComponent = InSkeletalMeshComponent;
-        params.MontageToPlay = MontageToPlay;
-        params.PlayRate = PlayRate;
-        params.StartingPosition = StartingPosition;
-        params.StartingSection = StartingSection;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
     /**
      * Function:
      *         RVA    -> 0x00EEF2C0
@@ -381,6 +248,139 @@ namespace CG::AnimGraphRuntime
         params.Component = Component;
         params.SocketOrBoneNameFrom = SocketOrBoneNameFrom;
         params.SocketOrBoneNameTo = SocketOrBoneNameTo;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00EEF870
+     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnNotifyEndReceived
+     *         Flags  -> (Final, Native, Protected, HasOutParms)
+     * Parameters:
+     *         BasicTypes::FName                                  NotifyName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::FBranchingPointNotifyPayload               BranchingPointNotifyPayload                                (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UPlayMontageCallbackProxy::OnNotifyEndReceived(const BasicTypes::FName& NotifyName, const Engine::FBranchingPointNotifyPayload& BranchingPointNotifyPayload)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnNotifyEndReceived");
+        
+        UPlayMontageCallbackProxy_OnNotifyEndReceived_Params params {};
+        params.NotifyName = NotifyName;
+        params.BranchingPointNotifyPayload = BranchingPointNotifyPayload;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00EEF790
+     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnNotifyBeginReceived
+     *         Flags  -> (Final, Native, Protected, HasOutParms)
+     * Parameters:
+     *         BasicTypes::FName                                  NotifyName                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::FBranchingPointNotifyPayload               BranchingPointNotifyPayload                                (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UPlayMontageCallbackProxy::OnNotifyBeginReceived(const BasicTypes::FName& NotifyName, const Engine::FBranchingPointNotifyPayload& BranchingPointNotifyPayload)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnNotifyBeginReceived");
+        
+        UPlayMontageCallbackProxy_OnNotifyBeginReceived_Params params {};
+        params.NotifyName = NotifyName;
+        params.BranchingPointNotifyPayload = BranchingPointNotifyPayload;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00EEF6C0
+     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnMontageEnded
+     *         Flags  -> (Final, Native, Protected)
+     * Parameters:
+     *         Engine::UAnimMontage*                              Montage                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bInterrupted                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UPlayMontageCallbackProxy::OnMontageEnded(Engine::UAnimMontage* Montage, bool bInterrupted)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnMontageEnded");
+        
+        UPlayMontageCallbackProxy_OnMontageEnded_Params params {};
+        params.Montage = Montage;
+        params.bInterrupted = bInterrupted;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00EEF5F0
+     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnMontageBlendingOut
+     *         Flags  -> (Final, Native, Protected)
+     * Parameters:
+     *         Engine::UAnimMontage*                              Montage                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bInterrupted                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UPlayMontageCallbackProxy::OnMontageBlendingOut(Engine::UAnimMontage* Montage, bool bInterrupted)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.OnMontageBlendingOut");
+        
+        UPlayMontageCallbackProxy_OnMontageBlendingOut_Params params {};
+        params.Montage = Montage;
+        params.bInterrupted = bInterrupted;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00EEE740
+     *         Name   -> Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.CreateProxyObjectForPlayMontage
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::USkeletalMeshComponent*                    InSkeletalMeshComponent                                    (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::UAnimMontage*                              MontageToPlay                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              PlayRate                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              StartingPosition                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  StartingSection                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         AnimGraphRuntime::UPlayMontageCallbackProxy*       ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    AnimGraphRuntime::UPlayMontageCallbackProxy* UPlayMontageCallbackProxy::STATIC_CreateProxyObjectForPlayMontage(Engine::USkeletalMeshComponent* InSkeletalMeshComponent, Engine::UAnimMontage* MontageToPlay, float PlayRate, float StartingPosition, const BasicTypes::FName& StartingSection)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AnimGraphRuntime.PlayMontageCallbackProxy.CreateProxyObjectForPlayMontage");
+        
+        UPlayMontageCallbackProxy_CreateProxyObjectForPlayMontage_Params params {};
+        params.InSkeletalMeshComponent = InSkeletalMeshComponent;
+        params.MontageToPlay = MontageToPlay;
+        params.PlayRate = PlayRate;
+        params.StartingPosition = StartingPosition;
+        params.StartingSection = StartingSection;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

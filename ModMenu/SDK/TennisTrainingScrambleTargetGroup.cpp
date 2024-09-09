@@ -1522,10 +1522,10 @@ namespace CG::TennisTrainingScrambleTargetGroup
      * Parameters:
      *         TennisScrambleTarget::ATennisScrambleTarget_C*     TargetActor                                                (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
      *         ScrambleEvent_Base::AScrambleEvent_Base_C*         EventClass                                                 (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-     *         int32_t                                            TargetID                                                   (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+     *         int32_t                                            TargetId                                                   (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
      *         void                                               ReturnValue
      */
-    void ATennisTrainingScrambleTargetGroup_C::TargetHasBeenHit__DelegateSignature(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetID)
+    void ATennisTrainingScrambleTargetGroup_C::TargetHasBeenHit__DelegateSignature(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetId)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
@@ -1534,7 +1534,7 @@ namespace CG::TennisTrainingScrambleTargetGroup
         ATennisTrainingScrambleTargetGroup_C_TargetHasBeenHit__DelegateSignature_Params params {};
         params.TargetActor = TargetActor;
         params.EventClass = EventClass;
-        params.TargetID = TargetID;
+        params.TargetId = TargetId;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

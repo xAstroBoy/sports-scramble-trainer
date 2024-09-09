@@ -22,156 +22,6 @@ namespace CG::SlateCore
     // # Enums
     // --------------------------------------------------
     /**
-     * Enum /Script/SlateCore.ESlateBrushDrawType
-     */
-    enum class ESlateBrushDrawType : uint8_t
-    {
-        NoDrawType = 0,
-        Box        = 1,
-        Border     = 2,
-        Image      = 3,
-        MAX        = 4
-    };
-
-    /**
-     * Enum /Script/SlateCore.ESlateColorStylingMode
-     */
-    enum class ESlateColorStylingMode : uint8_t
-    {
-        UseColor_Specified          = 0,
-        UseColor_Specified_Link     = 1,
-        UseColor_Foreground         = 2,
-        UseColor_Foreground_Subdued = 3,
-        UseColor_MAX                = 4
-    };
-
-    /**
-     * Enum /Script/SlateCore.ESelectInfo
-     */
-    enum class ESelectInfo : uint8_t
-    {
-        OnKeyPress   = 0,
-        OnNavigation = 1,
-        OnMouseClick = 2,
-        Direct       = 3,
-        MAX          = 4
-    };
-
-    /**
-     * Enum /Script/SlateCore.ETextCommit
-     */
-    enum class ETextCommit : uint8_t
-    {
-        Default          = 0,
-        OnEnter          = 1,
-        OnUserMovedFocus = 2,
-        OnCleared        = 3,
-        MAX              = 4
-    };
-
-    /**
-     * Enum /Script/SlateCore.EScrollDirection
-     */
-    enum class EScrollDirection : uint8_t
-    {
-        Scroll_Down = 0,
-        Scroll_Up   = 1,
-        Scroll_MAX  = 2
-    };
-
-    /**
-     * Enum /Script/SlateCore.EOrientation
-     */
-    enum class EOrientation : uint8_t
-    {
-        Orient_Horizontal = 0,
-        Orient_Vertical   = 1,
-        Orient_MAX        = 2
-    };
-
-    /**
-     * Enum /Script/SlateCore.EMenuPlacement
-     */
-    enum class EMenuPlacement : uint8_t
-    {
-        MenuPlacement_BelowAnchor         = 0,
-        MenuPlacement_CenteredBelowAnchor = 1,
-        MenuPlacement_BelowRightAnchor    = 2,
-        MenuPlacement_ComboBox            = 3,
-        MenuPlacement_ComboBoxRight       = 4,
-        MenuPlacement_MenuRight           = 5,
-        MenuPlacement_AboveAnchor         = 6,
-        MenuPlacement_CenteredAboveAnchor = 7,
-        MenuPlacement_AboveRightAnchor    = 8,
-        MenuPlacement_MenuLeft            = 9,
-        MenuPlacement_Center              = 10,
-        MenuPlacement_RightLeftCenter     = 11,
-        MenuPlacement_MatchBottomLeft     = 12,
-        MenuPlacement_MAX                 = 13
-    };
-
-    /**
-     * Enum /Script/SlateCore.EVerticalAlignment
-     */
-    enum class EVerticalAlignment : uint8_t
-    {
-        VAlign_Fill   = 0,
-        VAlign_Top    = 1,
-        VAlign_Center = 2,
-        VAlign_Bottom = 3,
-        VAlign_MAX    = 4
-    };
-
-    /**
-     * Enum /Script/SlateCore.EHorizontalAlignment
-     */
-    enum class EHorizontalAlignment : uint8_t
-    {
-        HAlign_Fill   = 0,
-        HAlign_Left   = 1,
-        HAlign_Center = 2,
-        HAlign_Right  = 3,
-        HAlign_MAX    = 4
-    };
-
-    /**
-     * Enum /Script/SlateCore.ENavigationGenesis
-     */
-    enum class ENavigationGenesis : uint8_t
-    {
-        Keyboard   = 0,
-        Controller = 1,
-        User       = 2,
-        MAX        = 3
-    };
-
-    /**
-     * Enum /Script/SlateCore.ENavigationSource
-     */
-    enum class ENavigationSource : uint8_t
-    {
-        FocusedWidget     = 0,
-        WidgetUnderCursor = 1,
-        MAX               = 2
-    };
-
-    /**
-     * Enum /Script/SlateCore.EUINavigation
-     */
-    enum class EUINavigation : uint8_t
-    {
-        Left     = 0,
-        Right    = 1,
-        Up       = 2,
-        Down     = 3,
-        Next     = 4,
-        Previous = 5,
-        Num      = 6,
-        Invalid  = 7,
-        MAX      = 8
-    };
-
-    /**
      * Enum /Script/SlateCore.EButtonPressMethod
      */
     enum class EButtonPressMethod : uint8_t
@@ -389,6 +239,156 @@ namespace CG::SlateCore
         Vertical   = 2,
         Both       = 3,
         MAX        = 4
+    };
+
+    /**
+     * Enum /Script/SlateCore.ESlateBrushDrawType
+     */
+    enum class ESlateBrushDrawType : uint8_t
+    {
+        NoDrawType = 0,
+        Box        = 1,
+        Border     = 2,
+        Image      = 3,
+        MAX        = 4
+    };
+
+    /**
+     * Enum /Script/SlateCore.ESlateColorStylingMode
+     */
+    enum class ESlateColorStylingMode : uint8_t
+    {
+        UseColor_Specified          = 0,
+        UseColor_Specified_Link     = 1,
+        UseColor_Foreground         = 2,
+        UseColor_Foreground_Subdued = 3,
+        UseColor_MAX                = 4
+    };
+
+    /**
+     * Enum /Script/SlateCore.ESelectInfo
+     */
+    enum class ESelectInfo : uint8_t
+    {
+        OnKeyPress   = 0,
+        OnNavigation = 1,
+        OnMouseClick = 2,
+        Direct       = 3,
+        MAX          = 4
+    };
+
+    /**
+     * Enum /Script/SlateCore.ETextCommit
+     */
+    enum class ETextCommit : uint8_t
+    {
+        Default          = 0,
+        OnEnter          = 1,
+        OnUserMovedFocus = 2,
+        OnCleared        = 3,
+        MAX              = 4
+    };
+
+    /**
+     * Enum /Script/SlateCore.EScrollDirection
+     */
+    enum class EScrollDirection : uint8_t
+    {
+        Scroll_Down = 0,
+        Scroll_Up   = 1,
+        Scroll_MAX  = 2
+    };
+
+    /**
+     * Enum /Script/SlateCore.EOrientation
+     */
+    enum class EOrientation : uint8_t
+    {
+        Orient_Horizontal = 0,
+        Orient_Vertical   = 1,
+        Orient_MAX        = 2
+    };
+
+    /**
+     * Enum /Script/SlateCore.EMenuPlacement
+     */
+    enum class EMenuPlacement : uint8_t
+    {
+        MenuPlacement_BelowAnchor         = 0,
+        MenuPlacement_CenteredBelowAnchor = 1,
+        MenuPlacement_BelowRightAnchor    = 2,
+        MenuPlacement_ComboBox            = 3,
+        MenuPlacement_ComboBoxRight       = 4,
+        MenuPlacement_MenuRight           = 5,
+        MenuPlacement_AboveAnchor         = 6,
+        MenuPlacement_CenteredAboveAnchor = 7,
+        MenuPlacement_AboveRightAnchor    = 8,
+        MenuPlacement_MenuLeft            = 9,
+        MenuPlacement_Center              = 10,
+        MenuPlacement_RightLeftCenter     = 11,
+        MenuPlacement_MatchBottomLeft     = 12,
+        MenuPlacement_MAX                 = 13
+    };
+
+    /**
+     * Enum /Script/SlateCore.EVerticalAlignment
+     */
+    enum class EVerticalAlignment : uint8_t
+    {
+        VAlign_Fill   = 0,
+        VAlign_Top    = 1,
+        VAlign_Center = 2,
+        VAlign_Bottom = 3,
+        VAlign_MAX    = 4
+    };
+
+    /**
+     * Enum /Script/SlateCore.EHorizontalAlignment
+     */
+    enum class EHorizontalAlignment : uint8_t
+    {
+        HAlign_Fill   = 0,
+        HAlign_Left   = 1,
+        HAlign_Center = 2,
+        HAlign_Right  = 3,
+        HAlign_MAX    = 4
+    };
+
+    /**
+     * Enum /Script/SlateCore.ENavigationGenesis
+     */
+    enum class ENavigationGenesis : uint8_t
+    {
+        Keyboard   = 0,
+        Controller = 1,
+        User       = 2,
+        MAX        = 3
+    };
+
+    /**
+     * Enum /Script/SlateCore.ENavigationSource
+     */
+    enum class ENavigationSource : uint8_t
+    {
+        FocusedWidget     = 0,
+        WidgetUnderCursor = 1,
+        MAX               = 2
+    };
+
+    /**
+     * Enum /Script/SlateCore.EUINavigation
+     */
+    enum class EUINavigation : uint8_t
+    {
+        Left     = 0,
+        Right    = 1,
+        Up       = 2,
+        Down     = 3,
+        Next     = 4,
+        Previous = 5,
+        Num      = 6,
+        Invalid  = 7,
+        MAX      = 8
     };
 
 }

@@ -158,7 +158,7 @@ namespace CG::BB_Train_Base
         void PlayerHitHomerun(bool BasesLoaded);
         void UnbindScoring();
         void TrainingTargetHit(SportsScramble::EBaseballScrambleTargetLocations Location);
-        void BB_OutfieldTargetHit(SportsScramble::AScramBall* Ball, int32_t TargetID);
+        void BB_OutfieldTargetHit(SportsScramble::AScramBall* Ball, int32_t TargetId);
         void BB_BallLaunched(Engine::AActor* LaunchedBall);
         void Strikezone_Strike();
         void Strikezone_Ball();

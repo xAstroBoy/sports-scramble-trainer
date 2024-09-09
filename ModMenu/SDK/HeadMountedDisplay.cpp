@@ -19,12 +19,12 @@
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/HeadMountedDisplay_ENUMS.h"
 #include "Headers/HeadMountedDisplay_PARAMS.h"
-#include "Headers/HeadMountedDisplay_UAsyncTask_LoadXRDeviceVisComponent.h"
 #include "Headers/HeadMountedDisplay_UHeadMountedDisplayFunctionLibrary.h"
 #include "Headers/HeadMountedDisplay_UMotionControllerComponent.h"
 #include "Headers/HeadMountedDisplay_UMotionTrackedDeviceFunctionLibrary.h"
 #include "Headers/HeadMountedDisplay_UVRNotificationsComponent.h"
 #include "Headers/HeadMountedDisplay_UXRAssetFunctionLibrary.h"
+#include "Headers/HeadMountedDisplay_UAsyncTask_LoadXRDeviceVisComponent.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -35,81 +35,6 @@ namespace CG::HeadMountedDisplay
     // --------------------------------------------------
     // # Structs functions
     // --------------------------------------------------
-    /**
-     * Function:
-     *         RVA    -> 0x00CAAF40
-     *         Name   -> Function /Script/HeadMountedDisplay.AsyncTask_LoadXRDeviceVisComponent.AddNamedDeviceVisualizationComponentAsync
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         Engine::AActor*                                    Target                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  SystemName                                                 (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  DeviceName                                                 (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bManualAttachment                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FTransform                            RelativeTransform                                          (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         HeadMountedDisplay::FXRDeviceId                    XRDeviceId                                                 (Parm, OutParm, NoDestructor, NativeAccessSpecifierPublic)
-     *         Engine::UPrimitiveComponent*                       NewComponent                                               (Parm, OutParm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent* UAsyncTask_LoadXRDeviceVisComponent::STATIC_AddNamedDeviceVisualizationComponentAsync(Engine::AActor* Target, const BasicTypes::FName& SystemName, const BasicTypes::FName& DeviceName, bool bManualAttachment, const CoreUObject::FTransform& RelativeTransform, HeadMountedDisplay::FXRDeviceId* XRDeviceId, Engine::UPrimitiveComponent** NewComponent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/HeadMountedDisplay.AsyncTask_LoadXRDeviceVisComponent.AddNamedDeviceVisualizationComponentAsync");
-        
-        UAsyncTask_LoadXRDeviceVisComponent_AddNamedDeviceVisualizationComponentAsync_Params params {};
-        params.Target = Target;
-        params.SystemName = SystemName;
-        params.DeviceName = DeviceName;
-        params.bManualAttachment = bManualAttachment;
-        params.RelativeTransform = RelativeTransform;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (XRDeviceId != nullptr)
-            *XRDeviceId = params.XRDeviceId;
-        if (NewComponent != nullptr)
-            *NewComponent = params.NewComponent;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00CAAB60
-     *         Name   -> Function /Script/HeadMountedDisplay.AsyncTask_LoadXRDeviceVisComponent.AddDeviceVisualizationComponentAsync
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         Engine::AActor*                                    Target                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         HeadMountedDisplay::FXRDeviceId                    XRDeviceId                                                 (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-     *         bool                                               bManualAttachment                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FTransform                            RelativeTransform                                          (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         Engine::UPrimitiveComponent*                       NewComponent                                               (Parm, OutParm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent* UAsyncTask_LoadXRDeviceVisComponent::STATIC_AddDeviceVisualizationComponentAsync(Engine::AActor* Target, const HeadMountedDisplay::FXRDeviceId& XRDeviceId, bool bManualAttachment, const CoreUObject::FTransform& RelativeTransform, Engine::UPrimitiveComponent** NewComponent)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/HeadMountedDisplay.AsyncTask_LoadXRDeviceVisComponent.AddDeviceVisualizationComponentAsync");
-        
-        UAsyncTask_LoadXRDeviceVisComponent_AddDeviceVisualizationComponentAsync_Params params {};
-        params.Target = Target;
-        params.XRDeviceId = XRDeviceId;
-        params.bManualAttachment = bManualAttachment;
-        params.RelativeTransform = RelativeTransform;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (NewComponent != nullptr)
-            *NewComponent = params.NewComponent;
-        
-        return params.ReturnValue;
-    }
-
     /**
      * Function:
      *         RVA    -> 0x00CAD950
@@ -1703,6 +1628,81 @@ namespace CG::HeadMountedDisplay
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00CAAF40
+     *         Name   -> Function /Script/HeadMountedDisplay.AsyncTask_LoadXRDeviceVisComponent.AddNamedDeviceVisualizationComponentAsync
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         Engine::AActor*                                    Target                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  SystemName                                                 (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  DeviceName                                                 (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bManualAttachment                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FTransform                            RelativeTransform                                          (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         HeadMountedDisplay::FXRDeviceId                    XRDeviceId                                                 (Parm, OutParm, NoDestructor, NativeAccessSpecifierPublic)
+     *         Engine::UPrimitiveComponent*                       NewComponent                                               (Parm, OutParm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent* UAsyncTask_LoadXRDeviceVisComponent::STATIC_AddNamedDeviceVisualizationComponentAsync(Engine::AActor* Target, const BasicTypes::FName& SystemName, const BasicTypes::FName& DeviceName, bool bManualAttachment, const CoreUObject::FTransform& RelativeTransform, HeadMountedDisplay::FXRDeviceId* XRDeviceId, Engine::UPrimitiveComponent** NewComponent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/HeadMountedDisplay.AsyncTask_LoadXRDeviceVisComponent.AddNamedDeviceVisualizationComponentAsync");
+        
+        UAsyncTask_LoadXRDeviceVisComponent_AddNamedDeviceVisualizationComponentAsync_Params params {};
+        params.Target = Target;
+        params.SystemName = SystemName;
+        params.DeviceName = DeviceName;
+        params.bManualAttachment = bManualAttachment;
+        params.RelativeTransform = RelativeTransform;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (XRDeviceId != nullptr)
+            *XRDeviceId = params.XRDeviceId;
+        if (NewComponent != nullptr)
+            *NewComponent = params.NewComponent;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00CAAB60
+     *         Name   -> Function /Script/HeadMountedDisplay.AsyncTask_LoadXRDeviceVisComponent.AddDeviceVisualizationComponentAsync
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         Engine::AActor*                                    Target                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         HeadMountedDisplay::FXRDeviceId                    XRDeviceId                                                 (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+     *         bool                                               bManualAttachment                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FTransform                            RelativeTransform                                          (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         Engine::UPrimitiveComponent*                       NewComponent                                               (Parm, OutParm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent* UAsyncTask_LoadXRDeviceVisComponent::STATIC_AddDeviceVisualizationComponentAsync(Engine::AActor* Target, const HeadMountedDisplay::FXRDeviceId& XRDeviceId, bool bManualAttachment, const CoreUObject::FTransform& RelativeTransform, Engine::UPrimitiveComponent** NewComponent)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/HeadMountedDisplay.AsyncTask_LoadXRDeviceVisComponent.AddDeviceVisualizationComponentAsync");
+        
+        UAsyncTask_LoadXRDeviceVisComponent_AddDeviceVisualizationComponentAsync_Params params {};
+        params.Target = Target;
+        params.XRDeviceId = XRDeviceId;
+        params.bManualAttachment = bManualAttachment;
+        params.RelativeTransform = RelativeTransform;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (NewComponent != nullptr)
+            *NewComponent = params.NewComponent;
         
         return params.ReturnValue;
     }

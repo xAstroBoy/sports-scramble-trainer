@@ -177,7 +177,7 @@ namespace CG::TN_Train_07_EquipMatch
     public:
         TennisScrambleTarget::ATennisScrambleTarget_C*               TargetActor;                                             //  0x0000(0x0008)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
         ScrambleEvent_Base::AScrambleEvent_Base_C*                   EventClass;                                              //  0x0008(0x0008)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-        int32_t                                                      TargetID;                                                //  0x0010(0x0004)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+        int32_t                                                      TargetId;                                                //  0x0010(0x0004)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
     };
 
     /**

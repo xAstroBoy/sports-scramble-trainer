@@ -171,7 +171,7 @@ namespace CG::TennisTrainingScrambleTargetGroup
         void SpawnDemoTargetCenter_TennisBall();
         void SpawnDemoTargetLeft_HockeyPuck();
         void ExecuteUbergraph_TennisTrainingScrambleTargetGroup(int32_t EntryPoint);
-        void TargetHasBeenHit__DelegateSignature(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetID);
+        void TargetHasBeenHit__DelegateSignature(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetId);
         void BallHasBeenFiredByTarget__DelegateSignature(TN_Ball_Base::ATN_Ball_Base_C* LaunchedBall);
         static inline CoreUObject::UClass* StaticClass()
         {

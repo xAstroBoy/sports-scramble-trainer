@@ -279,7 +279,7 @@ namespace CG::ScramSportManagerBaseball_Blueprint
         void PlayerBatterReady();
         void BeginGame();
         void PitchTargetHit(int32_t ScoreAmount);
-        void BatterHitOutfieldTarget(SportsScramble::AScramBall* Ball, int32_t TargetID);
+        void BatterHitOutfieldTarget(SportsScramble::AScramBall* Ball, int32_t TargetId);
         void SendRestartGame();
         void UpdateGameScore(int32_t NewP1TotalScore, int32_t NewP2TotalScore);
         void SwitchSides(bool TopOfTheInning, int32_t CurrentInning);

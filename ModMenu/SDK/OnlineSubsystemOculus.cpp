@@ -18,13 +18,13 @@
 #include "Headers/BasicTypes.h"
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/OnlineSubsystemOculus_PARAMS.h"
-#include "Headers/OnlineSubsystemOculus_UOculusCreateSessionCallbackProxy.h"
-#include "Headers/OnlineSubsystemOculus_UOculusNetDriver.h"
-#include "Headers/OnlineSubsystemOculus_UOculusUpdateSessionCallbackProxy.h"
 #include "Headers/OnlineSubsystemOculus_UOculusIdentityCallbackProxy.h"
-#include "Headers/OnlineSubsystemOculus_UOculusNetConnection.h"
 #include "Headers/OnlineSubsystemOculus_UOculusEntitlementCallbackProxy.h"
 #include "Headers/OnlineSubsystemOculus_UOculusFindSessionsCallbackProxy.h"
+#include "Headers/OnlineSubsystemOculus_UOculusUpdateSessionCallbackProxy.h"
+#include "Headers/OnlineSubsystemOculus_UOculusNetDriver.h"
+#include "Headers/OnlineSubsystemOculus_UOculusCreateSessionCallbackProxy.h"
+#include "Headers/OnlineSubsystemOculus_UOculusNetConnection.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -35,58 +35,6 @@ namespace CG::OnlineSubsystemOculus
     // --------------------------------------------------
     // # Structs functions
     // --------------------------------------------------
-    /**
-     * Function:
-     *         RVA    -> 0x001E67C0
-     *         Name   -> Function /Script/OnlineSubsystemOculus.OculusCreateSessionCallbackProxy.CreateSession
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            PublicConnections                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                OculusMatchmakingPool                                      (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemOculus::UOculusCreateSessionCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemOculus::UOculusCreateSessionCallbackProxy* UOculusCreateSessionCallbackProxy::STATIC_CreateSession(int32_t PublicConnections, const BasicTypes::FString& OculusMatchmakingPool)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemOculus.OculusCreateSessionCallbackProxy.CreateSession");
-        
-        UOculusCreateSessionCallbackProxy_CreateSession_Params params {};
-        params.PublicConnections = PublicConnections;
-        params.OculusMatchmakingPool = OculusMatchmakingPool;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x001E6B00
-     *         Name   -> Function /Script/OnlineSubsystemOculus.OculusUpdateSessionCallbackProxy.SetSessionEnqueue
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               bShouldEnqueueInMatchmakingPool                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemOculus::UOculusUpdateSessionCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemOculus::UOculusUpdateSessionCallbackProxy* UOculusUpdateSessionCallbackProxy::STATIC_SetSessionEnqueue(bool bShouldEnqueueInMatchmakingPool)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemOculus.OculusUpdateSessionCallbackProxy.SetSessionEnqueue");
-        
-        UOculusUpdateSessionCallbackProxy_SetSessionEnqueue_Params params {};
-        params.bShouldEnqueueInMatchmakingPool = bShouldEnqueueInMatchmakingPool;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
     /**
      * Function:
      *         RVA    -> 0x001E6A80
@@ -178,6 +126,58 @@ namespace CG::OnlineSubsystemOculus
         
         UOculusFindSessionsCallbackProxy_FindMatchmakingSessions_Params params {};
         params.MaxResults = MaxResults;
+        params.OculusMatchmakingPool = OculusMatchmakingPool;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x001E6B00
+     *         Name   -> Function /Script/OnlineSubsystemOculus.OculusUpdateSessionCallbackProxy.SetSessionEnqueue
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               bShouldEnqueueInMatchmakingPool                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemOculus::UOculusUpdateSessionCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemOculus::UOculusUpdateSessionCallbackProxy* UOculusUpdateSessionCallbackProxy::STATIC_SetSessionEnqueue(bool bShouldEnqueueInMatchmakingPool)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemOculus.OculusUpdateSessionCallbackProxy.SetSessionEnqueue");
+        
+        UOculusUpdateSessionCallbackProxy_SetSessionEnqueue_Params params {};
+        params.bShouldEnqueueInMatchmakingPool = bShouldEnqueueInMatchmakingPool;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x001E67C0
+     *         Name   -> Function /Script/OnlineSubsystemOculus.OculusCreateSessionCallbackProxy.CreateSession
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         int32_t                                            PublicConnections                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                OculusMatchmakingPool                                      (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemOculus::UOculusCreateSessionCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemOculus::UOculusCreateSessionCallbackProxy* UOculusCreateSessionCallbackProxy::STATIC_CreateSession(int32_t PublicConnections, const BasicTypes::FString& OculusMatchmakingPool)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemOculus.OculusCreateSessionCallbackProxy.CreateSession");
+        
+        UOculusCreateSessionCallbackProxy_CreateSession_Params params {};
+        params.PublicConnections = PublicConnections;
         params.OculusMatchmakingPool = OculusMatchmakingPool;
         
         auto flags = fn->FunctionFlags;

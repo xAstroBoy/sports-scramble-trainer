@@ -8,6 +8,5 @@
 #define PCH_H
 
 #include "framework.h"
-#include "SDK.h"
 
 #endif //PCH_H

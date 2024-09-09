@@ -27,11 +27,11 @@ namespace ConsoleTools
 
 	bool ShowConsole() {
 		if (AllocConsole() != NULL) {
-			SetConsoleTitle(TEXT("Sports Scramble Cheats Built by xAstroBoy#1337!"));
+			SetConsoleTitle(TEXT("Sports Scramble Cheats Built by xAstroBoy!"));
 			freopen_s(reinterpret_cast<FILE**>(stdout), "CONOUT$", "w", stdout);
 			freopen_s(reinterpret_cast<FILE**>(stdin), "CONIN$", "r", stdin);
 			freopen_s(reinterpret_cast<FILE**>(stderr), "CONOUT$", "w", stderr);
-			ConsoleWrite("This Cheat has been coded by xAstroBoy#1337, enjoy!");
+			ConsoleWrite("This Cheat has been coded by xAstroBoy, enjoy!");
 			return true;
 		}
 		return false;

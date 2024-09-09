@@ -1281,9 +1281,24 @@ namespace CG::CoreUObject
      *         CoreUObject::UFunction*                            function
      *         void*                                              params
      */
-    void UObject::ProcessEvent(CoreUObject::UFunction* function, void* params)
+    void UObject::ProcessEvent(CoreUObject::UFunction* function, void* parms)
     {
-        BasicTypes::GetVFunction<void(*)(UObject*, class UFunction*, void*)>(this, PROCESS_EVENT_INDEX)(this, function, params);
+        if (function == nullptr)
+        {
+            return;
+        }
+        auto vFunction = BasicTypes::GetVFunction<void(*)(UObject*, class UFunction*, void*)>(this, PROCESS_EVENT_INDEX);
+
+        if (vFunction != nullptr)
+        {
+            try
+            {
+                vFunction(this, function, parms);
+            }
+            catch (...)
+            {
+            }
+        }
     }
 
     /**

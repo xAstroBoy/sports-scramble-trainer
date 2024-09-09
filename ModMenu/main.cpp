@@ -1,33 +1,23 @@
 #include <regex>
-#include "pch.h"
-#include "ConsoleUtils.h"
-#include "includes.h"
-#include "SDK/Headers/BasicTypes.h"
 #include <thread>
-#include "stdafx.h"
 #include <iostream>
 #include <sstream>
 #include <typeinfo>
-#include <thread>
 #include <algorithm>
 #include <cctype>
 #include <future>
-#include <regex>
-#include <thread>
-#include <iostream>
 #include <string>
-#include <unordered_map>
 #include <vector>
 #include <list>
-#include <mutex>
 #include <unordered_map>
 #include <functional>
-#include <iostream>
-#include <algorithm>
-#include <string>
 #include <unordered_set>
-#include <vector>
 
+#include "pch.h"
+#include "ConsoleUtils.h"
+#include "includes.h"
+#include "stdafx.h"
+#include "SDK/Headers/BasicTypes.h"
 #include "SDK/Headers/CenterReturnWall_ACenterReturnWall_C.h"
 #include "SDK/Headers/CoreUObject_UFunction.h"
 #include "SDK/Headers/Engine_ABlockingVolume.h"
@@ -55,10 +45,6 @@
 #include "SDK/Headers/SportsScramble_PARAMS.h"
 #include "SDK/Headers/TN_AcceleratorBall_ATN_AcceleratorBall_C.h"
 
-#pragma once
-#pragma warning(disable: 4717)
-#pragma warning(disable: 4806)
-#pragma warning(disable: 305)
 
 
 struct Command {
@@ -72,14 +58,11 @@ typedef void(__thiscall* ProcessEvent)(CG::CoreUObject::UObject*, CG::CoreUObjec
 ProcessEvent oProcessEvent;
 uintptr_t UObjectProcessEvent_Offset = 0x662510;
 void HelpCommand(std::vector<std::string> args);
-
-
-
 CG::ScramSportManagerTennis_Blueprint::AScramSportManagerTennis_Blueprint_C* TennisManagerinstance;
 CG::TN_Ball_Base::ATN_Ball_Base_C* Tn_Ball;
 CG::CoreUObject::FVector TN_Original_Scale;
 CG::CoreUObject::FVector TN_Scaled_Value;
-float Scale_Adjuster = static_cast <float> (1);
+float Scale_Adjuster = static_cast <float>(1);
 bool SlowModeInsteadOfPauseMenu = true;
 bool isGameSlowed = false;
 bool HasSavedSetPlayerDilation = false;
@@ -88,6 +71,7 @@ bool BigBallMode = true;
 float BackupPlayerTimeDilation = 0;
 bool LoggerActive = false;
 bool DebugMessages = true;
+static CG::TN_AcceleratorBall::ATN_AcceleratorBall_C* AccelleratorInstance = nullptr;
 
 
 
@@ -115,15 +99,15 @@ std::string bool_as_text(bool b) {
 // Function to convert a string argument to a float
 float ConvertToFloat(const std::string& str) {
 	try {
-		return std::stof(str); // Convert string to float
+		return std::stof(str);
 	}
 	catch (const std::invalid_argument& e) {
 		std::cerr << "Invalid argument: " << e.what() << std::endl;
-		return 0.0f; // Return a default value or handle as needed
+		return 0.0f; 
 	}
 	catch (const std::out_of_range& e) {
 		std::cerr << "Out of range: " << e.what() << std::endl;
-		return 0.0f; // Return a default value or handle as needed
+		return 0.0f;
 	}
 }
 
@@ -138,7 +122,6 @@ void Print(const std::string& text)
 {
 	ConsoleTools::ConsoleWrite(text);
 }
-
 
 void ReportCustomEvent(const std::string& funcname, bool blocked = false, bool modified = false) {
 	if (!LoggerActive) return;
@@ -805,7 +788,6 @@ void ExecutorThread() {
 	}
 }
 
-static CG::TN_AcceleratorBall::ATN_AcceleratorBall_C* AccelleratorInstance = nullptr;
 
 CG::TN_AcceleratorBall::ATN_AcceleratorBall_C* GetCapturedAccelleratorInstance() {
 	if (AccelleratorInstance != nullptr) {

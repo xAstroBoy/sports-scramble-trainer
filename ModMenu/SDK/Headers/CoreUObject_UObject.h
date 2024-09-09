@@ -111,16 +111,10 @@ namespace CG::CoreUObject
             {
                 auto object = gObjects.GetByIndex(i);
 
-                if (object == nullptr)
-                    continue;
-                
                 if (!object)
                     continue;
 
-                if(v== nullptr)
-					continue;
-
-                if (object->IsA(v))
+            	if (object->IsA(v))
                     ret.push_back(static_cast<T*>(object));
             }
             return ret;

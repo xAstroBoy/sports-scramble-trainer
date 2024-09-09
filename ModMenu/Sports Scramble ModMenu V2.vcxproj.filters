@@ -72,18 +72,18 @@
     <ClInclude Include="kiero\minhook\src\trampoline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDK.h">
+    <ClInclude Include="IDE_Helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SDK\CoreUObject_Package.cpp">
+    <ClCompile Include="SDK\CoreUObject.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\Engine_Package.cpp">
+    <ClCompile Include="SDK\Engine.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\BasicTypes_Package.cpp">
+    <ClCompile Include="SDK\BasicTypes.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleUtils.cpp">
@@ -116,67 +116,67 @@
     <ClCompile Include="kiero\minhook\src\trampoline.c">
       <Filter>Kiero</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\UMG_Package.cpp">
+    <ClCompile Include="SDK\UMG.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\FrontEndManager_Package.cpp">
+    <ClCompile Include="SDK\FrontEndManager.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ScramPlayer_BP_Package.cpp">
+    <ClCompile Include="SDK\ScramPlayer_BP.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ScramPlayerBoundary_BP_Package.cpp">
+    <ClCompile Include="SDK\ScramPlayerBoundary_BP.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ScramSportManagerTennis_Blueprint_Package.cpp">
+    <ClCompile Include="SDK\ScramSportManagerTennis_Blueprint.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\SportsScramble_Package.cpp">
+    <ClCompile Include="SDK\SportsScramble.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ScramGameInstance_Package.cpp">
+    <ClCompile Include="SDK\ScramGameInstance.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\PauseMenu_Package.cpp">
+    <ClCompile Include="SDK\PauseMenu.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\PauseCapsule_Package.cpp">
+    <ClCompile Include="SDK\PauseCapsule.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ScramPlayerController_BP_Package.cpp">
+    <ClCompile Include="SDK\ScramPlayerController_BP.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\TN_AcceleratorBall_Package.cpp">
+    <ClCompile Include="SDK\TN_AcceleratorBall.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ScrambleEvent_Base_Package.cpp">
+    <ClCompile Include="SDK\ScrambleEvent_Base.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\TennisScrambleTargetGroup_Package.cpp">
+    <ClCompile Include="SDK\TennisScrambleTargetGroup.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\TennisScrambleTarget_Package.cpp">
+    <ClCompile Include="SDK\TennisScrambleTarget.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\TN_Ball_Base_Package.cpp">
+    <ClCompile Include="SDK\TN_Ball_Base.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\TN_BallTypes_Package.cpp">
+    <ClCompile Include="SDK\TN_BallTypes.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ServeLocationIndicator_Package.cpp">
+    <ClCompile Include="SDK\ServeLocationIndicator.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ScramCameraCover_BP_Package.cpp">
+    <ClCompile Include="SDK\ScramCameraCover_BP.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\CenterReturnWall_Package.cpp">
+    <ClCompile Include="SDK\CenterReturnWall.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\Challenge_ManagerTennis_LocalHelper_Package.cpp">
+    <ClCompile Include="SDK\Challenge_ManagerTennis_LocalHelper.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\ManagerTennis_LocalHelper_Package.cpp">
+    <ClCompile Include="SDK\ManagerTennis_LocalHelper.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
   </ItemGroup>

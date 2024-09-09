@@ -19,11 +19,11 @@
 // --------------------------------------------------
 // # Forwards
 // --------------------------------------------------
-namespace CG::OnlineSubsystemOculus { class UOculusCreateSessionCallbackProxy; };
-namespace CG::OnlineSubsystemOculus { class UOculusUpdateSessionCallbackProxy; };
 namespace CG::OnlineSubsystemOculus { class UOculusIdentityCallbackProxy; };
 namespace CG::OnlineSubsystemOculus { class UOculusEntitlementCallbackProxy; };
 namespace CG::OnlineSubsystemOculus { class UOculusFindSessionsCallbackProxy; };
+namespace CG::OnlineSubsystemOculus { class UOculusUpdateSessionCallbackProxy; };
+namespace CG::OnlineSubsystemOculus { class UOculusCreateSessionCallbackProxy; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -34,31 +34,6 @@ namespace CG::OnlineSubsystemOculus
     // --------------------------------------------------
     // # Classes
     // --------------------------------------------------
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UOculusCreateSessionCallbackProxy_CreateSession_Params
-    {
-    public:
-        int32_t                                                      PublicConnections;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          OculusMatchmakingPool;                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        OnlineSubsystemOculus::UOculusCreateSessionCallbackProxy*    ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UOculusUpdateSessionCallbackProxy_SetSessionEnqueue_Params
-    {
-    public:
-        bool                                                         bShouldEnqueueInMatchmakingPool;                         //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        OnlineSubsystemOculus::UOculusUpdateSessionCallbackProxy*    ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
     /**
      * 
      * Size -> 0x0000
@@ -104,6 +79,31 @@ namespace CG::OnlineSubsystemOculus
         uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
         BasicTypes::FString                                          OculusMatchmakingPool;                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         OnlineSubsystemOculus::UOculusFindSessionsCallbackProxy*     ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UOculusUpdateSessionCallbackProxy_SetSessionEnqueue_Params
+    {
+    public:
+        bool                                                         bShouldEnqueueInMatchmakingPool;                         //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        OnlineSubsystemOculus::UOculusUpdateSessionCallbackProxy*    ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UOculusCreateSessionCallbackProxy_CreateSession_Params
+    {
+    public:
+        int32_t                                                      PublicConnections;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          OculusMatchmakingPool;                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        OnlineSubsystemOculus::UOculusCreateSessionCallbackProxy*    ReturnValue;                                             //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

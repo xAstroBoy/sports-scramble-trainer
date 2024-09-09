@@ -19,12 +19,12 @@
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/Landscape_ENUMS.h"
 #include "Headers/Landscape_PARAMS.h"
-#include "Headers/Landscape_UControlPointMeshComponent.h"
-#include "Headers/Landscape_ALandscapeProxy.h"
-#include "Headers/Landscape_ALandscape.h"
-#include "Headers/Landscape_ULandscapeComponent.h"
-#include "Headers/Landscape_ALandscapeGizmoActor.h"
-#include "Headers/Landscape_ALandscapeGizmoActiveActor.h"
+#include "Headers/Landscape_ULandscapeGizmoRenderComponent.h"
+#include "Headers/Landscape_ULandscapeGrassType.h"
+#include "Headers/Landscape_ULandscapeHeightfieldCollisionComponent.h"
+#include "Headers/Landscape_ULandscapeInfo.h"
+#include "Headers/Landscape_ULandscapeInfoMap.h"
+#include "Headers/Landscape_ULandscapeLayerInfoObject.h"
 #include "Headers/Landscape_ULandscapeMaterialInstanceConstant.h"
 #include "Headers/Landscape_ULandscapeMeshCollisionComponent.h"
 #include "Headers/Landscape_ALandscapeMeshProxyActor.h"
@@ -40,12 +40,12 @@
 #include "Headers/Landscape_UMaterialExpressionLandscapeLayerSwitch.h"
 #include "Headers/Landscape_UMaterialExpressionLandscapeLayerWeight.h"
 #include "Headers/Landscape_UMaterialExpressionLandscapeVisibilityMask.h"
-#include "Headers/Landscape_ULandscapeGizmoRenderComponent.h"
-#include "Headers/Landscape_ULandscapeGrassType.h"
-#include "Headers/Landscape_ULandscapeHeightfieldCollisionComponent.h"
-#include "Headers/Landscape_ULandscapeInfo.h"
-#include "Headers/Landscape_ULandscapeInfoMap.h"
-#include "Headers/Landscape_ULandscapeLayerInfoObject.h"
+#include "Headers/Landscape_UControlPointMeshComponent.h"
+#include "Headers/Landscape_ALandscapeProxy.h"
+#include "Headers/Landscape_ALandscape.h"
+#include "Headers/Landscape_ULandscapeComponent.h"
+#include "Headers/Landscape_ALandscapeGizmoActor.h"
+#include "Headers/Landscape_ALandscapeGizmoActiveActor.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -56,6 +56,29 @@ namespace CG::Landscape
     // --------------------------------------------------
     // # Structs functions
     // --------------------------------------------------
+    /**
+     * Function:
+     *         RVA    -> 0x00E46470
+     *         Name   -> Function /Script/Landscape.LandscapeSplinesComponent.GetSplineMeshComponents
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<Engine::USplineMeshComponent*>  ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, ContainsInstancedReference, NativeAccessSpecifierPublic)
+     */
+    BasicTypes::TArray<Engine::USplineMeshComponent*> ULandscapeSplinesComponent::GetSplineMeshComponents()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/Landscape.LandscapeSplinesComponent.GetSplineMeshComponents");
+        
+        ULandscapeSplinesComponent_GetSplineMeshComponents_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
     /**
      * Function:
      *         RVA    -> 0x00E46680
@@ -329,29 +352,6 @@ namespace CG::Landscape
         
         ULandscapeComponent_GetMaterialInstanceDynamic_Params params {};
         params.InIndex = InIndex;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00E46470
-     *         Name   -> Function /Script/Landscape.LandscapeSplinesComponent.GetSplineMeshComponents
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<Engine::USplineMeshComponent*>  ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, ContainsInstancedReference, NativeAccessSpecifierPublic)
-     */
-    BasicTypes::TArray<Engine::USplineMeshComponent*> ULandscapeSplinesComponent::GetSplineMeshComponents()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/Landscape.LandscapeSplinesComponent.GetSplineMeshComponents");
-        
-        ULandscapeSplinesComponent_GetSplineMeshComponents_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

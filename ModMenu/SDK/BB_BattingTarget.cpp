@@ -585,10 +585,10 @@ namespace CG::BB_BattingTarget
      *         Flags  -> (Public, Delegate, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         SportsScramble::AScramBall*                        Ball                                                       (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-     *         int32_t                                            TargetID                                                   (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+     *         int32_t                                            TargetId                                                   (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
      *         void                                               ReturnValue
      */
-    void ABB_BattingTarget_C::ScoreBatter__DelegateSignature(SportsScramble::AScramBall* Ball, int32_t TargetID)
+    void ABB_BattingTarget_C::ScoreBatter__DelegateSignature(SportsScramble::AScramBall* Ball, int32_t TargetId)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
@@ -596,7 +596,7 @@ namespace CG::BB_BattingTarget
         
         ABB_BattingTarget_C_ScoreBatter__DelegateSignature_Params params {};
         params.Ball = Ball;
-        params.TargetID = TargetID;
+        params.TargetId = TargetId;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

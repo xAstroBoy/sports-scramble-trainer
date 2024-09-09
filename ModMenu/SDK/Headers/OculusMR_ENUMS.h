@@ -22,18 +22,6 @@ namespace CG::OculusMR
     // # Enums
     // --------------------------------------------------
     /**
-     * Enum /Script/OculusMR.EOculusMR_CameraDeviceEnum
-     */
-    enum class EOculusMR_CameraDeviceEnum : uint8_t
-    {
-        CD_None       = 0,
-        CD_WebCamera0 = 1,
-        CD_WebCamera1 = 2,
-        CD_ZEDCamera  = 3,
-        CD_MAX        = 4
-    };
-
-    /**
      * Enum /Script/OculusMR.EOculusMR_BoundaryType
      */
     enum class EOculusMR_BoundaryType : uint8_t
@@ -93,6 +81,18 @@ namespace CG::OculusMR
         CR_TrackingReference = 0,
         CR_Head              = 1,
         CR_MAX               = 2
+    };
+
+    /**
+     * Enum /Script/OculusMR.EOculusMR_CameraDeviceEnum
+     */
+    enum class EOculusMR_CameraDeviceEnum : uint8_t
+    {
+        CD_None       = 0,
+        CD_WebCamera0 = 1,
+        CD_WebCamera1 = 2,
+        CD_ZEDCamera  = 3,
+        CD_MAX        = 4
     };
 
 }

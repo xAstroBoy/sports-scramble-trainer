@@ -72,9 +72,6 @@
     <ClInclude Include="kiero\minhook\src\trampoline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IDE_Helper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SDK\CoreUObject.cpp">

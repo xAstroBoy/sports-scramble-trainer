@@ -14,26 +14,26 @@
 #include <cstdint>
 #include <vector>
 #include <string>
-#include "BasicTypes_FName.h"
 #include "CoreUObject_FTransform.h"
-#include "HeadMountedDisplay_FXRDeviceId.h"
 #include "HeadMountedDisplay_ENUMS.h"
 #include "CoreUObject_FVector2D.h"
+#include "HeadMountedDisplay_FXRDeviceId.h"
 #include "CoreUObject_FVector.h"
 #include "CoreUObject_FRotator.h"
+#include "BasicTypes_FName.h"
 #include "BasicTypes_TArray.h"
 #include "InputCore_ENUMS.h"
 
 // --------------------------------------------------
 // # Forwards
 // --------------------------------------------------
-namespace CG::Engine { class AActor; };
-namespace CG::Engine { class UPrimitiveComponent; };
-namespace CG::HeadMountedDisplay { class UAsyncTask_LoadXRDeviceVisComponent; };
 namespace CG::CoreUObject { class UObject; };
 namespace CG::Engine { class UTexture; };
 namespace CG::Engine { class UStaticMesh; };
 namespace CG::HeadMountedDisplay { class UMotionControllerComponent; };
+namespace CG::Engine { class AActor; };
+namespace CG::Engine { class UPrimitiveComponent; };
+namespace CG::HeadMountedDisplay { class UAsyncTask_LoadXRDeviceVisComponent; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -44,40 +44,6 @@ namespace CG::HeadMountedDisplay
     // --------------------------------------------------
     // # Classes
     // --------------------------------------------------
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAsyncTask_LoadXRDeviceVisComponent_AddNamedDeviceVisualizationComponentAsync_Params
-    {
-    public:
-        Engine::AActor*                                              Target;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SystemName;                                              //  0x0008(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            DeviceName;                                              //  0x0010(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bManualAttachment;                                       //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      RelativeTransform;                                       //  0x0020(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        HeadMountedDisplay::FXRDeviceId                              XRDeviceId;                                              //  0x0050(0x0010)  (Parm, OutParm, NoDestructor, NativeAccessSpecifierPublic)
-        Engine::UPrimitiveComponent*                                 NewComponent;                                            //  0x0060(0x0008)  (Parm, OutParm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent*     ReturnValue;                                             //  0x0068(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAsyncTask_LoadXRDeviceVisComponent_AddDeviceVisualizationComponentAsync_Params
-    {
-    public:
-        Engine::AActor*                                              Target;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        HeadMountedDisplay::FXRDeviceId                              XRDeviceId;                                              //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-        bool                                                         bManualAttachment;                                       //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      RelativeTransform;                                       //  0x0020(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        Engine::UPrimitiveComponent*                                 NewComponent;                                            //  0x0050(0x0008)  (Parm, OutParm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent*     ReturnValue;                                             //  0x0058(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
     /**
      * 
      * Size -> 0x0000
@@ -774,6 +740,40 @@ namespace CG::HeadMountedDisplay
         uint8_t                                                      UnknownData_0001[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
         CoreUObject::FTransform                                      RelativeTransform;                                       //  0x0020(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
         Engine::UPrimitiveComponent*                                 ReturnValue;                                             //  0x0050(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncTask_LoadXRDeviceVisComponent_AddNamedDeviceVisualizationComponentAsync_Params
+    {
+    public:
+        Engine::AActor*                                              Target;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SystemName;                                              //  0x0008(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            DeviceName;                                              //  0x0010(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bManualAttachment;                                       //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      RelativeTransform;                                       //  0x0020(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        HeadMountedDisplay::FXRDeviceId                              XRDeviceId;                                              //  0x0050(0x0010)  (Parm, OutParm, NoDestructor, NativeAccessSpecifierPublic)
+        Engine::UPrimitiveComponent*                                 NewComponent;                                            //  0x0060(0x0008)  (Parm, OutParm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent*     ReturnValue;                                             //  0x0068(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncTask_LoadXRDeviceVisComponent_AddDeviceVisualizationComponentAsync_Params
+    {
+    public:
+        Engine::AActor*                                              Target;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        HeadMountedDisplay::FXRDeviceId                              XRDeviceId;                                              //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+        bool                                                         bManualAttachment;                                       //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      RelativeTransform;                                       //  0x0020(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        Engine::UPrimitiveComponent*                                 NewComponent;                                            //  0x0050(0x0008)  (Parm, OutParm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        HeadMountedDisplay::UAsyncTask_LoadXRDeviceVisComponent*     ReturnValue;                                             //  0x0058(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

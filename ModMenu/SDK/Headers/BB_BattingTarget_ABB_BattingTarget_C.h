@@ -68,7 +68,7 @@ namespace CG::BB_BattingTarget
         bool                                                         Target_04_Unbroken;                                      //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
         bool                                                         Target_05_Unbroken;                                      //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
         bool                                                         TrainingTarget;                                          //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
-        int32_t                                                      TargetID;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+        int32_t                                                      TargetId;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         uint8_t                                                      UnknownData_0001[0x4];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
         SportsScramble::AScramBall*                                  OverlapBall;                                             //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         float                                                        TargetRespawnDelay;                                      //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
@@ -106,7 +106,7 @@ namespace CG::BB_BattingTarget
         void TrainingTarget_02_Overlap(SportsScramble::AScramBall* Ball);
         void TrainingTarget_03_Overlap(SportsScramble::AScramBall* Ball);
         void ExecuteUbergraph_BB_BattingTarget(int32_t EntryPoint);
-        void ScoreBatter__DelegateSignature(SportsScramble::AScramBall* Ball, int32_t TargetID);
+        void ScoreBatter__DelegateSignature(SportsScramble::AScramBall* Ball, int32_t TargetId);
         static inline CoreUObject::UClass* StaticClass()
         {
             static CoreUObject::UClass* ptr = nullptr;

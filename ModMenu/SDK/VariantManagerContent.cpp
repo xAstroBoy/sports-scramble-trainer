@@ -24,10 +24,10 @@
 #include "Headers/VariantManagerContent_UPropertyValue.h"
 #include "Headers/VariantManagerContent_UPropertyValueMaterial.h"
 #include "Headers/VariantManagerContent_UPropertyValueTransform.h"
+#include "Headers/VariantManagerContent_UVariant.h"
 #include "Headers/VariantManagerContent_UVariantObjectBinding.h"
 #include "Headers/VariantManagerContent_UVariantSet.h"
 #include "Headers/VariantManagerContent_UPropertyValueVisibility.h"
-#include "Headers/VariantManagerContent_UVariant.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -190,100 +190,6 @@ namespace CG::VariantManagerContent
 
     /**
      * Function:
-     *         RVA    -> 0x0023FB60
-     *         Name   -> Function /Script/VariantManagerContent.VariantSet.SetDisplayText
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FText                                  NewDisplayText                                             (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UVariantSet::SetDisplayText(const BasicTypes::FText& NewDisplayText)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/VariantManagerContent.VariantSet.SetDisplayText");
-        
-        UVariantSet_SetDisplayText_Params params {};
-        params.NewDisplayText = NewDisplayText;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0023FA40
-     *         Name   -> Function /Script/VariantManagerContent.VariantSet.GetVariant
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            VariantIndex                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         VariantManagerContent::UVariant*                   ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    VariantManagerContent::UVariant* UVariantSet::GetVariant(int32_t VariantIndex)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/VariantManagerContent.VariantSet.GetVariant");
-        
-        UVariantSet_GetVariant_Params params {};
-        params.VariantIndex = VariantIndex;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0023F9E0
-     *         Name   -> Function /Script/VariantManagerContent.VariantSet.GetNumVariants
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    int32_t UVariantSet::GetNumVariants()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/VariantManagerContent.VariantSet.GetNumVariants");
-        
-        UVariantSet_GetNumVariants_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0023F8B0
-     *         Name   -> Function /Script/VariantManagerContent.VariantSet.GetDisplayText
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         BasicTypes::FText                                  ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    BasicTypes::FText UVariantSet::GetDisplayText()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/VariantManagerContent.VariantSet.GetDisplayText");
-        
-        UVariantSet_GetDisplayText_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
      *         RVA    -> 0x0023FCC0
      *         Name   -> Function /Script/VariantManagerContent.Variant.SwitchOn
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
@@ -389,6 +295,100 @@ namespace CG::VariantManagerContent
         
         UVariant_GetActor_Params params {};
         params.ActorIndex = ActorIndex;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0023FB60
+     *         Name   -> Function /Script/VariantManagerContent.VariantSet.SetDisplayText
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FText                                  NewDisplayText                                             (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UVariantSet::SetDisplayText(const BasicTypes::FText& NewDisplayText)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/VariantManagerContent.VariantSet.SetDisplayText");
+        
+        UVariantSet_SetDisplayText_Params params {};
+        params.NewDisplayText = NewDisplayText;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0023FA40
+     *         Name   -> Function /Script/VariantManagerContent.VariantSet.GetVariant
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         int32_t                                            VariantIndex                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         VariantManagerContent::UVariant*                   ReturnValue                                                (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    VariantManagerContent::UVariant* UVariantSet::GetVariant(int32_t VariantIndex)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/VariantManagerContent.VariantSet.GetVariant");
+        
+        UVariantSet_GetVariant_Params params {};
+        params.VariantIndex = VariantIndex;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0023F9E0
+     *         Name   -> Function /Script/VariantManagerContent.VariantSet.GetNumVariants
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    int32_t UVariantSet::GetNumVariants()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/VariantManagerContent.VariantSet.GetNumVariants");
+        
+        UVariantSet_GetNumVariants_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0023F8B0
+     *         Name   -> Function /Script/VariantManagerContent.VariantSet.GetDisplayText
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         BasicTypes::FText                                  ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    BasicTypes::FText UVariantSet::GetDisplayText()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/VariantManagerContent.VariantSet.GetDisplayText");
+        
+        UVariantSet_GetDisplayText_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

@@ -14,19 +14,19 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include "BasicTypes_TArray.h"
 #include "BasicTypes_FName.h"
 #include "CoreUObject_FLinearColor.h"
-#include "BasicTypes_TArray.h"
 
 // --------------------------------------------------
 // # Forwards
 // --------------------------------------------------
+namespace CG::Engine { class USplineMeshComponent; };
 namespace CG::Engine { class UTexture; };
 namespace CG::Engine { class UMaterialInterface; };
 namespace CG::Engine { class USplineComponent; };
 namespace CG::Landscape { class ULandscapeLayerInfoObject; };
 namespace CG::Engine { class UMaterialInstanceDynamic; };
-namespace CG::Engine { class USplineMeshComponent; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -37,6 +37,16 @@ namespace CG::Landscape
     // --------------------------------------------------
     // # Classes
     // --------------------------------------------------
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ULandscapeSplinesComponent_GetSplineMeshComponents_Params
+    {
+    public:
+        BasicTypes::TArray<Engine::USplineMeshComponent*>            ReturnValue;                                             //  0x0000(0x0010)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, ContainsInstancedReference, NativeAccessSpecifierPublic)
+    };
+
     /**
      * 
      * Size -> 0x0000
@@ -161,16 +171,6 @@ namespace CG::Landscape
         int32_t                                                      InIndex;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
         Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ULandscapeSplinesComponent_GetSplineMeshComponents_Params
-    {
-    public:
-        BasicTypes::TArray<Engine::USplineMeshComponent*>            ReturnValue;                                             //  0x0000(0x0010)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, ContainsInstancedReference, NativeAccessSpecifierPublic)
     };
 
 }

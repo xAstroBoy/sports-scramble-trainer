@@ -29,7 +29,7 @@ void DeAttach(const HMODULE hModule)
 
 #pragma endregion
 
-extern int Main(); //This line tells our compiler that our Main function is located at other place(external).
+extern int Main(); 
 
 DWORD WINAPI OnAttach(const HMODULE hModule)
 {

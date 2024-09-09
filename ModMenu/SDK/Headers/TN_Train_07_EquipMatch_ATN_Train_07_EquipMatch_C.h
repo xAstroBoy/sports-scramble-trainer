@@ -93,7 +93,7 @@ namespace CG::TN_Train_07_EquipMatch
         void PreTrainingMakeLauncherHitBaseballTarget();
         void PreTrainingSpawnBatRightTarget();
         void PreTrainingSpawnLeftTargetBaseball();
-        void TN_TNG_ScrambleTargetHit(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetID);
+        void TN_TNG_ScrambleTargetHit(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetId);
         void ProcessChargeShot();
         void PreTrainingLaunchIntroBaseballAtPlayer();
         void TN_LaunchedBallMissed();

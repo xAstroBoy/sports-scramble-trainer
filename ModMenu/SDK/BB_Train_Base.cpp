@@ -832,10 +832,10 @@ namespace CG::BB_Train_Base
      *         Flags  -> (BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         SportsScramble::AScramBall*                        Ball                                                       (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-     *         int32_t                                            TargetID                                                   (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+     *         int32_t                                            TargetId                                                   (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
      *         void                                               ReturnValue
      */
-    void ABB_Train_Base_C::BB_OutfieldTargetHit(SportsScramble::AScramBall* Ball, int32_t TargetID)
+    void ABB_Train_Base_C::BB_OutfieldTargetHit(SportsScramble::AScramBall* Ball, int32_t TargetId)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
@@ -843,7 +843,7 @@ namespace CG::BB_Train_Base
         
         ABB_Train_Base_C_BB_OutfieldTargetHit_Params params {};
         params.Ball = Ball;
-        params.TargetID = TargetID;
+        params.TargetId = TargetId;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

@@ -144,7 +144,7 @@ namespace CG::BB_Train_07_UnlimitedBatting
     {
     public:
         SportsScramble::AScramBall*                                  Ball;                                                    //  0x0000(0x0008)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-        int32_t                                                      TargetID;                                                //  0x0008(0x0004)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+        int32_t                                                      TargetId;                                                //  0x0008(0x0004)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
     };
 
     /**

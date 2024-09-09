@@ -97,7 +97,7 @@ namespace CG::BB_Train_07_UnlimitedBatting
         void LaunchTrainingBall();
         void TrainingBallLaunched(Engine::AActor* Ball);
         void InitializeOutfieldTargets();
-        void TargetHit(SportsScramble::AScramBall* Ball, int32_t TargetID);
+        void TargetHit(SportsScramble::AScramBall* Ball, int32_t TargetId);
         void InitializeInstrumentSelector();
         void InstrumentSelected(CoreUObject::UObject* WorldContextObject, SportsScramble::UScramEventBasePayload* Payload);
         void StartTheLauncher();

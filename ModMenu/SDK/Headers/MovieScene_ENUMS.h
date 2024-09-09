@@ -22,6 +22,30 @@ namespace CG::MovieScene
     // # Enums
     // --------------------------------------------------
     /**
+     * Enum /Script/MovieScene.EMovieSceneKeyInterpolation
+     */
+    enum class EMovieSceneKeyInterpolation : uint8_t
+    {
+        Auto     = 0,
+        User     = 1,
+        Break    = 2,
+        Linear   = 3,
+        Constant = 4,
+        MAX      = 5
+    };
+
+    /**
+     * Enum /Script/MovieScene.EMovieSceneBlendType
+     */
+    enum class EMovieSceneBlendType : uint8_t
+    {
+        Absolute = 0,
+        Additive = 1,
+        Relative = 2,
+        MAX      = 3
+    };
+
+    /**
      * Enum /Script/MovieScene.EMovieSceneBuiltInEasing
      */
     enum class EMovieSceneBuiltInEasing : uint8_t
@@ -138,30 +162,6 @@ namespace CG::MovieScene
         MasterSequence = 1,
         External       = 2,
         MAX            = 3
-    };
-
-    /**
-     * Enum /Script/MovieScene.EMovieSceneKeyInterpolation
-     */
-    enum class EMovieSceneKeyInterpolation : uint8_t
-    {
-        Auto     = 0,
-        User     = 1,
-        Break    = 2,
-        Linear   = 3,
-        Constant = 4,
-        MAX      = 5
-    };
-
-    /**
-     * Enum /Script/MovieScene.EMovieSceneBlendType
-     */
-    enum class EMovieSceneBlendType : uint8_t
-    {
-        Absolute = 0,
-        Additive = 1,
-        Relative = 2,
-        MAX      = 3
     };
 
 }

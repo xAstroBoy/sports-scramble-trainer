@@ -22,17 +22,6 @@ namespace CG::CoreUObject
     // # Enums
     // --------------------------------------------------
     /**
-     * Enum /Script/CoreUObject.EAutomationEventType
-     */
-    enum class EAutomationEventType : uint8_t
-    {
-        Info    = 0,
-        Warning = 1,
-        Error   = 2,
-        MAX     = 3
-    };
-
-    /**
      * Enum /Script/CoreUObject.ERangeBoundTypes
      */
     enum class ERangeBoundTypes : uint8_t
@@ -41,17 +30,6 @@ namespace CG::CoreUObject
         Inclusive = 1,
         Open      = 2,
         MAX       = 3
-    };
-
-    /**
-     * Enum /Script/CoreUObject.ELocalizedTextSourceCategory
-     */
-    enum class ELocalizedTextSourceCategory : uint8_t
-    {
-        Game   = 0,
-        Engine = 1,
-        Editor = 2,
-        MAX    = 3
     };
 
     /**
@@ -66,108 +44,6 @@ namespace CG::CoreUObject
         CIM_CurveBreak       = 4,
         CIM_CurveAutoClamped = 5,
         CIM_MAX              = 6
-    };
-
-    /**
-     * Enum /Script/CoreUObject.ELifetimeCondition
-     */
-    enum class ELifetimeCondition : uint8_t
-    {
-        COND_None                       = 0,
-        COND_InitialOnly                = 1,
-        COND_OwnerOnly                  = 2,
-        COND_SkipOwner                  = 3,
-        COND_SimulatedOnly              = 4,
-        COND_AutonomousOnly             = 5,
-        COND_SimulatedOrPhysics         = 6,
-        COND_InitialOrOwner             = 7,
-        COND_Custom                     = 8,
-        COND_ReplayOrOwner              = 9,
-        COND_ReplayOnly                 = 10,
-        COND_SimulatedOnlyNoReplay      = 11,
-        COND_SimulatedOrPhysicsNoReplay = 12,
-        COND_SkipReplay                 = 13,
-        COND_Max                        = 14
-    };
-
-    /**
-     * Enum /Script/CoreUObject.EUnit
-     */
-    enum class EUnit : uint8_t
-    {
-        Micrometers          = 0,
-        Millimeters          = 1,
-        Centimeters          = 2,
-        Meters               = 3,
-        Kilometers           = 4,
-        Inches               = 5,
-        Feet                 = 6,
-        Yards                = 7,
-        Miles                = 8,
-        Lightyears           = 9,
-        Degrees              = 10,
-        Radians              = 11,
-        MetersPerSecond      = 12,
-        KilometersPerHour    = 13,
-        MilesPerHour         = 14,
-        Celsius              = 15,
-        Farenheit            = 16,
-        Kelvin               = 17,
-        Micrograms           = 18,
-        Milligrams           = 19,
-        Grams                = 20,
-        Kilograms            = 21,
-        MetricTons           = 22,
-        Ounces               = 23,
-        Pounds               = 24,
-        Stones               = 25,
-        Newtons              = 26,
-        PoundsForce          = 27,
-        KilogramsForce       = 28,
-        Hertz                = 29,
-        Kilohertz            = 30,
-        Megahertz            = 31,
-        Gigahertz            = 32,
-        RevolutionsPerMinute = 33,
-        Bytes                = 34,
-        Kilobytes            = 35,
-        Megabytes            = 36,
-        Gigabytes            = 37,
-        Terabytes            = 38,
-        Lumens               = 39,
-        Milliseconds         = 40,
-        Seconds              = 41,
-        Minutes              = 42,
-        Hours                = 43,
-        Days                 = 44,
-        Months               = 45,
-        Years                = 46,
-        Multiplier           = 47,
-        Percentage           = 48,
-        Unspecified          = 49,
-        MAX                  = 50
-    };
-
-    /**
-     * Enum /Script/CoreUObject.EMouseCursor
-     */
-    enum class EMouseCursor : uint8_t
-    {
-        None            = 0,
-        Default         = 1,
-        TextEditBeam    = 2,
-        ResizeLeftRight = 3,
-        ResizeUpDown    = 4,
-        ResizeSouthEast = 5,
-        ResizeSouthWest = 6,
-        CardinalCross   = 7,
-        Crosshairs      = 8,
-        Hand            = 9,
-        GrabHand        = 10,
-        GrabHandClosed  = 11,
-        SlashedCircle   = 12,
-        EyeDropper      = 13,
-        MAX             = 14
     };
 
     /**
@@ -284,6 +160,130 @@ namespace CG::CoreUObject
         CaseSensitive = 0,
         IgnoreCase    = 1,
         MAX           = 2
+    };
+
+    /**
+     * Enum /Script/CoreUObject.ELocalizedTextSourceCategory
+     */
+    enum class ELocalizedTextSourceCategory : uint8_t
+    {
+        Game   = 0,
+        Engine = 1,
+        Editor = 2,
+        MAX    = 3
+    };
+
+    /**
+     * Enum /Script/CoreUObject.EAutomationEventType
+     */
+    enum class EAutomationEventType : uint8_t
+    {
+        Info    = 0,
+        Warning = 1,
+        Error   = 2,
+        MAX     = 3
+    };
+
+    /**
+     * Enum /Script/CoreUObject.ELifetimeCondition
+     */
+    enum class ELifetimeCondition : uint8_t
+    {
+        COND_None                       = 0,
+        COND_InitialOnly                = 1,
+        COND_OwnerOnly                  = 2,
+        COND_SkipOwner                  = 3,
+        COND_SimulatedOnly              = 4,
+        COND_AutonomousOnly             = 5,
+        COND_SimulatedOrPhysics         = 6,
+        COND_InitialOrOwner             = 7,
+        COND_Custom                     = 8,
+        COND_ReplayOrOwner              = 9,
+        COND_ReplayOnly                 = 10,
+        COND_SimulatedOnlyNoReplay      = 11,
+        COND_SimulatedOrPhysicsNoReplay = 12,
+        COND_SkipReplay                 = 13,
+        COND_Max                        = 14
+    };
+
+    /**
+     * Enum /Script/CoreUObject.EUnit
+     */
+    enum class EUnit : uint8_t
+    {
+        Micrometers          = 0,
+        Millimeters          = 1,
+        Centimeters          = 2,
+        Meters               = 3,
+        Kilometers           = 4,
+        Inches               = 5,
+        Feet                 = 6,
+        Yards                = 7,
+        Miles                = 8,
+        Lightyears           = 9,
+        Degrees              = 10,
+        Radians              = 11,
+        MetersPerSecond      = 12,
+        KilometersPerHour    = 13,
+        MilesPerHour         = 14,
+        Celsius              = 15,
+        Farenheit            = 16,
+        Kelvin               = 17,
+        Micrograms           = 18,
+        Milligrams           = 19,
+        Grams                = 20,
+        Kilograms            = 21,
+        MetricTons           = 22,
+        Ounces               = 23,
+        Pounds               = 24,
+        Stones               = 25,
+        Newtons              = 26,
+        PoundsForce          = 27,
+        KilogramsForce       = 28,
+        Hertz                = 29,
+        Kilohertz            = 30,
+        Megahertz            = 31,
+        Gigahertz            = 32,
+        RevolutionsPerMinute = 33,
+        Bytes                = 34,
+        Kilobytes            = 35,
+        Megabytes            = 36,
+        Gigabytes            = 37,
+        Terabytes            = 38,
+        Lumens               = 39,
+        Milliseconds         = 40,
+        Seconds              = 41,
+        Minutes              = 42,
+        Hours                = 43,
+        Days                 = 44,
+        Months               = 45,
+        Years                = 46,
+        Multiplier           = 47,
+        Percentage           = 48,
+        Unspecified          = 49,
+        MAX                  = 50
+    };
+
+    /**
+     * Enum /Script/CoreUObject.EMouseCursor
+     */
+    enum class EMouseCursor : uint8_t
+    {
+        None            = 0,
+        Default         = 1,
+        TextEditBeam    = 2,
+        ResizeLeftRight = 3,
+        ResizeUpDown    = 4,
+        ResizeSouthEast = 5,
+        ResizeSouthWest = 6,
+        CardinalCross   = 7,
+        Crosshairs      = 8,
+        Hand            = 9,
+        GrabHand        = 10,
+        GrabHandClosed  = 11,
+        SlashedCircle   = 12,
+        EyeDropper      = 13,
+        MAX             = 14
     };
 
 }

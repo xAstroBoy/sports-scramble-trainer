@@ -22,12 +22,13 @@
 #include "Headers/MovieSceneCapture_UMovieSceneCaptureProtocolBase.h"
 #include "Headers/MovieSceneCapture_UMovieSceneAudioCaptureProtocolBase.h"
 #include "Headers/MovieSceneCapture_UNullAudioCaptureProtocol.h"
-#include "Headers/MovieSceneCapture_UMovieSceneImageCaptureProtocolBase.h"
-#include "Headers/MovieSceneCapture_UCompositionGraphCaptureProtocol.h"
-#include "Headers/MovieSceneCapture_UFrameGrabberProtocol.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol.h"
 #include "Headers/MovieSceneCapture_UCompressedImageSequenceProtocol.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol_BMP.h"
+#include "Headers/MovieSceneCapture_UMasterAudioSubmixCaptureProtocol.h"
+#include "Headers/MovieSceneCapture_UMovieSceneImageCaptureProtocolBase.h"
+#include "Headers/MovieSceneCapture_UCompositionGraphCaptureProtocol.h"
+#include "Headers/MovieSceneCapture_UFrameGrabberProtocol.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol_PNG.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol_JPG.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol_EXR.h"
@@ -38,7 +39,6 @@
 #include "Headers/MovieSceneCapture_UUserDefinedCaptureProtocol.h"
 #include "Headers/MovieSceneCapture_UUserDefinedImageCaptureProtocol.h"
 #include "Headers/MovieSceneCapture_UVideoCaptureProtocol.h"
-#include "Headers/MovieSceneCapture_UMasterAudioSubmixCaptureProtocol.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

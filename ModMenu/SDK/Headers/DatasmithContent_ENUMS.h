@@ -22,6 +22,52 @@ namespace CG::DatasmithContent
     // # Enums
     // --------------------------------------------------
     /**
+     * Enum /Script/DatasmithContent.EDatasmithAreaLightActorShape
+     */
+    enum class EDatasmithAreaLightActorShape : uint8_t
+    {
+        Rectangle = 0,
+        Disc      = 1,
+        Sphere    = 2,
+        Cylinder  = 3,
+        MAX       = 4
+    };
+
+    /**
+     * Enum /Script/DatasmithContent.EVREDDataTableType
+     */
+    enum class EVREDDataTableType : uint8_t
+    {
+        NotDatatable = 0,
+        Variants     = 1,
+        AnimClips    = 2,
+        AnimNodes    = 3,
+        MAX          = 4
+    };
+
+    /**
+     * Enum /Script/DatasmithContent.EDatasmithImportHierarchy
+     */
+    enum class EDatasmithImportHierarchy : uint8_t
+    {
+        UseMultipleActors = 0,
+        UseSingleActor    = 1,
+        UseOneBlueprint   = 2,
+        MAX               = 3
+    };
+
+    /**
+     * Enum /Script/DatasmithContent.EDatasmithImportScene
+     */
+    enum class EDatasmithImportScene : uint8_t
+    {
+        NewLevel     = 0,
+        CurrentLevel = 1,
+        AssetsOnly   = 2,
+        MAX          = 3
+    };
+
+    /**
      * Enum /Script/DatasmithContent.EDatasmithImportLightmapMax
      */
     enum class EDatasmithImportLightmapMax : uint8_t
@@ -92,52 +138,6 @@ namespace CG::DatasmithContent
         Current = 0,
         All     = 1,
         MAX     = 2
-    };
-
-    /**
-     * Enum /Script/DatasmithContent.EDatasmithAreaLightActorShape
-     */
-    enum class EDatasmithAreaLightActorShape : uint8_t
-    {
-        Rectangle = 0,
-        Disc      = 1,
-        Sphere    = 2,
-        Cylinder  = 3,
-        MAX       = 4
-    };
-
-    /**
-     * Enum /Script/DatasmithContent.EVREDDataTableType
-     */
-    enum class EVREDDataTableType : uint8_t
-    {
-        NotDatatable = 0,
-        Variants     = 1,
-        AnimClips    = 2,
-        AnimNodes    = 3,
-        MAX          = 4
-    };
-
-    /**
-     * Enum /Script/DatasmithContent.EDatasmithImportHierarchy
-     */
-    enum class EDatasmithImportHierarchy : uint8_t
-    {
-        UseMultipleActors = 0,
-        UseSingleActor    = 1,
-        UseOneBlueprint   = 2,
-        MAX               = 3
-    };
-
-    /**
-     * Enum /Script/DatasmithContent.EDatasmithImportScene
-     */
-    enum class EDatasmithImportScene : uint8_t
-    {
-        NewLevel     = 0,
-        CurrentLevel = 1,
-        AssetsOnly   = 2,
-        MAX          = 3
     };
 
 }

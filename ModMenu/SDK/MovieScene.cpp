@@ -23,6 +23,9 @@
 #include "Headers/MovieScene_UMovieSceneSection.h"
 #include "Headers/MovieScene_UMovieSceneTrack.h"
 #include "Headers/MovieScene_UMovieSceneNameableTrack.h"
+#include "Headers/MovieScene_IMovieSceneBindingOwnerInterface.h"
+#include "Headers/MovieScene_UMovieSceneBuiltInEasingFunction.h"
+#include "Headers/MovieScene_UMovieSceneEasingExternalCurve.h"
 #include "Headers/MovieScene_IMovieSceneEasingFunction.h"
 #include "Headers/MovieScene_UMovieSceneFolder.h"
 #include "Headers/MovieScene_IMovieSceneKeyProxy.h"
@@ -33,12 +36,9 @@
 #include "Headers/MovieScene_UTestMovieSceneTrack.h"
 #include "Headers/MovieScene_UTestMovieSceneSection.h"
 #include "Headers/MovieScene_UTestMovieSceneSequence.h"
-#include "Headers/MovieScene_UMovieSceneEasingExternalCurve.h"
 #include "Headers/MovieScene_UMovieScene.h"
 #include "Headers/MovieScene_UMovieSceneBindingOverrides.h"
 #include "Headers/MovieScene_IMovieSceneBindingOverridesInterface.h"
-#include "Headers/MovieScene_IMovieSceneBindingOwnerInterface.h"
-#include "Headers/MovieScene_UMovieSceneBuiltInEasingFunction.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

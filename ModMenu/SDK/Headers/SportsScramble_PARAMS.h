@@ -15,79 +15,77 @@
 #include <vector>
 #include <string>
 #include "SportsScramble_FScramGameInvite.h"
-#include "SportsScramble_FBPUniqueNetId.h"
-#include "BasicTypes_FString.h"
-#include "SportsScramble_FSessionPropertyKeyPair.h"
-#include "SportsScramble_ENUMS.h"
-#include "SportsScramble_FSessionsSearchSetting.h"
 #include "BasicTypes_FName.h"
-#include "OnlineSubsystemUtils_FBlueprintSessionResult.h"
-#include "BasicTypes_TArray.h"
-#include "CoreUObject_FVector.h"
-#include "CoreUObject_FRotator.h"
 #include "CoreUObject_FLinearColor.h"
 #include "SportsScramble_FScramTrajectory.h"
 #include "CoreUObject_FQuat.h"
 #include "SportsScramble_FScramPrimitiveProperties.h"
+#include "CoreUObject_FVector.h"
 #include "SportsScramble_FMotionState.h"
 #include "SportsScramble_FScramBallProperties.h"
+#include "SportsScramble_ENUMS.h"
 #include "SportsScramble_FBaseballShot.h"
 #include "SportsScramble_FBaseballBallProperties.h"
+#include "BasicTypes_TArray.h"
 #include "SportsScramble_FChance.h"
 #include "SportsScramble_FBaseballBallScrambleProperties.h"
-#include "SportsScramble_FBowlingThrow.h"
-#include "SportsScramble_FBowlingBallProperties.h"
-#include "CoreUObject_FTransform.h"
-#include "SportsScramble_FBowlingFrameSet.h"
-#include "Engine_FVector_NetQuantize.h"
-#include "SportsScramble_FScramFriend.h"
-#include "SportsScramble_FNetworkMotionState.h"
-#include "SportsScramble_FTennisInstrumentProperties.h"
-#include "CoreUObject_FColor.h"
-#include "SportsScramble_FCoverVignette.h"
-#include "SportsScramble_FMinMaxFloat.h"
 #include "CoreUObject_FBox.h"
 #include "SportsScramble_FScramInstrumentProperties.h"
 #include "SportsScramble_FBaseballInstrumentProperties.h"
 #include "SportsScramble_FBaseballInstrumentEntryProperties.h"
 #include "SportsScramble_FMittSpawnInfo.h"
-#include "SportsScramble_FAvatarLook.h"
-#include "BasicTypes_UScriptDelegate.h"
-#include "SportsScramble_FDodgeballShot.h"
-#include "SportsScramble_FDodgeballBallProperties.h"
+#include "SportsScramble_FBowlingThrow.h"
+#include "SportsScramble_FBowlingBallProperties.h"
+#include "CoreUObject_FTransform.h"
+#include "SportsScramble_FBowlingFrameSet.h"
+#include "Engine_FVector_NetQuantize.h"
+#include "SportsScramble_FMinMaxFloat.h"
 #include "BasicTypes_FText.h"
+#include "BasicTypes_UScriptDelegate.h"
+#include "SportsScramble_FScramFriend.h"
+#include "OnlineSubsystemUtils_FBlueprintSessionResult.h"
+#include "SportsScramble_FNetworkMotionState.h"
+#include "SportsScramble_FTennisInstrumentProperties.h"
+#include "CoreUObject_FColor.h"
+#include "SportsScramble_FCoverVignette.h"
+#include "SportsScramble_FAvatarLook.h"
 #include "SportsScramble_FTennisBallNetworkUpdate.h"
+#include "SportsScramble_FDodgeballShot.h"
 #include "SportsScramble_FBaseballNetworkUpdate.h"
 #include "SportsScramble_FScramPlayerPreferences.h"
 #include "SportsScramble_FFutureBallHit.h"
 #include "Engine_FVector_NetQuantize10.h"
-#include "SportsScramble_FBowlingScrambleState.h"
-#include "CoreUObject_FDateTime.h"
-#include "SportsScramble_FScramSportPreferences.h"
-#include "SportsScramble_FTennisBallProperties.h"
-#include "SportsScramble_FTennisShot.h"
 #include "SportsScramble_FPlayerTransforms.h"
 #include "SportsScramble_FScramPartialTransform.h"
+#include "SportsScramble_FScramSportPreferences.h"
+#include "SportsScramble_FBowlingScrambleState.h"
+#include "BasicTypes_FString.h"
+#include "CoreUObject_FDateTime.h"
+#include "CoreUObject_FRotator.h"
+#include "SportsScramble_FTennisBallProperties.h"
+#include "SportsScramble_FTennisShot.h"
+#include "SportsScramble_FBPUniqueNetId.h"
+#include "SportsScramble_FSessionPropertyKeyPair.h"
+#include "SportsScramble_FSessionsSearchSetting.h"
+#include "SportsScramble_FDodgeballBallProperties.h"
 
 // --------------------------------------------------
 // # Forwards
 // --------------------------------------------------
 namespace CG::Engine { class APlayerController; };
 namespace CG::SportsScramble { class UAcceptInviteCallbackProxy; };
-namespace CG::Engine { class AActor; };
-namespace CG::Engine { class APlayerState; };
-namespace CG::CoreUObject { class UObject; };
-namespace CG::Engine { class USoundBase; };
-namespace CG::Engine { class USoundAttenuation; };
-namespace CG::Engine { class USoundConcurrency; };
 namespace CG::SportsScramble { class AScramPlayer; };
 namespace CG::Engine { class UMeshComponent; };
 namespace CG::Engine { class UPrimitiveComponent; };
 namespace CG::SportsScramble { class AScramPrimitiveGrabbable; };
 namespace CG::SportsScramble { class AScramPlayerHand; };
+namespace CG::Engine { class AActor; };
+namespace CG::CoreUObject { class UObject; };
 namespace CG::SportsScramble { class UScramEventBasePayload; };
 namespace CG::Engine { class UTexture2D; };
 namespace CG::Engine { class UDataTable; };
+namespace CG::SportsScramble { class ABaseballBall; };
+namespace CG::SportsScramble { class AScramBall; };
 namespace CG::SportsScramble { class ABowlingPinsetter; };
 namespace CG::SportsScramble { class ABowlingBall; };
 namespace CG::Engine { class UPhysicalMaterial; };
@@ -102,16 +100,14 @@ namespace CG::Engine { class USceneComponent; };
 namespace CG::SportsScramble { class ABowlingPlinkoBall; };
 namespace CG::UMG { class UWidget; };
 namespace CG::SportsScramble { class ABowlingSpaceInvaderGroup; };
+namespace CG::Engine { class USoundBase; };
 namespace CG::SportsScramble { class UCancelOculusMatchmakingCallbackProxy; };
 namespace CG::SportsScramble { class UDestroyOculusSessionCallbackProxy; };
+namespace CG::SportsScramble { class ABowlingLaneFlipper; };
 namespace CG::SportsScramble { class UInviteFriendCallbackProxy; };
 namespace CG::SportsScramble { class UJoinOculusSessionCallbackProxy; };
-namespace CG::SportsScramble { class ABaseballBall; };
 namespace CG::SportsScramble { class AScramSportManagerBaseball; };
-namespace CG::SportsScramble { class AScramBall; };
-namespace CG::SportsScramble { class UScramSaveData; };
-namespace CG::Engine { class UHapticFeedbackEffect_Base; };
-namespace CG::SportsScramble { class ABowlingLaneFlipper; };
+namespace CG::SportsScramble { class AScramInviteManager; };
 namespace CG::SportsScramble { class ATennisBall; };
 namespace CG::SportsScramble { class ABaseballThrowingGlove; };
 namespace CG::SportsScramble { class ADodgeballBall; };
@@ -120,7 +116,7 @@ namespace CG::SportsScramble { class AScramSportManagerBase; };
 namespace CG::SportsScramble { class ABaseballMitt; };
 namespace CG::SportsScramble { class AScramPlayerServeTrigger; };
 namespace CG::SportsScramble { class AScramHandshakeActor; };
-namespace CG::SportsScramble { class AScramPlayerController; };
+namespace CG::SportsScramble { class AScramAvatar; };
 namespace CG::SportsScramble { class ABaseballInstrument; };
 namespace CG::SportsScramble { class AScramBaseballRunnerAI; };
 namespace CG::SportsScramble { class AScramStrikeZone; };
@@ -133,9 +129,13 @@ namespace CG::SportsScramble { class USpectateSessionCallbackProxy; };
 namespace CG::SportsScramble { class UStartOculusMatchmakingCallbackProxy; };
 namespace CG::SportsScramble { class UScramEventObjectPayload; };
 namespace CG::SportsScramble { class UScramEventCollisionPayload; };
-namespace CG::SportsScramble { class AScramInviteManager; };
+namespace CG::SportsScramble { class UScramSaveData; };
+namespace CG::Engine { class APlayerState; };
 namespace CG::SportsScramble { class UUpdateSessionCallbackProxyAdvanced; };
-namespace CG::SportsScramble { class AScramAvatar; };
+namespace CG::Engine { class UHapticFeedbackEffect_Base; };
+namespace CG::Engine { class USoundAttenuation; };
+namespace CG::Engine { class USoundConcurrency; };
+namespace CG::SportsScramble { class AScramPlayerController; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -167,470 +167,6 @@ namespace CG::SportsScramble
         Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         SportsScramble::FScramGameInvite                             invite;                                                  //  0x0008(0x0060)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
         SportsScramble::UAcceptInviteCallbackProxy*                  ReturnValue;                                             //  0x0068(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorSet_ResetActors_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorSet_GetNextActor_Params
-    {
-    public:
-        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UActorSet_AvoidActor_Params
-    {
-    public:
-        Engine::AActor*                                              ActorClass;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_UniqueNetIdToString_Params
-    {
-    public:
-        SportsScramble::FBPUniqueNetId                               UniqueNetId;                                             //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          String;                                                  //  0x0020(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_SetPlayerName_Params
-    {
-    public:
-        Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          PlayerName;                                              //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_MakeLiteralSessionSearchProperty_Params
-    {
-    public:
-        SportsScramble::FSessionPropertyKeyPair                      SessionSearchProperty;                                   //  0x0000(0x0020)  (Parm, NativeAccessSpecifierPublic)
-        SportsScramble::EOnlineComparisonOpRedux                     ComparisonOp;                                            //  0x0020(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0021(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::FSessionsSearchSetting                       ReturnValue;                                             //  0x0028(0x0028)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyString_Params
-    {
-    public:
-        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          Value;                                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0018(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyInt_Params
-    {
-    public:
-        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      Value;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x000C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0010(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyFloat_Params
-    {
-    public:
-        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Value;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0002[0x4];                                   //  0x000C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0010(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyByte_Params
-    {
-    public:
-        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      Value;                                                   //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0003[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0010(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyBool_Params
-    {
-    public:
-        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         Value;                                                   //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0004[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0010(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_IsValidUniqueNetID_Params
-    {
-    public:
-        SportsScramble::FBPUniqueNetId                               UniqueNetId;                                             //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0020(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_IsValidSession_Params
-    {
-    public:
-        OnlineSubsystemUtils::FBlueprintSessionResult                SessionResult;                                           //  0x0000(0x00B8)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x00B8(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_IsPlayerInSession_Params
-    {
-    public:
-        SportsScramble::FBPUniqueNetId                               PlayerToCheck;                                           //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        bool                                                         bIsInSession;                                            //  0x0020(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_HasOnlineSubsystem_Params
-    {
-    public:
-        BasicTypes::FName                                            SubSystemName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetUniqueNetIDFromPlayerState_Params
-    {
-    public:
-        Engine::APlayerState*                                        PlayerState;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::FBPUniqueNetId                               UniqueNetId;                                             //  0x0008(0x0020)  (Parm, OutParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetUniqueNetID_Params
-    {
-    public:
-        Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::FBPUniqueNetId                               UniqueNetId;                                             //  0x0008(0x0020)  (Parm, OutParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetUniqueBuildID_Params
-    {
-    public:
-        OnlineSubsystemUtils::FBlueprintSessionResult                SessionResult;                                           //  0x0000(0x00B8)  (Parm, NativeAccessSpecifierPublic)
-        int32_t                                                      UniqueBuildId;                                           //  0x00B8(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetSessionState_Params
-    {
-    public:
-        SportsScramble::EBPOnlineSessionState                        SessionState;                                            //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetSessionSettings_Params
-    {
-    public:
-        int32_t                                                      NumConnections;                                          //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NumPrivateConnections;                                   //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bIsLAN;                                                  //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bIsDedicated;                                            //  0x0009(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bAllowInvites;                                           //  0x000A(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bAllowJoinInProgress;                                    //  0x000B(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bIsAnticheatEnabled;                                     //  0x000C(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0005[0x3];                                   //  0x000D(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        int32_t                                                      BuildUniqueID;                                           //  0x0010(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0006[0x4];                                   //  0x0014(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0018(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-        SportsScramble::EBlueprintResultSwitch                       Result;                                                  //  0x0028(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetSessionPropertyString_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0007[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          SettingValue;                                            //  0x0020(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetSessionPropertyKey_Params
-    {
-    public:
-        SportsScramble::FSessionPropertyKeyPair                      SessionProperty;                                         //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            ReturnValue;                                             //  0x0020(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetSessionPropertyInt_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0008[0x3];                                   //  0x0019(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        int32_t                                                      SettingValue;                                            //  0x001C(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetSessionPropertyFloat_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0009[0x3];                                   //  0x0019(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        SettingValue;                                            //  0x001C(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetSessionPropertyByte_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      SettingValue;                                            //  0x0019(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetSessionPropertyBool_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         SettingValue;                                            //  0x0019(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetPlayerName_Params
-    {
-    public:
-        Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::FString                                          PlayerName;                                              //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetNumberOfNetworkPlayers_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NumNetPlayers;                                           //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetNetPlayerIndex_Params
-    {
-    public:
-        Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      NetPlayerIndex;                                          //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetExtraSettings_Params
-    {
-    public:
-        OnlineSubsystemUtils::FBlueprintSessionResult                SessionResult;                                           //  0x0000(0x00B8)  (Parm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x00B8(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_GetCurrentUniqueBuildID_Params
-    {
-    public:
-        int32_t                                                      UniqueBuildId;                                           //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_FindSessionPropertyIndexByName_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::EBlueprintResultSwitch                       Result;                                                  //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0010[0x3];                                   //  0x0019(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        int32_t                                                      OutIndex;                                                //  0x001C(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_FindSessionPropertyByName_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::FName                                            SettingsName;                                            //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::EBlueprintResultSwitch                       Result;                                                  //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0011[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::FSessionPropertyKeyPair                      OutProperty;                                             //  0x0020(0x0020)  (Parm, OutParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_EqualEqual_UNetIDUnetID_Params
-    {
-    public:
-        SportsScramble::FBPUniqueNetId                               A;                                                       //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        SportsScramble::FBPUniqueNetId                               B;                                                       //  0x0020(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0040(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UAdvancedSessionsLibrary_AddOrModifyExtraSettings_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  SettingsArray;                                           //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  NewOrChangedSettings;                                    //  0x0010(0x0010)  (Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ModifiedSettingsArray;                                   //  0x0020(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramActor_PlayManagedSoundAtLocation_Params
-    {
-    public:
-        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FRotator                                        Rotation;                                                //  0x0014(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        float                                                        VolumeMultiplier;                                        //  0x0020(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        PitchMultiplier;                                         //  0x0024(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        StartTime;                                               //  0x0028(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x002C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::USoundAttenuation*                                   AttenuationSettings;                                     //  0x0030(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::USoundConcurrency*                                   ConcurrencySettings;                                     //  0x0038(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramActor_HasBegunPlay_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramActor_AttachSound2D_Params
-    {
-    public:
-        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        VolumeMultiplier;                                        //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        PitchMultiplier;                                         //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        StartTime;                                               //  0x0010(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0014(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::USoundConcurrency*                                   ConcurrencySettings;                                     //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         IsUiSound;                                               //  0x0020(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -1400,7 +936,40 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
-    class ABaseballThrowingGlove_OnBowlingGloveRelease_Params
+    class UBaseballGlobalDataAsset_GetBatterPlayAreas_Params
+    {
+    public:
+        CoreUObject::FBox                                            minPlayArea;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FBox                                            maxPlayArea;                                             //  0x001C(0x001C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FBox                                            maxHazardArea;                                           //  0x0038(0x001C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        SportsScramble::EBattingSide                                 Side;                                                    //  0x0054(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramInstrument_GetLeverVelocity_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramInstrument_GetInstrumentProperties_Params
+    {
+    public:
+        SportsScramble::FScramInstrumentProperties                   ReturnValue;                                             //  0x0000(0x0068)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballInstrument_OnInstrumentBreakEvent_Params
     {
     public:
         CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -1411,7 +980,77 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
-    class ABattingAvatar_OnSwung_Params
+    class ABaseballInstrument_IsPendingRelease_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballInstrument_InstrumentLowHealth_Params
+    {
+    public:
+        float                                                        health;                                                  //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballInstrument_GetBaseballInstrumentProperties_Params
+    {
+    public:
+        SportsScramble::FBaseballInstrumentProperties                ReturnValue;                                             //  0x0000(0x00D0)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballInstrumentSelector_TrySetInstruments_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FBaseballInstrumentEntryProperties> instrumentEntries;                                       //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballInstrumentSelector_TryChangeInstrumentTable_Params
+    {
+    public:
+        Engine::UDataTable*                                          InstrumentTable;                                         //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballInstrumentSelector_SetSelectorVisible_Params
+    {
+    public:
+        bool                                                         visible;                                                 //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballInstrumentSelector_OnRep_ClientSpawnedInstruments_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballInstrumentSelector_InstrumentSelected_Params
     {
     public:
         CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -1422,11 +1061,116 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
-    class ABattingAvatar_OnHit_Params
+    class AScramGlove_GetGrabberHandedness_Params
+    {
+    public:
+        SportsScramble::EScramHandedness                             ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramGlove_ForceGrab_Params
+    {
+    public:
+        Engine::AActor*                                              GrabbableActor;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballMitt_OnScrambleBallGrabbed_Params
     {
     public:
         CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballMitt_OnRep_ClientSpawnedBalls_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballMitt_GetScrambleOptionsFull_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballMitt_GetScrambleOptions_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FMittSpawnInfo>           ReturnValue;                                             //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballMitt_ClearScrambleOptions_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballMitt_AddScrambleBallWithType_Params
+    {
+    public:
+        SportsScramble::ABaseballBall*                               BallClass;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         Imbued;                                                  //  0x0008(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballPitchingPropManager_SpawnRegisteredObjects_Params
+    {
+    public:
+        SportsScramble::EBaseballBallType                            BallType;                                                //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballPitchingPropManager_ClearAllObjects_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramBallTrigger_OnTriggered_Params
+    {
+    public:
+        SportsScramble::AScramBall*                                  Ball;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramBallTrigger_IsFutureHitPending_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -2666,6 +2410,129 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
+    class UScramMeshShadow_GetShadowSample_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UFanMeshShadow_GetInstancedMeshFloatValue_Params
+    {
+    public:
+        float                                                        shadowSample;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AFieldingPlayerManager_SetTimeScale_Params
+    {
+    public:
+        SportsScramble::EVerticalFieldZone                           zone;                                                    //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::FMinMaxFloat                                 TimeScale;                                               //  0x0004(0x0008)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AFieldingPlayerManager_OnBallInPlay_Params
+    {
+    public:
+        SportsScramble::ABaseballBall*                               Ball;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::EVerticalFieldZone                           zone;                                                    //  0x0008(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AFieldingPlayerManager_GetTimeScale_Params
+    {
+    public:
+        SportsScramble::EVerticalFieldZone                           zone;                                                    //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::FMinMaxFloat                                 ReturnValue;                                             //  0x0004(0x0008)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AFlyTextLabel_SetText_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AFlyTextLabel_SetScore_Params
+    {
+    public:
+        int32_t                                                      score;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bonus;                                                   //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0005(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FName                                            combineTag;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGameInviteUtils_GetFriends_Params
+    {
+    public:
+        BasicTypes::UScriptDelegate                                  Event;                                                   //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHoopsLaneIndicator_StopIndicator_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHoopsLaneIndicator_StartIndicator_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHoopsLaneIndicator_SetFlipper_Params
+    {
+    public:
+        SportsScramble::ABowlingLaneFlipper*                         Flipper;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHoopsLaneIndicator_ProgressIndicator_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
     class UInstancedMesh_UnregisterInstance_Params
     {
     };
@@ -2770,96 +2637,6 @@ namespace CG::SportsScramble
      */
     class AMenuInstrument_Initialize_Params
     {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMusicManager_StopMusic_Params
-    {
-    public:
-        float                                                        FadeTime;                                                //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMusicManager_Stop_Params
-    {
-    public:
-        float                                                        FadeTime;                                                //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMusicManager_PlayMusicEntry_Params
-    {
-    public:
-        BasicTypes::FName                                            EntryName;                                               //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        FadeTime;                                                //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMusicManager_PlayMusic_Params
-    {
-    public:
-        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        StartTime;                                               //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Volume;                                                  //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        FadeTime;                                                //  0x0010(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMusicManager_PlayEntry_Params
-    {
-    public:
-        BasicTypes::FName                                            EntryName;                                               //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        FadeTime;                                                //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMusicManager_Play_Params
-    {
-    public:
-        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        StartTime;                                               //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Volume;                                                  //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        FadeTime;                                                //  0x0010(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMusicManager_IsPlaying_Params
-    {
-    public:
-        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AMusicManager_IsMusicPlaying_Params
-    {
-    public:
-        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -2998,6 +2775,24 @@ namespace CG::SportsScramble
     public:
         Engine::AActor*                                              Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         SportsScramble::FTennisInstrumentProperties                  instrumentProps;                                         //  0x0008(0x00B8)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramBallManager_SetMaxBalls_Params
+    {
+    public:
+        int32_t                                                      maxBalls;                                                //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramBaseAI_PlaySpawnAnimation_Params
+    {
     };
 
     /**
@@ -3332,51 +3127,15 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
-    class UBaseballGlobalDataAsset_GetBatterPlayAreas_Params
+    class AScramHandshakeActor_ServerReady_Params
     {
-    public:
-        CoreUObject::FBox                                            minPlayArea;                                             //  0x0000(0x001C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FBox                                            maxPlayArea;                                             //  0x001C(0x001C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FBox                                            maxHazardArea;                                           //  0x0038(0x001C)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        SportsScramble::EBattingSide                                 Side;                                                    //  0x0054(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class AScramInstrument_GetLeverVelocity_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramInstrument_GetInstrumentProperties_Params
-    {
-    public:
-        SportsScramble::FScramInstrumentProperties                   ReturnValue;                                             //  0x0000(0x0068)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballInstrument_OnInstrumentBreakEvent_Params
-    {
-    public:
-        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballInstrument_IsPendingRelease_Params
+    class AScramInviteManager_HasAcceptedShellInvite_Params
     {
     public:
         bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -3386,611 +3145,10 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
-    class ABaseballInstrument_InstrumentLowHealth_Params
+    class AScramInviteManager_GetInviteManager_Params
     {
     public:
-        float                                                        health;                                                  //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballInstrument_GetBaseballInstrumentProperties_Params
-    {
-    public:
-        SportsScramble::FBaseballInstrumentProperties                ReturnValue;                                             //  0x0000(0x00D0)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballInstrumentSelector_TrySetInstruments_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FBaseballInstrumentEntryProperties> instrumentEntries;                                       //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballInstrumentSelector_TryChangeInstrumentTable_Params
-    {
-    public:
-        Engine::UDataTable*                                          InstrumentTable;                                         //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballInstrumentSelector_SetSelectorVisible_Params
-    {
-    public:
-        bool                                                         visible;                                                 //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballInstrumentSelector_OnRep_ClientSpawnedInstruments_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballInstrumentSelector_InstrumentSelected_Params
-    {
-    public:
-        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramGlove_GetGrabberHandedness_Params
-    {
-    public:
-        SportsScramble::EScramHandedness                             ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramGlove_ForceGrab_Params
-    {
-    public:
-        Engine::AActor*                                              GrabbableActor;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballMitt_OnScrambleBallGrabbed_Params
-    {
-    public:
-        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballMitt_OnRep_ClientSpawnedBalls_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballMitt_GetScrambleOptionsFull_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballMitt_GetScrambleOptions_Params
-    {
-    public:
-        BasicTypes::TArray<SportsScramble::FMittSpawnInfo>           ReturnValue;                                             //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballMitt_ClearScrambleOptions_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballMitt_AddScrambleBallWithType_Params
-    {
-    public:
-        SportsScramble::ABaseballBall*                               BallClass;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         Imbued;                                                  //  0x0008(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballPitchingPropManager_SpawnRegisteredObjects_Params
-    {
-    public:
-        SportsScramble::EBaseballBallType                            BallType;                                                //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ABaseballPitchingPropManager_ClearAllObjects_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramBallTrigger_OnTriggered_Params
-    {
-    public:
-        SportsScramble::AScramBall*                                  Ball;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramBallTrigger_IsFutureHitPending_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_StopGameInvitePings_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_StartOculusAchievementSync_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_ShowDebugMessage_Params
-    {
-    public:
-        BasicTypes::FString                                          Message;                                                 //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        LifeTime;                                                //  0x0010(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_SetUseVoiceChat_Params
-    {
-    public:
-        bool                                                         useVoice;                                                //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_SetAvatarLook_Params
-    {
-    public:
-        SportsScramble::AScramPlayer*                                pPlayer;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::FAvatarLook                                  AvatarLook;                                              //  0x0008(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_SaveGameData_Params
-    {
-    public:
-        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_RemoveShelfActor_Params
-    {
-    public:
-        Engine::AActor*                                              Actor;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_RefreshGameInvites_Params
-    {
-    public:
-        BasicTypes::UScriptDelegate                                  Event;                                                   //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_LocalNetworkVersionOverride_Params
-    {
-    public:
-        uint32_t                                                     ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_LoadGameData_Params
-    {
-    public:
-        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_InitializePendingGameInvitesComplete_Params
-    {
-    public:
-        bool                                                         wasSuccessful;                                           //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::TArray<SportsScramble::FScramGameInvite>         invites;                                                 //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_InitializePendingGameInvites_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_HasSportStateSaved_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_HasPendingGameInvites_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_GetUseVoiceChat_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_GetSaveData_Params
-    {
-    public:
-        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::UScramSaveData*                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_DoesUseVoiceChat_Params
-    {
-    public:
-        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_DismissPendingGameInvite_Params
-    {
-    public:
-        SportsScramble::FScramGameInvite                             invite;                                                  //  0x0000(0x0060)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_DismissAllPendingGameInvites_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_ClearSavedSportState_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_ClearDebugMessages_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_BroadcastLocalAvatarLook_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramGameInstance_AddShelfActor_Params
-    {
-    public:
-        Engine::AActor*                                              Actor;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADodgeballBall_OnShotChanged_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADodgeballBall_GetShot_Params
-    {
-    public:
-        SportsScramble::FDodgeballShot                               ReturnValue;                                             //  0x0000(0x0003)  (Parm, OutParm, ReturnParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADodgeballBall_GetDodgeballBallProperties_Params
-    {
-    public:
-        SportsScramble::FDodgeballBallProperties                     ReturnValue;                                             //  0x0000(0x00D8)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADodgeballGlove_PlayHaptic_Params
-    {
-    public:
-        Engine::UHapticFeedbackEffect_Base*                          haptic;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Scale;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADodgeballGlove_ItemThrown_Params
-    {
-    public:
-        Engine::AActor*                                              Item;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Speed;                                                   //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADodgeballGlove_ItemPassed_Params
-    {
-    public:
-        Engine::AActor*                                              Item;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ADodgeballGlove_ItemCaught_Params
-    {
-    public:
-        Engine::AActor*                                              Item;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Speed;                                                   //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramMeshShadow_GetShadowSample_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UFanMeshShadow_GetInstancedMeshFloatValue_Params
-    {
-    public:
-        float                                                        shadowSample;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AFieldingPlayerManager_SetTimeScale_Params
-    {
-    public:
-        SportsScramble::EVerticalFieldZone                           zone;                                                    //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::FMinMaxFloat                                 TimeScale;                                               //  0x0004(0x0008)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AFieldingPlayerManager_OnBallInPlay_Params
-    {
-    public:
-        SportsScramble::ABaseballBall*                               Ball;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::EVerticalFieldZone                           zone;                                                    //  0x0008(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AFieldingPlayerManager_GetTimeScale_Params
-    {
-    public:
-        SportsScramble::EVerticalFieldZone                           zone;                                                    //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::FMinMaxFloat                                 ReturnValue;                                             //  0x0004(0x0008)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AFlyTextLabel_SetText_Params
-    {
-    public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AFlyTextLabel_SetScore_Params
-    {
-    public:
-        int32_t                                                      score;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bonus;                                                   //  0x0004(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0005(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FName                                            combineTag;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGameInviteUtils_GetFriends_Params
-    {
-    public:
-        BasicTypes::UScriptDelegate                                  Event;                                                   //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHoopsLaneIndicator_StopIndicator_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHoopsLaneIndicator_StartIndicator_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHoopsLaneIndicator_SetFlipper_Params
-    {
-    public:
-        SportsScramble::ABowlingLaneFlipper*                         Flipper;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHoopsLaneIndicator_ProgressIndicator_Params
-    {
+        SportsScramble::AScramInviteManager*                         ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -4974,6 +4132,764 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
+    class AScramPauseManager_QueuePauseEvent_Params
+    {
+    public:
+        BasicTypes::UScriptDelegate                                  PauseEvent;                                              //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_SetWorldTimeDilation_Params
+    {
+    public:
+        float                                                        timeDilation;                                            //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_SetScriptedFadeOutOpacity_Params
+    {
+    public:
+        float                                                        Opacity;                                                 //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_SetNetVisible_Params
+    {
+    public:
+        bool                                                         netVisible;                                              //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_SetAvatarMaterials_Params
+    {
+    public:
+        SportsScramble::FAvatarLook                                  AvatarLook;                                              //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_SetAnchor_Params
+    {
+    public:
+        CoreUObject::FTransform                                      anchor;                                                  //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FBox                                            minPlayArea;                                             //  0x0030(0x001C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FBox                                            maxPlayArea;                                             //  0x004C(0x001C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FBox                                            maxHazardArea;                                           //  0x0068(0x001C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_Server_UpdateTransforms_Params
+    {
+    public:
+        SportsScramble::FPlayerTransforms                            Transforms;                                              //  0x0000(0x00C0)  (ConstParm, Parm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+        uint32_t                                                     updateCounter;                                           //  0x00C0(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_Server_UpdatePlayAreaDiagonal_Params
+    {
+    public:
+        float                                                        newPlayAreaDiagonal;                                     //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_Server_SpawnHands_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_Server_SetTennisReturnData_Params
+    {
+    public:
+        SportsScramble::FScramPartialTransform                       remoteTransform;                                         //  0x0000(0x0020)  (ConstParm, Parm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+        float                                                        returnTime;                                              //  0x0020(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_Server_SetPlayerReadyForMatch_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_Server_SetNetVisible_Params
+    {
+    public:
+        bool                                                         netVisible;                                              //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_Server_ClientSelectedAvatar_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_SavePreferences_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_ResetAnchor_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_RecenterDetected_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_PlayerResume_Params
+    {
+    public:
+        SportsScramble::EGamePauseReason                             reason;                                                  //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         multiplayer;                                             //  0x0001(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_PlayerPause_Params
+    {
+    public:
+        SportsScramble::EGamePauseReason                             reason;                                                  //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         multiplayer;                                             //  0x0001(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_OnRep_NetVisible_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_OnRep_ClientTransforms_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_OnRep_ClientPlayAreaDiagonal_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_OnRecenter_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_OnPlayerOutOfBoundary_Params
+    {
+    public:
+        CoreUObject::FTransform                                      ReturnTransform;                                         //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_OnPlayerEnterBoundary_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_NetSetPreferences_Params
+    {
+    public:
+        SportsScramble::FScramPlayerPreferences                      preferences;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_LocalAvatarSelected_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_LoadPreferences_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_IsPlayerRestricted_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_IsPlayerPaused_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_IsPlayerFadedOut_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_IsInitComplete_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_HasBegunPlay_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetWorldTimeDilation_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetScriptedFadeOutOpacity_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetPreferredHandedness_Params
+    {
+    public:
+        SportsScramble::EScramHandedness                             ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetPreferences_Params
+    {
+    public:
+        SportsScramble::FScramPlayerPreferences                      ReturnValue;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetPlayAreaTransform_Params
+    {
+    public:
+        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetOrthogonalAnchor_Params
+    {
+    public:
+        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetHand_Params
+    {
+    public:
+        SportsScramble::EScramHandedness                             Handedness;                                              //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::AScramPlayerHand*                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetDominantStroke_Params
+    {
+    public:
+        SportsScramble::EScramStroke                                 ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetDominantHandedness_Params
+    {
+    public:
+        SportsScramble::EScramHandedness                             ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_GetAnchor_Params
+    {
+    public:
+        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_ForceChangeGrabbable_Params
+    {
+    public:
+        SportsScramble::AScramPrimitiveGrabbable*                    NewGrabbableClass;                                       //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::AScramPlayerHand*                            SpecificHand;                                            //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::AScramPrimitiveGrabbable*                    ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_EnsureHasHands_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_DestroyAllGrabbables_Params
+    {
+    public:
+        bool                                                         playOut;                                                 //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        Delay;                                                   //  0x0004(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_DeferredInit_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_ConstrainToPlayArea_Params
+    {
+    public:
+        CoreUObject::FVector                                         Point;                                                   //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Radius;                                                  //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0010(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_Client_ServerSelectedAvatar_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_ChangeAvatarBlueprint_Params
+    {
+    public:
+        SportsScramble::AScramAvatar*                                avatarClass;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         PlaySpawnAnimation;                                      //  0x0008(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0009(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayer_CanBeSeen_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerBoundary_ResetPlayerAnchor_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerBoundary_ResetHazardLine_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_UnpauseLocalHeartbeat_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_StopLocalHeartbeat_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_StopHeartbeat_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_StartHeartbeat_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_ServerSetSportPreferences_Params
+    {
+    public:
+        SportsScramble::FScramSportPreferences                       clientPreferences;                                       //  0x0000(0x0003)  (Parm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_ResumeHeartbeatEvents_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_RestartHeartbeat_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_PauseLocalHeartbeat_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_HasStartedHeartbeat_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_DEBUGForceHeartbeatTimeout_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerController_ClientRequestSportPreferences_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_SpawnAndGrabActor_Params
+    {
+    public:
+        Engine::AActor*                                              GrabbableClass;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_ServerGrabSpawnedActor_Params
+    {
+    public:
+        Engine::AActor*                                              GrabbableActor;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_Server_SpawnAndGrabActor_Params
+    {
+    public:
+        Engine::AActor*                                              ActorClass;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        CoreUObject::FTransform                                      SpawnTransform;                                          //  0x0010(0x0030)  (ConstParm, Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_OnRep_ClientSpawnedActor_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_OnGrabbableHit_Params
+    {
+    public:
+        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_GrabberIsTracked_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_GetPlayer_Params
+    {
+    public:
+        SportsScramble::AScramPlayer*                                ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_GetGrabberVerticalStroke_Params
+    {
+    public:
+        SportsScramble::EScramStroke                                 ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_GetGrabberStroke_Params
+    {
+    public:
+        SportsScramble::EScramStroke                                 ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_GetGrabberHorizontalStroke_Params
+    {
+    public:
+        SportsScramble::EScramStroke                                 ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_GetGrabberHandedness_Params
+    {
+    public:
+        SportsScramble::EScramHandedness                             ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_ForceReleaseCurrentGrabbable_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_ForceGrab_Params
+    {
+    public:
+        Engine::AActor*                                              GrabbableActor;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_DestroyCurrentGrabbable_Params
+    {
+    public:
+        bool                                                         playOut;                                                 //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        Delay;                                                   //  0x0004(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_DeferredInit_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramPlayerHand_CurrentGrabbableActor_Params
+    {
+    public:
+        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
     class AScramPlayerTrigger_OnPlayerStay_Params
     {
     public:
@@ -5149,190 +5065,6 @@ namespace CG::SportsScramble
      */
     class AScramPlayerServeTrigger_DespawnCurrentBall_Params
     {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_WipeSaveData_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_WipeHighScoreData_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_UnlockTraining_Params
-    {
-    public:
-        BasicTypes::FName                                            TrainingName;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_SaveNamedValue_Params
-    {
-    public:
-        BasicTypes::FName                                            Name;                                                    //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      Value;                                                   //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_SaveHighScore_Params
-    {
-    public:
-        BasicTypes::FName                                            GameName;                                                //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        score;                                                   //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_GetTrainingProgression_Params
-    {
-    public:
-        BasicTypes::FName                                            TrainingName;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::ETrainingProgression                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_GetNamedValue_Params
-    {
-    public:
-        BasicTypes::FName                                            Name;                                                    //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_GetHighScore_Params
-    {
-    public:
-        BasicTypes::FName                                            GameName;                                                //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScramSaveData_CompleteTraining_Params
-    {
-    public:
-        BasicTypes::FName                                            TrainingName;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_StopSavingSportState_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_SetSelectableBallClass_Params
-    {
-    public:
-        Engine::AActor*                                              BallClass;                                               //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_ServerReady_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_SaveSportState_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_OnHeartbeatSustained_Params
-    {
-    public:
-        SportsScramble::AScramPlayerController*                      pPlayerController;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_OnHeartbeatDisconnected_Params
-    {
-    public:
-        SportsScramble::AScramPlayerController*                      pPlayerController;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_OnGameDone_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_LocalGameDone_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_GetPlayer_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        Engine::AActor*                                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramSportManagerBase_GetOtherPlayer_Params
-    {
-    public:
-        Engine::AActor*                                              Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Engine::AActor*                                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -7127,6 +6859,984 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
+    class UScramGameInstance_StopGameInvitePings_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_StartOculusAchievementSync_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_ShowDebugMessage_Params
+    {
+    public:
+        BasicTypes::FString                                          Message;                                                 //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        LifeTime;                                                //  0x0010(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_SetUseVoiceChat_Params
+    {
+    public:
+        bool                                                         useVoice;                                                //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_SetAvatarLook_Params
+    {
+    public:
+        SportsScramble::AScramPlayer*                                pPlayer;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::FAvatarLook                                  AvatarLook;                                              //  0x0008(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_SaveGameData_Params
+    {
+    public:
+        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_RemoveShelfActor_Params
+    {
+    public:
+        Engine::AActor*                                              Actor;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_RefreshGameInvites_Params
+    {
+    public:
+        BasicTypes::UScriptDelegate                                  Event;                                                   //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_LocalNetworkVersionOverride_Params
+    {
+    public:
+        uint32_t                                                     ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_LoadGameData_Params
+    {
+    public:
+        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_InitializePendingGameInvitesComplete_Params
+    {
+    public:
+        bool                                                         wasSuccessful;                                           //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::TArray<SportsScramble::FScramGameInvite>         invites;                                                 //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_InitializePendingGameInvites_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_HasSportStateSaved_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_HasPendingGameInvites_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_GetUseVoiceChat_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_GetSaveData_Params
+    {
+    public:
+        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::UScramSaveData*                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_DoesUseVoiceChat_Params
+    {
+    public:
+        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_DismissPendingGameInvite_Params
+    {
+    public:
+        SportsScramble::FScramGameInvite                             invite;                                                  //  0x0000(0x0060)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_DismissAllPendingGameInvites_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_ClearSavedSportState_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_ClearDebugMessages_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_BroadcastLocalAvatarLook_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramGameInstance_AddShelfActor_Params
+    {
+    public:
+        Engine::AActor*                                              Actor;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorSet_ResetActors_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorSet_GetNextActor_Params
+    {
+    public:
+        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UActorSet_AvoidActor_Params
+    {
+    public:
+        Engine::AActor*                                              ActorClass;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_UniqueNetIdToString_Params
+    {
+    public:
+        SportsScramble::FBPUniqueNetId                               UniqueNetId;                                             //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          String;                                                  //  0x0020(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_SetPlayerName_Params
+    {
+    public:
+        Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          PlayerName;                                              //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_MakeLiteralSessionSearchProperty_Params
+    {
+    public:
+        SportsScramble::FSessionPropertyKeyPair                      SessionSearchProperty;                                   //  0x0000(0x0020)  (Parm, NativeAccessSpecifierPublic)
+        SportsScramble::EOnlineComparisonOpRedux                     ComparisonOp;                                            //  0x0020(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0021(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::FSessionsSearchSetting                       ReturnValue;                                             //  0x0028(0x0028)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyString_Params
+    {
+    public:
+        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          Value;                                                   //  0x0008(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0018(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyInt_Params
+    {
+    public:
+        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      Value;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x000C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0010(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyFloat_Params
+    {
+    public:
+        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Value;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0002[0x4];                                   //  0x000C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0010(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyByte_Params
+    {
+    public:
+        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      Value;                                                   //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0003[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0010(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_MakeLiteralSessionPropertyBool_Params
+    {
+    public:
+        BasicTypes::FName                                            Key;                                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         Value;                                                   //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0004[0x7];                                   //  0x0009(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::FSessionPropertyKeyPair                      ReturnValue;                                             //  0x0010(0x0020)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_IsValidUniqueNetID_Params
+    {
+    public:
+        SportsScramble::FBPUniqueNetId                               UniqueNetId;                                             //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0020(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_IsValidSession_Params
+    {
+    public:
+        OnlineSubsystemUtils::FBlueprintSessionResult                SessionResult;                                           //  0x0000(0x00B8)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x00B8(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_IsPlayerInSession_Params
+    {
+    public:
+        SportsScramble::FBPUniqueNetId                               PlayerToCheck;                                           //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        bool                                                         bIsInSession;                                            //  0x0020(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_HasOnlineSubsystem_Params
+    {
+    public:
+        BasicTypes::FName                                            SubSystemName;                                           //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetUniqueNetIDFromPlayerState_Params
+    {
+    public:
+        Engine::APlayerState*                                        PlayerState;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::FBPUniqueNetId                               UniqueNetId;                                             //  0x0008(0x0020)  (Parm, OutParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetUniqueNetID_Params
+    {
+    public:
+        Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::FBPUniqueNetId                               UniqueNetId;                                             //  0x0008(0x0020)  (Parm, OutParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetUniqueBuildID_Params
+    {
+    public:
+        OnlineSubsystemUtils::FBlueprintSessionResult                SessionResult;                                           //  0x0000(0x00B8)  (Parm, NativeAccessSpecifierPublic)
+        int32_t                                                      UniqueBuildId;                                           //  0x00B8(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetSessionState_Params
+    {
+    public:
+        SportsScramble::EBPOnlineSessionState                        SessionState;                                            //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetSessionSettings_Params
+    {
+    public:
+        int32_t                                                      NumConnections;                                          //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NumPrivateConnections;                                   //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bIsLAN;                                                  //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bIsDedicated;                                            //  0x0009(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bAllowInvites;                                           //  0x000A(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bAllowJoinInProgress;                                    //  0x000B(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bIsAnticheatEnabled;                                     //  0x000C(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0005[0x3];                                   //  0x000D(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        int32_t                                                      BuildUniqueID;                                           //  0x0010(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0006[0x4];                                   //  0x0014(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0018(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+        SportsScramble::EBlueprintResultSwitch                       Result;                                                  //  0x0028(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetSessionPropertyString_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0007[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          SettingValue;                                            //  0x0020(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetSessionPropertyKey_Params
+    {
+    public:
+        SportsScramble::FSessionPropertyKeyPair                      SessionProperty;                                         //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            ReturnValue;                                             //  0x0020(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetSessionPropertyInt_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0008[0x3];                                   //  0x0019(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        int32_t                                                      SettingValue;                                            //  0x001C(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetSessionPropertyFloat_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0009[0x3];                                   //  0x0019(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        float                                                        SettingValue;                                            //  0x001C(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetSessionPropertyByte_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      SettingValue;                                            //  0x0019(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetSessionPropertyBool_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::ESessionSettingSearchResult                  SearchResult;                                            //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         SettingValue;                                            //  0x0019(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetPlayerName_Params
+    {
+    public:
+        Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FString                                          PlayerName;                                              //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetNumberOfNetworkPlayers_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NumNetPlayers;                                           //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetNetPlayerIndex_Params
+    {
+    public:
+        Engine::APlayerController*                                   PlayerController;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      NetPlayerIndex;                                          //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetExtraSettings_Params
+    {
+    public:
+        OnlineSubsystemUtils::FBlueprintSessionResult                SessionResult;                                           //  0x0000(0x00B8)  (Parm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x00B8(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_GetCurrentUniqueBuildID_Params
+    {
+    public:
+        int32_t                                                      UniqueBuildId;                                           //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_FindSessionPropertyIndexByName_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SettingName;                                             //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::EBlueprintResultSwitch                       Result;                                                  //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0010[0x3];                                   //  0x0019(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        int32_t                                                      OutIndex;                                                //  0x001C(0x0004)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_FindSessionPropertyByName_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            SettingsName;                                            //  0x0010(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::EBlueprintResultSwitch                       Result;                                                  //  0x0018(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0011[0x7];                                   //  0x0019(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::FSessionPropertyKeyPair                      OutProperty;                                             //  0x0020(0x0020)  (Parm, OutParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_EqualEqual_UNetIDUnetID_Params
+    {
+    public:
+        SportsScramble::FBPUniqueNetId                               A;                                                       //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        SportsScramble::FBPUniqueNetId                               B;                                                       //  0x0020(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0040(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAdvancedSessionsLibrary_AddOrModifyExtraSettings_Params
+    {
+    public:
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  SettingsArray;                                           //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  NewOrChangedSettings;                                    //  0x0010(0x0010)  (Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ModifiedSettingsArray;                                   //  0x0020(0x0010)  (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABaseballThrowingGlove_OnBowlingGloveRelease_Params
+    {
+    public:
+        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABattingAvatar_OnSwung_Params
+    {
+    public:
+        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ABattingAvatar_OnHit_Params
+    {
+    public:
+        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UTimeDisplayWidget_FormatTime_Params
+    {
+    public:
+        float                                                        Seconds;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyAwardListenerBase_UpdateProgress_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyAwardListenerBase_SaveProgressToSaveData_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyAwardListenerBase_LoadProgressFromSaveData_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyAwardListenerBase_Initialize_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyAwardListenerBase_IncreaseProgress_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyAwardListenerBase_AwardTrophy_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_WasTrophyEarned_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_RespawnTrophy_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_OverrideInitialRotation_Params
+    {
+    public:
+        CoreUObject::FRotator                                        overrideRotation;                                        //  0x0000(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_OverrideInitialPosition_Params
+    {
+    public:
+        CoreUObject::FVector                                         overridePosition;                                        //  0x0000(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_OnTrophyRespawnToOriginalPosition_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_OnTrophyReleased_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_OnTrophyGrabbed_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_OnStopPointingAt_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_OnStartPointingAt_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_GetInitialRotation_Params
+    {
+    public:
+        CoreUObject::FRotator                                        ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ATrophyGrabbable_GetInitialPosition_Params
+    {
+    public:
+        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UUpdateSessionCallbackProxyAdvanced_UpdateSession_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+        int32_t                                                      PublicConnections;                                       //  0x0018(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      PrivateConnections;                                      //  0x001C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bUseLAN;                                                 //  0x0020(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bAllowInvites;                                           //  0x0021(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bAllowJoinInProgress;                                    //  0x0022(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bRefreshOnlineData;                                      //  0x0023(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bIsDedicatedServer;                                      //  0x0024(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0025(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        SportsScramble::UUpdateSessionCallbackProxyAdvanced*         ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMusicManager_StopMusic_Params
+    {
+    public:
+        float                                                        FadeTime;                                                //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMusicManager_Stop_Params
+    {
+    public:
+        float                                                        FadeTime;                                                //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMusicManager_PlayMusicEntry_Params
+    {
+    public:
+        BasicTypes::FName                                            EntryName;                                               //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        FadeTime;                                                //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMusicManager_PlayMusic_Params
+    {
+    public:
+        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        StartTime;                                               //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Volume;                                                  //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        FadeTime;                                                //  0x0010(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMusicManager_PlayEntry_Params
+    {
+    public:
+        BasicTypes::FName                                            EntryName;                                               //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        FadeTime;                                                //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMusicManager_Play_Params
+    {
+    public:
+        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        StartTime;                                               //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Volume;                                                  //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        FadeTime;                                                //  0x0010(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMusicManager_IsPlaying_Params
+    {
+    public:
+        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AMusicManager_IsMusicPlaying_Params
+    {
+    public:
+        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADodgeballBall_OnShotChanged_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADodgeballBall_GetShot_Params
+    {
+    public:
+        SportsScramble::FDodgeballShot                               ReturnValue;                                             //  0x0000(0x0003)  (Parm, OutParm, ReturnParm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADodgeballBall_GetDodgeballBallProperties_Params
+    {
+    public:
+        SportsScramble::FDodgeballBallProperties                     ReturnValue;                                             //  0x0000(0x00D8)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
     class AScramGameMode_SetLocalizationCulture_Params
     {
     public:
@@ -7422,15 +8132,71 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
-    class AScramHandshakeActor_ServerReady_Params
+    class ADodgeballGlove_PlayHaptic_Params
     {
+    public:
+        Engine::UHapticFeedbackEffect_Base*                          haptic;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Scale;                                                   //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class AScramInviteManager_HasAcceptedShellInvite_Params
+    class ADodgeballGlove_ItemThrown_Params
+    {
+    public:
+        Engine::AActor*                                              Item;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Speed;                                                   //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADodgeballGlove_ItemPassed_Params
+    {
+    public:
+        Engine::AActor*                                              Item;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class ADodgeballGlove_ItemCaught_Params
+    {
+    public:
+        Engine::AActor*                                              Item;                                                    //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Speed;                                                   //  0x0014(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramActor_PlayManagedSoundAtLocation_Params
+    {
+    public:
+        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector                                         Location;                                                //  0x0008(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FRotator                                        Rotation;                                                //  0x0014(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        float                                                        VolumeMultiplier;                                        //  0x0020(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        PitchMultiplier;                                         //  0x0024(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        StartTime;                                               //  0x0028(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x002C(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::USoundAttenuation*                                   AttenuationSettings;                                     //  0x0030(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::USoundConcurrency*                                   ConcurrencySettings;                                     //  0x0038(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramActor_HasBegunPlay_Params
     {
     public:
         bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
@@ -7440,966 +8206,200 @@ namespace CG::SportsScramble
      * 
      * Size -> 0x0000
      */
-    class AScramInviteManager_GetInviteManager_Params
+    class AScramActor_AttachSound2D_Params
     {
     public:
-        SportsScramble::AScramInviteManager*                         ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::USoundBase*                                          Sound;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        VolumeMultiplier;                                        //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        PitchMultiplier;                                         //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        StartTime;                                               //  0x0010(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0001[0x4];                                   //  0x0014(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        Engine::USoundConcurrency*                                   ConcurrencySettings;                                     //  0x0018(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         IsUiSound;                                               //  0x0020(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UTimeDisplayWidget_FormatTime_Params
+    class UScramSaveData_WipeSaveData_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramSaveData_WipeHighScoreData_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramSaveData_UnlockTraining_Params
     {
     public:
-        float                                                        Seconds;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        BasicTypes::FName                                            TrainingName;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramSaveData_SaveNamedValue_Params
+    {
+    public:
+        BasicTypes::FName                                            Name;                                                    //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      Value;                                                   //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramSaveData_SaveHighScore_Params
+    {
+    public:
+        BasicTypes::FName                                            GameName;                                                //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        score;                                                   //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramSaveData_GetTrainingProgression_Params
+    {
+    public:
+        BasicTypes::FName                                            TrainingName;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SportsScramble::ETrainingProgression                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramSaveData_GetNamedValue_Params
+    {
+    public:
+        BasicTypes::FName                                            Name;                                                    //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramSaveData_GetHighScore_Params
+    {
+    public:
+        BasicTypes::FName                                            GameName;                                                //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScramSaveData_CompleteTraining_Params
+    {
+    public:
+        BasicTypes::FName                                            TrainingName;                                            //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_StopSavingSportState_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_SetSelectableBallClass_Params
+    {
+    public:
+        Engine::AActor*                                              BallClass;                                               //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_ServerReady_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_SaveSportState_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_OnHeartbeatSustained_Params
+    {
+    public:
+        SportsScramble::AScramPlayerController*                      pPlayerController;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_OnHeartbeatDisconnected_Params
+    {
+    public:
+        SportsScramble::AScramPlayerController*                      pPlayerController;                                       //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_OnGameDone_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_LocalGameDone_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class AScramSportManagerBase_GetPlayer_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class ATrophyAwardListenerBase_UpdateProgress_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyAwardListenerBase_SaveProgressToSaveData_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyAwardListenerBase_LoadProgressFromSaveData_Params
+    class AScramSportManagerBase_GetOtherPlayer_Params
     {
     public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyAwardListenerBase_Initialize_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyAwardListenerBase_IncreaseProgress_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyAwardListenerBase_AwardTrophy_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_WasTrophyEarned_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_RespawnTrophy_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_OverrideInitialRotation_Params
-    {
-    public:
-        CoreUObject::FRotator                                        overrideRotation;                                        //  0x0000(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_OverrideInitialPosition_Params
-    {
-    public:
-        CoreUObject::FVector                                         overridePosition;                                        //  0x0000(0x000C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_OnTrophyRespawnToOriginalPosition_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_OnTrophyReleased_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_OnTrophyGrabbed_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_OnStopPointingAt_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_OnStartPointingAt_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_GetInitialRotation_Params
-    {
-    public:
-        CoreUObject::FRotator                                        ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class ATrophyGrabbable_GetInitialPosition_Params
-    {
-    public:
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0000(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UUpdateSessionCallbackProxyAdvanced_UpdateSession_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>  ExtraSettings;                                           //  0x0008(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-        int32_t                                                      PublicConnections;                                       //  0x0018(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      PrivateConnections;                                      //  0x001C(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bUseLAN;                                                 //  0x0020(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bAllowInvites;                                           //  0x0021(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bAllowJoinInProgress;                                    //  0x0022(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bRefreshOnlineData;                                      //  0x0023(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bIsDedicatedServer;                                      //  0x0024(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x3];                                   //  0x0025(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::UUpdateSessionCallbackProxyAdvanced*         ReturnValue;                                             //  0x0028(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPauseManager_QueuePauseEvent_Params
-    {
-    public:
-        BasicTypes::UScriptDelegate                                  PauseEvent;                                              //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_SetWorldTimeDilation_Params
-    {
-    public:
-        float                                                        timeDilation;                                            //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_SetScriptedFadeOutOpacity_Params
-    {
-    public:
-        float                                                        Opacity;                                                 //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_SetNetVisible_Params
-    {
-    public:
-        bool                                                         netVisible;                                              //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_SetAvatarMaterials_Params
-    {
-    public:
-        SportsScramble::FAvatarLook                                  AvatarLook;                                              //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_SetAnchor_Params
-    {
-    public:
-        CoreUObject::FTransform                                      anchor;                                                  //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FBox                                            minPlayArea;                                             //  0x0030(0x001C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FBox                                            maxPlayArea;                                             //  0x004C(0x001C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FBox                                            maxHazardArea;                                           //  0x0068(0x001C)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_Server_UpdateTransforms_Params
-    {
-    public:
-        SportsScramble::FPlayerTransforms                            Transforms;                                              //  0x0000(0x00C0)  (ConstParm, Parm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-        uint32_t                                                     updateCounter;                                           //  0x00C0(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_Server_UpdatePlayAreaDiagonal_Params
-    {
-    public:
-        float                                                        newPlayAreaDiagonal;                                     //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_Server_SpawnHands_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_Server_SetTennisReturnData_Params
-    {
-    public:
-        SportsScramble::FScramPartialTransform                       remoteTransform;                                         //  0x0000(0x0020)  (ConstParm, Parm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-        float                                                        returnTime;                                              //  0x0020(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_Server_SetPlayerReadyForMatch_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_Server_SetNetVisible_Params
-    {
-    public:
-        bool                                                         netVisible;                                              //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_Server_ClientSelectedAvatar_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_SavePreferences_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_ResetAnchor_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_RecenterDetected_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_PlayerResume_Params
-    {
-    public:
-        SportsScramble::EGamePauseReason                             reason;                                                  //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         multiplayer;                                             //  0x0001(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_PlayerPause_Params
-    {
-    public:
-        SportsScramble::EGamePauseReason                             reason;                                                  //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         multiplayer;                                             //  0x0001(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_OnRep_NetVisible_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_OnRep_ClientTransforms_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_OnRep_ClientPlayAreaDiagonal_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_OnRecenter_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_OnPlayerOutOfBoundary_Params
-    {
-    public:
-        CoreUObject::FTransform                                      ReturnTransform;                                         //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_OnPlayerEnterBoundary_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_NetSetPreferences_Params
-    {
-    public:
-        SportsScramble::FScramPlayerPreferences                      preferences;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_LocalAvatarSelected_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_LoadPreferences_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_IsPlayerRestricted_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_IsPlayerPaused_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_IsPlayerFadedOut_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_IsInitComplete_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_HasBegunPlay_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetWorldTimeDilation_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetScriptedFadeOutOpacity_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetPreferredHandedness_Params
-    {
-    public:
-        SportsScramble::EScramHandedness                             ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetPreferences_Params
-    {
-    public:
-        SportsScramble::FScramPlayerPreferences                      ReturnValue;                                             //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetPlayAreaTransform_Params
-    {
-    public:
-        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetOrthogonalAnchor_Params
-    {
-    public:
-        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetHand_Params
-    {
-    public:
-        SportsScramble::EScramHandedness                             Handedness;                                              //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x7];                                   //  0x0001(0x0007) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        SportsScramble::AScramPlayerHand*                            ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetDominantStroke_Params
-    {
-    public:
-        SportsScramble::EScramStroke                                 ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetDominantHandedness_Params
-    {
-    public:
-        SportsScramble::EScramHandedness                             ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_GetAnchor_Params
-    {
-    public:
-        CoreUObject::FTransform                                      ReturnValue;                                             //  0x0000(0x0030)  (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_ForceChangeGrabbable_Params
-    {
-    public:
-        SportsScramble::AScramPrimitiveGrabbable*                    NewGrabbableClass;                                       //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::AScramPlayerHand*                            SpecificHand;                                            //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::AScramPrimitiveGrabbable*                    ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_EnsureHasHands_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_DestroyAllGrabbables_Params
-    {
-    public:
-        bool                                                         playOut;                                                 //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        Delay;                                                   //  0x0004(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_DeferredInit_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_ConstrainToPlayArea_Params
-    {
-    public:
-        CoreUObject::FVector                                         Point;                                                   //  0x0000(0x000C)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Radius;                                                  //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector                                         ReturnValue;                                             //  0x0010(0x000C)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_Client_ServerSelectedAvatar_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_ChangeAvatarBlueprint_Params
-    {
-    public:
-        SportsScramble::AScramAvatar*                                avatarClass;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         PlaySpawnAnimation;                                      //  0x0008(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0009(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayer_CanBeSeen_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerBoundary_ResetPlayerAnchor_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerBoundary_ResetHazardLine_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_UnpauseLocalHeartbeat_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_StopLocalHeartbeat_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_StopHeartbeat_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_StartHeartbeat_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_ServerSetSportPreferences_Params
-    {
-    public:
-        SportsScramble::FScramSportPreferences                       clientPreferences;                                       //  0x0000(0x0003)  (Parm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_ResumeHeartbeatEvents_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_RestartHeartbeat_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_PauseLocalHeartbeat_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_HasStartedHeartbeat_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_DEBUGForceHeartbeatTimeout_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerController_ClientRequestSportPreferences_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_SpawnAndGrabActor_Params
-    {
-    public:
-        Engine::AActor*                                              GrabbableClass;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_ServerGrabSpawnedActor_Params
-    {
-    public:
-        Engine::AActor*                                              GrabbableActor;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_Server_SpawnAndGrabActor_Params
-    {
-    public:
-        Engine::AActor*                                              ActorClass;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x8];                                   //  0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        CoreUObject::FTransform                                      SpawnTransform;                                          //  0x0010(0x0030)  (ConstParm, Parm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_OnRep_ClientSpawnedActor_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_OnGrabbableHit_Params
-    {
-    public:
-        CoreUObject::UObject*                                        pWorldContextObject;                                     //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SportsScramble::UScramEventBasePayload*                      pPayload;                                                //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_GrabberIsTracked_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_GetPlayer_Params
-    {
-    public:
-        SportsScramble::AScramPlayer*                                ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_GetGrabberVerticalStroke_Params
-    {
-    public:
-        SportsScramble::EScramStroke                                 ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_GetGrabberStroke_Params
-    {
-    public:
-        SportsScramble::EScramStroke                                 ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_GetGrabberHorizontalStroke_Params
-    {
-    public:
-        SportsScramble::EScramStroke                                 ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_GetGrabberHandedness_Params
-    {
-    public:
-        SportsScramble::EScramHandedness                             ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_ForceReleaseCurrentGrabbable_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_ForceGrab_Params
-    {
-    public:
-        Engine::AActor*                                              GrabbableActor;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_DestroyCurrentGrabbable_Params
-    {
-    public:
-        bool                                                         playOut;                                                 //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0001[0x3];                                   //  0x0001(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        float                                                        Delay;                                                   //  0x0004(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_DeferredInit_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramPlayerHand_CurrentGrabbableActor_Params
-    {
-    public:
-        Engine::AActor*                                              ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramBallManager_SetMaxBalls_Params
-    {
-    public:
-        int32_t                                                      maxBalls;                                                //  0x0000(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class AScramBaseAI_PlaySpawnAnimation_Params
-    {
+        Engine::AActor*                                              Player;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::AActor*                                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

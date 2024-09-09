@@ -22,8 +22,8 @@
 // --------------------------------------------------
 namespace CG::VariantManagerContent { class UVariantSet; };
 namespace CG::VariantManagerContent { class ULevelVariantSets; };
-namespace CG::VariantManagerContent { class UVariant; };
 namespace CG::Engine { class AActor; };
+namespace CG::VariantManagerContent { class UVariant; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -106,48 +106,6 @@ namespace CG::VariantManagerContent
      * 
      * Size -> 0x0000
      */
-    class UVariantSet_SetDisplayText_Params
-    {
-    public:
-        BasicTypes::FText                                            NewDisplayText;                                          //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVariantSet_GetVariant_Params
-    {
-    public:
-        int32_t                                                      VariantIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        VariantManagerContent::UVariant*                             ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVariantSet_GetNumVariants_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UVariantSet_GetDisplayText_Params
-    {
-    public:
-        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
     class UVariant_SwitchOn_Params
     {
     };
@@ -192,6 +150,48 @@ namespace CG::VariantManagerContent
         int32_t                                                      ActorIndex;                                              //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
         Engine::AActor*                                              ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVariantSet_SetDisplayText_Params
+    {
+    public:
+        BasicTypes::FText                                            NewDisplayText;                                          //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVariantSet_GetVariant_Params
+    {
+    public:
+        int32_t                                                      VariantIndex;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        VariantManagerContent::UVariant*                             ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVariantSet_GetNumVariants_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UVariantSet_GetDisplayText_Params
+    {
+    public:
+        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
     };
 
 }

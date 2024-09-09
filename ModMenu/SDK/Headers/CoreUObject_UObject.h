@@ -105,16 +105,15 @@ namespace CG::CoreUObject
         {
             std::vector<T*> ret;
             auto v = T::StaticClass();
-            if (v == nullptr) return ret;
             auto& gObjects = CoreUObject::UObject::GetGlobalObjects();
             for (int i = 0; i < gObjects.Count(); ++i)
             {
                 auto object = gObjects.GetByIndex(i);
-
+            
                 if (!object)
                     continue;
-
-            	if (object->IsA(v))
+            
+                if (object->IsA(v))
                     ret.push_back(static_cast<T*>(object));
             }
             return ret;

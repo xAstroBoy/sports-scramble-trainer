@@ -135,7 +135,7 @@ namespace CG::TN_Train_Base
         void BallShotTypeChange(SportsScramble::ETennisShotType ShotType);
         void ScrambleTargetLaunchedBall(TN_Ball_Base::ATN_Ball_Base_C* LaunchedBall);
         void ScrambleIconBallHit(CoreUObject::UObject* WorldContextObject, SportsScramble::UScramEventBasePayload* Payload);
-        void TN_TNG_ScrambleTargetHit(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetID);
+        void TN_TNG_ScrambleTargetHit(TennisScrambleTarget::ATennisScrambleTarget_C* TargetActor, ScrambleEvent_Base::AScrambleEvent_Base_C* EventClass, int32_t TargetId);
         void ScrambleIconBallTypeShotChange(SportsScramble::ETennisShotType ShotType);
         void ChangeBallClass(SportsScramble::AScramBall* BallClass);
         void EndOfGame();

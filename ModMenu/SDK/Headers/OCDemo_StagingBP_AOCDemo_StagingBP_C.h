@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -118,7 +118,7 @@ namespace CG::OCDemo_StagingBP
         int32_t                                                      Bounces;                                                 //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         uint8_t                                                      UnknownData_0007[0x4];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
         RacketGrabFX::ARacketGrabFX_C*                               RacketGrabFX;                                            //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-        OCDemo_Minigame::AOCDemo_Minigame_C*                         Minigame;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+        OCDemo_Minigame::AOCDemo_Minigame_C*                         MiniGame;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         uint8_t                                                      UnknownData_0008[0x8];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
         CoreUObject::FTransform                                      Player1Transform;                                        //  Edit, BlueprintVisible, DisableEditOnInstance, IsPlainOldData, NoDestructor
         CoreUObject::FTransform                                      Player2Transform;                                        //  Edit, BlueprintVisible, DisableEditOnInstance, IsPlainOldData, NoDestructor
@@ -149,7 +149,7 @@ namespace CG::OCDemo_StagingBP
         void DisplayTubeText(const BasicTypes::FText& Text, bool InstantSwap);
         void RemoveCapsule();
         void RemoveMinigame();
-        void SpawnMinigame();
+        void SpawnMiniGame();
         void DebugSkip();
         void SpawnCapsule(bool Instant, const CoreUObject::FTransform& SpawnTransform);
         void SetupButtons();

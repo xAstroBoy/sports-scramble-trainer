@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -24,6 +24,8 @@
 #include "Headers/MovieSceneTracks_UMovieScene3DAttachSection.h"
 #include "Headers/MovieSceneTracks_UMovieScene3DConstraintTrack.h"
 #include "Headers/MovieSceneTracks_UMovieScene3DAttachTrack.h"
+#include "Headers/MovieSceneTracks_UMovieScene3DPathSection.h"
+#include "Headers/MovieSceneTracks_UMovieScene3DPathTrack.h"
 #include "Headers/MovieSceneTracks_UMovieScene3DTransformSection.h"
 #include "Headers/MovieSceneTracks_UMovieScenePropertyTrack.h"
 #include "Headers/MovieSceneTracks_UMovieScene3DTransformTrack.h"
@@ -48,12 +50,11 @@
 #include "Headers/MovieSceneTracks_UMovieSceneEnumSection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneEnumTrack.h"
 #include "Headers/MovieSceneTracks_UMovieSceneEulerTransformTrack.h"
-#include "Headers/MovieSceneTracks_UMovieSceneEventSectionBase.h"
-#include "Headers/MovieSceneTracks_UMovieSceneEventTriggerSection.h"
-#include "Headers/MovieSceneTracks_UMovieSceneFloatSection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneFadeSection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneFloatTrack.h"
 #include "Headers/MovieSceneTracks_UMovieSceneFadeTrack.h"
+#include "Headers/MovieSceneTracks_UMovieSceneIntegerSection.h"
+#include "Headers/MovieSceneTracks_UMovieSceneIntegerTrack.h"
 #include "Headers/MovieSceneTracks_UMovieSceneLevelVisibilitySection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneLevelVisibilityTrack.h"
 #include "Headers/MovieSceneTracks_UMovieSceneMaterialTrack.h"
@@ -66,22 +67,21 @@
 #include "Headers/MovieSceneTracks_UMovieSceneSkeletalAnimationSection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneSkeletalAnimationTrack.h"
 #include "Headers/MovieSceneTracks_UMovieSceneSlomoSection.h"
+#include "Headers/MovieSceneTracks_UMovieSceneSlomoTrack.h"
+#include "Headers/MovieSceneTracks_UMovieSceneSpawnSection.h"
+#include "Headers/MovieSceneTracks_UMovieSceneSpawnTrack.h"
+#include "Headers/MovieSceneTracks_UMovieSceneStringSection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneStringTrack.h"
 #include "Headers/MovieSceneTracks_UMovieSceneTransformTrack.h"
 #include "Headers/MovieSceneTracks_UMovieSceneVectorSection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneVectorTrack.h"
 #include "Headers/MovieSceneTracks_UMovieSceneVisibilityTrack.h"
-#include "Headers/MovieSceneTracks_UMovieSceneIntegerSection.h"
-#include "Headers/MovieSceneTracks_UMovieSceneIntegerTrack.h"
-#include "Headers/MovieSceneTracks_UMovieScene3DPathSection.h"
-#include "Headers/MovieSceneTracks_UMovieScene3DPathTrack.h"
+#include "Headers/MovieSceneTracks_UMovieSceneEventSectionBase.h"
 #include "Headers/MovieSceneTracks_UMovieSceneEventRepeaterSection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneEventSection.h"
 #include "Headers/MovieSceneTracks_UMovieSceneEventTrack.h"
-#include "Headers/MovieSceneTracks_UMovieSceneSlomoTrack.h"
-#include "Headers/MovieSceneTracks_UMovieSceneSpawnSection.h"
-#include "Headers/MovieSceneTracks_UMovieSceneSpawnTrack.h"
-#include "Headers/MovieSceneTracks_UMovieSceneStringSection.h"
+#include "Headers/MovieSceneTracks_UMovieSceneEventTriggerSection.h"
+#include "Headers/MovieSceneTracks_UMovieSceneFloatSection.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

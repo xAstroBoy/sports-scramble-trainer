@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -47,7 +47,7 @@ namespace CG::BB_Train_01_Casual
      * 
      * Size -> 0x0000
      */
-    class ABB_Train_01_Casual_C_SetupInfoText_Params
+    class ABB_Train_01_Casual_C_SetUpInfoText_Params
     {
     };
 

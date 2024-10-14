@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -24,10 +24,10 @@
 // --------------------------------------------------
 // # Forwards
 // --------------------------------------------------
+namespace CG::Engine { class UTexture; };
 namespace CG::MovieSceneCapture { class UMovieSceneCaptureProtocolBase; };
 namespace CG::MovieSceneCapture { class UMovieSceneImageCaptureProtocolBase; };
 namespace CG::MovieSceneCapture { class UMovieSceneAudioCaptureProtocolBase; };
-namespace CG::Engine { class UTexture; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -56,96 +56,6 @@ namespace CG::MovieSceneCapture
     {
     public:
         MovieSceneCapture::EMovieSceneCaptureProtocolState           ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCapture_SetImageCaptureProtocolType_Params
-    {
-    public:
-        MovieSceneCapture::UMovieSceneCaptureProtocolBase*           ProtocolType;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCapture_SetAudioCaptureProtocolType_Params
-    {
-    public:
-        MovieSceneCapture::UMovieSceneCaptureProtocolBase*           ProtocolType;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCapture_GetImageCaptureProtocol_Params
-    {
-    public:
-        MovieSceneCapture::UMovieSceneCaptureProtocolBase*           ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCapture_GetAudioCaptureProtocol_Params
-    {
-    public:
-        MovieSceneCapture::UMovieSceneCaptureProtocolBase*           ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCaptureEnvironment_IsCaptureInProgress_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCaptureEnvironment_GetCaptureFrameNumber_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCaptureEnvironment_GetCaptureElapsedTime_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCaptureEnvironment_FindImageCaptureProtocol_Params
-    {
-    public:
-        MovieSceneCapture::UMovieSceneImageCaptureProtocolBase*      ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMovieSceneCaptureEnvironment_FindAudioCaptureProtocol_Params
-    {
-    public:
-        MovieSceneCapture::UMovieSceneAudioCaptureProtocolBase*      ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -338,6 +248,96 @@ namespace CG::MovieSceneCapture
         Engine::UTexture*                                            Buffer;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         BasicTypes::FName                                            StreamName;                                              //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         BasicTypes::FString                                          ReturnValue;                                             //  0x0010(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCapture_SetImageCaptureProtocolType_Params
+    {
+    public:
+        MovieSceneCapture::UMovieSceneCaptureProtocolBase*           ProtocolType;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCapture_SetAudioCaptureProtocolType_Params
+    {
+    public:
+        MovieSceneCapture::UMovieSceneCaptureProtocolBase*           ProtocolType;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCapture_GetImageCaptureProtocol_Params
+    {
+    public:
+        MovieSceneCapture::UMovieSceneCaptureProtocolBase*           ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCapture_GetAudioCaptureProtocol_Params
+    {
+    public:
+        MovieSceneCapture::UMovieSceneCaptureProtocolBase*           ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCaptureEnvironment_IsCaptureInProgress_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCaptureEnvironment_GetCaptureFrameNumber_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCaptureEnvironment_GetCaptureElapsedTime_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCaptureEnvironment_FindImageCaptureProtocol_Params
+    {
+    public:
+        MovieSceneCapture::UMovieSceneImageCaptureProtocolBase*      ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMovieSceneCaptureEnvironment_FindAudioCaptureProtocol_Params
+    {
+    public:
+        MovieSceneCapture::UMovieSceneAudioCaptureProtocolBase*      ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

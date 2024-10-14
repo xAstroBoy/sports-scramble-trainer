@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -21,17 +21,6 @@ namespace CG::MediaAssets
     // --------------------------------------------------
     // # Enums
     // --------------------------------------------------
-    /**
-     * Enum /Script/MediaAssets.EMediaSoundChannels
-     */
-    enum class EMediaSoundChannels : uint8_t
-    {
-        Mono     = 0,
-        Stereo   = 1,
-        Surround = 2,
-        MAX      = 3
-    };
-
     /**
      * Enum /Script/MediaAssets.EMediaWebcamCaptureDeviceFilter
      */
@@ -81,6 +70,17 @@ namespace CG::MediaAssets
         Text     = 5,
         Video    = 6,
         MAX      = 7
+    };
+
+    /**
+     * Enum /Script/MediaAssets.EMediaSoundChannels
+     */
+    enum class EMediaSoundChannels : uint8_t
+    {
+        Mono     = 0,
+        Stereo   = 1,
+        Surround = 2,
+        MAX      = 3
     };
 
 }

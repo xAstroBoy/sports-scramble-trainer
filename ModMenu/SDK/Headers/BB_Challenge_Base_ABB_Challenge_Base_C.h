@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -87,7 +87,7 @@ namespace CG::BB_Challenge_Base
 
     public:
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void BB_CHG_05_SportManagerPlayerPitching();
         void BB_CHG_UpdateScore(int32_t score);
         void BB_CHG_SpawnSportManagerWithAI(bool OverrideBattingSkill, SportsScramble::EScramSkill OverrideSkill);

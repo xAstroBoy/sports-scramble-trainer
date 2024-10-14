@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -88,7 +88,7 @@ namespace CG::BB_Minigame_Pitching_Base
 
     public:
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void ClearCurrentBall();
         void GetMaxBounces(Engine::AActor* Actor, int32_t* Result, bool* RollingPitch);
         void UpdatePitchTargetScoreboard();

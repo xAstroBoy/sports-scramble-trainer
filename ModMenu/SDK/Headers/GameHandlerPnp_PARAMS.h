@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -120,7 +120,7 @@ namespace CG::GameHandlerPnp
      * 
      * Size -> 0x0000
      */
-    class AGameHandlerPnp_C_SpawnMinigame_Params
+    class AGameHandlerPnp_C_SpawnMiniGame_Params
     {
     public:
         BasicTypes::FName                                            Game;                                                    //  0x0000(0x0008)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
@@ -288,7 +288,7 @@ namespace CG::GameHandlerPnp
      * 
      * Size -> 0x0000
      */
-    class AGameHandlerPnp_C_ShutDown_Params
+    class AGameHandlerPnp_C_Shutdown_Params
     {
     };
 
@@ -422,7 +422,7 @@ namespace CG::GameHandlerPnp
      * 
      * Size -> 0x0000
      */
-    class AGameHandlerPnp_C_LevelReady_Params
+    class AGameHandlerPnp_C_LevelREady_Params
     {
     public:
         BasicTypes::FName                                            NewGeoLevel;                                             //  0x0000(0x0008)  (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)

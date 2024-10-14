@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -21,6 +21,16 @@ namespace CG::OculusHMD
     // --------------------------------------------------
     // # Enums
     // --------------------------------------------------
+    /**
+     * Enum /Script/OculusHMD.EBoundaryType
+     */
+    enum class EBoundaryType : uint8_t
+    {
+        Boundary_Outer    = 0,
+        Boundary_PlayArea = 1,
+        Boundary_MAX      = 2
+    };
+
     /**
      * Enum /Script/OculusHMD.ETiledMultiResLevel
      */
@@ -46,16 +56,6 @@ namespace CG::OculusHMD
         DeviceObjectZero = 5,
         All              = 6,
         MAX              = 7
-    };
-
-    /**
-     * Enum /Script/OculusHMD.EBoundaryType
-     */
-    enum class EBoundaryType : uint8_t
-    {
-        Boundary_Outer    = 0,
-        Boundary_PlayArea = 1,
-        Boundary_MAX      = 2
     };
 
 }

@@ -7,29 +7,29 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
 #include <cstdint>
 #include <vector>
 #include <string>
-#include "Engine_ENUMS.h"
-#include "BasicTypes_FString.h"
-#include "Engine_FSourceEffectChainEntry.h"
 #include "AudioMixer_FSubmixEffectDynamicsProcessorSettings.h"
 #include "AudioMixer_FSubmixEffectSubmixEQSettings.h"
 #include "AudioMixer_FSubmixEffectReverbSettings.h"
+#include "Engine_ENUMS.h"
+#include "BasicTypes_FString.h"
+#include "Engine_FSourceEffectChainEntry.h"
 
 // --------------------------------------------------
 // # Forwards
 // --------------------------------------------------
-namespace CG::Engine { class USoundSubmix; };
+namespace CG::Engine { class UReverbEffect; };
 namespace CG::CoreUObject { class UObject; };
+namespace CG::Engine { class USoundSubmix; };
 namespace CG::Engine { class USoundWave; };
 namespace CG::Engine { class USoundEffectSourcePresetChain; };
 namespace CG::Engine { class USoundEffectSubmixPreset; };
-namespace CG::Engine { class UReverbEffect; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -44,47 +44,42 @@ namespace CG::AudioMixer
      * 
      * Size -> 0x0000
      */
-    class USynthComponent_Stop_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USynthComponent_Start_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USynthComponent_SetVolumeMultiplier_Params
+    class USubmixEffectDynamicsProcessorPreset_SetSettings_Params
     {
     public:
-        float                                                        VolumeMultiplier;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        AudioMixer::FSubmixEffectDynamicsProcessorSettings           InSettings;                                              //  0x0000(0x0028)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class USynthComponent_SetSubmixSend_Params
+    class USubmixEffectSubmixEQPreset_SetSettings_Params
     {
     public:
-        Engine::USoundSubmix*                                        Submix;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        SendLevel;                                               //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        AudioMixer::FSubmixEffectSubmixEQSettings                    InSettings;                                              //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class USynthComponent_IsPlaying_Params
+    class USubmixEffectReverbPreset_SetSettingsWithReverbEffect_Params
     {
     public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Engine::UReverbEffect*                                       InReverbEffect;                                          //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        WetLevel;                                                //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        DryLevel;                                                //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USubmixEffectReverbPreset_SetSettings_Params
+    {
+    public:
+        AudioMixer::FSubmixEffectReverbSettings                      InSettings;                                              //  0x0000(0x0034)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -224,42 +219,47 @@ namespace CG::AudioMixer
      * 
      * Size -> 0x0000
      */
-    class USubmixEffectDynamicsProcessorPreset_SetSettings_Params
+    class USynthComponent_Stop_Params
     {
-    public:
-        AudioMixer::FSubmixEffectDynamicsProcessorSettings           InSettings;                                              //  0x0000(0x0028)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class USubmixEffectSubmixEQPreset_SetSettings_Params
+    class USynthComponent_Start_Params
     {
-    public:
-        AudioMixer::FSubmixEffectSubmixEQSettings                    InSettings;                                              //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class USubmixEffectReverbPreset_SetSettingsWithReverbEffect_Params
+    class USynthComponent_SetVolumeMultiplier_Params
     {
     public:
-        Engine::UReverbEffect*                                       InReverbEffect;                                          //  0x0000(0x0008)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        WetLevel;                                                //  0x0008(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        DryLevel;                                                //  0x000C(0x0004)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        VolumeMultiplier;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class USubmixEffectReverbPreset_SetSettings_Params
+    class USynthComponent_SetSubmixSend_Params
     {
     public:
-        AudioMixer::FSubmixEffectReverbSettings                      InSettings;                                              //  0x0000(0x0034)  (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
+        Engine::USoundSubmix*                                        Submix;                                                  //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        SendLevel;                                               //  0x0008(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USynthComponent_IsPlaying_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

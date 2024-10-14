@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -64,7 +64,7 @@ namespace CG::BB_Minigame_Pitching_Fielding
         Engine::AActor*                                              CurrentBallInPlay;                                       //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 
     public:
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
         void SpawnActors();
         void InitializeMode();

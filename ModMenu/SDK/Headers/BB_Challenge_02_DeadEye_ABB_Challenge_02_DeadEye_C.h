@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -76,7 +76,7 @@ namespace CG::BB_Challenge_02_DeadEye
         void UpdateScoreAndBoard(int32_t AddScore);
         void LaunchABall();
         void SpawnAndSetManager();
-        void SetupInfoText();
+        void SetUpInfoText();
         void UserConstructionScript();
         void InitiateBonusScore();
         void SpawnPitchingEquipment();

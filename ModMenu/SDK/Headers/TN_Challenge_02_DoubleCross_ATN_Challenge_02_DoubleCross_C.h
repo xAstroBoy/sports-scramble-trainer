@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -83,7 +83,7 @@ namespace CG::TN_Challenge_02_DoubleCross
     public:
         void SetupRackets();
         void SetupBallLaunchers();
-        void SetupInfoText();
+        void SetUpInfoText();
         void Initialize();
         void UserConstructionScript();
         void BallLaunched(Engine::AActor* Ball);

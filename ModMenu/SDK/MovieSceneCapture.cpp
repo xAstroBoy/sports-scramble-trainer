@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -22,23 +22,23 @@
 #include "Headers/MovieSceneCapture_UMovieSceneCaptureProtocolBase.h"
 #include "Headers/MovieSceneCapture_UMovieSceneAudioCaptureProtocolBase.h"
 #include "Headers/MovieSceneCapture_UNullAudioCaptureProtocol.h"
+#include "Headers/MovieSceneCapture_ULevelCapture.h"
+#include "Headers/MovieSceneCapture_UUserDefinedCaptureProtocol.h"
+#include "Headers/MovieSceneCapture_UUserDefinedImageCaptureProtocol.h"
+#include "Headers/MovieSceneCapture_UVideoCaptureProtocol.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol.h"
 #include "Headers/MovieSceneCapture_UCompressedImageSequenceProtocol.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol_BMP.h"
-#include "Headers/MovieSceneCapture_UMasterAudioSubmixCaptureProtocol.h"
-#include "Headers/MovieSceneCapture_UMovieSceneImageCaptureProtocolBase.h"
-#include "Headers/MovieSceneCapture_UCompositionGraphCaptureProtocol.h"
-#include "Headers/MovieSceneCapture_UFrameGrabberProtocol.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol_PNG.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol_JPG.h"
 #include "Headers/MovieSceneCapture_UImageSequenceProtocol_EXR.h"
 #include "Headers/MovieSceneCapture_IMovieSceneCaptureInterface.h"
 #include "Headers/MovieSceneCapture_UMovieSceneCapture.h"
-#include "Headers/MovieSceneCapture_ULevelCapture.h"
 #include "Headers/MovieSceneCapture_UMovieSceneCaptureEnvironment.h"
-#include "Headers/MovieSceneCapture_UUserDefinedCaptureProtocol.h"
-#include "Headers/MovieSceneCapture_UUserDefinedImageCaptureProtocol.h"
-#include "Headers/MovieSceneCapture_UVideoCaptureProtocol.h"
+#include "Headers/MovieSceneCapture_UMasterAudioSubmixCaptureProtocol.h"
+#include "Headers/MovieSceneCapture_UMovieSceneImageCaptureProtocolBase.h"
+#include "Headers/MovieSceneCapture_UCompositionGraphCaptureProtocol.h"
+#include "Headers/MovieSceneCapture_UFrameGrabberProtocol.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -87,213 +87,6 @@ namespace CG::MovieSceneCapture
             fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureProtocolBase.GetState");
         
         UMovieSceneCaptureProtocolBase_GetState_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D48C0
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCapture.SetImageCaptureProtocolType
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         MovieSceneCapture::UMovieSceneCaptureProtocolBase* ProtocolType                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UMovieSceneCapture::SetImageCaptureProtocolType(MovieSceneCapture::UMovieSceneCaptureProtocolBase* ProtocolType)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCapture.SetImageCaptureProtocolType");
-        
-        UMovieSceneCapture_SetImageCaptureProtocolType_Params params {};
-        params.ProtocolType = ProtocolType;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D4840
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCapture.SetAudioCaptureProtocolType
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         MovieSceneCapture::UMovieSceneCaptureProtocolBase* ProtocolType                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UMovieSceneCapture::SetAudioCaptureProtocolType(MovieSceneCapture::UMovieSceneCaptureProtocolBase* ProtocolType)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCapture.SetAudioCaptureProtocolType");
-        
-        UMovieSceneCapture_SetAudioCaptureProtocolType_Params params {};
-        params.ProtocolType = ProtocolType;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D4550
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCapture.GetImageCaptureProtocol
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         MovieSceneCapture::UMovieSceneCaptureProtocolBase* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    MovieSceneCapture::UMovieSceneCaptureProtocolBase* UMovieSceneCapture::GetImageCaptureProtocol()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCapture.GetImageCaptureProtocol");
-        
-        UMovieSceneCapture_GetImageCaptureProtocol_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D44B0
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCapture.GetAudioCaptureProtocol
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         MovieSceneCapture::UMovieSceneCaptureProtocolBase* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    MovieSceneCapture::UMovieSceneCaptureProtocolBase* UMovieSceneCapture::GetAudioCaptureProtocol()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCapture.GetAudioCaptureProtocol");
-        
-        UMovieSceneCapture_GetAudioCaptureProtocol_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D4590
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.IsCaptureInProgress
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UMovieSceneCaptureEnvironment::STATIC_IsCaptureInProgress()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.IsCaptureInProgress");
-        
-        UMovieSceneCaptureEnvironment_IsCaptureInProgress_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D4500
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.GetCaptureFrameNumber
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    int32_t UMovieSceneCaptureEnvironment::STATIC_GetCaptureFrameNumber()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.GetCaptureFrameNumber");
-        
-        UMovieSceneCaptureEnvironment_GetCaptureFrameNumber_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D44D0
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.GetCaptureElapsedTime
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UMovieSceneCaptureEnvironment::STATIC_GetCaptureElapsedTime()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.GetCaptureElapsedTime");
-        
-        UMovieSceneCaptureEnvironment_GetCaptureElapsedTime_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D4210
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.FindImageCaptureProtocol
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         MovieSceneCapture::UMovieSceneImageCaptureProtocolBase* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    MovieSceneCapture::UMovieSceneImageCaptureProtocolBase* UMovieSceneCaptureEnvironment::STATIC_FindImageCaptureProtocol()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.FindImageCaptureProtocol");
-        
-        UMovieSceneCaptureEnvironment_FindImageCaptureProtocol_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010D41E0
-     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.FindAudioCaptureProtocol
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         MovieSceneCapture::UMovieSceneAudioCaptureProtocolBase* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    MovieSceneCapture::UMovieSceneAudioCaptureProtocolBase* UMovieSceneCaptureEnvironment::STATIC_FindAudioCaptureProtocol()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.FindAudioCaptureProtocol");
-        
-        UMovieSceneCaptureEnvironment_FindAudioCaptureProtocol_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -756,6 +549,213 @@ namespace CG::MovieSceneCapture
         UUserDefinedImageCaptureProtocol_GenerateFilenameForBuffer_Params params {};
         params.Buffer = Buffer;
         params.StreamName = StreamName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D48C0
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCapture.SetImageCaptureProtocolType
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         MovieSceneCapture::UMovieSceneCaptureProtocolBase* ProtocolType                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMovieSceneCapture::SetImageCaptureProtocolType(MovieSceneCapture::UMovieSceneCaptureProtocolBase* ProtocolType)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCapture.SetImageCaptureProtocolType");
+        
+        UMovieSceneCapture_SetImageCaptureProtocolType_Params params {};
+        params.ProtocolType = ProtocolType;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D4840
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCapture.SetAudioCaptureProtocolType
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         MovieSceneCapture::UMovieSceneCaptureProtocolBase* ProtocolType                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UMovieSceneCapture::SetAudioCaptureProtocolType(MovieSceneCapture::UMovieSceneCaptureProtocolBase* ProtocolType)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCapture.SetAudioCaptureProtocolType");
+        
+        UMovieSceneCapture_SetAudioCaptureProtocolType_Params params {};
+        params.ProtocolType = ProtocolType;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D4550
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCapture.GetImageCaptureProtocol
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         MovieSceneCapture::UMovieSceneCaptureProtocolBase* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    MovieSceneCapture::UMovieSceneCaptureProtocolBase* UMovieSceneCapture::GetImageCaptureProtocol()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCapture.GetImageCaptureProtocol");
+        
+        UMovieSceneCapture_GetImageCaptureProtocol_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D44B0
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCapture.GetAudioCaptureProtocol
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         MovieSceneCapture::UMovieSceneCaptureProtocolBase* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    MovieSceneCapture::UMovieSceneCaptureProtocolBase* UMovieSceneCapture::GetAudioCaptureProtocol()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCapture.GetAudioCaptureProtocol");
+        
+        UMovieSceneCapture_GetAudioCaptureProtocol_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D4590
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.IsCaptureInProgress
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UMovieSceneCaptureEnvironment::STATIC_IsCaptureInProgress()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.IsCaptureInProgress");
+        
+        UMovieSceneCaptureEnvironment_IsCaptureInProgress_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D4500
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.GetCaptureFrameNumber
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    int32_t UMovieSceneCaptureEnvironment::STATIC_GetCaptureFrameNumber()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.GetCaptureFrameNumber");
+        
+        UMovieSceneCaptureEnvironment_GetCaptureFrameNumber_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D44D0
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.GetCaptureElapsedTime
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float UMovieSceneCaptureEnvironment::STATIC_GetCaptureElapsedTime()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.GetCaptureElapsedTime");
+        
+        UMovieSceneCaptureEnvironment_GetCaptureElapsedTime_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D4210
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.FindImageCaptureProtocol
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         MovieSceneCapture::UMovieSceneImageCaptureProtocolBase* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    MovieSceneCapture::UMovieSceneImageCaptureProtocolBase* UMovieSceneCaptureEnvironment::STATIC_FindImageCaptureProtocol()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.FindImageCaptureProtocol");
+        
+        UMovieSceneCaptureEnvironment_FindImageCaptureProtocol_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010D41E0
+     *         Name   -> Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.FindAudioCaptureProtocol
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         MovieSceneCapture::UMovieSceneAudioCaptureProtocolBase* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    MovieSceneCapture::UMovieSceneAudioCaptureProtocolBase* UMovieSceneCaptureEnvironment::STATIC_FindAudioCaptureProtocol()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieSceneCapture.MovieSceneCaptureEnvironment.FindAudioCaptureProtocol");
+        
+        UMovieSceneCaptureEnvironment_FindAudioCaptureProtocol_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -21,18 +21,6 @@ namespace CG::SportsScramble
     // --------------------------------------------------
     // # Enums
     // --------------------------------------------------
-    /**
-     * Enum /Script/SportsScramble.ESetMode
-     */
-    enum class ESetMode : uint8_t
-    {
-        Random         = 0,
-        Sequence       = 1,
-        RandomSequence = 2,
-        Count          = 3,
-        MAX            = 4
-    };
-
     /**
      * Enum /Script/SportsScramble.EScramPendingGameFailure
      */
@@ -56,31 +44,6 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EBaseballPlayerRole
-     */
-    enum class EBaseballPlayerRole : uint8_t
-    {
-        Pitcher = 0,
-        Batter  = 1,
-        Count   = 2,
-        MAX     = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballShotType
-     */
-    enum class EBaseballShotType : uint8_t
-    {
-        None   = 0,
-        Pitch  = 1,
-        Light  = 2,
-        Normal = 3,
-        Charge = 4,
-        Count  = 5,
-        MAX    = 6
-    };
-
-    /**
      * Enum /Script/SportsScramble.EBowlingLanePitCorrection
      */
     enum class EBowlingLanePitCorrection : uint8_t
@@ -89,6 +52,101 @@ namespace CG::SportsScramble
         CorrectLeft  = 1,
         CorrectRight = 2,
         MAX          = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ESetMode
+     */
+    enum class ESetMode : uint8_t
+    {
+        Random         = 0,
+        Sequence       = 1,
+        RandomSequence = 2,
+        Count          = 3,
+        MAX            = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingAIAnimState
+     */
+    enum class EBowlingAIAnimState : uint8_t
+    {
+        Idle      = 0,
+        Spawn     = 1,
+        Turn      = 2,
+        PickUp    = 3,
+        Roll      = 4,
+        Celebrate = 5,
+        Lament    = 6,
+        MAX       = 7
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingRollResult
+     */
+    enum class EBowlingRollResult : uint8_t
+    {
+        None    = 0,
+        Partial = 1,
+        Spare   = 2,
+        Strike  = 3,
+        MAX     = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingAuthority
+     */
+    enum class EBowlingAuthority : uint8_t
+    {
+        Authority = 0,
+        Remote    = 1,
+        MAX       = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingAvatarAnimState
+     */
+    enum class EBowlingAvatarAnimState : uint8_t
+    {
+        Idle             = 0,
+        Spawn            = 1,
+        LeftHandedThrow  = 2,
+        RightHandedThrow = 3,
+        MAX              = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramFlightNoise
+     */
+    enum class EScramFlightNoise : uint8_t
+    {
+        Ascending  = 0,
+        Descending = 1,
+        MAX        = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramStabilizationType
+     */
+    enum class EScramStabilizationType : uint8_t
+    {
+        None     = 0,
+        Rolling  = 1,
+        Discus   = 2,
+        AlwaysUp = 3,
+        MAX      = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingHookMethod
+     */
+    enum class EBowlingHookMethod : uint8_t
+    {
+        None  = 0,
+        Roll  = 1,
+        Yaw   = 2,
+        Count = 3,
+        MAX   = 4
     };
 
     /**
@@ -120,177 +178,14 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EBPOnlineSessionState
+     * Enum /Script/SportsScramble.EScramBallTriggerShape
      */
-    enum class EBPOnlineSessionState : uint8_t
+    enum class EScramBallTriggerShape : uint8_t
     {
-        NoSession  = 0,
-        Creating   = 1,
-        Pending    = 2,
-        Starting   = 3,
-        InProgress = 4,
-        Ending     = 5,
-        Ended      = 6,
-        Destroying = 7,
-        MAX        = 8
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballShotSpeed
-     */
-    enum class EBaseballShotSpeed : uint8_t
-    {
-        Miss  = 0,
-        Light = 1,
-        Solid = 2,
-        Good  = 3,
-        Great = 4,
-        Count = 5,
-        MAX   = 6
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBowlingRollResult
-     */
-    enum class EBowlingRollResult : uint8_t
-    {
-        None    = 0,
-        Partial = 1,
-        Spare   = 2,
-        Strike  = 3,
-        MAX     = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballScrambleTargetLocations
-     */
-    enum class EBaseballScrambleTargetLocations : uint8_t
-    {
-        UpperRight = 0,
-        UpperLeft  = 1,
-        LowerRight = 2,
-        LowerLeft  = 3,
-        MAX        = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBowlingAuthority
-     */
-    enum class EBowlingAuthority : uint8_t
-    {
-        Authority = 0,
-        Remote    = 1,
-        MAX       = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBPOnlinePresenceState
-     */
-    enum class EBPOnlinePresenceState : uint8_t
-    {
-        Online       = 0,
-        Offline      = 1,
-        Away         = 2,
-        ExtendedAway = 3,
-        DoNotDisturb = 4,
-        Chat         = 5,
-        MAX          = 6
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EStrikeZoneRegion
-     */
-    enum class EStrikeZoneRegion : uint8_t
-    {
-        UpperLeft  = 0,
-        LowerLeft  = 1,
-        UpperRight = 2,
-        LowerRight = 3,
-        NearBall   = 4,
-        FarBall    = 5,
-        None       = 6,
-        MAX        = 7
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballInstrumentType
-     */
-    enum class EBaseballInstrumentType : uint8_t
-    {
-        Any            = 0,
-        AluminumBat    = 1,
-        BaseballBat    = 2,
-        CricketBat     = 3,
-        FishRacket     = 4,
-        FoamFinger     = 5,
-        GolfClub       = 6,
-        HockeyStick    = 7,
-        PingPongPaddle = 8,
-        PoolNoodle     = 9,
-        PoolCue        = 10,
-        TennisRacket   = 11,
-        GoldenBat      = 12,
-        Count          = 13,
-        MAX            = 14
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBPServerPresenceSearchType
-     */
-    enum class EBPServerPresenceSearchType : uint8_t
-    {
-        AllServers           = 0,
-        ClientServersOnly    = 1,
-        DedicatedServersOnly = 2,
-        MAX                  = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballBatterAnimState
-     */
-    enum class EBaseballBatterAnimState : uint8_t
-    {
-        Idle   = 0,
-        Spawn  = 1,
-        Fidget = 2,
-        Swing  = 3,
-        MAX    = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballPitcherAnimState
-     */
-    enum class EBaseballPitcherAnimState : uint8_t
-    {
-        Idle      = 0,
-        Spawn     = 1,
-        Catch     = 2,
-        Caught    = 3,
-        PrepThrow = 4,
-        Throw     = 5,
-        MAX       = 6
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBlueprintAsyncResultSwitch
-     */
-    enum class EBlueprintAsyncResultSwitch : uint8_t
-    {
-        OnSuccess    = 0,
-        AsyncLoading = 1,
-        OnFailure    = 2,
-        MAX          = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballCatcherThrowSide
-     */
-    enum class EBaseballCatcherThrowSide : uint8_t
-    {
-        Left   = 0,
-        Middle = 1,
-        Right  = 2,
-        MAX    = 3
+        Circle    = 0,
+        Rectangle = 1,
+        Count     = 2,
+        MAX       = 3
     };
 
     /**
@@ -319,35 +214,15 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EBaseballRunnerAnimState
+     * Enum /Script/SportsScramble.EBaseballScrambleTargetLocations
      */
-    enum class EBaseballRunnerAnimState : uint8_t
+    enum class EBaseballScrambleTargetLocations : uint8_t
     {
-        None       = 0,
-        Idle       = 1,
-        Locomotion = 2,
-        Despawn    = 3,
+        UpperRight = 0,
+        UpperLeft  = 1,
+        LowerRight = 2,
+        LowerLeft  = 3,
         MAX        = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBlueprintResultSwitch
-     */
-    enum class EBlueprintResultSwitch : uint8_t
-    {
-        OnSuccess = 0,
-        OnFailure = 1,
-        MAX       = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballCatcherAnimState
-     */
-    enum class EBaseballCatcherAnimState : uint8_t
-    {
-        Idle  = 0,
-        Throw = 1,
-        MAX   = 2
     };
 
     /**
@@ -365,417 +240,19 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EBattingAvatarAnimState
+     * Enum /Script/SportsScramble.EBaseballAIAnimNotify
      */
-    enum class EBattingAvatarAnimState : uint8_t
+    enum class EBaseballAIAnimNotify : uint8_t
     {
-        Idle           = 0,
-        Spawn          = 1,
-        SwingLeftSide  = 2,
-        SwingRightSide = 3,
-        MAX            = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ESessionSettingSearchResult
-     */
-    enum class ESessionSettingSearchResult : uint8_t
-    {
-        Found     = 0,
-        NotFound  = 1,
-        WrongType = 2,
-        MAX       = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballFielderAnimState
-     */
-    enum class EBaseballFielderAnimState : uint8_t
-    {
-        None       = 0,
-        Idle       = 1,
-        Locomotion = 2,
-        CatchWait  = 3,
-        Scoop      = 4,
-        Catch      = 5,
-        Drop       = 6,
-        MAX        = 7
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EDodgeballShotSpin
-     */
-    enum class EDodgeballShotSpin : uint8_t
-    {
-        Zero   = 0,
-        Slow   = 1,
-        Medium = 2,
-        Fast   = 3,
-        Count  = 4,
-        MAX    = 5
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBPLoginStatus
-     */
-    enum class EBPLoginStatus : uint8_t
-    {
-        NotLoggedIn       = 0,
-        UsingLocalProfile = 1,
-        LoggedIn          = 2,
-        MAX               = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EOnlineComparisonOpRedux
-     */
-    enum class EOnlineComparisonOpRedux : uint8_t
-    {
-        Equals            = 0,
-        NotEquals         = 1,
-        GreaterThan       = 2,
-        GreaterThanEquals = 3,
-        LessThan          = 4,
-        LessThanEquals    = 5,
-        MAX               = 6
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EDodgeballAIAnimNotify
-     */
-    enum class EDodgeballAIAnimNotify : uint8_t
-    {
-        StandStill = 0,
-        Disappear  = 1,
-        MAX        = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EDodgeballShotSpeed
-     */
-    enum class EDodgeballShotSpeed : uint8_t
-    {
-        Flub   = 0,
-        Light  = 1,
-        Medium = 2,
-        Hard   = 3,
-        Count  = 4,
-        MAX    = 5
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramGrabMode
-     */
-    enum class EScramGrabMode : uint8_t
-    {
-        Trigger = 0,
-        Grip    = 1,
-        Count   = 2,
-        MAX     = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBPUserPrivileges
-     */
-    enum class EBPUserPrivileges : uint8_t
-    {
-        CanPlay                    = 0,
-        CanPlayOnline              = 1,
-        CanCommunicateOnline       = 2,
-        CanUseUserGeneratedContent = 3,
-        MAX                        = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramHandedness
-     */
-    enum class EScramHandedness : uint8_t
-    {
-        None      = 0,
-        Left      = 1,
-        Right     = 2,
-        Ambiguous = 3,
-        MAX       = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramSkill
-     */
-    enum class EScramSkill : uint8_t
-    {
-        Casual   = 0,
-        Standard = 1,
-        Pro      = 2,
-        Count    = 3,
-        MAX      = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EVerticalFieldZone
-     */
-    enum class EVerticalFieldZone : uint8_t
-    {
-        GroundBall = 0,
-        LineDrive  = 1,
-        SweetSpot  = 2,
-        PopFly     = 3,
-        Count      = 4,
-        MAX        = 5
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBowlingAIAnimState
-     */
-    enum class EBowlingAIAnimState : uint8_t
-    {
-        Idle      = 0,
-        Spawn     = 1,
-        Turn      = 2,
-        PickUp    = 3,
-        Roll      = 4,
-        Celebrate = 5,
-        Lament    = 6,
-        MAX       = 7
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EDifficulty
-     */
-    enum class EDifficulty : uint8_t
-    {
-        Easy   = 0,
-        Normal = 1,
-        Hard   = 2,
-        Count  = 3,
-        MAX    = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EDodgeballInstrumentType
-     */
-    enum class EDodgeballInstrumentType : uint8_t
-    {
-        Any                      = 0,
-        BaseballBat              = 1,
-        CricketBat               = 2,
-        FishRacket               = 3,
-        FoamFinger               = 4,
-        GolfClub                 = 5,
-        LacrosseStick            = 6,
-        PingPongPaddle           = 7,
-        PoolNoodle               = 8,
-        DodgeballRacket          = 9,
-        DodgeballRacketUpgrade01 = 10,
-        Count                    = 11,
-        MAX                      = 12
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EThrowDirection
-     */
-    enum class EThrowDirection : uint8_t
-    {
-        Left   = 0,
-        Center = 1,
-        Right  = 2,
-        MAX    = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramIntersectRadiusMode
-     */
-    enum class EScramIntersectRadiusMode : uint8_t
-    {
-        Center  = 0,
-        Partial = 1,
-        Full    = 2,
-        MAX     = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EDodgeballPawnAnimState
-     */
-    enum class EDodgeballPawnAnimState : uint8_t
-    {
-        Idle     = 0,
-        Throw    = 1,
-        Selected = 2,
-        Hit      = 3,
-        MAX      = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBowlingAvatarAnimState
-     */
-    enum class EBowlingAvatarAnimState : uint8_t
-    {
-        Idle             = 0,
-        Spawn            = 1,
-        LeftHandedThrow  = 2,
-        RightHandedThrow = 3,
-        MAX              = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EFloorResult
-     */
-    enum class EFloorResult : uint8_t
-    {
-        None    = 0,
-        Bounced = 1,
-        OnFloor = 2,
-        MAX     = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBowlingHookMethod
-     */
-    enum class EBowlingHookMethod : uint8_t
-    {
-        None  = 0,
-        Roll  = 1,
-        Yaw   = 2,
-        Count = 3,
-        MAX   = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EInferredContactActivationMode
-     */
-    enum class EInferredContactActivationMode : uint8_t
-    {
-        AlwaysOff    = 0,
-        CheckTracked = 1,
-        AlwaysOn     = 2,
-        Count        = 3,
-        MAX          = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBowlingEvent
-     */
-    enum class EBowlingEvent : uint8_t
-    {
-        None             = 0,
-        Strike           = 1,
-        Spare            = 2,
-        GutterBall       = 3,
-        HitSomePins      = 4,
-        GameEnd          = 5,
-        LeftHandedThrow  = 6,
-        RightHandedThrow = 7,
-        MAX              = 8
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EPitchingAvatarAnimState
-     */
-    enum class EPitchingAvatarAnimState : uint8_t
-    {
-        Idle  = 0,
-        Spawn = 1,
-        Catch = 2,
-        Hold  = 3,
-        Throw = 4,
-        MAX   = 5
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ETennisEvent
-     */
-    enum class ETennisEvent : uint8_t
-    {
-        WonPoint     = 0,
-        WonGame      = 1,
-        WonMatch     = 2,
-        Ace          = 3,
-        Let          = 4,
-        DoubleFault  = 5,
-        NowServing   = 6,
-        BallInPlay   = 7,
-        Out          = 8,
-        ServiceFault = 9,
-        NormalFault  = 10,
-        None         = 11,
-        MAX          = 12
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ELaneType
-     */
-    enum class ELaneType : uint8_t
-    {
-        Default          = 0,
-        Croquet          = 1,
-        SpaceAttackers   = 2,
-        Bumpers          = 3,
-        BigGutters       = 4,
-        WhackMoles       = 5,
-        IceRink          = 6,
-        Clown            = 7,
-        ScoreField       = 8,
-        FigureEight      = 9,
-        ElectricFootball = 10,
-        MineField        = 11,
-        CurvedPath       = 12,
-        ExtraPins        = 13,
-        Conveyor         = 14,
-        BankShot         = 15,
-        MovingLane       = 16,
-        Hoops            = 17,
-        LeftLoop         = 18,
-        RightLoop        = 19,
-        SkeeBall         = 20,
-        MAX              = 21
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EPropVisibilityMode
-     */
-    enum class EPropVisibilityMode : uint8_t
-    {
-        ShowToPitcher = 0,
-        ShowToBatter  = 1,
-        ShowToAll     = 2,
-        MAX           = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EPlayByPlayEventInstigator
-     */
-    enum class EPlayByPlayEventInstigator : uint8_t
-    {
-        Player   = 0,
-        Opponent = 1,
-        MAX      = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBallState
-     */
-    enum class EBallState : uint8_t
-    {
-        In      = 0,
-        Foul    = 1,
-        Double  = 2,
-        Triple  = 3,
-        HomeRun = 4,
-        Trick   = 5,
-        MAX     = 6
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramSport
-     */
-    enum class EScramSport : uint8_t
-    {
-        None      = 0,
-        Tennis    = 1,
-        Baseball  = 2,
-        Bowling   = 3,
-        Dodgeball = 4,
-        Count     = 5,
-        MAX       = 6
+        StandStill        = 0,
+        SetCatchLocation  = 1,
+        ReleaseBall       = 2,
+        SwingEnd          = 3,
+        FreebieHit        = 4,
+        ReplaceBat        = 5,
+        ScoreAfterDrop    = 6,
+        EndOfDropReaction = 7,
+        MAX               = 8
     };
 
     /**
@@ -803,25 +280,43 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EGamePauseReason
+     * Enum /Script/SportsScramble.EStrikeZoneRegion
      */
-    enum class EGamePauseReason : uint8_t
+    enum class EStrikeZoneRegion : uint8_t
     {
-        PlayerInput         = 0,
-        PlayerOutOfBoundary = 1,
-        Disconnect          = 2,
-        Count               = 3,
-        MAX                 = 4
+        UpperLeft  = 0,
+        LowerLeft  = 1,
+        UpperRight = 2,
+        LowerRight = 3,
+        NearBall   = 4,
+        FarBall    = 5,
+        None       = 6,
+        MAX        = 7
     };
 
     /**
-     * Enum /Script/SportsScramble.EBattingSide
+     * Enum /Script/SportsScramble.EDodgeballShotSpin
      */
-    enum class EBattingSide : uint8_t
+    enum class EDodgeballShotSpin : uint8_t
     {
-        Left  = 0,
-        Right = 1,
-        MAX   = 2
+        Zero   = 0,
+        Slow   = 1,
+        Medium = 2,
+        Fast   = 3,
+        Count  = 4,
+        MAX    = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballBatterAnimState
+     */
+    enum class EBaseballBatterAnimState : uint8_t
+    {
+        Idle   = 0,
+        Spawn  = 1,
+        Fidget = 2,
+        Swing  = 3,
+        MAX    = 4
     };
 
     /**
@@ -837,18 +332,513 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.ETennisShotType
+     * Enum /Script/SportsScramble.EDodgeballShotSpeed
      */
-    enum class ETennisShotType : uint8_t
+    enum class EDodgeballShotSpeed : uint8_t
     {
-        None        = 0,
-        Light       = 1,
-        Normal      = 2,
-        NormalSlice = 3,
-        Charge      = 4,
-        ChargeSlice = 5,
-        Count       = 6,
-        MAX         = 7
+        Flub   = 0,
+        Light  = 1,
+        Medium = 2,
+        Hard   = 3,
+        Count  = 4,
+        MAX    = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBatterState
+     */
+    enum class EBatterState : uint8_t
+    {
+        Waiting         = 0,
+        Batting         = 1,
+        LettingABallGo  = 2,
+        Swinging        = 3,
+        WaitAfterSwing  = 4,
+        FreebieWaiting  = 5,
+        FreebieSwinging = 6,
+        MAX             = 7
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballCatcherThrowSide
+     */
+    enum class EBaseballCatcherThrowSide : uint8_t
+    {
+        Left   = 0,
+        Middle = 1,
+        Right  = 2,
+        MAX    = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingThrowType
+     */
+    enum class EBowlingThrowType : uint8_t
+    {
+        Pie      = 0,
+        Straight = 1,
+        Hook     = 2,
+        Count    = 3,
+        MAX      = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballCatcherAnimState
+     */
+    enum class EBaseballCatcherAnimState : uint8_t
+    {
+        Idle  = 0,
+        Throw = 1,
+        MAX   = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ECatcherGloveMode
+     */
+    enum class ECatcherGloveMode : uint8_t
+    {
+        Default     = 0,
+        Drifting    = 1,
+        Scripted    = 2,
+        StickDriven = 3,
+        MAX         = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingThrowSpin
+     */
+    enum class EBowlingThrowSpin : uint8_t
+    {
+        Zero   = 0,
+        Slow   = 1,
+        Medium = 2,
+        Fast   = 3,
+        Count  = 4,
+        MAX    = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballFielderAnimState
+     */
+    enum class EBaseballFielderAnimState : uint8_t
+    {
+        None       = 0,
+        Idle       = 1,
+        Locomotion = 2,
+        CatchWait  = 3,
+        Scoop      = 4,
+        Catch      = 5,
+        Drop       = 6,
+        MAX        = 7
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EDodgeballInstrumentType
+     */
+    enum class EDodgeballInstrumentType : uint8_t
+    {
+        Any                      = 0,
+        BaseballBat              = 1,
+        CricketBat               = 2,
+        FishRacket               = 3,
+        FoamFinger               = 4,
+        GolfClub                 = 5,
+        LacrosseStick            = 6,
+        PingPongPaddle           = 7,
+        PoolNoodle               = 8,
+        DodgeballRacket          = 9,
+        DodgeballRacketUpgrade01 = 10,
+        Count                    = 11,
+        MAX                      = 12
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingThrowSpeed
+     */
+    enum class EBowlingThrowSpeed : uint8_t
+    {
+        Pie    = 0,
+        Low    = 1,
+        Medium = 2,
+        High   = 3,
+        Count  = 4,
+        MAX    = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ECatcherAIState
+     */
+    enum class ECatcherAIState : uint8_t
+    {
+        WaitingToThrowBall     = 0,
+        PreparingThrow         = 1,
+        WaitingForPitcherCatch = 2,
+        WaitingForPitcherPitch = 3,
+        Intercepting           = 4,
+        WaitingToCallBall      = 5,
+        PausingAfterCatch      = 6,
+        Selecting              = 7,
+        MAX                    = 8
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballPlayerRole
+     */
+    enum class EBaseballPlayerRole : uint8_t
+    {
+        Pitcher = 0,
+        Batter  = 1,
+        Count   = 2,
+        MAX     = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EDodgeballPawnAnimState
+     */
+    enum class EDodgeballPawnAnimState : uint8_t
+    {
+        Idle     = 0,
+        Throw    = 1,
+        Selected = 2,
+        Hit      = 3,
+        MAX      = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EPitcherState
+     */
+    enum class EPitcherState : uint8_t
+    {
+        WaitingForBall   = 0,
+        WaitingToPitch   = 1,
+        DelayBeforePitch = 2,
+        Preparing        = 3,
+        Throwing         = 4,
+        MAX              = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballShotType
+     */
+    enum class EBaseballShotType : uint8_t
+    {
+        None   = 0,
+        Pitch  = 1,
+        Light  = 2,
+        Normal = 3,
+        Charge = 4,
+        Count  = 5,
+        MAX    = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScrambleTargetAiValue
+     */
+    enum class EScrambleTargetAiValue : uint8_t
+    {
+        Positive = 0,
+        Neutral  = 1,
+        Negative = 2,
+        MAX      = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EInferredContactActivationMode
+     */
+    enum class EInferredContactActivationMode : uint8_t
+    {
+        AlwaysOff    = 0,
+        CheckTracked = 1,
+        AlwaysOn     = 2,
+        Count        = 3,
+        MAX          = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EFielderAIState
+     */
+    enum class EFielderAIState : uint8_t
+    {
+        Waiting             = 0,
+        Intercepting        = 1,
+        WaitingToCatch      = 2,
+        Catching            = 3,
+        Dropping            = 4,
+        WatchingCatch       = 5,
+        PausingBeforeReturn = 6,
+        Returning           = 7,
+        MAX                 = 8
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballShotSpeed
+     */
+    enum class EBaseballShotSpeed : uint8_t
+    {
+        Miss  = 0,
+        Light = 1,
+        Solid = 2,
+        Good  = 3,
+        Great = 4,
+        Count = 5,
+        MAX   = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingAIState
+     */
+    enum class EBowlingAIState : uint8_t
+    {
+        WaitingForBall        = 0,
+        TurningToLook         = 1,
+        CollectingBall        = 2,
+        TurningToThrow        = 3,
+        WaitingForThrowWindow = 4,
+        Throwing              = 5,
+        WaitingForPinHit      = 6,
+        WaitingForScore       = 7,
+        Reacting              = 8,
+        MAX                   = 9
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EDifficulty
+     */
+    enum class EDifficulty : uint8_t
+    {
+        Easy   = 0,
+        Normal = 1,
+        Hard   = 2,
+        Count  = 3,
+        MAX    = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EPitchingAvatarAnimState
+     */
+    enum class EPitchingAvatarAnimState : uint8_t
+    {
+        Idle  = 0,
+        Spawn = 1,
+        Catch = 2,
+        Hold  = 3,
+        Throw = 4,
+        MAX   = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramIntersectRadiusMode
+     */
+    enum class EScramIntersectRadiusMode : uint8_t
+    {
+        Center  = 0,
+        Partial = 1,
+        Full    = 2,
+        MAX     = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingAIAnimNotify
+     */
+    enum class EBowlingAIAnimNotify : uint8_t
+    {
+        DoneWithTurn     = 0,
+        PickUp           = 1,
+        DoneWithPickUp   = 2,
+        Roll             = 3,
+        StartTurn        = 4,
+        DoneWithReaction = 5,
+        MAX              = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EPropVisibilityMode
+     */
+    enum class EPropVisibilityMode : uint8_t
+    {
+        ShowToPitcher = 0,
+        ShowToBatter  = 1,
+        ShowToAll     = 2,
+        MAX           = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballInstrumentType
+     */
+    enum class EBaseballInstrumentType : uint8_t
+    {
+        Any            = 0,
+        AluminumBat    = 1,
+        BaseballBat    = 2,
+        CricketBat     = 3,
+        FishRacket     = 4,
+        FoamFinger     = 5,
+        GolfClub       = 6,
+        HockeyStick    = 7,
+        PingPongPaddle = 8,
+        PoolNoodle     = 9,
+        PoolCue        = 10,
+        TennisRacket   = 11,
+        GoldenBat      = 12,
+        Count          = 13,
+        MAX            = 14
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ECoverVignetteType
+     */
+    enum class ECoverVignetteType : uint8_t
+    {
+        Trophy     = 0,
+        GameInvite = 1,
+        MAX        = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EFloorResult
+     */
+    enum class EFloorResult : uint8_t
+    {
+        None    = 0,
+        Bounced = 1,
+        OnFloor = 2,
+        MAX     = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EPlayByPlayEventInstigator
+     */
+    enum class EPlayByPlayEventInstigator : uint8_t
+    {
+        Player   = 0,
+        Opponent = 1,
+        MAX      = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramCourtMatchType
+     */
+    enum class EScramCourtMatchType : uint8_t
+    {
+        None     = 0,
+        Singles  = 1,
+        Doubles  = 2,
+        NetClear = 3,
+        MAX      = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballPitcherAnimState
+     */
+    enum class EBaseballPitcherAnimState : uint8_t
+    {
+        Idle      = 0,
+        Spawn     = 1,
+        Catch     = 2,
+        Caught    = 3,
+        PrepThrow = 4,
+        Throw     = 5,
+        MAX       = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EDodgeballAIAnimNotify
+     */
+    enum class EDodgeballAIAnimNotify : uint8_t
+    {
+        StandStill = 0,
+        Disappear  = 1,
+        MAX        = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBowlingEvent
+     */
+    enum class EBowlingEvent : uint8_t
+    {
+        None             = 0,
+        Strike           = 1,
+        Spare            = 2,
+        GutterBall       = 3,
+        HitSomePins      = 4,
+        GameEnd          = 5,
+        LeftHandedThrow  = 6,
+        RightHandedThrow = 7,
+        MAX              = 8
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballRunnerAnimState
+     */
+    enum class EBaseballRunnerAnimState : uint8_t
+    {
+        None       = 0,
+        Idle       = 1,
+        Locomotion = 2,
+        Despawn    = 3,
+        MAX        = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramHandedness
+     */
+    enum class EScramHandedness : uint8_t
+    {
+        None      = 0,
+        Left      = 1,
+        Right     = 2,
+        Ambiguous = 3,
+        MAX       = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBattingAvatarAnimState
+     */
+    enum class EBattingAvatarAnimState : uint8_t
+    {
+        Idle           = 0,
+        Spawn          = 1,
+        SwingLeftSide  = 2,
+        SwingRightSide = 3,
+        MAX            = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EVerticalFieldZone
+     */
+    enum class EVerticalFieldZone : uint8_t
+    {
+        GroundBall = 0,
+        LineDrive  = 1,
+        SweetSpot  = 2,
+        PopFly     = 3,
+        Count      = 4,
+        MAX        = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EOnlineComparisonOpRedux
+     */
+    enum class EOnlineComparisonOpRedux : uint8_t
+    {
+        Equals            = 0,
+        NotEquals         = 1,
+        GreaterThan       = 2,
+        GreaterThanEquals = 3,
+        LessThan          = 4,
+        LessThanEquals    = 5,
+        MAX               = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EThrowDirection
+     */
+    enum class EThrowDirection : uint8_t
+    {
+        Left   = 0,
+        Center = 1,
+        Right  = 2,
+        MAX    = 3
     };
 
     /**
@@ -883,15 +873,19 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EBowlingThrowType
+     * Enum /Script/SportsScramble.EBPOnlineSessionState
      */
-    enum class EBowlingThrowType : uint8_t
+    enum class EBPOnlineSessionState : uint8_t
     {
-        Pie      = 0,
-        Straight = 1,
-        Hook     = 2,
-        Count    = 3,
-        MAX      = 4
+        NoSession  = 0,
+        Creating   = 1,
+        Pending    = 2,
+        Starting   = 3,
+        InProgress = 4,
+        Ending     = 5,
+        Ended      = 6,
+        Destroying = 7,
+        MAX        = 8
     };
 
     /**
@@ -906,119 +900,77 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.ETennisShotSpin
+     * Enum /Script/SportsScramble.EBPOnlinePresenceState
      */
-    enum class ETennisShotSpin : uint8_t
+    enum class EBPOnlinePresenceState : uint8_t
     {
-        Zero   = 0,
-        Slow   = 1,
-        Medium = 2,
-        Fast   = 3,
-        Count  = 4,
-        MAX    = 5
+        Online       = 0,
+        Offline      = 1,
+        Away         = 2,
+        ExtendedAway = 3,
+        DoNotDisturb = 4,
+        Chat         = 5,
+        MAX          = 6
     };
 
     /**
-     * Enum /Script/SportsScramble.EBowlingThrowSpin
+     * Enum /Script/SportsScramble.ELaneType
      */
-    enum class EBowlingThrowSpin : uint8_t
+    enum class ELaneType : uint8_t
     {
-        Zero   = 0,
-        Slow   = 1,
-        Medium = 2,
-        Fast   = 3,
-        Count  = 4,
-        MAX    = 5
+        Default          = 0,
+        Croquet          = 1,
+        SpaceAttackers   = 2,
+        Bumpers          = 3,
+        BigGutters       = 4,
+        WhackMoles       = 5,
+        IceRink          = 6,
+        Clown            = 7,
+        ScoreField       = 8,
+        FigureEight      = 9,
+        ElectricFootball = 10,
+        MineField        = 11,
+        CurvedPath       = 12,
+        ExtraPins        = 13,
+        Conveyor         = 14,
+        BankShot         = 15,
+        MovingLane       = 16,
+        Hoops            = 17,
+        LeftLoop         = 18,
+        RightLoop        = 19,
+        SkeeBall         = 20,
+        MAX              = 21
     };
 
     /**
-     * Enum /Script/SportsScramble.ETennisShotSpeed
+     * Enum /Script/SportsScramble.ETennisEvent
      */
-    enum class ETennisShotSpeed : uint8_t
+    enum class ETennisEvent : uint8_t
     {
-        Flub   = 0,
-        Light  = 1,
-        Medium = 2,
-        Hard   = 3,
-        Count  = 4,
-        MAX    = 5
+        WonPoint     = 0,
+        WonGame      = 1,
+        WonMatch     = 2,
+        Ace          = 3,
+        Let          = 4,
+        DoubleFault  = 5,
+        NowServing   = 6,
+        BallInPlay   = 7,
+        Out          = 8,
+        ServiceFault = 9,
+        NormalFault  = 10,
+        None         = 11,
+        MAX          = 12
     };
 
     /**
-     * Enum /Script/SportsScramble.EBowlingThrowSpeed
+     * Enum /Script/SportsScramble.EBPServerPresenceSearchType
      */
-    enum class EBowlingThrowSpeed : uint8_t
+    enum class EBPServerPresenceSearchType : uint8_t
     {
-        Pie    = 0,
-        Low    = 1,
-        Medium = 2,
-        High   = 3,
-        Count  = 4,
-        MAX    = 5
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramEvent
-     */
-    enum class EScramEvent : uint8_t
-    {
-        None                    = 0,
-        BallGrabbed             = 1,
-        BallReleased            = 2,
-        BallHit                 = 3,
-        InstrumentBroken        = 4,
-        InstrumentGrabbed       = 5,
-        InstrumentReleased      = 6,
-        InstrumentSelected      = 7,
-        InstrumentHit           = 8,
-        InstrumentsSpawned      = 9,
-        TargetHit               = 10,
-        PlayerGrabbedSomething  = 11,
-        PlayerReleasedSomething = 12,
-        BowlingPinHit           = 13,
-        GloveGrabbedSomething   = 14,
-        GloveReleasedSomething  = 15,
-        BallDropped             = 16,
-        GripPressed             = 17,
-        BaseballSelectionShown  = 18,
-        TennisEvent             = 19,
-        BaseballEvent           = 20,
-        BowlingEvent            = 21,
-        TravelCapsuleOpen       = 22,
-        InstrumentSwungAtBall   = 23,
-        Count                   = 24,
-        MAX                     = 25
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ETennisInstrumentType
-     */
-    enum class ETennisInstrumentType : uint8_t
-    {
-        Any                   = 0,
-        BaseballBat           = 1,
-        CricketBat            = 2,
-        FishRacket            = 3,
-        FoamFinger            = 4,
-        GolfClub              = 5,
-        LacrosseStick         = 6,
-        PingPongPaddle        = 7,
-        PoolNoodle            = 8,
-        TennisRacket          = 9,
-        TennisRacketUpgrade01 = 10,
-        Count                 = 11,
-        MAX                   = 12
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBallThrowType
-     */
-    enum class EBallThrowType : uint8_t
-    {
-        UnderHand = 0,
-        OverHand  = 1,
-        SideArm   = 2,
-        MAX       = 3
+        AllServers           = 0,
+        ClientServersOnly    = 1,
+        DedicatedServersOnly = 2,
+        MAX                  = 3
     };
 
     /**
@@ -1074,6 +1026,202 @@ namespace CG::SportsScramble
     };
 
     /**
+     * Enum /Script/SportsScramble.EBallState
+     */
+    enum class EBallState : uint8_t
+    {
+        In      = 0,
+        Foul    = 1,
+        Double  = 2,
+        Triple  = 3,
+        HomeRun = 4,
+        Trick   = 5,
+        MAX     = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBlueprintAsyncResultSwitch
+     */
+    enum class EBlueprintAsyncResultSwitch : uint8_t
+    {
+        OnSuccess    = 0,
+        AsyncLoading = 1,
+        OnFailure    = 2,
+        MAX          = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramSport
+     */
+    enum class EScramSport : uint8_t
+    {
+        None      = 0,
+        Tennis    = 1,
+        Baseball  = 2,
+        Bowling   = 3,
+        Dodgeball = 4,
+        Count     = 5,
+        MAX       = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBlueprintResultSwitch
+     */
+    enum class EBlueprintResultSwitch : uint8_t
+    {
+        OnSuccess = 0,
+        OnFailure = 1,
+        MAX       = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EGamePauseReason
+     */
+    enum class EGamePauseReason : uint8_t
+    {
+        PlayerInput         = 0,
+        PlayerOutOfBoundary = 1,
+        Disconnect          = 2,
+        Count               = 3,
+        MAX                 = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBattingSide
+     */
+    enum class EBattingSide : uint8_t
+    {
+        Left  = 0,
+        Right = 1,
+        MAX   = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ESessionSettingSearchResult
+     */
+    enum class ESessionSettingSearchResult : uint8_t
+    {
+        Found     = 0,
+        NotFound  = 1,
+        WrongType = 2,
+        MAX       = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramGrabMode
+     */
+    enum class EScramGrabMode : uint8_t
+    {
+        Trigger = 0,
+        Grip    = 1,
+        Count   = 2,
+        MAX     = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBPLoginStatus
+     */
+    enum class EBPLoginStatus : uint8_t
+    {
+        NotLoggedIn       = 0,
+        UsingLocalProfile = 1,
+        LoggedIn          = 2,
+        MAX               = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramSkill
+     */
+    enum class EScramSkill : uint8_t
+    {
+        Casual   = 0,
+        Standard = 1,
+        Pro      = 2,
+        Count    = 3,
+        MAX      = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBPUserPrivileges
+     */
+    enum class EBPUserPrivileges : uint8_t
+    {
+        CanPlay                    = 0,
+        CanPlayOnline              = 1,
+        CanCommunicateOnline       = 2,
+        CanUseUserGeneratedContent = 3,
+        MAX                        = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramInstrumentRegionType
+     */
+    enum class EScramInstrumentRegionType : uint8_t
+    {
+        Box    = 0,
+        Racket = 1,
+        Bat    = 2,
+        MAX    = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramEvent
+     */
+    enum class EScramEvent : uint8_t
+    {
+        None                    = 0,
+        BallGrabbed             = 1,
+        BallReleased            = 2,
+        BallHit                 = 3,
+        InstrumentBroken        = 4,
+        InstrumentGrabbed       = 5,
+        InstrumentReleased      = 6,
+        InstrumentSelected      = 7,
+        InstrumentHit           = 8,
+        InstrumentsSpawned      = 9,
+        TargetHit               = 10,
+        PlayerGrabbedSomething  = 11,
+        PlayerReleasedSomething = 12,
+        BowlingPinHit           = 13,
+        GloveGrabbedSomething   = 14,
+        GloveReleasedSomething  = 15,
+        BallDropped             = 16,
+        GripPressed             = 17,
+        BaseballSelectionShown  = 18,
+        TennisEvent             = 19,
+        BaseballEvent           = 20,
+        BowlingEvent            = 21,
+        TravelCapsuleOpen       = 22,
+        InstrumentSwungAtBall   = 23,
+        Count                   = 24,
+        MAX                     = 25
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EInstrumentAnimState
+     */
+    enum class EInstrumentAnimState : uint8_t
+    {
+        Idle     = 0,
+        Swinging = 1,
+        MAX      = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EInfluencerRecentStatus
+     */
+    enum class EInfluencerRecentStatus : uint8_t
+    {
+        Default  = 0,
+        Discard  = 1,
+        Bullseye = 2,
+        Snap     = 3,
+        Hint     = 4,
+        Miss     = 5,
+        MAX      = 6
+    };
+
+    /**
      * Enum /Script/SportsScramble.EScramStroke
      */
     enum class EScramStroke : uint8_t
@@ -1089,46 +1237,15 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EScramInstrumentHitPhysics
+     * Enum /Script/SportsScramble.EScramTrajectoryRegionBounceResult
      */
-    enum class EScramInstrumentHitPhysics : uint8_t
+    enum class EScramTrajectoryRegionBounceResult : uint8_t
     {
-        None       = 0,
-        Default    = 1,
-        ForceSweep = 2,
-        ForcePhysX = 3,
-        MAX        = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ENormalBiasMode
-     */
-    enum class ENormalBiasMode : uint8_t
-    {
-        Corrective = 0,
-        Remapping  = 1,
-        MAX        = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramInstrumentRegionType
-     */
-    enum class EScramInstrumentRegionType : uint8_t
-    {
-        Box    = 0,
-        Racket = 1,
-        Bat    = 2,
-        MAX    = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EInstrumentAnimState
-     */
-    enum class EInstrumentAnimState : uint8_t
-    {
-        Idle     = 0,
-        Swinging = 1,
-        MAX      = 2
+        Invalid  = 0,
+        TooClose = 1,
+        TooFar   = 2,
+        Good     = 3,
+        MAX      = 4
     };
 
     /**
@@ -1147,6 +1264,17 @@ namespace CG::SportsScramble
     };
 
     /**
+     * Enum /Script/SportsScramble.ETrophyType
+     */
+    enum class ETrophyType : uint8_t
+    {
+        Bronze = 0,
+        Silver = 1,
+        Gold   = 2,
+        MAX    = 3
+    };
+
+    /**
      * Enum /Script/SportsScramble.EScramLauncherFiringMode
      */
     enum class EScramLauncherFiringMode : uint8_t
@@ -1154,6 +1282,38 @@ namespace CG::SportsScramble
         AimAtPlayerRegion = 0,
         AimAtLaunchTarget = 1,
         MAX               = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramInstrumentHitPhysics
+     */
+    enum class EScramInstrumentHitPhysics : uint8_t
+    {
+        None       = 0,
+        Default    = 1,
+        ForceSweep = 2,
+        ForcePhysX = 3,
+        MAX        = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ESuccessFailure
+     */
+    enum class ESuccessFailure : uint8_t
+    {
+        Success = 0,
+        Failure = 1,
+        MAX     = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ENormalBiasMode
+     */
+    enum class ENormalBiasMode : uint8_t
+    {
+        Corrective = 0,
+        Remapping  = 1,
+        MAX        = 2
     };
 
     /**
@@ -1165,6 +1325,16 @@ namespace CG::SportsScramble
         Pressed  = 1,
         Released = 2,
         MAX      = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EYesNo
+     */
+    enum class EYesNo : uint8_t
+    {
+        Yes = 0,
+        No  = 1,
+        MAX = 2
     };
 
     /**
@@ -1180,6 +1350,18 @@ namespace CG::SportsScramble
     };
 
     /**
+     * Enum /Script/SportsScramble.ESplineMovementMode
+     */
+    enum class ESplineMovementMode : uint8_t
+    {
+        Accelerate       = 0,
+        SlowToStop       = 1,
+        StayAtTopSpeed   = 2,
+        ApproachTopSpeed = 3,
+        MAX              = 4
+    };
+
+    /**
      * Enum /Script/SportsScramble.ETrainingProgression
      */
     enum class ETrainingProgression : uint8_t
@@ -1188,6 +1370,43 @@ namespace CG::SportsScramble
         Unlocked  = 1,
         Completed = 2,
         MAX       = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ETennisReaction
+     */
+    enum class ETennisReaction : uint8_t
+    {
+        FistPump  = 0,
+        SkyCry    = 1,
+        HeadShake = 2,
+        MAX       = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBaseballGameState
+     */
+    enum class EBaseballGameState : uint8_t
+    {
+        None         = 0,
+        Pitching     = 1,
+        Batting      = 2,
+        Fielding     = 3,
+        DeletingBall = 4,
+        Walk         = 5,
+        MAX          = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBallRegion
+     */
+    enum class EBallRegion : uint8_t
+    {
+        Up    = 0,
+        Down  = 1,
+        Left  = 2,
+        Right = 3,
+        MAX   = 4
     };
 
     /**
@@ -1267,403 +1486,6 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EBaseballGameState
-     */
-    enum class EBaseballGameState : uint8_t
-    {
-        None         = 0,
-        Pitching     = 1,
-        Batting      = 2,
-        Fielding     = 3,
-        DeletingBall = 4,
-        Walk         = 5,
-        MAX          = 6
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EDebugDrawMode
-     */
-    enum class EDebugDrawMode : uint8_t
-    {
-        None             = 0,
-        EditorOnly       = 1,
-        EditorAndPreview = 2,
-        MAX              = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBallMotionAnimState
-     */
-    enum class EBallMotionAnimState : uint8_t
-    {
-        None    = 0,
-        Rising  = 1,
-        Apex    = 2,
-        Falling = 3,
-        Rolling = 4,
-        MAX     = 5
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBallRegion
-     */
-    enum class EBallRegion : uint8_t
-    {
-        Up    = 0,
-        Down  = 1,
-        Left  = 2,
-        Right = 3,
-        MAX   = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBallAnimState
-     */
-    enum class EBallAnimState : uint8_t
-    {
-        Idle     = 0,
-        Held     = 1,
-        InFlight = 2,
-        MAX      = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramDodgeballTeam
-     */
-    enum class EScramDodgeballTeam : uint8_t
-    {
-        Team1 = 0,
-        Team2 = 1,
-        MAX   = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramFlightNoise
-     */
-    enum class EScramFlightNoise : uint8_t
-    {
-        Ascending  = 0,
-        Descending = 1,
-        MAX        = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EDodgeballEvent
-     */
-    enum class EDodgeballEvent : uint8_t
-    {
-        GeneratedItem  = 0,
-        PawnDead       = 1,
-        LocalPlayerHit = 2,
-        MAX            = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramStabilizationType
-     */
-    enum class EScramStabilizationType : uint8_t
-    {
-        None     = 0,
-        Rolling  = 1,
-        Discus   = 2,
-        AlwaysUp = 3,
-        MAX      = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ETennisRallyStage
-     */
-    enum class ETennisRallyStage : uint8_t
-    {
-        FirstServe  = 0,
-        SecondServe = 1,
-        Rally       = 2,
-        MAX         = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramBallTriggerShape
-     */
-    enum class EScramBallTriggerShape : uint8_t
-    {
-        Circle    = 0,
-        Rectangle = 1,
-        Count     = 2,
-        MAX       = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBaseballAIAnimNotify
-     */
-    enum class EBaseballAIAnimNotify : uint8_t
-    {
-        StandStill        = 0,
-        SetCatchLocation  = 1,
-        ReleaseBall       = 2,
-        SwingEnd          = 3,
-        FreebieHit        = 4,
-        ReplaceBat        = 5,
-        ScoreAfterDrop    = 6,
-        EndOfDropReaction = 7,
-        MAX               = 8
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ETennisAIState
-     */
-    enum class ETennisAIState : uint8_t
-    {
-        Waiting                  = 0,
-        Intercepting             = 1,
-        Overshooting             = 2,
-        PreparingToServe         = 3,
-        Tossing                  = 4,
-        Serving                  = 5,
-        Recentering              = 6,
-        GettingIntoServePosition = 7,
-        BouncingBall             = 8,
-        Reacting                 = 9,
-        MAX                      = 10
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ETennisAIAnimNotify
-     */
-    enum class ETennisAIAnimNotify : uint8_t
-    {
-        TossBall     = 0,
-        HitBall      = 1,
-        StandStill   = 2,
-        SkipReaction = 3,
-        MAX          = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBatterState
-     */
-    enum class EBatterState : uint8_t
-    {
-        Waiting         = 0,
-        Batting         = 1,
-        LettingABallGo  = 2,
-        Swinging        = 3,
-        WaitAfterSwing  = 4,
-        FreebieWaiting  = 5,
-        FreebieSwinging = 6,
-        MAX             = 7
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ECatcherGloveMode
-     */
-    enum class ECatcherGloveMode : uint8_t
-    {
-        Default     = 0,
-        Drifting    = 1,
-        Scripted    = 2,
-        StickDriven = 3,
-        MAX         = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramTimeLinePlayMode
-     */
-    enum class EScramTimeLinePlayMode : uint8_t
-    {
-        Once     = 0,
-        Loop     = 1,
-        PingPong = 2,
-        MAX      = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramTimeLineCurveSpace
-     */
-    enum class EScramTimeLineCurveSpace : uint8_t
-    {
-        LocalSpace = 0,
-        WorldSpace = 1,
-        MAX        = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ECatcherAIState
-     */
-    enum class ECatcherAIState : uint8_t
-    {
-        WaitingToThrowBall     = 0,
-        PreparingThrow         = 1,
-        WaitingForPitcherCatch = 2,
-        WaitingForPitcherPitch = 3,
-        Intercepting           = 4,
-        WaitingToCallBall      = 5,
-        PausingAfterCatch      = 6,
-        Selecting              = 7,
-        MAX                    = 8
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EInfluencerRecentStatus
-     */
-    enum class EInfluencerRecentStatus : uint8_t
-    {
-        Default  = 0,
-        Discard  = 1,
-        Bullseye = 2,
-        Snap     = 3,
-        Hint     = 4,
-        Miss     = 5,
-        MAX      = 6
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EFielderAIState
-     */
-    enum class EFielderAIState : uint8_t
-    {
-        Waiting             = 0,
-        Intercepting        = 1,
-        WaitingToCatch      = 2,
-        Catching            = 3,
-        Dropping            = 4,
-        WatchingCatch       = 5,
-        PausingBeforeReturn = 6,
-        Returning           = 7,
-        MAX                 = 8
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScramTrajectoryRegionBounceResult
-     */
-    enum class EScramTrajectoryRegionBounceResult : uint8_t
-    {
-        Invalid  = 0,
-        TooClose = 1,
-        TooFar   = 2,
-        Good     = 3,
-        MAX      = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ETrophyType
-     */
-    enum class ETrophyType : uint8_t
-    {
-        Bronze = 0,
-        Silver = 1,
-        Gold   = 2,
-        MAX    = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EPitcherState
-     */
-    enum class EPitcherState : uint8_t
-    {
-        WaitingForBall   = 0,
-        WaitingToPitch   = 1,
-        DelayBeforePitch = 2,
-        Preparing        = 3,
-        Throwing         = 4,
-        MAX              = 5
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ESuccessFailure
-     */
-    enum class ESuccessFailure : uint8_t
-    {
-        Success = 0,
-        Failure = 1,
-        MAX     = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EScrambleTargetAiValue
-     */
-    enum class EScrambleTargetAiValue : uint8_t
-    {
-        Positive = 0,
-        Neutral  = 1,
-        Negative = 2,
-        MAX      = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EYesNo
-     */
-    enum class EYesNo : uint8_t
-    {
-        Yes = 0,
-        No  = 1,
-        MAX = 2
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ESplineMovementMode
-     */
-    enum class ESplineMovementMode : uint8_t
-    {
-        Accelerate       = 0,
-        SlowToStop       = 1,
-        StayAtTopSpeed   = 2,
-        ApproachTopSpeed = 3,
-        MAX              = 4
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBowlingAIState
-     */
-    enum class EBowlingAIState : uint8_t
-    {
-        WaitingForBall        = 0,
-        TurningToLook         = 1,
-        CollectingBall        = 2,
-        TurningToThrow        = 3,
-        WaitingForThrowWindow = 4,
-        Throwing              = 5,
-        WaitingForPinHit      = 6,
-        WaitingForScore       = 7,
-        Reacting              = 8,
-        MAX                   = 9
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ETennisReaction
-     */
-    enum class ETennisReaction : uint8_t
-    {
-        FistPump  = 0,
-        SkyCry    = 1,
-        HeadShake = 2,
-        MAX       = 3
-    };
-
-    /**
-     * Enum /Script/SportsScramble.EBowlingAIAnimNotify
-     */
-    enum class EBowlingAIAnimNotify : uint8_t
-    {
-        DoneWithTurn     = 0,
-        PickUp           = 1,
-        DoneWithPickUp   = 2,
-        Roll             = 3,
-        StartTurn        = 4,
-        DoneWithReaction = 5,
-        MAX              = 6
-    };
-
-    /**
-     * Enum /Script/SportsScramble.ECoverVignetteType
-     */
-    enum class ECoverVignetteType : uint8_t
-    {
-        Trophy     = 0,
-        GameInvite = 1,
-        MAX        = 2
-    };
-
-    /**
      * Enum /Script/SportsScramble.ETennisAnimState
      */
     enum class ETennisAnimState : uint8_t
@@ -1682,15 +1504,24 @@ namespace CG::SportsScramble
     };
 
     /**
-     * Enum /Script/SportsScramble.EScramCourtMatchType
+     * Enum /Script/SportsScramble.EScramDodgeballTeam
      */
-    enum class EScramCourtMatchType : uint8_t
+    enum class EScramDodgeballTeam : uint8_t
     {
-        None     = 0,
-        Singles  = 1,
-        Doubles  = 2,
-        NetClear = 3,
-        MAX      = 4
+        Team1 = 0,
+        Team2 = 1,
+        MAX   = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EDebugDrawMode
+     */
+    enum class EDebugDrawMode : uint8_t
+    {
+        None             = 0,
+        EditorOnly       = 1,
+        EditorAndPreview = 2,
+        MAX              = 3
     };
 
     /**
@@ -1705,6 +1536,52 @@ namespace CG::SportsScramble
         PrepService  = 4,
         PlayService  = 5,
         MAX          = 6
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBallMotionAnimState
+     */
+    enum class EBallMotionAnimState : uint8_t
+    {
+        None    = 0,
+        Rising  = 1,
+        Apex    = 2,
+        Falling = 3,
+        Rolling = 4,
+        MAX     = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EDodgeballEvent
+     */
+    enum class EDodgeballEvent : uint8_t
+    {
+        GeneratedItem  = 0,
+        PawnDead       = 1,
+        LocalPlayerHit = 2,
+        MAX            = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBallAnimState
+     */
+    enum class EBallAnimState : uint8_t
+    {
+        Idle     = 0,
+        Held     = 1,
+        InFlight = 2,
+        MAX      = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ETennisRallyStage
+     */
+    enum class ETennisRallyStage : uint8_t
+    {
+        FirstServe  = 0,
+        SecondServe = 1,
+        Rally       = 2,
+        MAX         = 3
     };
 
     /**
@@ -1730,6 +1607,129 @@ namespace CG::SportsScramble
         Disc            = 15,
         Count           = 16,
         MAX             = 17
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ETennisAIState
+     */
+    enum class ETennisAIState : uint8_t
+    {
+        Waiting                  = 0,
+        Intercepting             = 1,
+        Overshooting             = 2,
+        PreparingToServe         = 3,
+        Tossing                  = 4,
+        Serving                  = 5,
+        Recentering              = 6,
+        GettingIntoServePosition = 7,
+        BouncingBall             = 8,
+        Reacting                 = 9,
+        MAX                      = 10
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ETennisShotType
+     */
+    enum class ETennisShotType : uint8_t
+    {
+        None        = 0,
+        Light       = 1,
+        Normal      = 2,
+        NormalSlice = 3,
+        Charge      = 4,
+        ChargeSlice = 5,
+        Count       = 6,
+        MAX         = 7
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ETennisAIAnimNotify
+     */
+    enum class ETennisAIAnimNotify : uint8_t
+    {
+        TossBall     = 0,
+        HitBall      = 1,
+        StandStill   = 2,
+        SkipReaction = 3,
+        MAX          = 4
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ETennisShotSpin
+     */
+    enum class ETennisShotSpin : uint8_t
+    {
+        Zero   = 0,
+        Slow   = 1,
+        Medium = 2,
+        Fast   = 3,
+        Count  = 4,
+        MAX    = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramTimeLinePlayMode
+     */
+    enum class EScramTimeLinePlayMode : uint8_t
+    {
+        Once     = 0,
+        Loop     = 1,
+        PingPong = 2,
+        MAX      = 3
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EScramTimeLineCurveSpace
+     */
+    enum class EScramTimeLineCurveSpace : uint8_t
+    {
+        LocalSpace = 0,
+        WorldSpace = 1,
+        MAX        = 2
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ETennisShotSpeed
+     */
+    enum class ETennisShotSpeed : uint8_t
+    {
+        Flub   = 0,
+        Light  = 1,
+        Medium = 2,
+        Hard   = 3,
+        Count  = 4,
+        MAX    = 5
+    };
+
+    /**
+     * Enum /Script/SportsScramble.ETennisInstrumentType
+     */
+    enum class ETennisInstrumentType : uint8_t
+    {
+        Any                   = 0,
+        BaseballBat           = 1,
+        CricketBat            = 2,
+        FishRacket            = 3,
+        FoamFinger            = 4,
+        GolfClub              = 5,
+        LacrosseStick         = 6,
+        PingPongPaddle        = 7,
+        PoolNoodle            = 8,
+        TennisRacket          = 9,
+        TennisRacketUpgrade01 = 10,
+        Count                 = 11,
+        MAX                   = 12
+    };
+
+    /**
+     * Enum /Script/SportsScramble.EBallThrowType
+     */
+    enum class EBallThrowType : uint8_t
+    {
+        UnderHand = 0,
+        OverHand  = 1,
+        SideArm   = 2,
+        MAX       = 3
     };
 
 }

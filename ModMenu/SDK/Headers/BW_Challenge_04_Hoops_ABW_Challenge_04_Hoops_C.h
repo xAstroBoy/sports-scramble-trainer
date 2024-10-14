@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -68,7 +68,7 @@ namespace CG::BW_Challenge_04_Hoops
     public:
         void UnbindEvents();
         void InitializeChallengeRoom();
-        void SetupInfoText();
+        void SetUpInfoText();
         void UserConstructionScript();
         void ReceiveBeginPlay();
         void StartTraining();

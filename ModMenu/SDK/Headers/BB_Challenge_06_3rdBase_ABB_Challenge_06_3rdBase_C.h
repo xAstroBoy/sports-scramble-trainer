@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -68,7 +68,7 @@ namespace CG::BB_Challenge_06_3rdBase
     public:
         void SetZoneTimeScales(const SportsScramble::FMinMaxFloat& PopFlyTimeScale, const SportsScramble::FMinMaxFloat& SweetSpotTimeScale, const SportsScramble::FMinMaxFloat& LineDriveTimeScale, const SportsScramble::FMinMaxFloat& GroundBallTimeScale);
         void GetNextBallClass(BB_Ball_Base::ABB_Ball_Base_C** NextBallClass);
-        void SetupInfoText();
+        void SetUpInfoText();
         void SetZoneChances(float PopFlyChance, float SweetSpotChance, float LineDriveChance, float GroundBallChance);
         void SetParameters(float TimeBetweenBalls, float BombChance, float GoldenBallChance);
         void Initialized3rdBase();

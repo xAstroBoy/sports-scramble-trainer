@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -49,7 +49,7 @@ namespace CG::Countdown
         Engine::ETimelineDirection                                   Timeline_ScaleUp__Direction_5F8626E347F9F5D50E22D58082E3EE83; //  ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         uint8_t                                                      UnknownData_0000[0x3];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
         Engine::UTimelineComponent*                                  Timeline_ScaleUp;                                        //  BlueprintVisible, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-        BasicTypes::UScriptMulticastDelegate                         CountdownComplete;                                       //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, BlueprintAssignable, BlueprintCallable
+        BasicTypes::UScriptMulticastDelegate                         CountDownComplete;                                       //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, BlueprintAssignable, BlueprintCallable
         Countdown_Widget::UCountdown_Widget_C*                       CountdownWidget;                                         //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         int32_t                                                      Count;                                                   //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         CoreUObject::FVector                                         InitialScale;                                            //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash

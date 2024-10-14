@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -21,10 +21,8 @@
 #include "Headers/SportsScramble_PARAMS.h"
 #include "Headers/SportsScramble_UAcceptInviteCallbackProxy.h"
 #include "Headers/SportsScramble_UScramSceneComponent.h"
-#include "Headers/SportsScramble_UBaseballAIAnimInstance.h"
-#include "Headers/SportsScramble_AScramAvatar.h"
-#include "Headers/SportsScramble_ABaseballAvatar.h"
-#include "Headers/SportsScramble_AScramMeshActor.h"
+#include "Headers/SportsScramble_UActorSet.h"
+#include "Headers/SportsScramble_UAdvancedSessionsLibrary.h"
 #include "Headers/SportsScramble_AScramPrimitiveActor.h"
 #include "Headers/SportsScramble_AScramPrimitiveGrabbable.h"
 #include "Headers/SportsScramble_AScramBall.h"
@@ -86,6 +84,7 @@
 #include "Headers/SportsScramble_UCancelOculusMatchmakingCallbackProxy.h"
 #include "Headers/SportsScramble_UDestroyOculusSessionCallbackProxy.h"
 #include "Headers/SportsScramble_UDodgeballAIAnimInstance.h"
+#include "Headers/SportsScramble_ADodgeballAvatar.h"
 #include "Headers/SportsScramble_ADodgeballInstrument.h"
 #include "Headers/SportsScramble_UDodgeballPawnAIAnimInstance.h"
 #include "Headers/SportsScramble_UScramMeshShadow.h"
@@ -101,6 +100,7 @@
 #include "Headers/SportsScramble_UJoinOculusSessionCallbackProxy.h"
 #include "Headers/SportsScramble_AMenuInstrument.h"
 #include "Headers/SportsScramble_UMovingLaneAssist.h"
+#include "Headers/SportsScramble_AMusicManager.h"
 #include "Headers/SportsScramble_ANetworkMotionStateManager.h"
 #include "Headers/SportsScramble_APitchingAvatar.h"
 #include "Headers/SportsScramble_UPitchingAvatarAnimInstance.h"
@@ -141,14 +141,11 @@
 #include "Headers/SportsScramble_UScramDodgeballAIAnimNotify.h"
 #include "Headers/SportsScramble_UScramDodgeballAIAnimNotifyState.h"
 #include "Headers/SportsScramble_AScramDodgeballCaptainAI.h"
-#include "Headers/SportsScramble_AScramDodgeballPawnAI.h"
-#include "Headers/SportsScramble_AScramEquipmentSet.h"
-#include "Headers/SportsScramble_UScramEventBasePayload.h"
+#include "Headers/SportsScramble_IScramGrabbable.h"
 #include "Headers/SportsScramble_IScramGrabber.h"
-#include "Headers/SportsScramble_AScramGripSet.h"
-#include "Headers/SportsScramble_AScramHandshakeActor.h"
-#include "Headers/SportsScramble_AScramHitManager.h"
-#include "Headers/SportsScramble_IScramHittableActor.h"
+#include "Headers/SportsScramble_ADodgeballGlove.h"
+#include "Headers/SportsScramble_UScramHullVisibility.h"
+#include "Headers/SportsScramble_UScramInstrumentAnimInstance.h"
 #include "Headers/SportsScramble_AScramInviteManager.h"
 #include "Headers/SportsScramble_AScramKeyboard.h"
 #include "Headers/SportsScramble_AScramLauncher.h"
@@ -166,6 +163,8 @@
 #include "Headers/SportsScramble_AScramPlayerTrigger.h"
 #include "Headers/SportsScramble_AScramPlayerServeTrigger.h"
 #include "Headers/SportsScramble_AScramReturnTarget.h"
+#include "Headers/SportsScramble_AScramSpectatorPawn.h"
+#include "Headers/SportsScramble_AScramSportManagerBase.h"
 #include "Headers/SportsScramble_AScramSportManagerBaseball.h"
 #include "Headers/SportsScramble_AScramSportManagerBowling.h"
 #include "Headers/SportsScramble_AScramSportManagerDodgeball.h"
@@ -200,6 +199,26 @@
 #include "Headers/SportsScramble_UTennisGlobalDataAsset.h"
 #include "Headers/SportsScramble_ATennisInstrument.h"
 #include "Headers/SportsScramble_UTennisState.h"
+#include "Headers/SportsScramble_UTimeDisplayWidget.h"
+#include "Headers/SportsScramble_ATravelSpline.h"
+#include "Headers/SportsScramble_ATrophyAwardListenerBase.h"
+#include "Headers/SportsScramble_ATrophyGrabbable.h"
+#include "Headers/SportsScramble_ABaseballThrowingGlove.h"
+#include "Headers/SportsScramble_ABattingAvatar.h"
+#include "Headers/SportsScramble_UBaseballAIAnimInstance.h"
+#include "Headers/SportsScramble_AScramActor.h"
+#include "Headers/SportsScramble_AScramAvatar.h"
+#include "Headers/SportsScramble_ABaseballAvatar.h"
+#include "Headers/SportsScramble_AScramGripSet.h"
+#include "Headers/SportsScramble_AScramHandshakeActor.h"
+#include "Headers/SportsScramble_UBaseballState.h"
+#include "Headers/SportsScramble_AThrowingGlove.h"
+#include "Headers/SportsScramble_AScramMeshActor.h"
+#include "Headers/SportsScramble_AScramHitManager.h"
+#include "Headers/SportsScramble_IScramHittableActor.h"
+#include "Headers/SportsScramble_AScramDodgeballPawnAI.h"
+#include "Headers/SportsScramble_AScramEquipmentSet.h"
+#include "Headers/SportsScramble_UScramEventBasePayload.h"
 #include "Headers/SportsScramble_UScramEventObjectPayload.h"
 #include "Headers/SportsScramble_UScramEventCollisionPayload.h"
 #include "Headers/SportsScramble_UScramEventTennisEventPayload.h"
@@ -207,35 +226,16 @@
 #include "Headers/SportsScramble_UScramEventBowlingEventPayload.h"
 #include "Headers/SportsScramble_AScramEventManager.h"
 #include "Headers/SportsScramble_UScramGameInstance.h"
-#include "Headers/SportsScramble_UActorSet.h"
-#include "Headers/SportsScramble_UAdvancedSessionsLibrary.h"
-#include "Headers/SportsScramble_UBaseballState.h"
-#include "Headers/SportsScramble_AThrowingGlove.h"
-#include "Headers/SportsScramble_ABaseballThrowingGlove.h"
-#include "Headers/SportsScramble_ABattingAvatar.h"
-#include "Headers/SportsScramble_UScramAvatarAnimInstance.h"
-#include "Headers/SportsScramble_UBattingAvatarAnimInstance.h"
-#include "Headers/SportsScramble_UTimeDisplayWidget.h"
-#include "Headers/SportsScramble_ATravelSpline.h"
-#include "Headers/SportsScramble_ATrophyAwardListenerBase.h"
-#include "Headers/SportsScramble_ATrophyGrabbable.h"
-#include "Headers/SportsScramble_UUpdateSessionCallbackProxyAdvanced.h"
-#include "Headers/SportsScramble_AMusicManager.h"
-#include "Headers/SportsScramble_UScramHullVisibility.h"
-#include "Headers/SportsScramble_UScramInstrumentAnimInstance.h"
-#include "Headers/SportsScramble_ADodgeballAvatar.h"
-#include "Headers/SportsScramble_ADodgeballBall.h"
-#include "Headers/SportsScramble_UDodgeballCaptainAIAnimInstance.h"
-#include "Headers/SportsScramble_AScramGameMode.h"
-#include "Headers/SportsScramble_AScramGameState.h"
-#include "Headers/SportsScramble_IScramGrabbable.h"
-#include "Headers/SportsScramble_UDodgeballGlobalDataAsset.h"
-#include "Headers/SportsScramble_ADodgeballGlove.h"
-#include "Headers/SportsScramble_AScramActor.h"
 #include "Headers/SportsScramble_UScramSaveData.h"
 #include "Headers/SportsScramble_IScramSceneComponentInterface.h"
-#include "Headers/SportsScramble_AScramSpectatorPawn.h"
-#include "Headers/SportsScramble_AScramSportManagerBase.h"
+#include "Headers/SportsScramble_AScramGameMode.h"
+#include "Headers/SportsScramble_AScramGameState.h"
+#include "Headers/SportsScramble_UBattingAvatarAnimInstance.h"
+#include "Headers/SportsScramble_UUpdateSessionCallbackProxyAdvanced.h"
+#include "Headers/SportsScramble_ADodgeballBall.h"
+#include "Headers/SportsScramble_UDodgeballCaptainAIAnimInstance.h"
+#include "Headers/SportsScramble_UDodgeballGlobalDataAsset.h"
+#include "Headers/SportsScramble_UScramAvatarAnimInstance.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -300,19 +300,19 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x003BC2E0
-     *         Name   -> Function /Script/SportsScramble.ScramAvatar.PlaySpawnAnimation
+     *         RVA    -> 0x0039EB00
+     *         Name   -> Function /Script/SportsScramble.ActorSet.ResetActors
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void AScramAvatar::PlaySpawnAnimation()
+    void UActorSet::ResetActors()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramAvatar.PlaySpawnAnimation");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ActorSet.ResetActors");
         
-        AScramAvatar_PlaySpawnAnimation_Params params {};
+        UActorSet_ResetActors_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -321,19 +321,19 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x003BB700
-     *         Name   -> Function /Script/SportsScramble.ScramAvatar.GetPlayerIndex
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     *         RVA    -> 0x0039CA30
+     *         Name   -> Function /Script/SportsScramble.ActorSet.GetNextActor
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::AActor*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    int32_t AScramAvatar::GetPlayerIndex()
+    Engine::AActor* UActorSet::GetNextActor()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramAvatar.GetPlayerIndex");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ActorSet.GetNextActor");
         
-        AScramAvatar_GetPlayerIndex_Params params {};
+        UActorSet_GetNextActor_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -344,19 +344,98 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x003BB6D0
-     *         Name   -> Function /Script/SportsScramble.ScramAvatar.GetPlayer
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     *         RVA    -> 0x0039BF30
+     *         Name   -> Function /Script/SportsScramble.ActorSet.AvoidActor
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         SportsScramble::AScramPlayer*                      ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::AActor*                                    ActorClass                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
      */
-    SportsScramble::AScramPlayer* AScramAvatar::GetPlayer()
+    void UActorSet::AvoidActor(Engine::AActor* ActorClass)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramAvatar.GetPlayer");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ActorSet.AvoidActor");
         
-        AScramAvatar_GetPlayer_Params params {};
+        UActorSet_AvoidActor_Params params {};
+        params.ActorClass = ActorClass;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039EE90
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.UniqueNetIdToString
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SportsScramble::FBPUniqueNetId                     UniqueNetId                                                (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                String                                                     (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_UniqueNetIdToString(const SportsScramble::FBPUniqueNetId& UniqueNetId, BasicTypes::FString* String)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.UniqueNetIdToString");
+        
+        UAdvancedSessionsLibrary_UniqueNetIdToString_Params params {};
+        params.UniqueNetId = UniqueNetId;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (String != nullptr)
+            *String = params.String;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039ECD0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.SetPlayerName
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                PlayerName                                                 (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_SetPlayerName(Engine::APlayerController* PlayerController, const BasicTypes::FString& PlayerName)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.SetPlayerName");
+        
+        UAdvancedSessionsLibrary_SetPlayerName_Params params {};
+        params.PlayerController = PlayerController;
+        params.PlayerName = PlayerName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039E810
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionSearchProperty
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SportsScramble::FSessionPropertyKeyPair            SessionSearchProperty                                      (Parm, NativeAccessSpecifierPublic)
+     *         SportsScramble::EOnlineComparisonOpRedux           ComparisonOp                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FSessionsSearchSetting             ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    SportsScramble::FSessionsSearchSetting UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionSearchProperty(const SportsScramble::FSessionPropertyKeyPair& SessionSearchProperty, SportsScramble::EOnlineComparisonOpRedux ComparisonOp)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionSearchProperty");
+        
+        UAdvancedSessionsLibrary_MakeLiteralSessionSearchProperty_Params params {};
+        params.SessionSearchProperty = SessionSearchProperty;
+        params.ComparisonOp = ComparisonOp;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -367,21 +446,23 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.ScramAvatar.GetGlobalColor
-     *         Flags  -> (Event, Public, HasDefaults, BlueprintEvent, Const)
+     *         RVA    -> 0x0039E6D0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyString
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
      * Parameters:
-     *         BasicTypes::FName                                  globalColorName                                            (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FLinearColor                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                Value                                                      (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
      */
-    CoreUObject::FLinearColor AScramAvatar::GetGlobalColor(const BasicTypes::FName& globalColorName)
+    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyString(const BasicTypes::FName& Key, const BasicTypes::FString& Value)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramAvatar.GetGlobalColor");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyString");
         
-        AScramAvatar_GetGlobalColor_Params params {};
-        params.globalColorName = globalColorName;
+        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyString_Params params {};
+        params.Key = Key;
+        params.Value = Value;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -392,25 +473,810 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x003BB730
-     *         Name   -> Function /Script/SportsScramble.ScramMeshActor.HasBegunPlay
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     *         RVA    -> 0x0039E5F0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyInt
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
      * Parameters:
+     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            Value                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyInt(const BasicTypes::FName& Key, int32_t Value)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyInt");
+        
+        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyInt_Params params {};
+        params.Key = Key;
+        params.Value = Value;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039E510
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyFloat
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              Value                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyFloat(const BasicTypes::FName& Key, float Value)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyFloat");
+        
+        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyFloat_Params params {};
+        params.Key = Key;
+        params.Value = Value;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039E430
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyByte
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         uint8_t                                            Value                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyByte(const BasicTypes::FName& Key, uint8_t Value)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyByte");
+        
+        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyByte_Params params {};
+        params.Key = Key;
+        params.Value = Value;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039E350
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyBool
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               Value                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     */
+    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyBool(const BasicTypes::FName& Key, bool Value)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyBool");
+        
+        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyBool_Params params {};
+        params.Key = Key;
+        params.Value = Value;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039E270
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.IsValidUniqueNetID
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SportsScramble::FBPUniqueNetId                     UniqueNetId                                                (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
      *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    bool AScramMeshActor::HasBegunPlay()
+    bool UAdvancedSessionsLibrary::STATIC_IsValidUniqueNetID(const SportsScramble::FBPUniqueNetId& UniqueNetId)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramMeshActor.HasBegunPlay");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.IsValidUniqueNetID");
         
-        AScramMeshActor_HasBegunPlay_Params params {};
+        UAdvancedSessionsLibrary_IsValidUniqueNetID_Params params {};
+        params.UniqueNetId = UniqueNetId;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
         
         return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039E090
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.IsValidSession
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         OnlineSubsystemUtils::FBlueprintSessionResult      SessionResult                                              (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UAdvancedSessionsLibrary::STATIC_IsValidSession(const OnlineSubsystemUtils::FBlueprintSessionResult& SessionResult)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.IsValidSession");
+        
+        UAdvancedSessionsLibrary_IsValidSession_Params params {};
+        params.SessionResult = SessionResult;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039DF40
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.IsPlayerInSession
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         SportsScramble::FBPUniqueNetId                     PlayerToCheck                                              (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         bool                                               bIsInSession                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_IsPlayerInSession(const SportsScramble::FBPUniqueNetId& PlayerToCheck, bool* bIsInSession)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.IsPlayerInSession");
+        
+        UAdvancedSessionsLibrary_IsPlayerInSession_Params params {};
+        params.PlayerToCheck = PlayerToCheck;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (bIsInSession != nullptr)
+            *bIsInSession = params.bIsInSession;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039DE90
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.HasOnlineSubsystem
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         BasicTypes::FName                                  SubSystemName                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UAdvancedSessionsLibrary::STATIC_HasOnlineSubsystem(const BasicTypes::FName& SubSystemName)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.HasOnlineSubsystem");
+        
+        UAdvancedSessionsLibrary_HasOnlineSubsystem_Params params {};
+        params.SubSystemName = SubSystemName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039DD50
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueNetIDFromPlayerState
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         Engine::APlayerState*                              PlayerState                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FBPUniqueNetId                     UniqueNetId                                                (Parm, OutParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetUniqueNetIDFromPlayerState(Engine::APlayerState* PlayerState, SportsScramble::FBPUniqueNetId* UniqueNetId)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueNetIDFromPlayerState");
+        
+        UAdvancedSessionsLibrary_GetUniqueNetIDFromPlayerState_Params params {};
+        params.PlayerState = PlayerState;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (UniqueNetId != nullptr)
+            *UniqueNetId = params.UniqueNetId;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039DC40
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueNetID
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FBPUniqueNetId                     UniqueNetId                                                (Parm, OutParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetUniqueNetID(Engine::APlayerController* PlayerController, SportsScramble::FBPUniqueNetId* UniqueNetId)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueNetID");
+        
+        UAdvancedSessionsLibrary_GetUniqueNetID_Params params {};
+        params.PlayerController = PlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (UniqueNetId != nullptr)
+            *UniqueNetId = params.UniqueNetId;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039D960
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueBuildID
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         OnlineSubsystemUtils::FBlueprintSessionResult      SessionResult                                              (Parm, NativeAccessSpecifierPublic)
+     *         int32_t                                            UniqueBuildId                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetUniqueBuildID(const OnlineSubsystemUtils::FBlueprintSessionResult& SessionResult, int32_t* UniqueBuildId)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueBuildID");
+        
+        UAdvancedSessionsLibrary_GetUniqueBuildID_Params params {};
+        params.SessionResult = SessionResult;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (UniqueBuildId != nullptr)
+            *UniqueBuildId = params.UniqueBuildId;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039D8A0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionState
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         SportsScramble::EBPOnlineSessionState              SessionState                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetSessionState(SportsScramble::EBPOnlineSessionState* SessionState)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionState");
+        
+        UAdvancedSessionsLibrary_GetSessionState_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (SessionState != nullptr)
+            *SessionState = params.SessionState;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039D4F0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionSettings
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         int32_t                                            NumConnections                                             (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            NumPrivateConnections                                      (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bIsLAN                                                     (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bIsDedicated                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bAllowInvites                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bAllowJoinInProgress                                       (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bIsAnticheatEnabled                                        (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            BuildUniqueID                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+     *         SportsScramble::EBlueprintResultSwitch             Result                                                     (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetSessionSettings(int32_t* NumConnections, int32_t* NumPrivateConnections, bool* bIsLAN, bool* bIsDedicated, bool* bAllowInvites, bool* bAllowJoinInProgress, bool* bIsAnticheatEnabled, int32_t* BuildUniqueID, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* ExtraSettings, SportsScramble::EBlueprintResultSwitch* Result)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionSettings");
+        
+        UAdvancedSessionsLibrary_GetSessionSettings_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (NumConnections != nullptr)
+            *NumConnections = params.NumConnections;
+        if (NumPrivateConnections != nullptr)
+            *NumPrivateConnections = params.NumPrivateConnections;
+        if (bIsLAN != nullptr)
+            *bIsLAN = params.bIsLAN;
+        if (bIsDedicated != nullptr)
+            *bIsDedicated = params.bIsDedicated;
+        if (bAllowInvites != nullptr)
+            *bAllowInvites = params.bAllowInvites;
+        if (bAllowJoinInProgress != nullptr)
+            *bAllowJoinInProgress = params.bAllowJoinInProgress;
+        if (bIsAnticheatEnabled != nullptr)
+            *bIsAnticheatEnabled = params.bIsAnticheatEnabled;
+        if (BuildUniqueID != nullptr)
+            *BuildUniqueID = params.BuildUniqueID;
+        if (ExtraSettings != nullptr)
+            *ExtraSettings = params.ExtraSettings;
+        if (Result != nullptr)
+            *Result = params.Result;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039D340
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyString
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                SettingValue                                               (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyString(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, BasicTypes::FString* SettingValue)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyString");
+        
+        UAdvancedSessionsLibrary_GetSessionPropertyString_Params params {};
+        params.ExtraSettings = ExtraSettings;
+        params.SettingName = SettingName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (SearchResult != nullptr)
+            *SearchResult = params.SearchResult;
+        if (SettingValue != nullptr)
+            *SettingValue = params.SettingValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039D290
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyKey
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         SportsScramble::FSessionPropertyKeyPair            SessionProperty                                            (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    BasicTypes::FName UAdvancedSessionsLibrary::STATIC_GetSessionPropertyKey(const SportsScramble::FSessionPropertyKeyPair& SessionProperty)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyKey");
+        
+        UAdvancedSessionsLibrary_GetSessionPropertyKey_Params params {};
+        params.SessionProperty = SessionProperty;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039D0F0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyInt
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            SettingValue                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyInt(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, int32_t* SettingValue)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyInt");
+        
+        UAdvancedSessionsLibrary_GetSessionPropertyInt_Params params {};
+        params.ExtraSettings = ExtraSettings;
+        params.SettingName = SettingName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (SearchResult != nullptr)
+            *SearchResult = params.SearchResult;
+        if (SettingValue != nullptr)
+            *SettingValue = params.SettingValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039CF50
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyFloat
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              SettingValue                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyFloat(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, float* SettingValue)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyFloat");
+        
+        UAdvancedSessionsLibrary_GetSessionPropertyFloat_Params params {};
+        params.ExtraSettings = ExtraSettings;
+        params.SettingName = SettingName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (SearchResult != nullptr)
+            *SearchResult = params.SearchResult;
+        if (SettingValue != nullptr)
+            *SettingValue = params.SettingValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039CDB0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyByte
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         uint8_t                                            SettingValue                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyByte(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, uint8_t* SettingValue)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyByte");
+        
+        UAdvancedSessionsLibrary_GetSessionPropertyByte_Params params {};
+        params.ExtraSettings = ExtraSettings;
+        params.SettingName = SettingName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (SearchResult != nullptr)
+            *SearchResult = params.SearchResult;
+        if (SettingValue != nullptr)
+            *SettingValue = params.SettingValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039CC10
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyBool
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               SettingValue                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyBool(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, bool* SettingValue)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyBool");
+        
+        UAdvancedSessionsLibrary_GetSessionPropertyBool_Params params {};
+        params.ExtraSettings = ExtraSettings;
+        params.SettingName = SettingName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (SearchResult != nullptr)
+            *SearchResult = params.SearchResult;
+        if (SettingValue != nullptr)
+            *SettingValue = params.SettingValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039CB30
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetPlayerName
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                PlayerName                                                 (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetPlayerName(Engine::APlayerController* PlayerController, BasicTypes::FString* PlayerName)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetPlayerName");
+        
+        UAdvancedSessionsLibrary_GetPlayerName_Params params {};
+        params.PlayerController = PlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (PlayerName != nullptr)
+            *PlayerName = params.PlayerName;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039CA70
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetNumberOfNetworkPlayers
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            NumNetPlayers                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetNumberOfNetworkPlayers(CoreUObject::UObject* WorldContextObject, int32_t* NumNetPlayers)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetNumberOfNetworkPlayers");
+        
+        UAdvancedSessionsLibrary_GetNumberOfNetworkPlayers_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (NumNetPlayers != nullptr)
+            *NumNetPlayers = params.NumNetPlayers;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039C970
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetNetPlayerIndex
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            NetPlayerIndex                                             (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetNetPlayerIndex(Engine::APlayerController* PlayerController, int32_t* NetPlayerIndex)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetNetPlayerIndex");
+        
+        UAdvancedSessionsLibrary_GetNetPlayerIndex_Params params {};
+        params.PlayerController = PlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (NetPlayerIndex != nullptr)
+            *NetPlayerIndex = params.NetPlayerIndex;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039C5C0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetExtraSettings
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         OnlineSubsystemUtils::FBlueprintSessionResult      SessionResult                                              (Parm, NativeAccessSpecifierPublic)
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetExtraSettings(const OnlineSubsystemUtils::FBlueprintSessionResult& SessionResult, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* ExtraSettings)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetExtraSettings");
+        
+        UAdvancedSessionsLibrary_GetExtraSettings_Params params {};
+        params.SessionResult = SessionResult;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (ExtraSettings != nullptr)
+            *ExtraSettings = params.ExtraSettings;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039C540
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetCurrentUniqueBuildID
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         int32_t                                            UniqueBuildId                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_GetCurrentUniqueBuildID(int32_t* UniqueBuildId)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetCurrentUniqueBuildID");
+        
+        UAdvancedSessionsLibrary_GetCurrentUniqueBuildID_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (UniqueBuildId != nullptr)
+            *UniqueBuildId = params.UniqueBuildId;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039C2E0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.FindSessionPropertyIndexByName
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::EBlueprintResultSwitch             Result                                                     (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            OutIndex                                                   (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_FindSessionPropertyIndexByName(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::EBlueprintResultSwitch* Result, int32_t* OutIndex)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.FindSessionPropertyIndexByName");
+        
+        UAdvancedSessionsLibrary_FindSessionPropertyIndexByName_Params params {};
+        params.ExtraSettings = ExtraSettings;
+        params.SettingName = SettingName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (Result != nullptr)
+            *Result = params.Result;
+        if (OutIndex != nullptr)
+            *OutIndex = params.OutIndex;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039C130
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.FindSessionPropertyByName
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  SettingsName                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::EBlueprintResultSwitch             Result                                                     (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FSessionPropertyKeyPair            OutProperty                                                (Parm, OutParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_FindSessionPropertyByName(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingsName, SportsScramble::EBlueprintResultSwitch* Result, SportsScramble::FSessionPropertyKeyPair* OutProperty)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.FindSessionPropertyByName");
+        
+        UAdvancedSessionsLibrary_FindSessionPropertyByName_Params params {};
+        params.ExtraSettings = ExtraSettings;
+        params.SettingsName = SettingsName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (Result != nullptr)
+            *Result = params.Result;
+        if (OutProperty != nullptr)
+            *OutProperty = params.OutProperty;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039BFB0
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.EqualEqual_UNetIDUnetID
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         SportsScramble::FBPUniqueNetId                     A                                                          (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         SportsScramble::FBPUniqueNetId                     B                                                          (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool UAdvancedSessionsLibrary::STATIC_EqualEqual_UNetIDUnetID(const SportsScramble::FBPUniqueNetId& A, const SportsScramble::FBPUniqueNetId& B)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.EqualEqual_UNetIDUnetID");
+        
+        UAdvancedSessionsLibrary_EqualEqual_UNetIDUnetID_Params params {};
+        params.A = A;
+        params.B = B;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x0039BD60
+     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.AddOrModifyExtraSettings
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> SettingsArray                                              (Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> NewOrChangedSettings                                       (Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ModifiedSettingsArray                                      (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UAdvancedSessionsLibrary::STATIC_AddOrModifyExtraSettings(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* SettingsArray, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* NewOrChangedSettings, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* ModifiedSettingsArray)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.AddOrModifyExtraSettings");
+        
+        UAdvancedSessionsLibrary_AddOrModifyExtraSettings_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        if (SettingsArray != nullptr)
+            *SettingsArray = params.SettingsArray;
+        if (NewOrChangedSettings != nullptr)
+            *NewOrChangedSettings = params.NewOrChangedSettings;
+        if (ModifiedSettingsArray != nullptr)
+            *ModifiedSettingsArray = params.ModifiedSettingsArray;
     }
 
     /**
@@ -6118,6 +6984,210 @@ namespace CG::SportsScramble
 
     /**
      * Function:
+     *         RVA    -> 0x003BC7B0
+     *         Name   -> Function /Script/SportsScramble.MusicManager.StopMusic
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AMusicManager::STATIC_StopMusic(float FadeTime)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.StopMusic");
+        
+        AMusicManager_StopMusic_Params params {};
+        params.FadeTime = FadeTime;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BC730
+     *         Name   -> Function /Script/SportsScramble.MusicManager.Stop
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AMusicManager::Stop(float FadeTime)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.Stop");
+        
+        AMusicManager_Stop_Params params {};
+        params.FadeTime = FadeTime;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BC230
+     *         Name   -> Function /Script/SportsScramble.MusicManager.PlayMusicEntry
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FName                                  EntryName                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AMusicManager::STATIC_PlayMusicEntry(const BasicTypes::FName& EntryName, float FadeTime)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.PlayMusicEntry");
+        
+        AMusicManager_PlayMusicEntry_Params params {};
+        params.EntryName = EntryName;
+        params.FadeTime = FadeTime;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BC100
+     *         Name   -> Function /Script/SportsScramble.MusicManager.PlayMusic
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              StartTime                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              Volume                                                     (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AMusicManager::STATIC_PlayMusic(Engine::USoundBase* Sound, float StartTime, float Volume, float FadeTime)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.PlayMusic");
+        
+        AMusicManager_PlayMusic_Params params {};
+        params.Sound = Sound;
+        params.StartTime = StartTime;
+        params.Volume = Volume;
+        params.FadeTime = FadeTime;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.MusicManager.PlayEntry
+     *         Flags  -> (Event, Protected, BlueprintCallable, BlueprintEvent)
+     * Parameters:
+     *         BasicTypes::FName                                  EntryName                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AMusicManager::PlayEntry(const BasicTypes::FName& EntryName, float FadeTime)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.PlayEntry");
+        
+        AMusicManager_PlayEntry_Params params {};
+        params.EntryName = EntryName;
+        params.FadeTime = FadeTime;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BBD40
+     *         Name   -> Function /Script/SportsScramble.MusicManager.Play
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              StartTime                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              Volume                                                     (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AMusicManager::Play(Engine::USoundBase* Sound, float StartTime, float Volume, float FadeTime)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.Play");
+        
+        AMusicManager_Play_Params params {};
+        params.Sound = Sound;
+        params.StartTime = StartTime;
+        params.Volume = Volume;
+        params.FadeTime = FadeTime;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BB810
+     *         Name   -> Function /Script/SportsScramble.MusicManager.IsPlaying
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool AMusicManager::IsPlaying(Engine::USoundBase* Sound)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.IsPlaying");
+        
+        AMusicManager_IsPlaying_Params params {};
+        params.Sound = Sound;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BB790
+     *         Name   -> Function /Script/SportsScramble.MusicManager.IsMusicPlaying
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool AMusicManager::STATIC_IsMusicPlaying(Engine::USoundBase* Sound)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.IsMusicPlaying");
+        
+        AMusicManager_IsMusicPlaying_Params params {};
+        params.Sound = Sound;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
      *         RVA    -> 0x003BC4B0
      *         Name   -> Function /Script/SportsScramble.NetworkMotionStateManager.Server_ApplyReplicatedStates
      *         Flags  -> (Final, Net, Native, Event, Private, NetServer, NetValidate)
@@ -7124,42 +8194,23 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x003C2960
-     *         Name   -> Function /Script/SportsScramble.ScramDodgeballPawnAI.StartGame
+     *         RVA    -> 0x003B77B0
+     *         Name   -> Function /Script/SportsScramble.DodgeballGlove.PlayHaptic
      *         Flags  -> (Final, Native, Protected, BlueprintCallable)
      * Parameters:
+     *         Engine::UHapticFeedbackEffect_Base*                haptic                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              Scale                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void AScramDodgeballPawnAI::StartGame()
+    void ADodgeballGlove::PlayHaptic(Engine::UHapticFeedbackEffect_Base* haptic, float Scale)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramDodgeballPawnAI.StartGame");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballGlove.PlayHaptic");
         
-        AScramDodgeballPawnAI_StartGame_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003C2770
-     *         Name   -> Function /Script/SportsScramble.ScramDodgeballPawnAI.SetDelayBeforeThrowing
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         SportsScramble::FMinMaxFloat                       delayBeforeThrow                                           (Parm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AScramDodgeballPawnAI::SetDelayBeforeThrowing(const SportsScramble::FMinMaxFloat& delayBeforeThrow)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramDodgeballPawnAI.SetDelayBeforeThrowing");
-        
-        AScramDodgeballPawnAI_SetDelayBeforeThrowing_Params params {};
-        params.delayBeforeThrow = delayBeforeThrow;
+        ADodgeballGlove_PlayHaptic_Params params {};
+        params.haptic = haptic;
+        params.Scale = Scale;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7169,43 +8220,22 @@ namespace CG::SportsScramble
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.ScramDodgeballPawnAI.KnockedOut
-     *         Flags  -> (Event, Protected, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void AScramDodgeballPawnAI::KnockedOut()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramDodgeballPawnAI.KnockedOut");
-        
-        AScramDodgeballPawnAI_KnockedOut_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.ScramDodgeballPawnAI.BallThrown
+     *         Name   -> Function /Script/SportsScramble.DodgeballGlove.ItemThrown
      *         Flags  -> (Event, Protected, HasDefaults, BlueprintEvent)
      * Parameters:
-     *         Engine::AActor*                                    Ball                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::AActor*                                    Item                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         float                                              Speed                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void AScramDodgeballPawnAI::BallThrown(Engine::AActor* Ball, const CoreUObject::FVector& Location, float Speed)
+    void ADodgeballGlove::ItemThrown(Engine::AActor* Item, const CoreUObject::FVector& Location, float Speed)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramDodgeballPawnAI.BallThrown");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballGlove.ItemThrown");
         
-        AScramDodgeballPawnAI_BallThrown_Params params {};
-        params.Ball = Ball;
+        ADodgeballGlove_ItemThrown_Params params {};
+        params.Item = Item;
         params.Location = Location;
         params.Speed = Speed;
         
@@ -7217,22 +8247,22 @@ namespace CG::SportsScramble
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.ScramEquipmentSet.PostEquipmentSpawn
-     *         Flags  -> (Event, Public, BlueprintEvent)
+     *         Name   -> Function /Script/SportsScramble.DodgeballGlove.ItemPassed
+     *         Flags  -> (Event, Protected, HasDefaults, BlueprintEvent)
      * Parameters:
-     *         SportsScramble::AScramPrimitiveGrabbable*          DominantHandSpawnedEquipment                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::AScramPrimitiveGrabbable*          OffHandSpawnedEquipment                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::AActor*                                    Item                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void AScramEquipmentSet::PostEquipmentSpawn(SportsScramble::AScramPrimitiveGrabbable* DominantHandSpawnedEquipment, SportsScramble::AScramPrimitiveGrabbable* OffHandSpawnedEquipment)
+    void ADodgeballGlove::ItemPassed(Engine::AActor* Item, const CoreUObject::FVector& Location)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramEquipmentSet.PostEquipmentSpawn");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballGlove.ItemPassed");
         
-        AScramEquipmentSet_PostEquipmentSpawn_Params params {};
-        params.DominantHandSpawnedEquipment = DominantHandSpawnedEquipment;
-        params.OffHandSpawnedEquipment = OffHandSpawnedEquipment;
+        ADodgeballGlove_ItemPassed_Params params {};
+        params.Item = Item;
+        params.Location = Location;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -7242,18 +8272,24 @@ namespace CG::SportsScramble
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.ScramHandshakeActor.ServerReady
-     *         Flags  -> (Event, Public, BlueprintEvent)
+     *         Name   -> Function /Script/SportsScramble.DodgeballGlove.ItemCaught
+     *         Flags  -> (Event, Protected, HasDefaults, BlueprintEvent)
      * Parameters:
+     *         Engine::AActor*                                    Item                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              Speed                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void AScramHandshakeActor::ServerReady()
+    void ADodgeballGlove::ItemCaught(Engine::AActor* Item, const CoreUObject::FVector& Location, float Speed)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramHandshakeActor.ServerReady");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballGlove.ItemCaught");
         
-        AScramHandshakeActor_ServerReady_Params params {};
+        ADodgeballGlove_ItemCaught_Params params {};
+        params.Item = Item;
+        params.Location = Location;
+        params.Speed = Speed;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -11718,6 +12754,230 @@ namespace CG::SportsScramble
 
     /**
      * Function:
+     *         RVA    -> 0x003D9F20
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.StopSavingSportState
+     *         Flags  -> (Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramSportManagerBase::StopSavingSportState()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.StopSavingSportState");
+        
+        AScramSportManagerBase_StopSavingSportState_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003D9E80
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.SetSelectableBallClass
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::AActor*                                    BallClass                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AScramSportManagerBase::SetSelectableBallClass(Engine::AActor* BallClass)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.SetSelectableBallClass");
+        
+        AScramSportManagerBase_SetSelectableBallClass_Params params {};
+        params.BallClass = BallClass;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.ServerReady
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramSportManagerBase::ServerReady()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.ServerReady");
+        
+        AScramSportManagerBase_ServerReady_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003D98A0
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.SaveSportState
+     *         Flags  -> (Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramSportManagerBase::SaveSportState()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.SaveSportState");
+        
+        AScramSportManagerBase_SaveSportState_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003D95A0
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.OnHeartbeatSustained
+     *         Flags  -> (Final, Native, Private)
+     * Parameters:
+     *         SportsScramble::AScramPlayerController*            pPlayerController                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AScramSportManagerBase::OnHeartbeatSustained(SportsScramble::AScramPlayerController* pPlayerController)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.OnHeartbeatSustained");
+        
+        AScramSportManagerBase_OnHeartbeatSustained_Params params {};
+        params.pPlayerController = pPlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003D9520
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.OnHeartbeatDisconnected
+     *         Flags  -> (Final, Native, Private)
+     * Parameters:
+     *         SportsScramble::AScramPlayerController*            pPlayerController                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AScramSportManagerBase::OnHeartbeatDisconnected(SportsScramble::AScramPlayerController* pPlayerController)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.OnHeartbeatDisconnected");
+        
+        AScramSportManagerBase_OnHeartbeatDisconnected_Params params {};
+        params.pPlayerController = pPlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.OnGameDone
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramSportManagerBase::OnGameDone()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.OnGameDone");
+        
+        AScramSportManagerBase_OnGameDone_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003D92C0
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.LocalGameDone
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramSportManagerBase::LocalGameDone()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.LocalGameDone");
+        
+        AScramSportManagerBase_LocalGameDone_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003D8F60
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.GetPlayer
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         int32_t                                            Index                                                      (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::AActor*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    Engine::AActor* AScramSportManagerBase::GetPlayer(int32_t Index)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.GetPlayer");
+        
+        AScramSportManagerBase_GetPlayer_Params params {};
+        params.Index = Index;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003D8E70
+     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.GetOtherPlayer
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         Engine::AActor*                                    Player                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::AActor*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    Engine::AActor* AScramSportManagerBase::GetOtherPlayer(Engine::AActor* Player)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.GetOtherPlayer");
+        
+        AScramSportManagerBase_GetOtherPlayer_Params params {};
+        params.Player = Player;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
      *         RVA    -> 0x003D9D60
      *         Name   -> Function /Script/SportsScramble.ScramSportManagerBaseball.SetScrambleBallProperties
      *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
@@ -15656,6 +16916,821 @@ namespace CG::SportsScramble
 
     /**
      * Function:
+     *         RVA    -> 0x003E5220
+     *         Name   -> Function /Script/SportsScramble.TimeDisplayWidget.FormatTime
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              Seconds                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    BasicTypes::FString UTimeDisplayWidget::FormatTime(float Seconds)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TimeDisplayWidget.FormatTime");
+        
+        UTimeDisplayWidget_FormatTime_Params params {};
+        params.Seconds = Seconds;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E5830
+     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.UpdateProgress
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyAwardListenerBase::UpdateProgress()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.UpdateProgress");
+        
+        ATrophyAwardListenerBase_UpdateProgress_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E5810
+     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.SaveProgressToSaveData
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyAwardListenerBase::SaveProgressToSaveData()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.SaveProgressToSaveData");
+        
+        ATrophyAwardListenerBase_SaveProgressToSaveData_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E54F0
+     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.LoadProgressFromSaveData
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    int32_t ATrophyAwardListenerBase::LoadProgressFromSaveData()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.LoadProgressFromSaveData");
+        
+        ATrophyAwardListenerBase_LoadProgressFromSaveData_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.Initialize
+     *         Flags  -> (Event, Public, BlueprintCallable, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyAwardListenerBase::Initialize()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.Initialize");
+        
+        ATrophyAwardListenerBase_Initialize_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E54D0
+     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.IncreaseProgress
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyAwardListenerBase::IncreaseProgress()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.IncreaseProgress");
+        
+        ATrophyAwardListenerBase_IncreaseProgress_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E5200
+     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.AwardTrophy
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyAwardListenerBase::AwardTrophy()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.AwardTrophy");
+        
+        ATrophyAwardListenerBase_AwardTrophy_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E5B30
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.WasTrophyEarned
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool ATrophyGrabbable::WasTrophyEarned()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.WasTrophyEarned");
+        
+        ATrophyGrabbable_WasTrophyEarned_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E5700
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.RespawnTrophy
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyGrabbable::RespawnTrophy()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.RespawnTrophy");
+        
+        ATrophyGrabbable_RespawnTrophy_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E5670
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OverrideInitialRotation
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FRotator                              overrideRotation                                           (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void ATrophyGrabbable::OverrideInitialRotation(const CoreUObject::FRotator& overrideRotation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OverrideInitialRotation");
+        
+        ATrophyGrabbable_OverrideInitialRotation_Params params {};
+        params.overrideRotation = overrideRotation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E55E0
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OverrideInitialPosition
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::FVector                               overridePosition                                           (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void ATrophyGrabbable::OverrideInitialPosition(const CoreUObject::FVector& overridePosition)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OverrideInitialPosition");
+        
+        ATrophyGrabbable_OverrideInitialPosition_Params params {};
+        params.overridePosition = overridePosition;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnTrophyRespawnToOriginalPosition
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyGrabbable::OnTrophyRespawnToOriginalPosition()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnTrophyRespawnToOriginalPosition");
+        
+        ATrophyGrabbable_OnTrophyRespawnToOriginalPosition_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnTrophyReleased
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyGrabbable::OnTrophyReleased()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnTrophyReleased");
+        
+        ATrophyGrabbable_OnTrophyReleased_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnTrophyGrabbed
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyGrabbable::OnTrophyGrabbed()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnTrophyGrabbed");
+        
+        ATrophyGrabbable_OnTrophyGrabbed_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnStopPointingAt
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyGrabbable::OnStopPointingAt()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnStopPointingAt");
+        
+        ATrophyGrabbable_OnStopPointingAt_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnStartPointingAt
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void ATrophyGrabbable::OnStartPointingAt()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnStartPointingAt");
+        
+        ATrophyGrabbable_OnStartPointingAt_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E5340
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.GetInitialRotation
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         CoreUObject::FRotator                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FRotator ATrophyGrabbable::GetInitialRotation()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.GetInitialRotation");
+        
+        ATrophyGrabbable_GetInitialRotation_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003E5300
+     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.GetInitialPosition
+     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         CoreUObject::FVector                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FVector ATrophyGrabbable::GetInitialPosition()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.GetInitialPosition");
+        
+        ATrophyGrabbable_GetInitialPosition_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003AB640
+     *         Name   -> Function /Script/SportsScramble.BaseballThrowingGlove.OnBowlingGloveRelease
+     *         Flags  -> (Final, Native, Protected)
+     * Parameters:
+     *         CoreUObject::UObject*                              pWorldContextObject                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::UScramEventBasePayload*            pPayload                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void ABaseballThrowingGlove::OnBowlingGloveRelease(CoreUObject::UObject* pWorldContextObject, SportsScramble::UScramEventBasePayload* pPayload)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.BaseballThrowingGlove.OnBowlingGloveRelease");
+        
+        ABaseballThrowingGlove_OnBowlingGloveRelease_Params params {};
+        params.pWorldContextObject = pWorldContextObject;
+        params.pPayload = pPayload;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003AB7C0
+     *         Name   -> Function /Script/SportsScramble.BattingAvatar.OnSwung
+     *         Flags  -> (Final, Native, Private)
+     * Parameters:
+     *         CoreUObject::UObject*                              pWorldContextObject                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::UScramEventBasePayload*            pPayload                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void ABattingAvatar::OnSwung(CoreUObject::UObject* pWorldContextObject, SportsScramble::UScramEventBasePayload* pPayload)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.BattingAvatar.OnSwung");
+        
+        ABattingAvatar_OnSwung_Params params {};
+        params.pWorldContextObject = pWorldContextObject;
+        params.pPayload = pPayload;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003AB700
+     *         Name   -> Function /Script/SportsScramble.BattingAvatar.OnHit
+     *         Flags  -> (Final, Native, Private)
+     * Parameters:
+     *         CoreUObject::UObject*                              pWorldContextObject                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::UScramEventBasePayload*            pPayload                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void ABattingAvatar::OnHit(CoreUObject::UObject* pWorldContextObject, SportsScramble::UScramEventBasePayload* pPayload)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.BattingAvatar.OnHit");
+        
+        ABattingAvatar_OnHit_Params params {};
+        params.pWorldContextObject = pWorldContextObject;
+        params.pPayload = pPayload;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BBE90
+     *         Name   -> Function /Script/SportsScramble.ScramActor.PlayManagedSoundAtLocation
+     *         Flags  -> (Final, Native, Public, HasOutParms, HasDefaults, BlueprintCallable)
+     * Parameters:
+     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector                               Location                                                   (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FRotator                              Rotation                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+     *         float                                              VolumeMultiplier                                           (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              PitchMultiplier                                            (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              StartTime                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::USoundAttenuation*                         AttenuationSettings                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::USoundConcurrency*                         ConcurrencySettings                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AScramActor::PlayManagedSoundAtLocation(Engine::USoundBase* Sound, const CoreUObject::FVector& Location, const CoreUObject::FRotator& Rotation, float VolumeMultiplier, float PitchMultiplier, float StartTime, Engine::USoundAttenuation* AttenuationSettings, Engine::USoundConcurrency* ConcurrencySettings)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramActor.PlayManagedSoundAtLocation");
+        
+        AScramActor_PlayManagedSoundAtLocation_Params params {};
+        params.Sound = Sound;
+        params.Location = Location;
+        params.Rotation = Rotation;
+        params.VolumeMultiplier = VolumeMultiplier;
+        params.PitchMultiplier = PitchMultiplier;
+        params.StartTime = StartTime;
+        params.AttenuationSettings = AttenuationSettings;
+        params.ConcurrencySettings = ConcurrencySettings;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BB730
+     *         Name   -> Function /Script/SportsScramble.ScramActor.HasBegunPlay
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool AScramActor::HasBegunPlay()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramActor.HasBegunPlay");
+        
+        AScramActor_HasBegunPlay_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BB270
+     *         Name   -> Function /Script/SportsScramble.ScramActor.AttachSound2D
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              VolumeMultiplier                                           (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              PitchMultiplier                                            (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              StartTime                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::USoundConcurrency*                         ConcurrencySettings                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               IsUiSound                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AScramActor::AttachSound2D(Engine::USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier, float StartTime, Engine::USoundConcurrency* ConcurrencySettings, bool IsUiSound)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramActor.AttachSound2D");
+        
+        AScramActor_AttachSound2D_Params params {};
+        params.Sound = Sound;
+        params.VolumeMultiplier = VolumeMultiplier;
+        params.PitchMultiplier = PitchMultiplier;
+        params.StartTime = StartTime;
+        params.ConcurrencySettings = ConcurrencySettings;
+        params.IsUiSound = IsUiSound;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BC2E0
+     *         Name   -> Function /Script/SportsScramble.ScramAvatar.PlaySpawnAnimation
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramAvatar::PlaySpawnAnimation()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramAvatar.PlaySpawnAnimation");
+        
+        AScramAvatar_PlaySpawnAnimation_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BB700
+     *         Name   -> Function /Script/SportsScramble.ScramAvatar.GetPlayerIndex
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    int32_t AScramAvatar::GetPlayerIndex()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramAvatar.GetPlayerIndex");
+        
+        AScramAvatar_GetPlayerIndex_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BB6D0
+     *         Name   -> Function /Script/SportsScramble.ScramAvatar.GetPlayer
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         SportsScramble::AScramPlayer*                      ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    SportsScramble::AScramPlayer* AScramAvatar::GetPlayer()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramAvatar.GetPlayer");
+        
+        AScramAvatar_GetPlayer_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.ScramAvatar.GetGlobalColor
+     *         Flags  -> (Event, Public, HasDefaults, BlueprintEvent, Const)
+     * Parameters:
+     *         BasicTypes::FName                                  globalColorName                                            (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FLinearColor                          ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    CoreUObject::FLinearColor AScramAvatar::GetGlobalColor(const BasicTypes::FName& globalColorName)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramAvatar.GetGlobalColor");
+        
+        AScramAvatar_GetGlobalColor_Params params {};
+        params.globalColorName = globalColorName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.ScramHandshakeActor.ServerReady
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramHandshakeActor::ServerReady()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramHandshakeActor.ServerReady");
+        
+        AScramHandshakeActor_ServerReady_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003BB730
+     *         Name   -> Function /Script/SportsScramble.ScramMeshActor.HasBegunPlay
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool AScramMeshActor::HasBegunPlay()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramMeshActor.HasBegunPlay");
+        
+        AScramMeshActor_HasBegunPlay_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003C2960
+     *         Name   -> Function /Script/SportsScramble.ScramDodgeballPawnAI.StartGame
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramDodgeballPawnAI::StartGame()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramDodgeballPawnAI.StartGame");
+        
+        AScramDodgeballPawnAI_StartGame_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003C2770
+     *         Name   -> Function /Script/SportsScramble.ScramDodgeballPawnAI.SetDelayBeforeThrowing
+     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     * Parameters:
+     *         SportsScramble::FMinMaxFloat                       delayBeforeThrow                                           (Parm, NoDestructor, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AScramDodgeballPawnAI::SetDelayBeforeThrowing(const SportsScramble::FMinMaxFloat& delayBeforeThrow)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramDodgeballPawnAI.SetDelayBeforeThrowing");
+        
+        AScramDodgeballPawnAI_SetDelayBeforeThrowing_Params params {};
+        params.delayBeforeThrow = delayBeforeThrow;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.ScramDodgeballPawnAI.KnockedOut
+     *         Flags  -> (Event, Protected, BlueprintEvent)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AScramDodgeballPawnAI::KnockedOut()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramDodgeballPawnAI.KnockedOut");
+        
+        AScramDodgeballPawnAI_KnockedOut_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.ScramDodgeballPawnAI.BallThrown
+     *         Flags  -> (Event, Protected, HasDefaults, BlueprintEvent)
+     * Parameters:
+     *         Engine::AActor*                                    Ball                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              Speed                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AScramDodgeballPawnAI::BallThrown(Engine::AActor* Ball, const CoreUObject::FVector& Location, float Speed)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramDodgeballPawnAI.BallThrown");
+        
+        AScramDodgeballPawnAI_BallThrown_Params params {};
+        params.Ball = Ball;
+        params.Location = Location;
+        params.Speed = Speed;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/SportsScramble.ScramEquipmentSet.PostEquipmentSpawn
+     *         Flags  -> (Event, Public, BlueprintEvent)
+     * Parameters:
+     *         SportsScramble::AScramPrimitiveGrabbable*          DominantHandSpawnedEquipment                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::AScramPrimitiveGrabbable*          OffHandSpawnedEquipment                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void AScramEquipmentSet::PostEquipmentSpawn(SportsScramble::AScramPrimitiveGrabbable* DominantHandSpawnedEquipment, SportsScramble::AScramPrimitiveGrabbable* OffHandSpawnedEquipment)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramEquipmentSet.PostEquipmentSpawn");
+        
+        AScramEquipmentSet_PostEquipmentSpawn_Params params {};
+        params.DominantHandSpawnedEquipment = DominantHandSpawnedEquipment;
+        params.OffHandSpawnedEquipment = OffHandSpawnedEquipment;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
      *         RVA    -> 0x003C2500
      *         Name   -> Function /Script/SportsScramble.ScramEventObjectPayload.CreateObjectPayload
      *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
@@ -16378,19 +18453,19 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x0039EB00
-     *         Name   -> Function /Script/SportsScramble.ActorSet.ResetActors
+     *         RVA    -> 0x003D6BC0
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.WipeSaveData
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void UActorSet::ResetActors()
+    void UScramSaveData::WipeSaveData()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ActorSet.ResetActors");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.WipeSaveData");
         
-        UActorSet_ResetActors_Params params {};
+        UScramSaveData_WipeSaveData_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -16399,202 +18474,115 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x0039CA30
-     *         Name   -> Function /Script/SportsScramble.ActorSet.GetNextActor
+     *         RVA    -> 0x003D6BA0
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.WipeHighScoreData
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         Engine::AActor*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
      */
-    Engine::AActor* UActorSet::GetNextActor()
+    void UScramSaveData::WipeHighScoreData()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ActorSet.GetNextActor");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.WipeHighScoreData");
         
-        UActorSet_GetNextActor_Params params {};
+        UScramSaveData_WipeHighScoreData_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
     }
 
     /**
      * Function:
-     *         RVA    -> 0x0039BF30
-     *         Name   -> Function /Script/SportsScramble.ActorSet.AvoidActor
+     *         RVA    -> 0x003D6B10
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.UnlockTraining
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::FName                                  TrainingName                                               (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void UScramSaveData::UnlockTraining(const BasicTypes::FName& TrainingName)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.UnlockTraining");
+        
+        UScramSaveData_UnlockTraining_Params params {};
+        params.TrainingName = TrainingName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x003D6810
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.SaveNamedValue
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         Engine::AActor*                                    ActorClass                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  Name                                                       (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            Value                                                      (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void UActorSet::AvoidActor(Engine::AActor* ActorClass)
+    void UScramSaveData::SaveNamedValue(const BasicTypes::FName& Name, int32_t Value)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ActorSet.AvoidActor");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.SaveNamedValue");
         
-        UActorSet_AvoidActor_Params params {};
-        params.ActorClass = ActorClass;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039EE90
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.UniqueNetIdToString
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SportsScramble::FBPUniqueNetId                     UniqueNetId                                                (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                String                                                     (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_UniqueNetIdToString(const SportsScramble::FBPUniqueNetId& UniqueNetId, BasicTypes::FString* String)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.UniqueNetIdToString");
-        
-        UAdvancedSessionsLibrary_UniqueNetIdToString_Params params {};
-        params.UniqueNetId = UniqueNetId;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (String != nullptr)
-            *String = params.String;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039ECD0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.SetPlayerName
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                PlayerName                                                 (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_SetPlayerName(Engine::APlayerController* PlayerController, const BasicTypes::FString& PlayerName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.SetPlayerName");
-        
-        UAdvancedSessionsLibrary_SetPlayerName_Params params {};
-        params.PlayerController = PlayerController;
-        params.PlayerName = PlayerName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039E810
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionSearchProperty
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SportsScramble::FSessionPropertyKeyPair            SessionSearchProperty                                      (Parm, NativeAccessSpecifierPublic)
-     *         SportsScramble::EOnlineComparisonOpRedux           ComparisonOp                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FSessionsSearchSetting             ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    SportsScramble::FSessionsSearchSetting UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionSearchProperty(const SportsScramble::FSessionPropertyKeyPair& SessionSearchProperty, SportsScramble::EOnlineComparisonOpRedux ComparisonOp)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionSearchProperty");
-        
-        UAdvancedSessionsLibrary_MakeLiteralSessionSearchProperty_Params params {};
-        params.SessionSearchProperty = SessionSearchProperty;
-        params.ComparisonOp = ComparisonOp;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039E6D0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyString
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                Value                                                      (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyString(const BasicTypes::FName& Key, const BasicTypes::FString& Value)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyString");
-        
-        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyString_Params params {};
-        params.Key = Key;
+        UScramSaveData_SaveNamedValue_Params params {};
+        params.Name = Name;
         params.Value = Value;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
     }
 
     /**
      * Function:
-     *         RVA    -> 0x0039E5F0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyInt
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     *         RVA    -> 0x003D6740
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.SaveHighScore
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            Value                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  GameName                                                   (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              score                                                      (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
      */
-    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyInt(const BasicTypes::FName& Key, int32_t Value)
+    void UScramSaveData::SaveHighScore(const BasicTypes::FName& GameName, float score)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyInt");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.SaveHighScore");
         
-        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyInt_Params params {};
-        params.Key = Key;
-        params.Value = Value;
+        UScramSaveData_SaveHighScore_Params params {};
+        params.GameName = GameName;
+        params.score = score;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
     }
 
     /**
      * Function:
-     *         RVA    -> 0x0039E510
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyFloat
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     *         RVA    -> 0x003D5FE0
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.GetTrainingProgression
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable, BlueprintPure, Const)
      * Parameters:
-     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              Value                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  TrainingName                                               (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::ETrainingProgression               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyFloat(const BasicTypes::FName& Key, float Value)
+    SportsScramble::ETrainingProgression UScramSaveData::GetTrainingProgression(const BasicTypes::FName& TrainingName)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyFloat");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.GetTrainingProgression");
         
-        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyFloat_Params params {};
-        params.Key = Key;
-        params.Value = Value;
+        UScramSaveData_GetTrainingProgression_Params params {};
+        params.TrainingName = TrainingName;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -16605,915 +18593,21 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x0039E430
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyByte
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
+     *         RVA    -> 0x003D58E0
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.GetNamedValue
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
      * Parameters:
-     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         uint8_t                                            Value                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyByte(const BasicTypes::FName& Key, uint8_t Value)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyByte");
-        
-        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyByte_Params params {};
-        params.Key = Key;
-        params.Value = Value;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039E350
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyBool
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         BasicTypes::FName                                  Key                                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               Value                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FSessionPropertyKeyPair            ReturnValue                                                (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-     */
-    SportsScramble::FSessionPropertyKeyPair UAdvancedSessionsLibrary::STATIC_MakeLiteralSessionPropertyBool(const BasicTypes::FName& Key, bool Value)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.MakeLiteralSessionPropertyBool");
-        
-        UAdvancedSessionsLibrary_MakeLiteralSessionPropertyBool_Params params {};
-        params.Key = Key;
-        params.Value = Value;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039E270
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.IsValidUniqueNetID
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SportsScramble::FBPUniqueNetId                     UniqueNetId                                                (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UAdvancedSessionsLibrary::STATIC_IsValidUniqueNetID(const SportsScramble::FBPUniqueNetId& UniqueNetId)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.IsValidUniqueNetID");
-        
-        UAdvancedSessionsLibrary_IsValidUniqueNetID_Params params {};
-        params.UniqueNetId = UniqueNetId;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039E090
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.IsValidSession
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         OnlineSubsystemUtils::FBlueprintSessionResult      SessionResult                                              (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UAdvancedSessionsLibrary::STATIC_IsValidSession(const OnlineSubsystemUtils::FBlueprintSessionResult& SessionResult)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.IsValidSession");
-        
-        UAdvancedSessionsLibrary_IsValidSession_Params params {};
-        params.SessionResult = SessionResult;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039DF40
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.IsPlayerInSession
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         SportsScramble::FBPUniqueNetId                     PlayerToCheck                                              (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         bool                                               bIsInSession                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_IsPlayerInSession(const SportsScramble::FBPUniqueNetId& PlayerToCheck, bool* bIsInSession)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.IsPlayerInSession");
-        
-        UAdvancedSessionsLibrary_IsPlayerInSession_Params params {};
-        params.PlayerToCheck = PlayerToCheck;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (bIsInSession != nullptr)
-            *bIsInSession = params.bIsInSession;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039DE90
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.HasOnlineSubsystem
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         BasicTypes::FName                                  SubSystemName                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UAdvancedSessionsLibrary::STATIC_HasOnlineSubsystem(const BasicTypes::FName& SubSystemName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.HasOnlineSubsystem");
-        
-        UAdvancedSessionsLibrary_HasOnlineSubsystem_Params params {};
-        params.SubSystemName = SubSystemName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039DD50
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueNetIDFromPlayerState
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         Engine::APlayerState*                              PlayerState                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FBPUniqueNetId                     UniqueNetId                                                (Parm, OutParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetUniqueNetIDFromPlayerState(Engine::APlayerState* PlayerState, SportsScramble::FBPUniqueNetId* UniqueNetId)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueNetIDFromPlayerState");
-        
-        UAdvancedSessionsLibrary_GetUniqueNetIDFromPlayerState_Params params {};
-        params.PlayerState = PlayerState;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (UniqueNetId != nullptr)
-            *UniqueNetId = params.UniqueNetId;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039DC40
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueNetID
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FBPUniqueNetId                     UniqueNetId                                                (Parm, OutParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetUniqueNetID(Engine::APlayerController* PlayerController, SportsScramble::FBPUniqueNetId* UniqueNetId)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueNetID");
-        
-        UAdvancedSessionsLibrary_GetUniqueNetID_Params params {};
-        params.PlayerController = PlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (UniqueNetId != nullptr)
-            *UniqueNetId = params.UniqueNetId;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039D960
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueBuildID
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         OnlineSubsystemUtils::FBlueprintSessionResult      SessionResult                                              (Parm, NativeAccessSpecifierPublic)
-     *         int32_t                                            UniqueBuildId                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetUniqueBuildID(const OnlineSubsystemUtils::FBlueprintSessionResult& SessionResult, int32_t* UniqueBuildId)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetUniqueBuildID");
-        
-        UAdvancedSessionsLibrary_GetUniqueBuildID_Params params {};
-        params.SessionResult = SessionResult;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (UniqueBuildId != nullptr)
-            *UniqueBuildId = params.UniqueBuildId;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039D8A0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionState
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         SportsScramble::EBPOnlineSessionState              SessionState                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetSessionState(SportsScramble::EBPOnlineSessionState* SessionState)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionState");
-        
-        UAdvancedSessionsLibrary_GetSessionState_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (SessionState != nullptr)
-            *SessionState = params.SessionState;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039D4F0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionSettings
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         int32_t                                            NumConnections                                             (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            NumPrivateConnections                                      (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bIsLAN                                                     (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bIsDedicated                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bAllowInvites                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bAllowJoinInProgress                                       (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bIsAnticheatEnabled                                        (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            BuildUniqueID                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-     *         SportsScramble::EBlueprintResultSwitch             Result                                                     (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetSessionSettings(int32_t* NumConnections, int32_t* NumPrivateConnections, bool* bIsLAN, bool* bIsDedicated, bool* bAllowInvites, bool* bAllowJoinInProgress, bool* bIsAnticheatEnabled, int32_t* BuildUniqueID, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* ExtraSettings, SportsScramble::EBlueprintResultSwitch* Result)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionSettings");
-        
-        UAdvancedSessionsLibrary_GetSessionSettings_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (NumConnections != nullptr)
-            *NumConnections = params.NumConnections;
-        if (NumPrivateConnections != nullptr)
-            *NumPrivateConnections = params.NumPrivateConnections;
-        if (bIsLAN != nullptr)
-            *bIsLAN = params.bIsLAN;
-        if (bIsDedicated != nullptr)
-            *bIsDedicated = params.bIsDedicated;
-        if (bAllowInvites != nullptr)
-            *bAllowInvites = params.bAllowInvites;
-        if (bAllowJoinInProgress != nullptr)
-            *bAllowJoinInProgress = params.bAllowJoinInProgress;
-        if (bIsAnticheatEnabled != nullptr)
-            *bIsAnticheatEnabled = params.bIsAnticheatEnabled;
-        if (BuildUniqueID != nullptr)
-            *BuildUniqueID = params.BuildUniqueID;
-        if (ExtraSettings != nullptr)
-            *ExtraSettings = params.ExtraSettings;
-        if (Result != nullptr)
-            *Result = params.Result;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039D340
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyString
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                SettingValue                                               (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyString(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, BasicTypes::FString* SettingValue)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyString");
-        
-        UAdvancedSessionsLibrary_GetSessionPropertyString_Params params {};
-        params.ExtraSettings = ExtraSettings;
-        params.SettingName = SettingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (SearchResult != nullptr)
-            *SearchResult = params.SearchResult;
-        if (SettingValue != nullptr)
-            *SettingValue = params.SettingValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039D290
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyKey
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         SportsScramble::FSessionPropertyKeyPair            SessionProperty                                            (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    BasicTypes::FName UAdvancedSessionsLibrary::STATIC_GetSessionPropertyKey(const SportsScramble::FSessionPropertyKeyPair& SessionProperty)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyKey");
-        
-        UAdvancedSessionsLibrary_GetSessionPropertyKey_Params params {};
-        params.SessionProperty = SessionProperty;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039D0F0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyInt
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            SettingValue                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyInt(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, int32_t* SettingValue)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyInt");
-        
-        UAdvancedSessionsLibrary_GetSessionPropertyInt_Params params {};
-        params.ExtraSettings = ExtraSettings;
-        params.SettingName = SettingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (SearchResult != nullptr)
-            *SearchResult = params.SearchResult;
-        if (SettingValue != nullptr)
-            *SettingValue = params.SettingValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039CF50
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyFloat
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              SettingValue                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyFloat(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, float* SettingValue)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyFloat");
-        
-        UAdvancedSessionsLibrary_GetSessionPropertyFloat_Params params {};
-        params.ExtraSettings = ExtraSettings;
-        params.SettingName = SettingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (SearchResult != nullptr)
-            *SearchResult = params.SearchResult;
-        if (SettingValue != nullptr)
-            *SettingValue = params.SettingValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039CDB0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyByte
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         uint8_t                                            SettingValue                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyByte(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, uint8_t* SettingValue)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyByte");
-        
-        UAdvancedSessionsLibrary_GetSessionPropertyByte_Params params {};
-        params.ExtraSettings = ExtraSettings;
-        params.SettingName = SettingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (SearchResult != nullptr)
-            *SearchResult = params.SearchResult;
-        if (SettingValue != nullptr)
-            *SettingValue = params.SettingValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039CC10
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyBool
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::ESessionSettingSearchResult        SearchResult                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               SettingValue                                               (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetSessionPropertyBool(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::ESessionSettingSearchResult* SearchResult, bool* SettingValue)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetSessionPropertyBool");
-        
-        UAdvancedSessionsLibrary_GetSessionPropertyBool_Params params {};
-        params.ExtraSettings = ExtraSettings;
-        params.SettingName = SettingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (SearchResult != nullptr)
-            *SearchResult = params.SearchResult;
-        if (SettingValue != nullptr)
-            *SettingValue = params.SettingValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039CB30
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetPlayerName
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                PlayerName                                                 (Parm, OutParm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetPlayerName(Engine::APlayerController* PlayerController, BasicTypes::FString* PlayerName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetPlayerName");
-        
-        UAdvancedSessionsLibrary_GetPlayerName_Params params {};
-        params.PlayerController = PlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (PlayerName != nullptr)
-            *PlayerName = params.PlayerName;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039CA70
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetNumberOfNetworkPlayers
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            NumNetPlayers                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetNumberOfNetworkPlayers(CoreUObject::UObject* WorldContextObject, int32_t* NumNetPlayers)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetNumberOfNetworkPlayers");
-        
-        UAdvancedSessionsLibrary_GetNumberOfNetworkPlayers_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (NumNetPlayers != nullptr)
-            *NumNetPlayers = params.NumNetPlayers;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039C970
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetNetPlayerIndex
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            NetPlayerIndex                                             (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetNetPlayerIndex(Engine::APlayerController* PlayerController, int32_t* NetPlayerIndex)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetNetPlayerIndex");
-        
-        UAdvancedSessionsLibrary_GetNetPlayerIndex_Params params {};
-        params.PlayerController = PlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (NetPlayerIndex != nullptr)
-            *NetPlayerIndex = params.NetPlayerIndex;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039C5C0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetExtraSettings
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         OnlineSubsystemUtils::FBlueprintSessionResult      SessionResult                                              (Parm, NativeAccessSpecifierPublic)
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetExtraSettings(const OnlineSubsystemUtils::FBlueprintSessionResult& SessionResult, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* ExtraSettings)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetExtraSettings");
-        
-        UAdvancedSessionsLibrary_GetExtraSettings_Params params {};
-        params.SessionResult = SessionResult;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (ExtraSettings != nullptr)
-            *ExtraSettings = params.ExtraSettings;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039C540
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.GetCurrentUniqueBuildID
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         int32_t                                            UniqueBuildId                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_GetCurrentUniqueBuildID(int32_t* UniqueBuildId)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.GetCurrentUniqueBuildID");
-        
-        UAdvancedSessionsLibrary_GetCurrentUniqueBuildID_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (UniqueBuildId != nullptr)
-            *UniqueBuildId = params.UniqueBuildId;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039C2E0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.FindSessionPropertyIndexByName
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  SettingName                                                (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::EBlueprintResultSwitch             Result                                                     (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            OutIndex                                                   (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_FindSessionPropertyIndexByName(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingName, SportsScramble::EBlueprintResultSwitch* Result, int32_t* OutIndex)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.FindSessionPropertyIndexByName");
-        
-        UAdvancedSessionsLibrary_FindSessionPropertyIndexByName_Params params {};
-        params.ExtraSettings = ExtraSettings;
-        params.SettingName = SettingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (Result != nullptr)
-            *Result = params.Result;
-        if (OutIndex != nullptr)
-            *OutIndex = params.OutIndex;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039C130
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.FindSessionPropertyByName
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  SettingsName                                               (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::EBlueprintResultSwitch             Result                                                     (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::FSessionPropertyKeyPair            OutProperty                                                (Parm, OutParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_FindSessionPropertyByName(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, const BasicTypes::FName& SettingsName, SportsScramble::EBlueprintResultSwitch* Result, SportsScramble::FSessionPropertyKeyPair* OutProperty)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.FindSessionPropertyByName");
-        
-        UAdvancedSessionsLibrary_FindSessionPropertyByName_Params params {};
-        params.ExtraSettings = ExtraSettings;
-        params.SettingsName = SettingsName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (Result != nullptr)
-            *Result = params.Result;
-        if (OutProperty != nullptr)
-            *OutProperty = params.OutProperty;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039BFB0
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.EqualEqual_UNetIDUnetID
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         SportsScramble::FBPUniqueNetId                     A                                                          (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         SportsScramble::FBPUniqueNetId                     B                                                          (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UAdvancedSessionsLibrary::STATIC_EqualEqual_UNetIDUnetID(const SportsScramble::FBPUniqueNetId& A, const SportsScramble::FBPUniqueNetId& B)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.EqualEqual_UNetIDUnetID");
-        
-        UAdvancedSessionsLibrary_EqualEqual_UNetIDUnetID_Params params {};
-        params.A = A;
-        params.B = B;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x0039BD60
-     *         Name   -> Function /Script/SportsScramble.AdvancedSessionsLibrary.AddOrModifyExtraSettings
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> SettingsArray                                              (Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> NewOrChangedSettings                                       (Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ModifiedSettingsArray                                      (Parm, OutParm, ZeroConstructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UAdvancedSessionsLibrary::STATIC_AddOrModifyExtraSettings(BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* SettingsArray, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* NewOrChangedSettings, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair>* ModifiedSettingsArray)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.AdvancedSessionsLibrary.AddOrModifyExtraSettings");
-        
-        UAdvancedSessionsLibrary_AddOrModifyExtraSettings_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        if (SettingsArray != nullptr)
-            *SettingsArray = params.SettingsArray;
-        if (NewOrChangedSettings != nullptr)
-            *NewOrChangedSettings = params.NewOrChangedSettings;
-        if (ModifiedSettingsArray != nullptr)
-            *ModifiedSettingsArray = params.ModifiedSettingsArray;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003AB640
-     *         Name   -> Function /Script/SportsScramble.BaseballThrowingGlove.OnBowlingGloveRelease
-     *         Flags  -> (Final, Native, Protected)
-     * Parameters:
-     *         CoreUObject::UObject*                              pWorldContextObject                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::UScramEventBasePayload*            pPayload                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void ABaseballThrowingGlove::OnBowlingGloveRelease(CoreUObject::UObject* pWorldContextObject, SportsScramble::UScramEventBasePayload* pPayload)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.BaseballThrowingGlove.OnBowlingGloveRelease");
-        
-        ABaseballThrowingGlove_OnBowlingGloveRelease_Params params {};
-        params.pWorldContextObject = pWorldContextObject;
-        params.pPayload = pPayload;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003AB7C0
-     *         Name   -> Function /Script/SportsScramble.BattingAvatar.OnSwung
-     *         Flags  -> (Final, Native, Private)
-     * Parameters:
-     *         CoreUObject::UObject*                              pWorldContextObject                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::UScramEventBasePayload*            pPayload                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void ABattingAvatar::OnSwung(CoreUObject::UObject* pWorldContextObject, SportsScramble::UScramEventBasePayload* pPayload)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.BattingAvatar.OnSwung");
-        
-        ABattingAvatar_OnSwung_Params params {};
-        params.pWorldContextObject = pWorldContextObject;
-        params.pPayload = pPayload;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003AB700
-     *         Name   -> Function /Script/SportsScramble.BattingAvatar.OnHit
-     *         Flags  -> (Final, Native, Private)
-     * Parameters:
-     *         CoreUObject::UObject*                              pWorldContextObject                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::UScramEventBasePayload*            pPayload                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void ABattingAvatar::OnHit(CoreUObject::UObject* pWorldContextObject, SportsScramble::UScramEventBasePayload* pPayload)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.BattingAvatar.OnHit");
-        
-        ABattingAvatar_OnHit_Params params {};
-        params.pWorldContextObject = pWorldContextObject;
-        params.pPayload = pPayload;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5220
-     *         Name   -> Function /Script/SportsScramble.TimeDisplayWidget.FormatTime
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              Seconds                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    BasicTypes::FString UTimeDisplayWidget::FormatTime(float Seconds)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TimeDisplayWidget.FormatTime");
-        
-        UTimeDisplayWidget_FormatTime_Params params {};
-        params.Seconds = Seconds;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5830
-     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.UpdateProgress
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyAwardListenerBase::UpdateProgress()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.UpdateProgress");
-        
-        ATrophyAwardListenerBase_UpdateProgress_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5810
-     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.SaveProgressToSaveData
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyAwardListenerBase::SaveProgressToSaveData()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.SaveProgressToSaveData");
-        
-        ATrophyAwardListenerBase_SaveProgressToSaveData_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E54F0
-     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.LoadProgressFromSaveData
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
+     *         BasicTypes::FName                                  Name                                                       (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    int32_t ATrophyAwardListenerBase::LoadProgressFromSaveData()
+    int32_t UScramSaveData::GetNamedValue(const BasicTypes::FName& Name)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.LoadProgressFromSaveData");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.GetNamedValue");
         
-        ATrophyAwardListenerBase_LoadProgressFromSaveData_Params params {};
+        UScramSaveData_GetNamedValue_Params params {};
+        params.Name = Name;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -17524,82 +18618,21 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.Initialize
-     *         Flags  -> (Event, Public, BlueprintCallable, BlueprintEvent)
+     *         RVA    -> 0x003D5840
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.GetHighScore
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable, BlueprintPure, Const)
      * Parameters:
-     *         void                                               ReturnValue
+     *         BasicTypes::FName                                  GameName                                                   (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    void ATrophyAwardListenerBase::Initialize()
+    float UScramSaveData::GetHighScore(const BasicTypes::FName& GameName)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.Initialize");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.GetHighScore");
         
-        ATrophyAwardListenerBase_Initialize_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E54D0
-     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.IncreaseProgress
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyAwardListenerBase::IncreaseProgress()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.IncreaseProgress");
-        
-        ATrophyAwardListenerBase_IncreaseProgress_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5200
-     *         Name   -> Function /Script/SportsScramble.TrophyAwardListenerBase.AwardTrophy
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyAwardListenerBase::AwardTrophy()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyAwardListenerBase.AwardTrophy");
-        
-        ATrophyAwardListenerBase_AwardTrophy_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5B30
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.WasTrophyEarned
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool ATrophyGrabbable::WasTrophyEarned()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.WasTrophyEarned");
-        
-        ATrophyGrabbable_WasTrophyEarned_Params params {};
+        UScramSaveData_GetHighScore_Params params {};
+        params.GameName = GameName;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -17610,532 +18643,25 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x003E5700
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.RespawnTrophy
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     *         RVA    -> 0x003D5620
+     *         Name   -> Function /Script/SportsScramble.ScramSaveData.CompleteTraining
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
      * Parameters:
+     *         BasicTypes::FName                                  TrainingName                                               (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void ATrophyGrabbable::RespawnTrophy()
+    void UScramSaveData::CompleteTraining(const BasicTypes::FName& TrainingName)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.RespawnTrophy");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.CompleteTraining");
         
-        ATrophyGrabbable_RespawnTrophy_Params params {};
+        UScramSaveData_CompleteTraining_Params params {};
+        params.TrainingName = TrainingName;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5670
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OverrideInitialRotation
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FRotator                              overrideRotation                                           (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void ATrophyGrabbable::OverrideInitialRotation(const CoreUObject::FRotator& overrideRotation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OverrideInitialRotation");
-        
-        ATrophyGrabbable_OverrideInitialRotation_Params params {};
-        params.overrideRotation = overrideRotation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E55E0
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OverrideInitialPosition
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::FVector                               overridePosition                                           (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void ATrophyGrabbable::OverrideInitialPosition(const CoreUObject::FVector& overridePosition)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OverrideInitialPosition");
-        
-        ATrophyGrabbable_OverrideInitialPosition_Params params {};
-        params.overridePosition = overridePosition;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnTrophyRespawnToOriginalPosition
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyGrabbable::OnTrophyRespawnToOriginalPosition()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnTrophyRespawnToOriginalPosition");
-        
-        ATrophyGrabbable_OnTrophyRespawnToOriginalPosition_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnTrophyReleased
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyGrabbable::OnTrophyReleased()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnTrophyReleased");
-        
-        ATrophyGrabbable_OnTrophyReleased_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnTrophyGrabbed
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyGrabbable::OnTrophyGrabbed()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnTrophyGrabbed");
-        
-        ATrophyGrabbable_OnTrophyGrabbed_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnStopPointingAt
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyGrabbable::OnStopPointingAt()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnStopPointingAt");
-        
-        ATrophyGrabbable_OnStopPointingAt_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.OnStartPointingAt
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ATrophyGrabbable::OnStartPointingAt()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.OnStartPointingAt");
-        
-        ATrophyGrabbable_OnStartPointingAt_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5340
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.GetInitialRotation
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         CoreUObject::FRotator                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FRotator ATrophyGrabbable::GetInitialRotation()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.GetInitialRotation");
-        
-        ATrophyGrabbable_GetInitialRotation_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5300
-     *         Name   -> Function /Script/SportsScramble.TrophyGrabbable.GetInitialPosition
-     *         Flags  -> (Final, Native, Public, HasDefaults, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         CoreUObject::FVector                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    CoreUObject::FVector ATrophyGrabbable::GetInitialPosition()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.TrophyGrabbable.GetInitialPosition");
-        
-        ATrophyGrabbable_GetInitialPosition_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003E5850
-     *         Name   -> Function /Script/SportsScramble.UpdateSessionCallbackProxyAdvanced.UpdateSession
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         int32_t                                            PublicConnections                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            PrivateConnections                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bUseLAN                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bAllowInvites                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bAllowJoinInProgress                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bRefreshOnlineData                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bIsDedicatedServer                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::UUpdateSessionCallbackProxyAdvanced* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    SportsScramble::UUpdateSessionCallbackProxyAdvanced* UUpdateSessionCallbackProxyAdvanced::STATIC_UpdateSession(CoreUObject::UObject* WorldContextObject, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, int32_t PublicConnections, int32_t PrivateConnections, bool bUseLAN, bool bAllowInvites, bool bAllowJoinInProgress, bool bRefreshOnlineData, bool bIsDedicatedServer)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.UpdateSessionCallbackProxyAdvanced.UpdateSession");
-        
-        UUpdateSessionCallbackProxyAdvanced_UpdateSession_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.ExtraSettings = ExtraSettings;
-        params.PublicConnections = PublicConnections;
-        params.PrivateConnections = PrivateConnections;
-        params.bUseLAN = bUseLAN;
-        params.bAllowInvites = bAllowInvites;
-        params.bAllowJoinInProgress = bAllowJoinInProgress;
-        params.bRefreshOnlineData = bRefreshOnlineData;
-        params.bIsDedicatedServer = bIsDedicatedServer;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BC7B0
-     *         Name   -> Function /Script/SportsScramble.MusicManager.StopMusic
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AMusicManager::STATIC_StopMusic(float FadeTime)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.StopMusic");
-        
-        AMusicManager_StopMusic_Params params {};
-        params.FadeTime = FadeTime;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BC730
-     *         Name   -> Function /Script/SportsScramble.MusicManager.Stop
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AMusicManager::Stop(float FadeTime)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.Stop");
-        
-        AMusicManager_Stop_Params params {};
-        params.FadeTime = FadeTime;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BC230
-     *         Name   -> Function /Script/SportsScramble.MusicManager.PlayMusicEntry
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FName                                  EntryName                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AMusicManager::STATIC_PlayMusicEntry(const BasicTypes::FName& EntryName, float FadeTime)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.PlayMusicEntry");
-        
-        AMusicManager_PlayMusicEntry_Params params {};
-        params.EntryName = EntryName;
-        params.FadeTime = FadeTime;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BC100
-     *         Name   -> Function /Script/SportsScramble.MusicManager.PlayMusic
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              StartTime                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              Volume                                                     (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AMusicManager::STATIC_PlayMusic(Engine::USoundBase* Sound, float StartTime, float Volume, float FadeTime)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.PlayMusic");
-        
-        AMusicManager_PlayMusic_Params params {};
-        params.Sound = Sound;
-        params.StartTime = StartTime;
-        params.Volume = Volume;
-        params.FadeTime = FadeTime;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.MusicManager.PlayEntry
-     *         Flags  -> (Event, Protected, BlueprintCallable, BlueprintEvent)
-     * Parameters:
-     *         BasicTypes::FName                                  EntryName                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AMusicManager::PlayEntry(const BasicTypes::FName& EntryName, float FadeTime)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.PlayEntry");
-        
-        AMusicManager_PlayEntry_Params params {};
-        params.EntryName = EntryName;
-        params.FadeTime = FadeTime;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BBD40
-     *         Name   -> Function /Script/SportsScramble.MusicManager.Play
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
-     * Parameters:
-     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              StartTime                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              Volume                                                     (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              FadeTime                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AMusicManager::Play(Engine::USoundBase* Sound, float StartTime, float Volume, float FadeTime)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.Play");
-        
-        AMusicManager_Play_Params params {};
-        params.Sound = Sound;
-        params.StartTime = StartTime;
-        params.Volume = Volume;
-        params.FadeTime = FadeTime;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BB810
-     *         Name   -> Function /Script/SportsScramble.MusicManager.IsPlaying
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool AMusicManager::IsPlaying(Engine::USoundBase* Sound)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.IsPlaying");
-        
-        AMusicManager_IsPlaying_Params params {};
-        params.Sound = Sound;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BB790
-     *         Name   -> Function /Script/SportsScramble.MusicManager.IsMusicPlaying
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool AMusicManager::STATIC_IsMusicPlaying(Engine::USoundBase* Sound)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.MusicManager.IsMusicPlaying");
-        
-        AMusicManager_IsMusicPlaying_Params params {};
-        params.Sound = Sound;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.DodgeballBall.OnShotChanged
-     *         Flags  -> (Event, Protected, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void ADodgeballBall::OnShotChanged()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballBall.OnShotChanged");
-        
-        ADodgeballBall_OnShotChanged_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003B7370
-     *         Name   -> Function /Script/SportsScramble.DodgeballBall.GetShot
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         SportsScramble::FDodgeballShot                     ReturnValue                                                (Parm, OutParm, ReturnParm, NoDestructor, NativeAccessSpecifierPublic)
-     */
-    SportsScramble::FDodgeballShot ADodgeballBall::GetShot()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballBall.GetShot");
-        
-        ADodgeballBall_GetShot_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003B71F0
-     *         Name   -> Function /Script/SportsScramble.DodgeballBall.GetDodgeballBallProperties
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         SportsScramble::FDodgeballBallProperties           ReturnValue                                                (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
-     */
-    SportsScramble::FDodgeballBallProperties ADodgeballBall::GetDodgeballBallProperties()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballBall.GetDodgeballBallProperties");
-        
-        ADodgeballBall_GetDodgeballBallProperties_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
     }
 
     /**
@@ -18840,50 +19366,60 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x003B77B0
-     *         Name   -> Function /Script/SportsScramble.DodgeballGlove.PlayHaptic
-     *         Flags  -> (Final, Native, Protected, BlueprintCallable)
+     *         RVA    -> 0x003E5850
+     *         Name   -> Function /Script/SportsScramble.UpdateSessionCallbackProxyAdvanced.UpdateSession
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
      * Parameters:
-     *         Engine::UHapticFeedbackEffect_Base*                haptic                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              Scale                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings                                              (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         int32_t                                            PublicConnections                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            PrivateConnections                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bUseLAN                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bAllowInvites                                              (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bAllowJoinInProgress                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bRefreshOnlineData                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bIsDedicatedServer                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::UUpdateSessionCallbackProxyAdvanced* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    void ADodgeballGlove::PlayHaptic(Engine::UHapticFeedbackEffect_Base* haptic, float Scale)
+    SportsScramble::UUpdateSessionCallbackProxyAdvanced* UUpdateSessionCallbackProxyAdvanced::STATIC_UpdateSession(CoreUObject::UObject* WorldContextObject, BasicTypes::TArray<SportsScramble::FSessionPropertyKeyPair> ExtraSettings, int32_t PublicConnections, int32_t PrivateConnections, bool bUseLAN, bool bAllowInvites, bool bAllowJoinInProgress, bool bRefreshOnlineData, bool bIsDedicatedServer)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballGlove.PlayHaptic");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.UpdateSessionCallbackProxyAdvanced.UpdateSession");
         
-        ADodgeballGlove_PlayHaptic_Params params {};
-        params.haptic = haptic;
-        params.Scale = Scale;
+        UUpdateSessionCallbackProxyAdvanced_UpdateSession_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.ExtraSettings = ExtraSettings;
+        params.PublicConnections = PublicConnections;
+        params.PrivateConnections = PrivateConnections;
+        params.bUseLAN = bUseLAN;
+        params.bAllowInvites = bAllowInvites;
+        params.bAllowJoinInProgress = bAllowJoinInProgress;
+        params.bRefreshOnlineData = bRefreshOnlineData;
+        params.bIsDedicatedServer = bIsDedicatedServer;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
     }
 
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.DodgeballGlove.ItemThrown
-     *         Flags  -> (Event, Protected, HasDefaults, BlueprintEvent)
+     *         Name   -> Function /Script/SportsScramble.DodgeballBall.OnShotChanged
+     *         Flags  -> (Event, Protected, BlueprintEvent)
      * Parameters:
-     *         Engine::AActor*                                    Item                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              Speed                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void ADodgeballGlove::ItemThrown(Engine::AActor* Item, const CoreUObject::FVector& Location, float Speed)
+    void ADodgeballBall::OnShotChanged()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballGlove.ItemThrown");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballBall.OnShotChanged");
         
-        ADodgeballGlove_ItemThrown_Params params {};
-        params.Item = Item;
-        params.Location = Location;
-        params.Speed = Speed;
+        ADodgeballBall_OnShotChanged_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -18892,108 +19428,19 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.DodgeballGlove.ItemPassed
-     *         Flags  -> (Event, Protected, HasDefaults, BlueprintEvent)
-     * Parameters:
-     *         Engine::AActor*                                    Item                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void ADodgeballGlove::ItemPassed(Engine::AActor* Item, const CoreUObject::FVector& Location)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballGlove.ItemPassed");
-        
-        ADodgeballGlove_ItemPassed_Params params {};
-        params.Item = Item;
-        params.Location = Location;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.DodgeballGlove.ItemCaught
-     *         Flags  -> (Event, Protected, HasDefaults, BlueprintEvent)
-     * Parameters:
-     *         Engine::AActor*                                    Item                                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector                               Location                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              Speed                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void ADodgeballGlove::ItemCaught(Engine::AActor* Item, const CoreUObject::FVector& Location, float Speed)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballGlove.ItemCaught");
-        
-        ADodgeballGlove_ItemCaught_Params params {};
-        params.Item = Item;
-        params.Location = Location;
-        params.Speed = Speed;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BBE90
-     *         Name   -> Function /Script/SportsScramble.ScramActor.PlayManagedSoundAtLocation
-     *         Flags  -> (Final, Native, Public, HasOutParms, HasDefaults, BlueprintCallable)
-     * Parameters:
-     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FVector                               Location                                                   (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         CoreUObject::FRotator                              Rotation                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-     *         float                                              VolumeMultiplier                                           (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              PitchMultiplier                                            (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              StartTime                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::USoundAttenuation*                         AttenuationSettings                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::USoundConcurrency*                         ConcurrencySettings                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AScramActor::PlayManagedSoundAtLocation(Engine::USoundBase* Sound, const CoreUObject::FVector& Location, const CoreUObject::FRotator& Rotation, float VolumeMultiplier, float PitchMultiplier, float StartTime, Engine::USoundAttenuation* AttenuationSettings, Engine::USoundConcurrency* ConcurrencySettings)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramActor.PlayManagedSoundAtLocation");
-        
-        AScramActor_PlayManagedSoundAtLocation_Params params {};
-        params.Sound = Sound;
-        params.Location = Location;
-        params.Rotation = Rotation;
-        params.VolumeMultiplier = VolumeMultiplier;
-        params.PitchMultiplier = PitchMultiplier;
-        params.StartTime = StartTime;
-        params.AttenuationSettings = AttenuationSettings;
-        params.ConcurrencySettings = ConcurrencySettings;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003BB730
-     *         Name   -> Function /Script/SportsScramble.ScramActor.HasBegunPlay
+     *         RVA    -> 0x003B7370
+     *         Name   -> Function /Script/SportsScramble.DodgeballBall.GetShot
      *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
      * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FDodgeballShot                     ReturnValue                                                (Parm, OutParm, ReturnParm, NoDestructor, NativeAccessSpecifierPublic)
      */
-    bool AScramActor::HasBegunPlay()
+    SportsScramble::FDodgeballShot ADodgeballBall::GetShot()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramActor.HasBegunPlay");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballBall.GetShot");
         
-        AScramActor_HasBegunPlay_Params params {};
+        ADodgeballBall_GetShot_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -19004,466 +19451,19 @@ namespace CG::SportsScramble
 
     /**
      * Function:
-     *         RVA    -> 0x003BB270
-     *         Name   -> Function /Script/SportsScramble.ScramActor.AttachSound2D
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::USoundBase*                                Sound                                                      (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              VolumeMultiplier                                           (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              PitchMultiplier                                            (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              StartTime                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::USoundConcurrency*                         ConcurrencySettings                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               IsUiSound                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, AdvancedDisplay, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AScramActor::AttachSound2D(Engine::USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier, float StartTime, Engine::USoundConcurrency* ConcurrencySettings, bool IsUiSound)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramActor.AttachSound2D");
-        
-        AScramActor_AttachSound2D_Params params {};
-        params.Sound = Sound;
-        params.VolumeMultiplier = VolumeMultiplier;
-        params.PitchMultiplier = PitchMultiplier;
-        params.StartTime = StartTime;
-        params.ConcurrencySettings = ConcurrencySettings;
-        params.IsUiSound = IsUiSound;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D6BC0
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.WipeSaveData
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UScramSaveData::WipeSaveData()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.WipeSaveData");
-        
-        UScramSaveData_WipeSaveData_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D6BA0
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.WipeHighScoreData
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void UScramSaveData::WipeHighScoreData()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.WipeHighScoreData");
-        
-        UScramSaveData_WipeHighScoreData_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D6B10
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.UnlockTraining
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FName                                  TrainingName                                               (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScramSaveData::UnlockTraining(const BasicTypes::FName& TrainingName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.UnlockTraining");
-        
-        UScramSaveData_UnlockTraining_Params params {};
-        params.TrainingName = TrainingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D6810
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.SaveNamedValue
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FName                                  Name                                                       (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            Value                                                      (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScramSaveData::SaveNamedValue(const BasicTypes::FName& Name, int32_t Value)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.SaveNamedValue");
-        
-        UScramSaveData_SaveNamedValue_Params params {};
-        params.Name = Name;
-        params.Value = Value;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D6740
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.SaveHighScore
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FName                                  GameName                                                   (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              score                                                      (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScramSaveData::SaveHighScore(const BasicTypes::FName& GameName, float score)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.SaveHighScore");
-        
-        UScramSaveData_SaveHighScore_Params params {};
-        params.GameName = GameName;
-        params.score = score;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D5FE0
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.GetTrainingProgression
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         BasicTypes::FName                                  TrainingName                                               (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         SportsScramble::ETrainingProgression               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    SportsScramble::ETrainingProgression UScramSaveData::GetTrainingProgression(const BasicTypes::FName& TrainingName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.GetTrainingProgression");
-        
-        UScramSaveData_GetTrainingProgression_Params params {};
-        params.TrainingName = TrainingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D58E0
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.GetNamedValue
+     *         RVA    -> 0x003B71F0
+     *         Name   -> Function /Script/SportsScramble.DodgeballBall.GetDodgeballBallProperties
      *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
      * Parameters:
-     *         BasicTypes::FName                                  Name                                                       (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         SportsScramble::FDodgeballBallProperties           ReturnValue                                                (ConstParm, Parm, OutParm, ReturnParm, ReferenceParm, NativeAccessSpecifierPublic)
      */
-    int32_t UScramSaveData::GetNamedValue(const BasicTypes::FName& Name)
+    SportsScramble::FDodgeballBallProperties ADodgeballBall::GetDodgeballBallProperties()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.GetNamedValue");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.DodgeballBall.GetDodgeballBallProperties");
         
-        UScramSaveData_GetNamedValue_Params params {};
-        params.Name = Name;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D5840
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.GetHighScore
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         BasicTypes::FName                                  GameName                                                   (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float UScramSaveData::GetHighScore(const BasicTypes::FName& GameName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.GetHighScore");
-        
-        UScramSaveData_GetHighScore_Params params {};
-        params.GameName = GameName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D5620
-     *         Name   -> Function /Script/SportsScramble.ScramSaveData.CompleteTraining
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         BasicTypes::FName                                  TrainingName                                               (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void UScramSaveData::CompleteTraining(const BasicTypes::FName& TrainingName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSaveData.CompleteTraining");
-        
-        UScramSaveData_CompleteTraining_Params params {};
-        params.TrainingName = TrainingName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D9F20
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.StopSavingSportState
-     *         Flags  -> (Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void AScramSportManagerBase::StopSavingSportState()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.StopSavingSportState");
-        
-        AScramSportManagerBase_StopSavingSportState_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D9E80
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.SetSelectableBallClass
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::AActor*                                    BallClass                                                  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AScramSportManagerBase::SetSelectableBallClass(Engine::AActor* BallClass)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.SetSelectableBallClass");
-        
-        AScramSportManagerBase_SetSelectableBallClass_Params params {};
-        params.BallClass = BallClass;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.ServerReady
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void AScramSportManagerBase::ServerReady()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.ServerReady");
-        
-        AScramSportManagerBase_ServerReady_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D98A0
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.SaveSportState
-     *         Flags  -> (Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void AScramSportManagerBase::SaveSportState()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.SaveSportState");
-        
-        AScramSportManagerBase_SaveSportState_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D95A0
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.OnHeartbeatSustained
-     *         Flags  -> (Final, Native, Private)
-     * Parameters:
-     *         SportsScramble::AScramPlayerController*            pPlayerController                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AScramSportManagerBase::OnHeartbeatSustained(SportsScramble::AScramPlayerController* pPlayerController)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.OnHeartbeatSustained");
-        
-        AScramSportManagerBase_OnHeartbeatSustained_Params params {};
-        params.pPlayerController = pPlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D9520
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.OnHeartbeatDisconnected
-     *         Flags  -> (Final, Native, Private)
-     * Parameters:
-     *         SportsScramble::AScramPlayerController*            pPlayerController                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void AScramSportManagerBase::OnHeartbeatDisconnected(SportsScramble::AScramPlayerController* pPlayerController)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.OnHeartbeatDisconnected");
-        
-        AScramSportManagerBase_OnHeartbeatDisconnected_Params params {};
-        params.pPlayerController = pPlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.OnGameDone
-     *         Flags  -> (Event, Public, BlueprintEvent)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void AScramSportManagerBase::OnGameDone()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.OnGameDone");
-        
-        AScramSportManagerBase_OnGameDone_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D92C0
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.LocalGameDone
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void AScramSportManagerBase::LocalGameDone()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.LocalGameDone");
-        
-        AScramSportManagerBase_LocalGameDone_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D8F60
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.GetPlayer
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         int32_t                                            Index                                                      (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::AActor*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    Engine::AActor* AScramSportManagerBase::GetPlayer(int32_t Index)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.GetPlayer");
-        
-        AScramSportManagerBase_GetPlayer_Params params {};
-        params.Index = Index;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x003D8E70
-     *         Name   -> Function /Script/SportsScramble.ScramSportManagerBase.GetOtherPlayer
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         Engine::AActor*                                    Player                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::AActor*                                    ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    Engine::AActor* AScramSportManagerBase::GetOtherPlayer(Engine::AActor* Player)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/SportsScramble.ScramSportManagerBase.GetOtherPlayer");
-        
-        AScramSportManagerBase_GetOtherPlayer_Params params {};
-        params.Player = Player;
+        ADodgeballBall_GetDodgeballBallProperties_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

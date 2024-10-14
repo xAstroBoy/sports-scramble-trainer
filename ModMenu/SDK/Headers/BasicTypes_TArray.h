@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -20,52 +20,116 @@
 
 namespace CG::BasicTypes
 {
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    template<typename T>
-    class TArray
-    {
-    private:
-        T*                                                           _data;
-        int32_t                                                      _count;
-        int32_t                                                      _max;
+	/**
+	 *
+	 * Size -> 0x0000
+	 */
+	template<typename T>
+	class TArray
+	{
+	private:
+		T* _data;                                                   // 0x0000(0x0000)
+		int32_t                                                    _count;                                                  // 0x0000(0x0000)
+		int32_t                                                    _max;                                                    // 0x0000(0x0000)
 
-        friend class FString;
+		friend class FString;
+	public:
+		TArray()
+		{
+			_data = nullptr;
+			_count = 0;
+			_max = 0;
+		}
 
-    public:
-        TArray()
-        {
-            _data = nullptr;
-            _count = 0;
-            _max = 0;
-        }
-        T* Data() const
-        {
-            return _data;
-        }
-        const int32_t& Count() const
-        {
-            return _count;
-        }
-        const int32_t& Max() const
-        {
-            return _max;
-        }
-        const bool& IsValidIndex(int32_t index) const
-        {
-            return index >= 0 && index < _count;
-        }
-        T& operator[](const int32_t& index)
-        {
-            return _data[index];
-        }
-        const T& operator[](const int32_t& index) const
-        {
-            return _data[index];
-        }
-    };
+		T* Data() const
+		{
+			return _data;
+		}
+
+		int32_t Count() const
+		{
+			return _count;
+		}
+
+		int32_t Max() const
+		{
+			return _max;
+		}
+
+		bool IsValidIndex(int32_t i) const
+		{
+			return i < _count;
+		}
+
+		T& operator[](int32_t i)
+		{
+			return _data[i];
+		}
+
+		const T& operator[](int32_t i) const
+		{
+			return _data[i];
+		}
+		bool Contains(const T& item) const
+		{
+			for (int32_t i = 0; i < _count; ++i)
+			{
+				if (_data[i] == item)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		void Add(const T& item)
+		{
+			if (_count >= _max)
+			{
+				size_t newSize = (_max == 0) ? 1 : _max * 2;
+				T* newData = (T*)realloc(_data, newSize * sizeof(T));
+				if (newData == nullptr)
+				{
+					throw std::bad_alloc(); // Handle memory allocation failure
+				}
+
+				_data = newData;
+				_max = newSize;
+			}
+
+			_data[_count++] = item;
+		}
+
+
+		void RemoveAt(int32_t index)
+		{
+			if (!IsValidIndex(index)) return;
+
+			// Shift elements down to remove the item
+			for (int32_t i = index; i < _count - 1; i++)
+			{
+				_data[i] = _data[i + 1];
+			}
+
+			_count--;
+		}
+
+		void Remove(const T& item)
+		{
+			for (int32_t i = 0; i < _count; ++i)
+			{
+				if (_data[i] == item)
+				{
+					RemoveAt(i);
+					return;
+				}
+			}
+		}
+
+		~TArray()
+		{
+		}
+	};
 }
 
 #ifdef _MSC_VER

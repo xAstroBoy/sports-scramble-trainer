@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -32,18 +32,18 @@ namespace CG::TN_Train_06_ScrambleInstruments
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/Training/Tennis/TN_Train_06_ScrambleInstruments.TN_Train_06_ScrambleInstruments_C.SetupInfoText
+     *         Name   -> Function /Game/Blueprints/Training/Tennis/TN_Train_06_ScrambleInstruments.TN_Train_06_ScrambleInstruments_C.SetUpInfoText
      *         Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void ATN_Train_06_ScrambleInstruments_C::SetupInfoText()
+    void ATN_Train_06_ScrambleInstruments_C::SetUpInfoText()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Training/Tennis/TN_Train_06_ScrambleInstruments.TN_Train_06_ScrambleInstruments_C.SetupInfoText");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Training/Tennis/TN_Train_06_ScrambleInstruments.TN_Train_06_ScrambleInstruments_C.SetUpInfoText");
         
-        ATN_Train_06_ScrambleInstruments_C_SetupInfoText_Params params {};
+        ATN_Train_06_ScrambleInstruments_C_SetUpInfoText_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

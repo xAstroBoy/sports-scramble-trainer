@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -60,7 +60,7 @@ namespace CG::TN_Train_01_BasicHitting
      * 
      * Size -> 0x0000
      */
-    class ATN_Train_01_BasicHitting_C_SetupInfoText_Params
+    class ATN_Train_01_BasicHitting_C_SetUpInfoText_Params
     {
     };
 

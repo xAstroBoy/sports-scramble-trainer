@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -50,7 +50,7 @@ namespace CG::BW_Challenge_05_EqualMatch
     public:
         void GetTrophyID(BasicTypes::FName* TrophyID);
         void InitializeChallengeRoom();
-        void SetupInfoText();
+        void SetUpInfoText();
         void UserConstructionScript();
         void ReceiveBeginPlay();
         void NotifyChallengeContinue(Engine::AActor* DestroyedActor);

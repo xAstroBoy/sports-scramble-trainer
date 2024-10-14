@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -74,7 +74,7 @@ namespace CG::GameHandlerPnp
         uint8_t                                                      UnknownData_0001[0x7];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
         BasicTypes::TArray<Engine::AActor*>                          Scoreboards;                                             //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance
         ScramGameInstance::UScramGameInstance_C*                     GameInstance;                                            //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-        Engine::AActor*                                              Minigame;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+        Engine::AActor*                                              MiniGame;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         BasicTypes::TArray<Engine::AActor*>                          GameElements;                                            //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance
         BasicTypes::UScriptMulticastDelegate                         MenuOpened;                                              //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, BlueprintAssignable, BlueprintCallable
         BasicTypes::UScriptMulticastDelegate                         NewMenuReady;                                            //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, BlueprintAssignable, BlueprintCallable
@@ -110,7 +110,7 @@ namespace CG::GameHandlerPnp
         void UpdatePlayerSettings();
         void ClearScores();
         void CreateResultsScoreMenu(const BasicTypes::UScriptDelegate& Event, Menu_ResultsScore::AMenu_ResultsScore_C** Menu);
-        void SpawnMinigame(const BasicTypes::FName& Game);
+        void SpawnMiniGame(const BasicTypes::FName& Game);
         void CreateEnterNameMenu(Menu_EnterName::AMenu_EnterName_C** Menu);
         void NextMenu(const BasicTypes::UScriptDelegate& Event);
         void CreateReadyPlayerMenu(bool PassToPlayer, const BasicTypes::UScriptDelegate& Event, Menu_PnpReadyPlayer::AMenu_PnpReadyPlayer_C** Menu);
@@ -126,7 +126,7 @@ namespace CG::GameHandlerPnp
         void EnableActiveMenuInput();
         void SetupBaseball();
         void SetupBowling();
-        void ShutDown();
+        void Shutdown();
         void SetupTennis();
         void UserConstructionScript();
         void Timeline_ScaleMenu__FinishedFunc();
@@ -142,7 +142,7 @@ namespace CG::GameHandlerPnp
         void NewRoundBegin();
         void EnterPlayerName();
         void ChangeLevel(const BasicTypes::FName& Game);
-        void LevelReady(const BasicTypes::FName& NewGeoLevel);
+        void LevelREady(const BasicTypes::FName& NewGeoLevel);
         void GetNextPlayerReady();
         void NextPlayerReady(int32_t ID);
         void EnterNameMenuReady();

@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -145,18 +145,18 @@ namespace CG::OCDemo_StagingBP
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/OCDemo/OCDemo_StagingBP.OCDemo_StagingBP_C.SpawnMinigame
+     *         Name   -> Function /Game/Blueprints/OCDemo/OCDemo_StagingBP.OCDemo_StagingBP_C.SpawnMiniGame
      *         Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void AOCDemo_StagingBP_C::SpawnMinigame()
+    void AOCDemo_StagingBP_C::SpawnMiniGame()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/OCDemo/OCDemo_StagingBP.OCDemo_StagingBP_C.SpawnMinigame");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/OCDemo/OCDemo_StagingBP.OCDemo_StagingBP_C.SpawnMiniGame");
         
-        AOCDemo_StagingBP_C_SpawnMinigame_Params params {};
+        AOCDemo_StagingBP_C_SpawnMiniGame_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

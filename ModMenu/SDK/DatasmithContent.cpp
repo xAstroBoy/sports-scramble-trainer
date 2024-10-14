@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -23,11 +23,14 @@
 #include "Headers/DatasmithContent_UDatasmithActorTemplate.h"
 #include "Headers/DatasmithContent_ADatasmithAreaLightActor.h"
 #include "Headers/DatasmithContent_UDatasmithAreaLightActorTemplate.h"
+#include "Headers/DatasmithContent_UDatasmithAssetImportData.h"
+#include "Headers/DatasmithContent_UDatasmithSceneImportData.h"
+#include "Headers/DatasmithContent_UDatasmithCADImportSceneData.h"
+#include "Headers/DatasmithContent_UDatasmithMDLSceneImportData.h"
+#include "Headers/DatasmithContent_UDatasmithDeltaGenAssetImportData.h"
+#include "Headers/DatasmithContent_UDatasmithDeltaGenSceneImportData.h"
 #include "Headers/DatasmithContent_UDatasmithVREDAssetImportData.h"
 #include "Headers/DatasmithContent_UDatasmithVREDSceneImportData.h"
-#include "Headers/DatasmithContent_UDatasmithCineCameraComponentTemplate.h"
-#include "Headers/DatasmithContent_UDatasmithContentBlueprintLibrary.h"
-#include "Headers/DatasmithContent_UDatasmithImportOptions.h"
 #include "Headers/DatasmithContent_UDatasmithLandscapeTemplate.h"
 #include "Headers/DatasmithContent_UDatasmithLightComponentTemplate.h"
 #include "Headers/DatasmithContent_UDatasmithPointLightComponentTemplate.h"
@@ -38,15 +41,12 @@
 #include "Headers/DatasmithContent_UDatasmithSpotLightComponentTemplate.h"
 #include "Headers/DatasmithContent_UDatasmithStaticMeshComponentTemplate.h"
 #include "Headers/DatasmithContent_UDatasmithStaticMeshTemplate.h"
-#include "Headers/DatasmithContent_UDatasmithAssetImportData.h"
+#include "Headers/DatasmithContent_UDatasmithAssetUserData.h"
+#include "Headers/DatasmithContent_UDatasmithCineCameraComponentTemplate.h"
+#include "Headers/DatasmithContent_UDatasmithContentBlueprintLibrary.h"
+#include "Headers/DatasmithContent_UDatasmithImportOptions.h"
 #include "Headers/DatasmithContent_UDatasmithStaticMeshImportData.h"
 #include "Headers/DatasmithContent_UDatasmithStaticMeshCADImportData.h"
-#include "Headers/DatasmithContent_UDatasmithSceneImportData.h"
-#include "Headers/DatasmithContent_UDatasmithAssetUserData.h"
-#include "Headers/DatasmithContent_UDatasmithCADImportSceneData.h"
-#include "Headers/DatasmithContent_UDatasmithMDLSceneImportData.h"
-#include "Headers/DatasmithContent_UDatasmithDeltaGenAssetImportData.h"
-#include "Headers/DatasmithContent_UDatasmithDeltaGenSceneImportData.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

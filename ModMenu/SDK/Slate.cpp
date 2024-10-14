@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -18,9 +18,6 @@
 #include "Headers/BasicTypes.h"
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/Slate_ENUMS.h"
-#include "Headers/Slate_UButtonWidgetStyle.h"
-#include "Headers/Slate_UCheckBoxWidgetStyle.h"
-#include "Headers/Slate_UComboBoxWidgetStyle.h"
 #include "Headers/Slate_UComboButtonWidgetStyle.h"
 #include "Headers/Slate_UEditableTextBoxWidgetStyle.h"
 #include "Headers/Slate_UEditableTextWidgetStyle.h"
@@ -30,6 +27,9 @@
 #include "Headers/Slate_USlateSettings.h"
 #include "Headers/Slate_USpinBoxWidgetStyle.h"
 #include "Headers/Slate_UTextBlockWidgetStyle.h"
+#include "Headers/Slate_UButtonWidgetStyle.h"
+#include "Headers/Slate_UCheckBoxWidgetStyle.h"
+#include "Headers/Slate_UComboBoxWidgetStyle.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

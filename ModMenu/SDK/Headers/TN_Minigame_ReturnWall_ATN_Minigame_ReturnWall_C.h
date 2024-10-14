@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -51,7 +51,7 @@ namespace CG::TN_Minigame_ReturnWall
 
     public:
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void SpawnGameElements();
         void UpdateScore(int32_t NewScore);
         void Initialize();

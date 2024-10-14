@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -64,9 +64,9 @@ namespace CG::TN_Challenge_04_Accelerator
         bool                                                         ValuesSet;                                               //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
 
     public:
-        void SetupInfoText();
+        void SetUpInfoText();
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void Initialize();
         void UserConstructionScript();
         void ReceiveBeginPlay();

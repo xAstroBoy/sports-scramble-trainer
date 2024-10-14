@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -18,8 +18,8 @@
 #include "Headers/BasicTypes.h"
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/AndroidPermission_PARAMS.h"
-#include "Headers/AndroidPermission_UAndroidPermissionFunctionLibrary.h"
 #include "Headers/AndroidPermission_UAndroidPermissionCallbackProxy.h"
+#include "Headers/AndroidPermission_UAndroidPermissionFunctionLibrary.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

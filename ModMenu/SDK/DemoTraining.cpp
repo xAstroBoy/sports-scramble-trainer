@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -147,18 +147,18 @@ namespace CG::DemoTraining
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/Demo/DemoTraining.DemoTraining_C.SpawnMinigame
+     *         Name   -> Function /Game/Blueprints/Demo/DemoTraining.DemoTraining_C.SpawnMiniGame
      *         Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void ADemoTraining_C::SpawnMinigame()
+    void ADemoTraining_C::SpawnMiniGame()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Demo/DemoTraining.DemoTraining_C.SpawnMinigame");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Demo/DemoTraining.DemoTraining_C.SpawnMiniGame");
         
-        ADemoTraining_C_SpawnMinigame_Params params {};
+        ADemoTraining_C_SpawnMiniGame_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

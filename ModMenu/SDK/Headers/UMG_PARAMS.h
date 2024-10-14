@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -41,21 +41,21 @@
 #include "SlateCore_FButtonStyle.h"
 #include "UMG_FAnchorData.h"
 #include "BasicTypes_TArray.h"
-#include "UMG_FSlateChildSize.h"
-#include "BasicTypes_TSoftObjectPtr.h"
-#include "Engine_UTexture2D.h"
-#include "BasicTypes_TScriptInterface.h"
-#include "Engine_ISlateTextureAtlasInterface.h"
-#include "Slate_FInputChord.h"
-#include "InputCore_FKey.h"
 #include "Slate_ENUMS.h"
 #include "SlateCore_FSlateFontInfo.h"
+#include "UMG_FSlateChildSize.h"
 #include "CoreUObject_FRotator.h"
 #include "CoreUObject_FVector.h"
 #include "CoreUObject_FVector4.h"
 #include "SlateCore_FInputEvent.h"
 #include "SlateCore_FNavigationEvent.h"
+#include "InputCore_FKey.h"
 #include "Engine_FHitResult.h"
+#include "BasicTypes_TSoftObjectPtr.h"
+#include "Engine_UTexture2D.h"
+#include "BasicTypes_TScriptInterface.h"
+#include "Engine_ISlateTextureAtlasInterface.h"
+#include "Slate_FInputChord.h"
 
 // --------------------------------------------------
 // # Forwards
@@ -69,7 +69,6 @@ namespace CG::UMG { class UWidgetAnimation; };
 namespace CG::Engine { class USoundBase; };
 namespace CG::UMG { class UDragDropOperation; };
 namespace CG::Engine { class APawn; };
-namespace CG::UMG { class UAsyncTaskDownloadImage; };
 namespace CG::UMG { class UPanelSlot; };
 namespace CG::Engine { class UTexture2D; };
 namespace CG::Engine { class UMaterialInterface; };
@@ -77,10 +76,6 @@ namespace CG::Engine { class USlateBrushAsset; };
 namespace CG::Engine { class UMaterialInstanceDynamic; };
 namespace CG::UMG { class UCanvasPanelSlot; };
 namespace CG::UMG { class UUserWidget; };
-namespace CG::UMG { class UGridSlot; };
-namespace CG::UMG { class UHorizontalBoxSlot; };
-namespace CG::Engine { class UTexture2DDynamic; };
-namespace CG::UMG { class UOverlaySlot; };
 namespace CG::UMG { class URichTextBlockDecorator; };
 namespace CG::UMG { class UUniformGridSlot; };
 namespace CG::UMG { class UVerticalBoxSlot; };
@@ -88,10 +83,15 @@ namespace CG::Engine { class AActor; };
 namespace CG::Engine { class UWorld; };
 namespace CG::CoreUObject { class IInterface; };
 namespace CG::Engine { class UFont; };
-namespace CG::UMG { class UWrapBoxSlot; };
 namespace CG::Engine { class UTextureRenderTarget2D; };
 namespace CG::UMG { class UWidgetComponent; };
+namespace CG::UMG { class UOverlaySlot; };
+namespace CG::UMG { class UHorizontalBoxSlot; };
+namespace CG::UMG { class UGridSlot; };
 namespace CG::UMG { class UBorderSlot; };
+namespace CG::UMG { class UAsyncTaskDownloadImage; };
+namespace CG::Engine { class UTexture2DDynamic; };
+namespace CG::UMG { class UWrapBoxSlot; };
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -1502,112 +1502,6 @@ namespace CG::UMG
      * 
      * Size -> 0x0000
      */
-    class UAsyncTaskDownloadImage_DownloadImage_Params
-    {
-    public:
-        BasicTypes::FString                                          URL;                                                     //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        UMG::UAsyncTaskDownloadImage*                                ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_RemoveChildAt_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0004(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_RemoveChild_Params
-    {
-    public:
-        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_HasChild_Params
-    {
-    public:
-        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_HasAnyChildren_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_GetChildrenCount_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_GetChildIndex_Params
-    {
-    public:
-        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_GetChildAt_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        UMG::UWidget*                                                ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_ClearChildren_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UPanelWidget_AddChild_Params
-    {
-    public:
-        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        UMG::UPanelSlot*                                             ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
     class UContentWidget_SetContent_Params
     {
     public:
@@ -2280,850 +2174,6 @@ namespace CG::UMG
      * 
      * Size -> 0x0000
      */
-    class UColorBinding_GetSlateValue_Params
-    {
-    public:
-        SlateCore::FSlateColor                                       ReturnValue;                                             //  0x0000(0x0028)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UColorBinding_GetLinearValue_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_SetSelectedOption_Params
-    {
-    public:
-        BasicTypes::FString                                          Option;                                                  //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_RemoveOption_Params
-    {
-    public:
-        BasicTypes::FString                                          Option;                                                  //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_RefreshOptions_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_OnSelectionChangedEvent__DelegateSignature_Params
-    {
-    public:
-        BasicTypes::FString                                          SelectedItem;                                            //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SlateCore::ESelectInfo                                       SelectionType;                                           //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_OnOpeningEvent__DelegateSignature_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_GetSelectedOption_Params
-    {
-    public:
-        BasicTypes::FString                                          ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_GetOptionCount_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_GetOptionAtIndex_Params
-    {
-    public:
-        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
-        BasicTypes::FString                                          ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_FindOptionIndex_Params
-    {
-    public:
-        BasicTypes::FString                                          Option;                                                  //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      ReturnValue;                                             //  0x0010(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_ClearSelection_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_ClearOptions_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UComboBoxString_AddOption_Params
-    {
-    public:
-        BasicTypes::FString                                          Option;                                                  //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDragDropOperation_Drop_Params
-    {
-    public:
-        SlateCore::FPointerEvent                                     PointerEvent;                                            //  0x0000(0x0070)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDragDropOperation_Dragged_Params
-    {
-    public:
-        SlateCore::FPointerEvent                                     PointerEvent;                                            //  0x0000(0x0070)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDragDropOperation_DragCancelled_Params
-    {
-    public:
-        SlateCore::FPointerEvent                                     PointerEvent;                                            //  0x0000(0x0070)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDynamicEntryBox_SetEntrySpacing_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       InEntrySpacing;                                          //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDynamicEntryBox_Reset_Params
-    {
-    public:
-        bool                                                         bDeleteWidgets;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDynamicEntryBox_RemoveEntry_Params
-    {
-    public:
-        UMG::UUserWidget*                                            EntryWidget;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDynamicEntryBox_GetNumEntries_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDynamicEntryBox_GetAllEntries_Params
-    {
-    public:
-        BasicTypes::TArray<UMG::UUserWidget*>                        ReturnValue;                                             //  0x0000(0x0010)  (ConstParm, ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, ReferenceParm, ContainsInstancedReference, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDynamicEntryBox_BP_CreateEntryOfClass_Params
-    {
-    public:
-        UMG::UUserWidget*                                            EntryClass;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        UMG::UUserWidget*                                            ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UDynamicEntryBox_BP_CreateEntry_Params
-    {
-    public:
-        UMG::UUserWidget*                                            ReturnValue;                                             //  0x0000(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableText_SetText_Params
-    {
-    public:
-        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableText_SetIsReadOnly_Params
-    {
-    public:
-        bool                                                         InbIsReadyOnly;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableText_SetIsPassword_Params
-    {
-    public:
-        bool                                                         InbIsPassword;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableText_SetHintText_Params
-    {
-    public:
-        BasicTypes::FText                                            InHintText;                                              //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableText_OnEditableTextCommittedEvent__DelegateSignature_Params
-    {
-    public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        SlateCore::ETextCommit                                       CommitMethod;                                            //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableText_OnEditableTextChangedEvent__DelegateSignature_Params
-    {
-    public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableText_GetText_Params
-    {
-    public:
-        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_SetText_Params
-    {
-    public:
-        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_SetIsReadOnly_Params
-    {
-    public:
-        bool                                                         bReadOnly;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_SetIsPassword_Params
-    {
-    public:
-        bool                                                         bIsPassword;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_SetHintText_Params
-    {
-    public:
-        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_SetError_Params
-    {
-    public:
-        BasicTypes::FText                                            InError;                                                 //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_OnEditableTextBoxCommittedEvent__DelegateSignature_Params
-    {
-    public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        SlateCore::ETextCommit                                       CommitMethod;                                            //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_OnEditableTextBoxChangedEvent__DelegateSignature_Params
-    {
-    public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_HasError_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_GetText_Params
-    {
-    public:
-        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UEditableTextBox_ClearError_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExpandableArea_SetIsExpanded_Animated_Params
-    {
-    public:
-        bool                                                         IsExpanded;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExpandableArea_SetIsExpanded_Params
-    {
-    public:
-        bool                                                         IsExpanded;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UExpandableArea_GetIsExpanded_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UFloatBinding_GetValue_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridPanel_SetRowFill_Params
-    {
-    public:
-        int32_t                                                      ColumnIndex;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Coefficient;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridPanel_SetColumnFill_Params
-    {
-    public:
-        int32_t                                                      ColumnIndex;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        Coefficient;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridPanel_AddChildToGrid_Params
-    {
-    public:
-        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        UMG::UGridSlot*                                              ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridSlot_SetVerticalAlignment_Params
-    {
-    public:
-        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridSlot_SetRowSpan_Params
-    {
-    public:
-        int32_t                                                      InRowSpan;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridSlot_SetRow_Params
-    {
-    public:
-        int32_t                                                      InRow;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridSlot_SetPadding_Params
-    {
-    public:
-        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridSlot_SetLayer_Params
-    {
-    public:
-        int32_t                                                      InLayer;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridSlot_SetHorizontalAlignment_Params
-    {
-    public:
-        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridSlot_SetColumnSpan_Params
-    {
-    public:
-        int32_t                                                      InColumnSpan;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UGridSlot_SetColumn_Params
-    {
-    public:
-        int32_t                                                      InColumn;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHorizontalBox_AddChildToHorizontalBox_Params
-    {
-    public:
-        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        UMG::UHorizontalBoxSlot*                                     ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHorizontalBoxSlot_SetVerticalAlignment_Params
-    {
-    public:
-        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHorizontalBoxSlot_SetSize_Params
-    {
-    public:
-        UMG::FSlateChildSize                                         InSize;                                                  //  0x0000(0x0008)  (Parm, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHorizontalBoxSlot_SetPadding_Params
-    {
-    public:
-        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UHorizontalBoxSlot_SetHorizontalAlignment_Params
-    {
-    public:
-        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetOpacity_Params
-    {
-    public:
-        float                                                        InOpacity;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetColorAndOpacity_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    InColorAndOpacity;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrushTintColor_Params
-    {
-    public:
-        SlateCore::FSlateColor                                       TintColor;                                               //  0x0000(0x0028)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrushSize_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       DesiredSize;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrushFromTextureDynamic_Params
-    {
-    public:
-        Engine::UTexture2DDynamic*                                   Texture;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bMatchSize;                                              //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrushFromTexture_Params
-    {
-    public:
-        Engine::UTexture2D*                                          Texture;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bMatchSize;                                              //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrushFromSoftTexture_Params
-    {
-    public:
-        BasicTypes::TSoftObjectPtr<Engine::UTexture2D>               SoftTexture;                                             //  0x0000(0x0024)  (Parm, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         bMatchSize;                                              //  0x0028(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrushFromMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  Material;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrushFromAtlasInterface_Params
-    {
-    public:
-        BasicTypes::TScriptInterface<Engine::ISlateTextureAtlasInterface> AtlasRegion;                                             //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
-        bool                                                         bMatchSize;                                              //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrushFromAsset_Params
-    {
-    public:
-        Engine::USlateBrushAsset*                                    Asset;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_SetBrush_Params
-    {
-    public:
-        SlateCore::FSlateBrush                                       InBrush;                                                 //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UImage_GetDynamicMaterial_Params
-    {
-    public:
-        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_SetTextBlockVisibility_Params
-    {
-    public:
-        UMG::ESlateVisibility                                        InVisibility;                                            //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_SetSelectedKey_Params
-    {
-    public:
-        Slate::FInputChord                                           InSelectedKey;                                           //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_SetNoKeySpecifiedText_Params
-    {
-    public:
-        BasicTypes::FText                                            InNoKeySpecifiedText;                                    //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_SetKeySelectionText_Params
-    {
-    public:
-        BasicTypes::FText                                            InKeySelectionText;                                      //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_SetEscapeKeys_Params
-    {
-    public:
-        BasicTypes::TArray<InputCore::FKey>                          InKeys;                                                  //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_SetAllowModifierKeys_Params
-    {
-    public:
-        bool                                                         bInAllowModifierKeys;                                    //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_SetAllowGamepadKeys_Params
-    {
-    public:
-        bool                                                         bInAllowGamepadKeys;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_OnKeySelected__DelegateSignature_Params
-    {
-    public:
-        Slate::FInputChord                                           SelectedKey;                                             //  0x0000(0x0020)  (Parm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_OnIsSelectingKeyChanged__DelegateSignature_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInputKeySelector_GetIsSelectingKey_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UInt32Binding_GetValue_Params
-    {
-    public:
-        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
     class UInvalidationBox_SetCanCache_Params
     {
     public:
@@ -3474,109 +2524,67 @@ namespace CG::UMG
      * 
      * Size -> 0x0000
      */
-    class UOverlay_AddChildToOverlay_Params
+    class UMenuAnchor_ToggleOpen_Params
     {
     public:
-        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        UMG::UOverlaySlot*                                           ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bFocusOnOpen;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UOverlaySlot_SetVerticalAlignment_Params
+    class UMenuAnchor_ShouldOpenDueToClick_Params
     {
     public:
-        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UOverlaySlot_SetPadding_Params
+    class UMenuAnchor_Open_Params
     {
     public:
-        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        bool                                                         bFocusMenu;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UOverlaySlot_SetHorizontalAlignment_Params
+    class UMenuAnchor_IsOpen_Params
     {
     public:
-        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UProgressBar_SetPercent_Params
+    class UMenuAnchor_HasOpenSubMenus_Params
     {
     public:
-        float                                                        InPercent;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UProgressBar_SetIsMarquee_Params
+    class UMenuAnchor_GetMenuPosition_Params
     {
     public:
-        bool                                                         InbIsMarquee;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UProgressBar_SetFillColorAndOpacity_Params
-    {
-    public:
-        CoreUObject::FLinearColor                                    InColor;                                                 //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URetainerBox_SetTextureParameter_Params
-    {
-    public:
-        BasicTypes::FName                                            TextureParameter;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URetainerBox_SetRenderingPhase_Params
-    {
-    public:
-        int32_t                                                      RenderPhase;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        int32_t                                                      TotalPhases;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URetainerBox_SetEffectMaterial_Params
-    {
-    public:
-        Engine::UMaterialInterface*                                  EffectMaterial;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class URetainerBox_RequestRender_Params
+    class UMenuAnchor_Close_Params
     {
     };
 
@@ -3584,10 +2592,61 @@ namespace CG::UMG
      * 
      * Size -> 0x0000
      */
-    class URetainerBox_GetEffectMaterial_Params
+    class UMouseCursorBinding_GetValue_Params
     {
     public:
-        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::EMouseCursor                                    ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableText_SetText_Params
+    {
+    public:
+        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableText_SetIsReadOnly_Params
+    {
+    public:
+        bool                                                         bReadOnly;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableText_OnMultiLineEditableTextCommittedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        SlateCore::ETextCommit                                       CommitMethod;                                            //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableText_OnMultiLineEditableTextChangedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableText_GetText_Params
+    {
+    public:
+        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -3609,6 +2668,253 @@ namespace CG::UMG
     public:
         UMG::URichTextBlockDecorator*                                DecoratorClass;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
         UMG::URichTextBlockDecorator*                                ReturnValue;                                             //  0x0008(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USafeZone_SetSidesToPad_Params
+    {
+    public:
+        bool                                                         InPadLeft;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         InPadRight;                                              //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         InPadTop;                                                //  0x0002(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         InPadBottom;                                             //  0x0003(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScaleBox_SetUserSpecifiedScale_Params
+    {
+    public:
+        float                                                        InUserSpecifiedScale;                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScaleBox_SetStretchDirection_Params
+    {
+    public:
+        Slate::EStretchDirection                                     InStretchDirection;                                      //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScaleBox_SetStretch_Params
+    {
+    public:
+        Slate::EStretch                                              InStretch;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScaleBox_SetIgnoreInheritedScale_Params
+    {
+    public:
+        bool                                                         bInIgnoreInheritedScale;                                 //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScaleBoxSlot_SetVerticalAlignment_Params
+    {
+    public:
+        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScaleBoxSlot_SetPadding_Params
+    {
+    public:
+        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScaleBoxSlot_SetHorizontalAlignment_Params
+    {
+    public:
+        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBoxSlot_SetVerticalAlignment_Params
+    {
+    public:
+        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBoxSlot_SetPadding_Params
+    {
+    public:
+        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBoxSlot_SetHorizontalAlignment_Params
+    {
+    public:
+        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_ScreenToWidgetLocal_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SlateCore::FGeometry                                         Geometry;                                                //  0x0008(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       LocalCoordinate;                                         //  0x0048(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_ScreenToWidgetAbsolute_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       AbsoluteCoordinate;                                      //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_ScreenToViewport_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ViewportPosition;                                        //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_LocalToViewport_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SlateCore::FGeometry                                         Geometry;                                                //  0x0008(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       LocalCoordinate;                                         //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       PixelPosition;                                           //  0x0048(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ViewportPosition;                                        //  0x0050(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_LocalToAbsolute_Params
+    {
+    public:
+        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       LocalCoordinate;                                         //  0x0038(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0040(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_IsUnderLocation_Params
+    {
+    public:
+        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       AbsoluteCoordinate;                                      //  0x0038(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0040(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_GetLocalSize_Params
+    {
+    public:
+        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0038(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_GetAbsoluteSize_Params
+    {
+    public:
+        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0038(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_EqualEqual_SlateBrush_Params
+    {
+    public:
+        SlateCore::FSlateBrush                                       A;                                                       //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        SlateCore::FSlateBrush                                       B;                                                       //  0x0088(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0110(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_AbsoluteToViewport_Params
+    {
+    public:
+        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       AbsoluteDesktopCoordinate;                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       PixelPosition;                                           //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ViewportPosition;                                        //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USlateBlueprintLibrary_AbsoluteToLocal_Params
+    {
+    public:
+        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       AbsoluteCoordinate;                                      //  0x0038(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0040(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
@@ -4968,697 +4274,6 @@ namespace CG::UMG
      * 
      * Size -> 0x0000
      */
-    class UWindowTitleBarAreaSlot_SetVerticalAlignment_Params
-    {
-    public:
-        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWindowTitleBarAreaSlot_SetPadding_Params
-    {
-    public:
-        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWindowTitleBarAreaSlot_SetHorizontalAlignment_Params
-    {
-    public:
-        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWrapBox_SetInnerSlotPadding_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       InPadding;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWrapBox_AddChildWrapBox_Params
-    {
-    public:
-        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        UMG::UWrapBoxSlot*                                           ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWrapBoxSlot_SetVerticalAlignment_Params
-    {
-    public:
-        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWrapBoxSlot_SetPadding_Params
-    {
-    public:
-        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWrapBoxSlot_SetHorizontalAlignment_Params
-    {
-    public:
-        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWrapBoxSlot_SetFillSpanWhenLessThan_Params
-    {
-    public:
-        float                                                        InFillSpanWhenLessThan;                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UWrapBoxSlot_SetFillEmptySpace_Params
-    {
-    public:
-        bool                                                         InbFillEmptySpace;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScaleBoxSlot_SetVerticalAlignment_Params
-    {
-    public:
-        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScaleBoxSlot_SetPadding_Params
-    {
-    public:
-        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScaleBoxSlot_SetHorizontalAlignment_Params
-    {
-    public:
-        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBar_SetState_Params
-    {
-    public:
-        float                                                        InOffsetFraction;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        InThumbSizeFraction;                                     //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_SetScrollOffset_Params
-    {
-    public:
-        float                                                        NewScrollOffset;                                         //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_SetScrollBarVisibility_Params
-    {
-    public:
-        UMG::ESlateVisibility                                        NewScrollBarVisibility;                                  //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_SetScrollbarThickness_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       NewScrollbarThickness;                                   //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_SetOrientation_Params
-    {
-    public:
-        SlateCore::EOrientation                                      NewOrientation;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_SetAlwaysShowScrollbar_Params
-    {
-    public:
-        bool                                                         NewAlwaysShowScrollbar;                                  //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_SetAllowOverscroll_Params
-    {
-    public:
-        bool                                                         NewAllowOverscroll;                                      //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_ScrollWidgetIntoView_Params
-    {
-    public:
-        UMG::UWidget*                                                WidgetToFind;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         AnimateScroll;                                           //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        Slate::EDescendantScrollDestination                          ScrollDestination;                                       //  0x0009(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_ScrollToStart_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_ScrollToEnd_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_GetViewOffsetFraction_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBox_GetScrollOffset_Params
-    {
-    public:
-        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBoxSlot_SetVerticalAlignment_Params
-    {
-    public:
-        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBoxSlot_SetPadding_Params
-    {
-    public:
-        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScrollBoxSlot_SetHorizontalAlignment_Params
-    {
-    public:
-        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_SetWidthOverride_Params
-    {
-    public:
-        float                                                        InWidthOverride;                                         //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_SetMinDesiredWidth_Params
-    {
-    public:
-        float                                                        InMinDesiredWidth;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_SetMinDesiredHeight_Params
-    {
-    public:
-        float                                                        InMinDesiredHeight;                                      //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_SetMaxDesiredWidth_Params
-    {
-    public:
-        float                                                        InMaxDesiredWidth;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_SetMaxDesiredHeight_Params
-    {
-    public:
-        float                                                        InMaxDesiredHeight;                                      //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_SetMaxAspectRatio_Params
-    {
-    public:
-        float                                                        InMaxAspectRatio;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_SetHeightOverride_Params
-    {
-    public:
-        float                                                        InHeightOverride;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_ClearWidthOverride_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_ClearMinDesiredWidth_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_ClearMinDesiredHeight_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_ClearMaxDesiredWidth_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_ClearMaxDesiredHeight_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_ClearMaxAspectRatio_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBox_ClearHeightOverride_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBoxSlot_SetVerticalAlignment_Params
-    {
-    public:
-        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBoxSlot_SetPadding_Params
-    {
-    public:
-        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USizeBoxSlot_SetHorizontalAlignment_Params
-    {
-    public:
-        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_ScreenToWidgetLocal_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SlateCore::FGeometry                                         Geometry;                                                //  0x0008(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       LocalCoordinate;                                         //  0x0048(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_ScreenToWidgetAbsolute_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       AbsoluteCoordinate;                                      //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_ScreenToViewport_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ScreenPosition;                                          //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ViewportPosition;                                        //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_LocalToViewport_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        SlateCore::FGeometry                                         Geometry;                                                //  0x0008(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       LocalCoordinate;                                         //  0x0040(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       PixelPosition;                                           //  0x0048(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ViewportPosition;                                        //  0x0050(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_LocalToAbsolute_Params
-    {
-    public:
-        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       LocalCoordinate;                                         //  0x0038(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0040(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_IsUnderLocation_Params
-    {
-    public:
-        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       AbsoluteCoordinate;                                      //  0x0038(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0040(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_GetLocalSize_Params
-    {
-    public:
-        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0038(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_GetAbsoluteSize_Params
-    {
-    public:
-        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0038(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_EqualEqual_SlateBrush_Params
-    {
-    public:
-        SlateCore::FSlateBrush                                       A;                                                       //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        SlateCore::FSlateBrush                                       B;                                                       //  0x0088(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        bool                                                         ReturnValue;                                             //  0x0110(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_AbsoluteToViewport_Params
-    {
-    public:
-        CoreUObject::UObject*                                        WorldContextObject;                                      //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       AbsoluteDesktopCoordinate;                               //  0x0008(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       PixelPosition;                                           //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ViewportPosition;                                        //  0x0018(0x0008)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USlateBlueprintLibrary_AbsoluteToLocal_Params
-    {
-    public:
-        SlateCore::FGeometry                                         Geometry;                                                //  0x0000(0x0038)  (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       AbsoluteCoordinate;                                      //  0x0038(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0040(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMenuAnchor_ToggleOpen_Params
-    {
-    public:
-        bool                                                         bFocusOnOpen;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMenuAnchor_ShouldOpenDueToClick_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMenuAnchor_Open_Params
-    {
-    public:
-        bool                                                         bFocusMenu;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMenuAnchor_IsOpen_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMenuAnchor_HasOpenSubMenus_Params
-    {
-    public:
-        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMenuAnchor_GetMenuPosition_Params
-    {
-    public:
-        CoreUObject::FVector2D                                       ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UMenuAnchor_Close_Params
-    {
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class USafeZone_SetSidesToPad_Params
-    {
-    public:
-        bool                                                         InPadLeft;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         InPadRight;                                              //  0x0001(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         InPadTop;                                                //  0x0002(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        bool                                                         InPadBottom;                                             //  0x0003(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScaleBox_SetUserSpecifiedScale_Params
-    {
-    public:
-        float                                                        InUserSpecifiedScale;                                    //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScaleBox_SetStretchDirection_Params
-    {
-    public:
-        Slate::EStretchDirection                                     InStretchDirection;                                      //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScaleBox_SetStretch_Params
-    {
-    public:
-        Slate::EStretch                                              InStretch;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class UScaleBox_SetIgnoreInheritedScale_Params
-    {
-    public:
-        bool                                                         bInIgnoreInheritedScale;                                 //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
-    /**
-     * 
-     * Size -> 0x0000
-     */
     class UWidgetComponent_SetWidget_Params
     {
     public:
@@ -6101,6 +4716,1292 @@ namespace CG::UMG
      * 
      * Size -> 0x0000
      */
+    class UScrollBar_SetState_Params
+    {
+    public:
+        float                                                        InOffsetFraction;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        InThumbSizeFraction;                                     //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_SetScrollOffset_Params
+    {
+    public:
+        float                                                        NewScrollOffset;                                         //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_SetScrollBarVisibility_Params
+    {
+    public:
+        UMG::ESlateVisibility                                        NewScrollBarVisibility;                                  //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_SetScrollbarThickness_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       NewScrollbarThickness;                                   //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_SetOrientation_Params
+    {
+    public:
+        SlateCore::EOrientation                                      NewOrientation;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_SetAlwaysShowScrollbar_Params
+    {
+    public:
+        bool                                                         NewAlwaysShowScrollbar;                                  //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_SetAllowOverscroll_Params
+    {
+    public:
+        bool                                                         NewAllowOverscroll;                                      //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_ScrollWidgetIntoView_Params
+    {
+    public:
+        UMG::UWidget*                                                WidgetToFind;                                            //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         AnimateScroll;                                           //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        Slate::EDescendantScrollDestination                          ScrollDestination;                                       //  0x0009(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_ScrollToStart_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_ScrollToEnd_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_GetViewOffsetFraction_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBox_GetScrollOffset_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBoxSlot_SetVerticalAlignment_Params
+    {
+    public:
+        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBoxSlot_SetPadding_Params
+    {
+    public:
+        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UScrollBoxSlot_SetHorizontalAlignment_Params
+    {
+    public:
+        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_SetWidthOverride_Params
+    {
+    public:
+        float                                                        InWidthOverride;                                         //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_SetMinDesiredWidth_Params
+    {
+    public:
+        float                                                        InMinDesiredWidth;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_SetMinDesiredHeight_Params
+    {
+    public:
+        float                                                        InMinDesiredHeight;                                      //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_SetMaxDesiredWidth_Params
+    {
+    public:
+        float                                                        InMaxDesiredWidth;                                       //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_SetMaxDesiredHeight_Params
+    {
+    public:
+        float                                                        InMaxDesiredHeight;                                      //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_SetMaxAspectRatio_Params
+    {
+    public:
+        float                                                        InMaxAspectRatio;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_SetHeightOverride_Params
+    {
+    public:
+        float                                                        InHeightOverride;                                        //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_ClearWidthOverride_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_ClearMinDesiredWidth_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_ClearMinDesiredHeight_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_ClearMaxDesiredWidth_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_ClearMaxDesiredHeight_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_ClearMaxAspectRatio_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class USizeBox_ClearHeightOverride_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UAsyncTaskDownloadImage_DownloadImage_Params
+    {
+    public:
+        BasicTypes::FString                                          URL;                                                     //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        UMG::UAsyncTaskDownloadImage*                                ReturnValue;                                             //  0x0010(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_RemoveChildAt_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0004(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_RemoveChild_Params
+    {
+    public:
+        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_HasChild_Params
+    {
+    public:
+        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0008(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_HasAnyChildren_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_GetChildrenCount_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_GetChildIndex_Params
+    {
+    public:
+        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0008(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_GetChildAt_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        UMG::UWidget*                                                ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_ClearChildren_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UPanelWidget_AddChild_Params
+    {
+    public:
+        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        UMG::UPanelSlot*                                             ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UColorBinding_GetSlateValue_Params
+    {
+    public:
+        SlateCore::FSlateColor                                       ReturnValue;                                             //  0x0000(0x0028)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UColorBinding_GetLinearValue_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_SetSelectedOption_Params
+    {
+    public:
+        BasicTypes::FString                                          Option;                                                  //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_RemoveOption_Params
+    {
+    public:
+        BasicTypes::FString                                          Option;                                                  //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         ReturnValue;                                             //  0x0010(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_RefreshOptions_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_OnSelectionChangedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FString                                          SelectedItem;                                            //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SlateCore::ESelectInfo                                       SelectionType;                                           //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_OnOpeningEvent__DelegateSignature_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_GetSelectedOption_Params
+    {
+    public:
+        BasicTypes::FString                                          ReturnValue;                                             //  0x0000(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_GetOptionCount_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_GetOptionAtIndex_Params
+    {
+    public:
+        int32_t                                                      Index;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        uint8_t                                                      UnknownData_0000[0x4];                                   //  0x0004(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY) ()
+        BasicTypes::FString                                          ReturnValue;                                             //  0x0008(0x0010)  (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_FindOptionIndex_Params
+    {
+    public:
+        BasicTypes::FString                                          Option;                                                  //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      ReturnValue;                                             //  0x0010(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_ClearSelection_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_ClearOptions_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UComboBoxString_AddOption_Params
+    {
+    public:
+        BasicTypes::FString                                          Option;                                                  //  0x0000(0x0010)  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDragDropOperation_Drop_Params
+    {
+    public:
+        SlateCore::FPointerEvent                                     PointerEvent;                                            //  0x0000(0x0070)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDragDropOperation_Dragged_Params
+    {
+    public:
+        SlateCore::FPointerEvent                                     PointerEvent;                                            //  0x0000(0x0070)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDragDropOperation_DragCancelled_Params
+    {
+    public:
+        SlateCore::FPointerEvent                                     PointerEvent;                                            //  0x0000(0x0070)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDynamicEntryBox_SetEntrySpacing_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       InEntrySpacing;                                          //  0x0000(0x0008)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDynamicEntryBox_Reset_Params
+    {
+    public:
+        bool                                                         bDeleteWidgets;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDynamicEntryBox_RemoveEntry_Params
+    {
+    public:
+        UMG::UUserWidget*                                            EntryWidget;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDynamicEntryBox_GetNumEntries_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDynamicEntryBox_GetAllEntries_Params
+    {
+    public:
+        BasicTypes::TArray<UMG::UUserWidget*>                        ReturnValue;                                             //  0x0000(0x0010)  (ConstParm, ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, ReferenceParm, ContainsInstancedReference, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDynamicEntryBox_BP_CreateEntryOfClass_Params
+    {
+    public:
+        UMG::UUserWidget*                                            EntryClass;                                              //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        UMG::UUserWidget*                                            ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UDynamicEntryBox_BP_CreateEntry_Params
+    {
+    public:
+        UMG::UUserWidget*                                            ReturnValue;                                             //  0x0000(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableText_SetText_Params
+    {
+    public:
+        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableText_SetIsReadOnly_Params
+    {
+    public:
+        bool                                                         InbIsReadyOnly;                                          //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableText_SetIsPassword_Params
+    {
+    public:
+        bool                                                         InbIsPassword;                                           //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableText_SetHintText_Params
+    {
+    public:
+        BasicTypes::FText                                            InHintText;                                              //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableText_OnEditableTextCommittedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        SlateCore::ETextCommit                                       CommitMethod;                                            //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableText_OnEditableTextChangedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableText_GetText_Params
+    {
+    public:
+        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_SetText_Params
+    {
+    public:
+        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_SetIsReadOnly_Params
+    {
+    public:
+        bool                                                         bReadOnly;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_SetIsPassword_Params
+    {
+    public:
+        bool                                                         bIsPassword;                                             //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_SetHintText_Params
+    {
+    public:
+        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_SetError_Params
+    {
+    public:
+        BasicTypes::FText                                            InError;                                                 //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_OnEditableTextBoxCommittedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        SlateCore::ETextCommit                                       CommitMethod;                                            //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_OnEditableTextBoxChangedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_HasError_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_GetText_Params
+    {
+    public:
+        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UEditableTextBox_ClearError_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExpandableArea_SetIsExpanded_Animated_Params
+    {
+    public:
+        bool                                                         IsExpanded;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExpandableArea_SetIsExpanded_Params
+    {
+    public:
+        bool                                                         IsExpanded;                                              //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UExpandableArea_GetIsExpanded_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UFloatBinding_GetValue_Params
+    {
+    public:
+        float                                                        ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridPanel_SetRowFill_Params
+    {
+    public:
+        int32_t                                                      ColumnIndex;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Coefficient;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridPanel_SetColumnFill_Params
+    {
+    public:
+        int32_t                                                      ColumnIndex;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        Coefficient;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridPanel_AddChildToGrid_Params
+    {
+    public:
+        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        UMG::UGridSlot*                                              ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridSlot_SetVerticalAlignment_Params
+    {
+    public:
+        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridSlot_SetRowSpan_Params
+    {
+    public:
+        int32_t                                                      InRowSpan;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridSlot_SetRow_Params
+    {
+    public:
+        int32_t                                                      InRow;                                                   //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridSlot_SetPadding_Params
+    {
+    public:
+        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridSlot_SetLayer_Params
+    {
+    public:
+        int32_t                                                      InLayer;                                                 //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridSlot_SetHorizontalAlignment_Params
+    {
+    public:
+        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridSlot_SetColumnSpan_Params
+    {
+    public:
+        int32_t                                                      InColumnSpan;                                            //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UGridSlot_SetColumn_Params
+    {
+    public:
+        int32_t                                                      InColumn;                                                //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHorizontalBox_AddChildToHorizontalBox_Params
+    {
+    public:
+        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        UMG::UHorizontalBoxSlot*                                     ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHorizontalBoxSlot_SetVerticalAlignment_Params
+    {
+    public:
+        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHorizontalBoxSlot_SetSize_Params
+    {
+    public:
+        UMG::FSlateChildSize                                         InSize;                                                  //  0x0000(0x0008)  (Parm, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHorizontalBoxSlot_SetPadding_Params
+    {
+    public:
+        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UHorizontalBoxSlot_SetHorizontalAlignment_Params
+    {
+    public:
+        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetOpacity_Params
+    {
+    public:
+        float                                                        InOpacity;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetColorAndOpacity_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    InColorAndOpacity;                                       //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrushTintColor_Params
+    {
+    public:
+        SlateCore::FSlateColor                                       TintColor;                                               //  0x0000(0x0028)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrushSize_Params
+    {
+    public:
+        CoreUObject::FVector2D                                       DesiredSize;                                             //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrushFromTextureDynamic_Params
+    {
+    public:
+        Engine::UTexture2DDynamic*                                   Texture;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bMatchSize;                                              //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrushFromTexture_Params
+    {
+    public:
+        Engine::UTexture2D*                                          Texture;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bMatchSize;                                              //  0x0008(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrushFromSoftTexture_Params
+    {
+    public:
+        BasicTypes::TSoftObjectPtr<Engine::UTexture2D>               SoftTexture;                                             //  0x0000(0x0024)  (Parm, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         bMatchSize;                                              //  0x0028(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrushFromMaterial_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  Material;                                                //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrushFromAtlasInterface_Params
+    {
+    public:
+        BasicTypes::TScriptInterface<Engine::ISlateTextureAtlasInterface> AtlasRegion;                                             //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
+        bool                                                         bMatchSize;                                              //  0x0010(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrushFromAsset_Params
+    {
+    public:
+        Engine::USlateBrushAsset*                                    Asset;                                                   //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_SetBrush_Params
+    {
+    public:
+        SlateCore::FSlateBrush                                       InBrush;                                                 //  0x0000(0x0088)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UImage_GetDynamicMaterial_Params
+    {
+    public:
+        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_SetTextBlockVisibility_Params
+    {
+    public:
+        UMG::ESlateVisibility                                        InVisibility;                                            //  0x0000(0x0001)  (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_SetSelectedKey_Params
+    {
+    public:
+        Slate::FInputChord                                           InSelectedKey;                                           //  0x0000(0x0020)  (ConstParm, Parm, OutParm, ReferenceParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_SetNoKeySpecifiedText_Params
+    {
+    public:
+        BasicTypes::FText                                            InNoKeySpecifiedText;                                    //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_SetKeySelectionText_Params
+    {
+    public:
+        BasicTypes::FText                                            InKeySelectionText;                                      //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_SetEscapeKeys_Params
+    {
+    public:
+        BasicTypes::TArray<InputCore::FKey>                          InKeys;                                                  //  0x0000(0x0010)  (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_SetAllowModifierKeys_Params
+    {
+    public:
+        bool                                                         bInAllowModifierKeys;                                    //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_SetAllowGamepadKeys_Params
+    {
+    public:
+        bool                                                         bInAllowGamepadKeys;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_OnKeySelected__DelegateSignature_Params
+    {
+    public:
+        Slate::FInputChord                                           SelectedKey;                                             //  0x0000(0x0020)  (Parm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_OnIsSelectingKeyChanged__DelegateSignature_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInputKeySelector_GetIsSelectingKey_Params
+    {
+    public:
+        bool                                                         ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UInt32Binding_GetValue_Params
+    {
+    public:
+        int32_t                                                      ReturnValue;                                             //  0x0000(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableTextBox_SetText_Params
+    {
+    public:
+        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableTextBox_SetIsReadOnly_Params
+    {
+    public:
+        bool                                                         bReadOnly;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableTextBox_SetError_Params
+    {
+    public:
+        BasicTypes::FText                                            InError;                                                 //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableTextBox_OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        SlateCore::ETextCommit                                       CommitMethod;                                            //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableTextBox_OnMultiLineEditableTextBoxChangedEvent__DelegateSignature_Params
+    {
+    public:
+        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UMultiLineEditableTextBox_GetText_Params
+    {
+    public:
+        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
     class UWidgetSwitcher_SetActiveWidgetIndex_Params
     {
     public:
@@ -6223,122 +6124,221 @@ namespace CG::UMG
      * 
      * Size -> 0x0000
      */
-    class UMouseCursorBinding_GetValue_Params
+    class UWindowTitleBarAreaSlot_SetVerticalAlignment_Params
     {
     public:
-        CoreUObject::EMouseCursor                                    ReturnValue;                                             //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableText_SetText_Params
+    class UWindowTitleBarAreaSlot_SetPadding_Params
     {
     public:
-        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableText_SetIsReadOnly_Params
+    class UWindowTitleBarAreaSlot_SetHorizontalAlignment_Params
     {
     public:
-        bool                                                         bReadOnly;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableText_OnMultiLineEditableTextCommittedEvent__DelegateSignature_Params
+    class UWrapBox_SetInnerSlotPadding_Params
     {
     public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        SlateCore::ETextCommit                                       CommitMethod;                                            //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        CoreUObject::FVector2D                                       InPadding;                                               //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableText_OnMultiLineEditableTextChangedEvent__DelegateSignature_Params
+    class UWrapBox_AddChildWrapBox_Params
     {
     public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        UMG::UWrapBoxSlot*                                           ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableText_GetText_Params
+    class UWrapBoxSlot_SetVerticalAlignment_Params
     {
     public:
-        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableTextBox_SetText_Params
+    class UWrapBoxSlot_SetPadding_Params
     {
     public:
-        BasicTypes::FText                                            InText;                                                  //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableTextBox_SetIsReadOnly_Params
+    class UWrapBoxSlot_SetHorizontalAlignment_Params
     {
     public:
-        bool                                                         bReadOnly;                                               //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableTextBox_SetError_Params
+    class UWrapBoxSlot_SetFillSpanWhenLessThan_Params
     {
     public:
-        BasicTypes::FText                                            InError;                                                 //  0x0000(0x0018)  (Parm, NativeAccessSpecifierPublic)
+        float                                                        InFillSpanWhenLessThan;                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableTextBox_OnMultiLineEditableTextBoxCommittedEvent__DelegateSignature_Params
+    class UWrapBoxSlot_SetFillEmptySpace_Params
     {
     public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-        SlateCore::ETextCommit                                       CommitMethod;                                            //  0x0018(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        bool                                                         InbFillEmptySpace;                                       //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableTextBox_OnMultiLineEditableTextBoxChangedEvent__DelegateSignature_Params
+    class UOverlay_AddChildToOverlay_Params
     {
     public:
-        BasicTypes::FText                                            Text;                                                    //  0x0000(0x0018)  (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+        UMG::UWidget*                                                Content;                                                 //  0x0000(0x0008)  (Parm, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        UMG::UOverlaySlot*                                           ReturnValue;                                             //  0x0008(0x0008)  (ExportObject, Parm, OutParm, ZeroConstructor, ReturnParm, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
     /**
      * 
      * Size -> 0x0000
      */
-    class UMultiLineEditableTextBox_GetText_Params
+    class UOverlaySlot_SetVerticalAlignment_Params
     {
     public:
-        BasicTypes::FText                                            ReturnValue;                                             //  0x0000(0x0018)  (Parm, OutParm, ReturnParm, NativeAccessSpecifierPublic)
+        SlateCore::EVerticalAlignment                                InVerticalAlignment;                                     //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UOverlaySlot_SetPadding_Params
+    {
+    public:
+        SlateCore::FMargin                                           InPadding;                                               //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UOverlaySlot_SetHorizontalAlignment_Params
+    {
+    public:
+        SlateCore::EHorizontalAlignment                              InHorizontalAlignment;                                   //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProgressBar_SetPercent_Params
+    {
+    public:
+        float                                                        InPercent;                                               //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProgressBar_SetIsMarquee_Params
+    {
+    public:
+        bool                                                         InbIsMarquee;                                            //  0x0000(0x0001)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class UProgressBar_SetFillColorAndOpacity_Params
+    {
+    public:
+        CoreUObject::FLinearColor                                    InColor;                                                 //  0x0000(0x0010)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URetainerBox_SetTextureParameter_Params
+    {
+    public:
+        BasicTypes::FName                                            TextureParameter;                                        //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URetainerBox_SetRenderingPhase_Params
+    {
+    public:
+        int32_t                                                      RenderPhase;                                             //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        int32_t                                                      TotalPhases;                                             //  0x0004(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URetainerBox_SetEffectMaterial_Params
+    {
+    public:
+        Engine::UMaterialInterface*                                  EffectMaterial;                                          //  0x0000(0x0008)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URetainerBox_RequestRender_Params
+    {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class URetainerBox_GetEffectMaterial_Params
+    {
+    public:
+        Engine::UMaterialInstanceDynamic*                            ReturnValue;                                             //  0x0000(0x0008)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -34,17 +34,6 @@ namespace CG::MovieScene
     // --------------------------------------------------
     // # Classes
     // --------------------------------------------------
-    /**
-     * 
-     * Size -> 0x0000
-     */
-    class IMovieSceneEasingFunction_OnEvaluate_Params
-    {
-    public:
-        float                                                        Interp;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-        float                                                        ReturnValue;                                             //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-    };
-
     /**
      * 
      * Size -> 0x0000
@@ -424,6 +413,17 @@ namespace CG::MovieScene
      */
     class UMovieSceneSequencePlayer_ChangePlaybackDirection_Params
     {
+    };
+
+    /**
+     * 
+     * Size -> 0x0000
+     */
+    class IMovieSceneEasingFunction_OnEvaluate_Params
+    {
+    public:
+        float                                                        Interp;                                                  //  0x0000(0x0004)  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+        float                                                        ReturnValue;                                             //  0x0004(0x0004)  (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
     };
 
 }

@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -218,19 +218,19 @@ namespace CG::GameHandlerPnp
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.SpawnMinigame
+     *         Name   -> Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.SpawnMiniGame
      *         Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         BasicTypes::FName                                  Game                                                       (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
      *         void                                               ReturnValue
      */
-    void AGameHandlerPnp_C::SpawnMinigame(const BasicTypes::FName& Game)
+    void AGameHandlerPnp_C::SpawnMiniGame(const BasicTypes::FName& Game)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.SpawnMinigame");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.SpawnMiniGame");
         
-        AGameHandlerPnp_C_SpawnMinigame_Params params {};
+        AGameHandlerPnp_C_SpawnMiniGame_Params params {};
         params.Game = Game;
         
         auto flags = fn->FunctionFlags;
@@ -614,18 +614,18 @@ namespace CG::GameHandlerPnp
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.ShutDown
+     *         Name   -> Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.Shutdown
      *         Flags  -> (Public, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void AGameHandlerPnp_C::ShutDown()
+    void AGameHandlerPnp_C::Shutdown()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.ShutDown");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.Shutdown");
         
-        AGameHandlerPnp_C_ShutDown_Params params {};
+        AGameHandlerPnp_C_Shutdown_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -956,19 +956,19 @@ namespace CG::GameHandlerPnp
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.LevelReady
+     *         Name   -> Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.LevelREady
      *         Flags  -> (BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         BasicTypes::FName                                  NewGeoLevel                                                (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
      *         void                                               ReturnValue
      */
-    void AGameHandlerPnp_C::LevelReady(const BasicTypes::FName& NewGeoLevel)
+    void AGameHandlerPnp_C::LevelREady(const BasicTypes::FName& NewGeoLevel)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.LevelReady");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/GameHandlers/GameHandlerPnp.GameHandlerPnp_C.LevelREady");
         
-        AGameHandlerPnp_C_LevelReady_Params params {};
+        AGameHandlerPnp_C_LevelREady_Params params {};
         params.NewGeoLevel = NewGeoLevel;
         
         auto flags = fn->FunctionFlags;

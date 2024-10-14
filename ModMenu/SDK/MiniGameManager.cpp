@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -59,19 +59,19 @@ namespace CG::MiniGameManager
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Interfaces/MiniGameManager.MiniGameManager_C.ShutDown
+     *         Name   -> Function /Game/Interfaces/MiniGameManager.MiniGameManager_C.Shutdown
      *         Flags  -> (Public, HasOutParms, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         bool                                               ShutdownBegun                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
      *         void                                               ReturnValue
      */
-    void IMiniGameManager_C::ShutDown(bool* ShutdownBegun)
+    void IMiniGameManager_C::Shutdown(bool* ShutdownBegun)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Interfaces/MiniGameManager.MiniGameManager_C.ShutDown");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Interfaces/MiniGameManager.MiniGameManager_C.Shutdown");
         
-        IMiniGameManager_C_ShutDown_Params params {};
+        IMiniGameManager_C_Shutdown_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

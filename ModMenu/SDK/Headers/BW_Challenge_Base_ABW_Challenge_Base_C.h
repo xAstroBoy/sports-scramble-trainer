@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -83,7 +83,7 @@ namespace CG::BW_Challenge_Base
 
     public:
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void BW_GameEndResetLane();
         void BW_CHG_SpawnSportMgr();
         void BW_CHG_CalculateEndScore(bool Countdown, int32_t CurrentScore, int32_t TargetScore);

@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -71,7 +71,7 @@ namespace CG::TN_Train_06_ScrambleInstruments
         bool                                                         LauncherPos05_HitFloppyFish;                             //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
 
     public:
-        void SetupInfoText();
+        void SetUpInfoText();
         void UserConstructionScript();
         void ReceiveBeginPlay();
         void PreTrainingGameCountDown();

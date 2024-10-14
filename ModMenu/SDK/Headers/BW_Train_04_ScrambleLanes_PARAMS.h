@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -42,7 +42,7 @@ namespace CG::BW_Train_04_ScrambleLanes
      * 
      * Size -> 0x0000
      */
-    class ABW_Train_04_ScrambleLanes_C_SetupInfoText_Params
+    class ABW_Train_04_ScrambleLanes_C_SetUpInfoText_Params
     {
     };
 

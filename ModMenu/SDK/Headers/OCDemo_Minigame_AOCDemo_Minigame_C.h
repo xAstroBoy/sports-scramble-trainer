@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -67,7 +67,7 @@ namespace CG::OCDemo_Minigame
 
     public:
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void RefreshActivePayloads();
         void IsStreakContinued(Engine::AActor* PayloadActor, bool* StreakContinues);
         void PickNewTarget(Engine::AActor* OldTarget);

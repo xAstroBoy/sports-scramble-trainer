@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -20,9 +20,7 @@
 #include "Headers/GameplayTags_ENUMS.h"
 #include "Headers/GameplayTags_PARAMS.h"
 #include "Headers/GameplayTags_UBlueprintGameplayTagLibrary.h"
-#include "Headers/GameplayTags_IGameplayTagAssetInterface.h"
-#include "Headers/GameplayTags_UEditableGameplayTagQuery.h"
-#include "Headers/GameplayTags_UEditableGameplayTagQueryExpression.h"
+#include "Headers/GameplayTags_UGameplayTagsDeveloperSettings.h"
 #include "Headers/GameplayTags_UEditableGameplayTagQueryExpression_NoTagsMatch.h"
 #include "Headers/GameplayTags_UEditableGameplayTagQueryExpression_AnyExprMatch.h"
 #include "Headers/GameplayTags_UEditableGameplayTagQueryExpression_AllExprMatch.h"
@@ -31,7 +29,9 @@
 #include "Headers/GameplayTags_UGameplayTagsList.h"
 #include "Headers/GameplayTags_URestrictedGameplayTagsList.h"
 #include "Headers/GameplayTags_UGameplayTagsSettings.h"
-#include "Headers/GameplayTags_UGameplayTagsDeveloperSettings.h"
+#include "Headers/GameplayTags_IGameplayTagAssetInterface.h"
+#include "Headers/GameplayTags_UEditableGameplayTagQuery.h"
+#include "Headers/GameplayTags_UEditableGameplayTagQueryExpression.h"
 #include "Headers/GameplayTags_UEditableGameplayTagQueryExpression_AnyTagsMatch.h"
 #include "Headers/GameplayTags_UEditableGameplayTagQueryExpression_AllTagsMatch.h"
 

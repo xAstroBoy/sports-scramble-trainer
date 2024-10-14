@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -23,10 +23,10 @@
 #include "Headers/MovieScene_UMovieSceneSection.h"
 #include "Headers/MovieScene_UMovieSceneTrack.h"
 #include "Headers/MovieScene_UMovieSceneNameableTrack.h"
+#include "Headers/MovieScene_UMovieScene.h"
+#include "Headers/MovieScene_UMovieSceneBindingOverrides.h"
+#include "Headers/MovieScene_IMovieSceneBindingOverridesInterface.h"
 #include "Headers/MovieScene_IMovieSceneBindingOwnerInterface.h"
-#include "Headers/MovieScene_UMovieSceneBuiltInEasingFunction.h"
-#include "Headers/MovieScene_UMovieSceneEasingExternalCurve.h"
-#include "Headers/MovieScene_IMovieSceneEasingFunction.h"
 #include "Headers/MovieScene_UMovieSceneFolder.h"
 #include "Headers/MovieScene_IMovieSceneKeyProxy.h"
 #include "Headers/MovieScene_UMovieSceneSequence.h"
@@ -36,9 +36,9 @@
 #include "Headers/MovieScene_UTestMovieSceneTrack.h"
 #include "Headers/MovieScene_UTestMovieSceneSection.h"
 #include "Headers/MovieScene_UTestMovieSceneSequence.h"
-#include "Headers/MovieScene_UMovieScene.h"
-#include "Headers/MovieScene_UMovieSceneBindingOverrides.h"
-#include "Headers/MovieScene_IMovieSceneBindingOverridesInterface.h"
+#include "Headers/MovieScene_UMovieSceneBuiltInEasingFunction.h"
+#include "Headers/MovieScene_UMovieSceneEasingExternalCurve.h"
+#include "Headers/MovieScene_IMovieSceneEasingFunction.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -49,31 +49,6 @@ namespace CG::MovieScene
     // --------------------------------------------------
     // # Structs functions
     // --------------------------------------------------
-    /**
-     * Function:
-     *         RVA    -> 0x006628B0
-     *         Name   -> Function /Script/MovieScene.MovieSceneEasingFunction.OnEvaluate
-     *         Flags  -> (Event, Protected, BlueprintCallable, BlueprintEvent, BlueprintPure, Const)
-     * Parameters:
-     *         float                                              Interp                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    float IMovieSceneEasingFunction::OnEvaluate(float Interp)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieScene.MovieSceneEasingFunction.OnEvaluate");
-        
-        IMovieSceneEasingFunction_OnEvaluate_Params params {};
-        params.Interp = Interp;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
     /**
      * Function:
      *         RVA    -> 0x00E91B60
@@ -965,6 +940,31 @@ namespace CG::MovieScene
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x006628B0
+     *         Name   -> Function /Script/MovieScene.MovieSceneEasingFunction.OnEvaluate
+     *         Flags  -> (Event, Protected, BlueprintCallable, BlueprintEvent, BlueprintPure, Const)
+     * Parameters:
+     *         float                                              Interp                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    float IMovieSceneEasingFunction::OnEvaluate(float Interp)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/MovieScene.MovieSceneEasingFunction.OnEvaluate");
+        
+        IMovieSceneEasingFunction_OnEvaluate_Params params {};
+        params.Interp = Interp;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
     }
 
 }

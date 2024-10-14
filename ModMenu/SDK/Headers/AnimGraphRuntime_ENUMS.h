@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -21,6 +21,39 @@ namespace CG::AnimGraphRuntime
     // --------------------------------------------------
     // # Enums
     // --------------------------------------------------
+    /**
+     * Enum /Script/AnimGraphRuntime.ESphericalLimitType
+     */
+    enum class ESphericalLimitType : uint8_t
+    {
+        Inner = 0,
+        Outer = 1,
+        MAX   = 2
+    };
+
+    /**
+     * Enum /Script/AnimGraphRuntime.AnimPhysSimSpaceType
+     */
+    enum class EAnimPhysSimSpaceType : uint8_t
+    {
+        AnimPhysSimSpaceTypeComponent                = 0,
+        AnimPhysSimSpaceTypeActor                    = 1,
+        AnimPhysSimSpaceTypeWorld                    = 2,
+        AnimPhysSimSpaceTypeRootRelative             = 3,
+        AnimPhysSimSpaceTypeBoneRelative             = 4,
+        AnimPhysSimSpaceTypeAnimPhysSimSpaceType_MAX = 5
+    };
+
+    /**
+     * Enum /Script/AnimGraphRuntime.AnimPhysLinearConstraintType
+     */
+    enum class EAnimPhysLinearConstraintType : uint8_t
+    {
+        AnimPhysLinearConstraintTypeFree                             = 0,
+        AnimPhysLinearConstraintTypeLimited                          = 1,
+        AnimPhysLinearConstraintTypeAnimPhysLinearConstraintType_MAX = 2
+    };
+
     /**
      * Enum /Script/AnimGraphRuntime.AnimPhysAngularConstraintType
      */
@@ -229,39 +262,6 @@ namespace CG::AnimGraphRuntime
         Cubic       = 3,
         Quintic     = 4,
         MAX         = 5
-    };
-
-    /**
-     * Enum /Script/AnimGraphRuntime.ESphericalLimitType
-     */
-    enum class ESphericalLimitType : uint8_t
-    {
-        Inner = 0,
-        Outer = 1,
-        MAX   = 2
-    };
-
-    /**
-     * Enum /Script/AnimGraphRuntime.AnimPhysSimSpaceType
-     */
-    enum class EAnimPhysSimSpaceType : uint8_t
-    {
-        AnimPhysSimSpaceTypeComponent                = 0,
-        AnimPhysSimSpaceTypeActor                    = 1,
-        AnimPhysSimSpaceTypeWorld                    = 2,
-        AnimPhysSimSpaceTypeRootRelative             = 3,
-        AnimPhysSimSpaceTypeBoneRelative             = 4,
-        AnimPhysSimSpaceTypeAnimPhysSimSpaceType_MAX = 5
-    };
-
-    /**
-     * Enum /Script/AnimGraphRuntime.AnimPhysLinearConstraintType
-     */
-    enum class EAnimPhysLinearConstraintType : uint8_t
-    {
-        AnimPhysLinearConstraintTypeFree                             = 0,
-        AnimPhysLinearConstraintTypeLimited                          = 1,
-        AnimPhysLinearConstraintTypeAnimPhysLinearConstraintType_MAX = 2
     };
 
 }

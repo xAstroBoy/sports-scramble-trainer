@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -21,6 +21,32 @@ namespace CG::SlateCore
     // --------------------------------------------------
     // # Enums
     // --------------------------------------------------
+    /**
+     * Enum /Script/SlateCore.ENavigationSource
+     */
+    enum class ENavigationSource : uint8_t
+    {
+        FocusedWidget     = 0,
+        WidgetUnderCursor = 1,
+        MAX               = 2
+    };
+
+    /**
+     * Enum /Script/SlateCore.EUINavigation
+     */
+    enum class EUINavigation : uint8_t
+    {
+        Left     = 0,
+        Right    = 1,
+        Up       = 2,
+        Down     = 3,
+        Next     = 4,
+        Previous = 5,
+        Num      = 6,
+        Invalid  = 7,
+        MAX      = 8
+    };
+
     /**
      * Enum /Script/SlateCore.EButtonPressMethod
      */
@@ -363,32 +389,6 @@ namespace CG::SlateCore
         Controller = 1,
         User       = 2,
         MAX        = 3
-    };
-
-    /**
-     * Enum /Script/SlateCore.ENavigationSource
-     */
-    enum class ENavigationSource : uint8_t
-    {
-        FocusedWidget     = 0,
-        WidgetUnderCursor = 1,
-        MAX               = 2
-    };
-
-    /**
-     * Enum /Script/SlateCore.EUINavigation
-     */
-    enum class EUINavigation : uint8_t
-    {
-        Left     = 0,
-        Right    = 1,
-        Up       = 2,
-        Down     = 3,
-        Next     = 4,
-        Previous = 5,
-        Num      = 6,
-        Invalid  = 7,
-        MAX      = 8
     };
 
 }

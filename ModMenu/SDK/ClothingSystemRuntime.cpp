@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -19,10 +19,10 @@
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/ClothingSystemRuntime_ENUMS.h"
 #include "Headers/ClothingSystemRuntime_PARAMS.h"
-#include "Headers/ClothingSystemRuntime_UClothingAssetCustomData.h"
-#include "Headers/ClothingSystemRuntime_UClothingAsset.h"
 #include "Headers/ClothingSystemRuntime_UClothingSimulationFactoryNv.h"
 #include "Headers/ClothingSystemRuntime_UClothingSimulationInteractorNv.h"
+#include "Headers/ClothingSystemRuntime_UClothingAssetCustomData.h"
+#include "Headers/ClothingSystemRuntime_UClothingAsset.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

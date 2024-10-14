@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -82,7 +82,7 @@ namespace CG::BB_Train_04_BasicHitting
 
     public:
         void StopPlayingAudioComponents();
-        void SetupInfoText();
+        void SetUpInfoText();
         void BB_TRN_Hitting_Initialize();
         void UserConstructionScript();
         void ValidHitRegistered();

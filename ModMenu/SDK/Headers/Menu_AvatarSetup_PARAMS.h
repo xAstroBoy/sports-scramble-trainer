@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -95,7 +95,7 @@ namespace CG::Menu_AvatarSetup
      * 
      * Size -> 0x0000
      */
-    class AMenu_AvatarSetup_C_ShutDown_Params
+    class AMenu_AvatarSetup_C_Shutdown_Params
     {
     };
 

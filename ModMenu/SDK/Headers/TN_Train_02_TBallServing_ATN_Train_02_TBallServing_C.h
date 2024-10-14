@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -61,10 +61,10 @@ namespace CG::TN_Train_02_TBallServing
         uint8_t                                                      UnknownData_0002[0x7];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
         BasicTypes::FText                                            Text_Instructions01;                                     //  Edit, BlueprintVisible, DisableEditOnInstance
         TN_Ball_Base::ATN_Ball_Base_C*                               BallInPlay;                                              //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-        bool                                                         CountdownComplete;                                       //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
+        bool                                                         CountDownComplete;                                       //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
 
     public:
-        void SetupInfoText();
+        void SetUpInfoText();
         void UserConstructionScript();
         void ReceiveBeginPlay();
         void StartCountdown();

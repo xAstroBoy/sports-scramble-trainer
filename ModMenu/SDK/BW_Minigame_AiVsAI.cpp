@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -59,19 +59,19 @@ namespace CG::BW_Minigame_AiVsAI
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/Minigames/Bowling/BW_Minigame_AiVsAI.BW_Minigame_AiVsAI_C.ShutDown
+     *         Name   -> Function /Game/Blueprints/Minigames/Bowling/BW_Minigame_AiVsAI.BW_Minigame_AiVsAI_C.Shutdown
      *         Flags  -> (Public, HasOutParms, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         bool                                               ShutdownBegun                                              (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)
      *         void                                               ReturnValue
      */
-    void ABW_Minigame_AiVsAI_C::ShutDown(bool* ShutdownBegun)
+    void ABW_Minigame_AiVsAI_C::Shutdown(bool* ShutdownBegun)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Minigames/Bowling/BW_Minigame_AiVsAI.BW_Minigame_AiVsAI_C.ShutDown");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Minigames/Bowling/BW_Minigame_AiVsAI.BW_Minigame_AiVsAI_C.Shutdown");
         
-        ABW_Minigame_AiVsAI_C_ShutDown_Params params {};
+        ABW_Minigame_AiVsAI_C_Shutdown_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -71,7 +71,7 @@ namespace CG::BB_Train_05_BatBreaking
     public:
         void DespawnRunners();
         void StopPlayingAudioComponents();
-        void SetupInfoText();
+        void SetUpInfoText();
         void BB_TRN_Initialize();
         void UserConstructionScript();
         void ReceiveBeginPlay();

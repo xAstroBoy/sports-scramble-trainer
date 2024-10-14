@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -50,7 +50,7 @@ namespace CG::GameHandlerTraining
      * 
      * Size -> 0x0000
      */
-    class AGameHandlerTraining_C_ShutDown_Params
+    class AGameHandlerTraining_C_Shutdown_Params
     {
     };
 

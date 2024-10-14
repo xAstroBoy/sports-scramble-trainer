@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -122,7 +122,7 @@ namespace CG::BB_Train_03_ScramblePitching
     public:
         void HasScrambleBallOption(SportsScramble::ABaseballBall* Ball, bool* HasFrisbee);
         void StopPlayingAudioComponents();
-        void SetupInfoText();
+        void SetUpInfoText();
         void BB_TRN_Balls_Initialize();
         void UserConstructionScript();
         void BaseballEvent(CoreUObject::UObject* WorldContextObject, SportsScramble::UScramEventBasePayload* Payload);

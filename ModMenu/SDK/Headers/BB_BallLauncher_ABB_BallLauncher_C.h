@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -96,7 +96,7 @@ namespace CG::BB_BallLauncher
         SportsScramble::FScramTrajectory                             trajectory;                                              //  Edit, BlueprintVisible, DisableEditOnInstance
         float                                                        InitialHeight;                                           //  Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, ExposeOnSpawn, HasGetValueTypeHash
         uint8_t                                                      UnknownData_0009[0x4];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
-        BallLauncher_AnimBP::UBallLauncher_AnimBP_C*                 AnimBP;                                                  //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+        BallLauncher_AnimBP::UBallLauncher_AnimBP_C*                 AnimBp;                                                  //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         Engine::UMaterialInstanceDynamic*                            Material;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         CoreUObject::FLinearColor                                    LightOffColor;                                           //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         CoreUObject::FLinearColor                                    LightOnColor;                                            //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash

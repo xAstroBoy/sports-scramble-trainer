@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -19,42 +19,42 @@
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/OnlineSubsystemUtils_ENUMS.h"
 #include "Headers/OnlineSubsystemUtils_PARAMS.h"
+#include "Headers/OnlineSubsystemUtils_UCreateSessionCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UAchievementWriteCallbackProxy.h"
 #include "Headers/OnlineSubsystemUtils_ULeaderboardFlushCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UIpConnection.h"
+#include "Headers/OnlineSubsystemUtils_ULeaderboardQueryCallbackProxy.h"
 #include "Headers/OnlineSubsystemUtils_ULogoutCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_AOnlineBeacon.h"
-#include "Headers/OnlineSubsystemUtils_AOnlineBeaconClient.h"
-#include "Headers/OnlineSubsystemUtils_AOnlineBeaconHost.h"
-#include "Headers/OnlineSubsystemUtils_AOnlineBeaconHostObject.h"
+#include "Headers/OnlineSubsystemUtils_UIpNetDriver.h"
+#include "Headers/OnlineSubsystemUtils_UEndTurnCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UFindSessionsCallbackProxy.h"
 #include "Headers/OnlineSubsystemUtils_UOnlineEngineInterfaceImpl.h"
 #include "Headers/OnlineSubsystemUtils_UOnlinePIESettings.h"
-#include "Headers/OnlineSubsystemUtils_UShowLoginUICallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_ATestBeaconClient.h"
-#include "Headers/OnlineSubsystemUtils_ATestBeaconHost.h"
-#include "Headers/OnlineSubsystemUtils_UTurnBasedBlueprintLibrary.h"
-#include "Headers/OnlineSubsystemUtils_UVoipListenerSynthComponent.h"
-#include "Headers/OnlineSubsystemUtils_UAchievementBlueprintLibrary.h"
-#include "Headers/OnlineSubsystemUtils_UInAppPurchaseCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UDestroySessionCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UEndMatchCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UFindSessionsCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UConnectionCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UFindTurnBasedMatchCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UInAppPurchaseQueryCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UJoinSessionCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UAchievementQueryCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UInAppPurchaseRestoreCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_ULeaderboardQueryCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UQuitMatchCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_UIpNetDriver.h"
-#include "Headers/OnlineSubsystemUtils_UAchievementWriteCallbackProxy.h"
-#include "Headers/OnlineSubsystemUtils_ULeaderboardBlueprintLibrary.h"
-#include "Headers/OnlineSubsystemUtils_UEndTurnCallbackProxy.h"
 #include "Headers/OnlineSubsystemUtils_UOnlineSessionClient.h"
 #include "Headers/OnlineSubsystemUtils_APartyBeaconClient.h"
 #include "Headers/OnlineSubsystemUtils_APartyBeaconHost.h"
 #include "Headers/OnlineSubsystemUtils_UPartyBeaconState.h"
-#include "Headers/OnlineSubsystemUtils_UCreateSessionCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UQuitMatchCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UShowLoginUICallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_ATestBeaconClient.h"
+#include "Headers/OnlineSubsystemUtils_ATestBeaconHost.h"
+#include "Headers/OnlineSubsystemUtils_UTurnBasedBlueprintLibrary.h"
+#include "Headers/OnlineSubsystemUtils_UIpConnection.h"
+#include "Headers/OnlineSubsystemUtils_UAchievementBlueprintLibrary.h"
+#include "Headers/OnlineSubsystemUtils_AOnlineBeacon.h"
+#include "Headers/OnlineSubsystemUtils_AOnlineBeaconClient.h"
+#include "Headers/OnlineSubsystemUtils_AOnlineBeaconHost.h"
+#include "Headers/OnlineSubsystemUtils_AOnlineBeaconHostObject.h"
+#include "Headers/OnlineSubsystemUtils_UInAppPurchaseCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UInAppPurchaseQueryCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UInAppPurchaseRestoreCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_ULeaderboardBlueprintLibrary.h"
+#include "Headers/OnlineSubsystemUtils_UDestroySessionCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UJoinSessionCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UConnectionCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UFindTurnBasedMatchCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UEndMatchCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UAchievementQueryCallbackProxy.h"
+#include "Headers/OnlineSubsystemUtils_UVoipListenerSynthComponent.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -65,6 +65,70 @@ namespace CG::OnlineSubsystemUtils
     // --------------------------------------------------
     // # Structs functions
     // --------------------------------------------------
+    /**
+     * Function:
+     *         RVA    -> 0x00231730
+     *         Name   -> Function /Script/OnlineSubsystemUtils.CreateSessionCallbackProxy.CreateSession
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            PublicConnections                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bUseLAN                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UCreateSessionCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemUtils::UCreateSessionCallbackProxy* UCreateSessionCallbackProxy::STATIC_CreateSession(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, int32_t PublicConnections, bool bUseLAN)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.CreateSessionCallbackProxy.CreateSession");
+        
+        UCreateSessionCallbackProxy_CreateSession_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.PlayerController = PlayerController;
+        params.PublicConnections = PublicConnections;
+        params.bUseLAN = bUseLAN;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00233930
+     *         Name   -> Function /Script/OnlineSubsystemUtils.AchievementWriteCallbackProxy.WriteAchievementProgress
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  AchievementName                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              Progress                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            UserTag                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UAchievementWriteCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemUtils::UAchievementWriteCallbackProxy* UAchievementWriteCallbackProxy::STATIC_WriteAchievementProgress(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const BasicTypes::FName& AchievementName, float Progress, int32_t UserTag)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.AchievementWriteCallbackProxy.WriteAchievementProgress");
+        
+        UAchievementWriteCallbackProxy_WriteAchievementProgress_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.PlayerController = PlayerController;
+        params.AchievementName = AchievementName;
+        params.Progress = Progress;
+        params.UserTag = UserTag;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
     /**
      * Function:
      *         RVA    -> 0x00231290
@@ -84,6 +148,33 @@ namespace CG::OnlineSubsystemUtils
         ULeaderboardFlushCallbackProxy_CreateProxyObjectForFlush_Params params {};
         params.PlayerController = PlayerController;
         params.SessionName = SessionName;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00231670
+     *         Name   -> Function /Script/OnlineSubsystemUtils.LeaderboardQueryCallbackProxy.CreateProxyObjectForIntQuery
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  StatName                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::ULeaderboardQueryCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemUtils::ULeaderboardQueryCallbackProxy* ULeaderboardQueryCallbackProxy::STATIC_CreateProxyObjectForIntQuery(Engine::APlayerController* PlayerController, const BasicTypes::FName& StatName)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.LeaderboardQueryCallbackProxy.CreateProxyObjectForIntQuery");
+        
+        ULeaderboardQueryCallbackProxy_CreateProxyObjectForIntQuery_Params params {};
+        params.PlayerController = PlayerController;
+        params.StatName = StatName;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -121,23 +212,360 @@ namespace CG::OnlineSubsystemUtils
 
     /**
      * Function:
-     *         RVA    -> 0x00231060
-     *         Name   -> Function /Script/OnlineSubsystemUtils.OnlineBeaconClient.ClientOnConnected
-     *         Flags  -> (Final, Net, NetReliable, Native, Event, Private, NetClient)
+     *         RVA    -> 0x00231B30
+     *         Name   -> Function /Script/OnlineSubsystemUtils.EndTurnCallbackProxy.EndTurn
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
      * Parameters:
-     *         void                                               ReturnValue
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                MatchID                                                    (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::TScriptInterface<OnlineSubsystem::ITurnBasedMatchInterface> TurnBasedMatchInterface                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UEndTurnCallbackProxy*       ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    void AOnlineBeaconClient::ClientOnConnected()
+    OnlineSubsystemUtils::UEndTurnCallbackProxy* UEndTurnCallbackProxy::STATIC_EndTurn(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const BasicTypes::FString& MatchID, const BasicTypes::TScriptInterface<OnlineSubsystem::ITurnBasedMatchInterface>& TurnBasedMatchInterface)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.OnlineBeaconClient.ClientOnConnected");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.EndTurnCallbackProxy.EndTurn");
         
-        AOnlineBeaconClient_ClientOnConnected_Params params {};
+        UEndTurnCallbackProxy_EndTurn_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.PlayerController = PlayerController;
+        params.MatchID = MatchID;
+        params.TurnBasedMatchInterface = TurnBasedMatchInterface;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00232DB0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetServerName
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         OnlineSubsystemUtils::FBlueprintSessionResult      Result                                                     (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    BasicTypes::FString UFindSessionsCallbackProxy::STATIC_GetServerName(const OnlineSubsystemUtils::FBlueprintSessionResult& Result)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetServerName");
+        
+        UFindSessionsCallbackProxy_GetServerName_Params params {};
+        params.Result = Result;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00232AA0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetPingInMs
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         OnlineSubsystemUtils::FBlueprintSessionResult      Result                                                     (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    int32_t UFindSessionsCallbackProxy::STATIC_GetPingInMs(const OnlineSubsystemUtils::FBlueprintSessionResult& Result)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetPingInMs");
+        
+        UFindSessionsCallbackProxy_GetPingInMs_Params params {};
+        params.Result = Result;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x002327E0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetMaxPlayers
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         OnlineSubsystemUtils::FBlueprintSessionResult      Result                                                     (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    int32_t UFindSessionsCallbackProxy::STATIC_GetMaxPlayers(const OnlineSubsystemUtils::FBlueprintSessionResult& Result)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetMaxPlayers");
+        
+        UFindSessionsCallbackProxy_GetMaxPlayers_Params params {};
+        params.Result = Result;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00232520
+     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetCurrentPlayers
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
+     * Parameters:
+     *         OnlineSubsystemUtils::FBlueprintSessionResult      Result                                                     (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    int32_t UFindSessionsCallbackProxy::STATIC_GetCurrentPlayers(const OnlineSubsystemUtils::FBlueprintSessionResult& Result)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetCurrentPlayers");
+        
+        UFindSessionsCallbackProxy_GetCurrentPlayers_Params params {};
+        params.Result = Result;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00231CE0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.FindSessions
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            MaxResults                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               bUseLAN                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UFindSessionsCallbackProxy*  ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemUtils::UFindSessionsCallbackProxy* UFindSessionsCallbackProxy::STATIC_FindSessions(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, int32_t MaxResults, bool bUseLAN)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.FindSessions");
+        
+        UFindSessionsCallbackProxy_FindSessions_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.PlayerController = PlayerController;
+        params.MaxResults = MaxResults;
+        params.bUseLAN = bUseLAN;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00233720
+     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerUpdateReservationRequest
+     *         Flags  -> (Net, NetReliable, Native, Event, Protected, NetServer, NetValidate)
+     * Parameters:
+     *         BasicTypes::FString                                SessionId                                                  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::FPartyReservation            ReservationUpdate                                          (ConstParm, Parm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void APartyBeaconClient::ServerUpdateReservationRequest(const BasicTypes::FString& SessionId, const OnlineSubsystemUtils::FPartyReservation& ReservationUpdate)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerUpdateReservationRequest");
+        
+        APartyBeaconClient_ServerUpdateReservationRequest_Params params {};
+        params.SessionId = SessionId;
+        params.ReservationUpdate = ReservationUpdate;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x002335D0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerReservationRequest
+     *         Flags  -> (Net, NetReliable, Native, Event, Protected, NetServer, NetValidate)
+     * Parameters:
+     *         BasicTypes::FString                                SessionId                                                  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::FPartyReservation            Reservation                                                (ConstParm, Parm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void APartyBeaconClient::ServerReservationRequest(const BasicTypes::FString& SessionId, const OnlineSubsystemUtils::FPartyReservation& Reservation)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerReservationRequest");
+        
+        APartyBeaconClient_ServerReservationRequest_Params params {};
+        params.SessionId = SessionId;
+        params.Reservation = Reservation;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00233460
+     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerCancelReservationRequest
+     *         Flags  -> (Net, NetReliable, Native, Event, Protected, NetServer, NetValidate)
+     * Parameters:
+     *         Engine::FUniqueNetIdRepl                           PartyLeader                                                (ConstParm, Parm, ReferenceParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void APartyBeaconClient::ServerCancelReservationRequest(const Engine::FUniqueNetIdRepl& PartyLeader)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerCancelReservationRequest");
+        
+        APartyBeaconClient_ServerCancelReservationRequest_Params params {};
+        params.PartyLeader = PartyLeader;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00231140
+     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientSendReservationUpdates
+     *         Flags  -> (Net, NetReliable, Native, Event, Public, NetClient)
+     * Parameters:
+     *         int32_t                                            NumRemainingReservations                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void APartyBeaconClient::ClientSendReservationUpdates(int32_t NumRemainingReservations)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientSendReservationUpdates");
+        
+        APartyBeaconClient_ClientSendReservationUpdates_Params params {};
+        params.NumRemainingReservations = NumRemainingReservations;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00231120
+     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientSendReservationFull
+     *         Flags  -> (Net, NetReliable, Native, Event, Public, NetClient)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void APartyBeaconClient::ClientSendReservationFull()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientSendReservationFull");
+        
+        APartyBeaconClient_ClientSendReservationFull_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x002310A0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientReservationResponse
+     *         Flags  -> (Net, NetReliable, Native, Event, Public, NetClient)
+     * Parameters:
+     *         OnlineSubsystemUtils::EPartyReservationResult      ReservationResponse                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void APartyBeaconClient::ClientReservationResponse(OnlineSubsystemUtils::EPartyReservationResult ReservationResponse)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientReservationResponse");
+        
+        APartyBeaconClient_ClientReservationResponse_Params params {};
+        params.ReservationResponse = ReservationResponse;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00230FE0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientCancelReservationResponse
+     *         Flags  -> (Net, NetReliable, Native, Event, Public, NetClient)
+     * Parameters:
+     *         OnlineSubsystemUtils::EPartyReservationResult      ReservationResponse                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void APartyBeaconClient::ClientCancelReservationResponse(OnlineSubsystemUtils::EPartyReservationResult ReservationResponse)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientCancelReservationResponse");
+        
+        APartyBeaconClient_ClientCancelReservationResponse_Params params {};
+        params.ReservationResponse = ReservationResponse;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x002331B0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.QuitMatchCallbackProxy.QuitMatch
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                MatchID                                                    (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystem::EMPMatchOutcome                   Outcome                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            TurnTimeoutInSeconds                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UQuitMatchCallbackProxy*     ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemUtils::UQuitMatchCallbackProxy* UQuitMatchCallbackProxy::STATIC_QuitMatch(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const BasicTypes::FString& MatchID, OnlineSubsystem::EMPMatchOutcome Outcome, int32_t TurnTimeoutInSeconds)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.QuitMatchCallbackProxy.QuitMatch");
+        
+        UQuitMatchCallbackProxy_QuitMatch_Params params {};
+        params.WorldContextObject = WorldContextObject;
+        params.PlayerController = PlayerController;
+        params.MatchID = MatchID;
+        params.Outcome = Outcome;
+        params.TurnTimeoutInSeconds = TurnTimeoutInSeconds;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
     }
 
     /**
@@ -333,29 +761,6 @@ namespace CG::OnlineSubsystemUtils
 
     /**
      * Function:
-     *         RVA    -> 0x00232F20
-     *         Name   -> Function /Script/OnlineSubsystemUtils.VoipListenerSynthComponent.IsIdling
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool UVoipListenerSynthComponent::IsIdling()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.VoipListenerSynthComponent.IsIdling");
-        
-        UVoipListenerSynthComponent_IsIdling_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
      *         RVA    -> 0x00232380
      *         Name   -> Function /Script/OnlineSubsystemUtils.AchievementBlueprintLibrary.GetCachedAchievementProgress
      *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
@@ -433,6 +838,27 @@ namespace CG::OnlineSubsystemUtils
 
     /**
      * Function:
+     *         RVA    -> 0x00231060
+     *         Name   -> Function /Script/OnlineSubsystemUtils.OnlineBeaconClient.ClientOnConnected
+     *         Flags  -> (Final, Net, NetReliable, Native, Event, Private, NetClient)
+     * Parameters:
+     *         void                                               ReturnValue
+     */
+    void AOnlineBeaconClient::ClientOnConnected()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.OnlineBeaconClient.ClientOnConnected");
+        
+        AOnlineBeaconClient_ClientOnConnected_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
      *         RVA    -> 0x00231350
      *         Name   -> Function /Script/OnlineSubsystemUtils.InAppPurchaseCallbackProxy.CreateProxyObjectForInAppPurchase
      *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
@@ -450,6 +876,89 @@ namespace CG::OnlineSubsystemUtils
         UInAppPurchaseCallbackProxy_CreateProxyObjectForInAppPurchase_Params params {};
         params.PlayerController = PlayerController;
         params.ProductRequest = ProductRequest;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00231440
+     *         Name   -> Function /Script/OnlineSubsystemUtils.InAppPurchaseQueryCallbackProxy.CreateProxyObjectForInAppPurchaseQuery
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::TArray<BasicTypes::FString>            ProductIdentifiers                                         (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UInAppPurchaseQueryCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemUtils::UInAppPurchaseQueryCallbackProxy* UInAppPurchaseQueryCallbackProxy::STATIC_CreateProxyObjectForInAppPurchaseQuery(Engine::APlayerController* PlayerController, BasicTypes::TArray<BasicTypes::FString> ProductIdentifiers)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.InAppPurchaseQueryCallbackProxy.CreateProxyObjectForInAppPurchaseQuery");
+        
+        UInAppPurchaseQueryCallbackProxy_CreateProxyObjectForInAppPurchaseQuery_Params params {};
+        params.PlayerController = PlayerController;
+        params.ProductIdentifiers = ProductIdentifiers;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00231550
+     *         Name   -> Function /Script/OnlineSubsystemUtils.InAppPurchaseRestoreCallbackProxy.CreateProxyObjectForInAppPurchaseRestore
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     * Parameters:
+     *         BasicTypes::TArray<OnlineSubsystem::FInAppPurchaseProductRequest> ConsumableProductFlags                                     (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UInAppPurchaseRestoreCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    OnlineSubsystemUtils::UInAppPurchaseRestoreCallbackProxy* UInAppPurchaseRestoreCallbackProxy::STATIC_CreateProxyObjectForInAppPurchaseRestore(BasicTypes::TArray<OnlineSubsystem::FInAppPurchaseProductRequest> ConsumableProductFlags, Engine::APlayerController* PlayerController)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.InAppPurchaseRestoreCallbackProxy.CreateProxyObjectForInAppPurchaseRestore");
+        
+        UInAppPurchaseRestoreCallbackProxy_CreateProxyObjectForInAppPurchaseRestore_Params params {};
+        params.ConsumableProductFlags = ConsumableProductFlags;
+        params.PlayerController = PlayerController;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x00233AB0
+     *         Name   -> Function /Script/OnlineSubsystemUtils.LeaderboardBlueprintLibrary.WriteLeaderboardInteger
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::FName                                  StatName                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         int32_t                                            StatValue                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool ULeaderboardBlueprintLibrary::STATIC_WriteLeaderboardInteger(Engine::APlayerController* PlayerController, const BasicTypes::FName& StatName, int32_t StatValue)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.LeaderboardBlueprintLibrary.WriteLeaderboardInteger");
+        
+        ULeaderboardBlueprintLibrary_WriteLeaderboardInteger_Params params {};
+        params.PlayerController = PlayerController;
+        params.StatName = StatName;
+        params.StatValue = StatValue;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -487,162 +996,25 @@ namespace CG::OnlineSubsystemUtils
 
     /**
      * Function:
-     *         RVA    -> 0x00231920
-     *         Name   -> Function /Script/OnlineSubsystemUtils.EndMatchCallbackProxy.EndMatch
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
+     *         RVA    -> 0x00232F50
+     *         Name   -> Function /Script/OnlineSubsystemUtils.JoinSessionCallbackProxy.JoinSession
+     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
      * Parameters:
      *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::TScriptInterface<OnlineSubsystem::ITurnBasedMatchInterface> MatchActor                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                MatchID                                                    (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystem::EMPMatchOutcome                   LocalPlayerOutcome                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystem::EMPMatchOutcome                   OtherPlayersOutcome                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UEndMatchCallbackProxy*      ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::FBlueprintSessionResult      SearchResult                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UJoinSessionCallbackProxy*   ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    OnlineSubsystemUtils::UEndMatchCallbackProxy* UEndMatchCallbackProxy::STATIC_EndMatch(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const BasicTypes::TScriptInterface<OnlineSubsystem::ITurnBasedMatchInterface>& MatchActor, const BasicTypes::FString& MatchID, OnlineSubsystem::EMPMatchOutcome LocalPlayerOutcome, OnlineSubsystem::EMPMatchOutcome OtherPlayersOutcome)
+    OnlineSubsystemUtils::UJoinSessionCallbackProxy* UJoinSessionCallbackProxy::STATIC_JoinSession(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const OnlineSubsystemUtils::FBlueprintSessionResult& SearchResult)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.EndMatchCallbackProxy.EndMatch");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.JoinSessionCallbackProxy.JoinSession");
         
-        UEndMatchCallbackProxy_EndMatch_Params params {};
+        UJoinSessionCallbackProxy_JoinSession_Params params {};
         params.WorldContextObject = WorldContextObject;
         params.PlayerController = PlayerController;
-        params.MatchActor = MatchActor;
-        params.MatchID = MatchID;
-        params.LocalPlayerOutcome = LocalPlayerOutcome;
-        params.OtherPlayersOutcome = OtherPlayersOutcome;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00232DB0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetServerName
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         OnlineSubsystemUtils::FBlueprintSessionResult      Result                                                     (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    BasicTypes::FString UFindSessionsCallbackProxy::STATIC_GetServerName(const OnlineSubsystemUtils::FBlueprintSessionResult& Result)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetServerName");
-        
-        UFindSessionsCallbackProxy_GetServerName_Params params {};
-        params.Result = Result;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00232AA0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetPingInMs
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         OnlineSubsystemUtils::FBlueprintSessionResult      Result                                                     (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    int32_t UFindSessionsCallbackProxy::STATIC_GetPingInMs(const OnlineSubsystemUtils::FBlueprintSessionResult& Result)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetPingInMs");
-        
-        UFindSessionsCallbackProxy_GetPingInMs_Params params {};
-        params.Result = Result;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x002327E0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetMaxPlayers
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         OnlineSubsystemUtils::FBlueprintSessionResult      Result                                                     (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    int32_t UFindSessionsCallbackProxy::STATIC_GetMaxPlayers(const OnlineSubsystemUtils::FBlueprintSessionResult& Result)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetMaxPlayers");
-        
-        UFindSessionsCallbackProxy_GetMaxPlayers_Params params {};
-        params.Result = Result;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00232520
-     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetCurrentPlayers
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable, BlueprintPure)
-     * Parameters:
-     *         OnlineSubsystemUtils::FBlueprintSessionResult      Result                                                     (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         int32_t                                            ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    int32_t UFindSessionsCallbackProxy::STATIC_GetCurrentPlayers(const OnlineSubsystemUtils::FBlueprintSessionResult& Result)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.GetCurrentPlayers");
-        
-        UFindSessionsCallbackProxy_GetCurrentPlayers_Params params {};
-        params.Result = Result;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00231CE0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.FindSessions
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            MaxResults                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bUseLAN                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UFindSessionsCallbackProxy*  ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemUtils::UFindSessionsCallbackProxy* UFindSessionsCallbackProxy::STATIC_FindSessions(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, int32_t MaxResults, bool bUseLAN)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.FindSessionsCallbackProxy.FindSessions");
-        
-        UFindSessionsCallbackProxy_FindSessions_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.PlayerController = PlayerController;
-        params.MaxResults = MaxResults;
-        params.bUseLAN = bUseLAN;
+        params.SearchResult = SearchResult;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -717,52 +1089,31 @@ namespace CG::OnlineSubsystemUtils
 
     /**
      * Function:
-     *         RVA    -> 0x00231440
-     *         Name   -> Function /Script/OnlineSubsystemUtils.InAppPurchaseQueryCallbackProxy.CreateProxyObjectForInAppPurchaseQuery
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::TArray<BasicTypes::FString>            ProductIdentifiers                                         (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UInAppPurchaseQueryCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemUtils::UInAppPurchaseQueryCallbackProxy* UInAppPurchaseQueryCallbackProxy::STATIC_CreateProxyObjectForInAppPurchaseQuery(Engine::APlayerController* PlayerController, BasicTypes::TArray<BasicTypes::FString> ProductIdentifiers)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.InAppPurchaseQueryCallbackProxy.CreateProxyObjectForInAppPurchaseQuery");
-        
-        UInAppPurchaseQueryCallbackProxy_CreateProxyObjectForInAppPurchaseQuery_Params params {};
-        params.PlayerController = PlayerController;
-        params.ProductIdentifiers = ProductIdentifiers;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00232F50
-     *         Name   -> Function /Script/OnlineSubsystemUtils.JoinSessionCallbackProxy.JoinSession
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     *         RVA    -> 0x00231920
+     *         Name   -> Function /Script/OnlineSubsystemUtils.EndMatchCallbackProxy.EndMatch
+     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
      * Parameters:
      *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::FBlueprintSessionResult      SearchResult                                               (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UJoinSessionCallbackProxy*   ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         BasicTypes::TScriptInterface<OnlineSubsystem::ITurnBasedMatchInterface> MatchActor                                                 (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
+     *         BasicTypes::FString                                MatchID                                                    (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystem::EMPMatchOutcome                   LocalPlayerOutcome                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystem::EMPMatchOutcome                   OtherPlayersOutcome                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         OnlineSubsystemUtils::UEndMatchCallbackProxy*      ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    OnlineSubsystemUtils::UJoinSessionCallbackProxy* UJoinSessionCallbackProxy::STATIC_JoinSession(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const OnlineSubsystemUtils::FBlueprintSessionResult& SearchResult)
+    OnlineSubsystemUtils::UEndMatchCallbackProxy* UEndMatchCallbackProxy::STATIC_EndMatch(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const BasicTypes::TScriptInterface<OnlineSubsystem::ITurnBasedMatchInterface>& MatchActor, const BasicTypes::FString& MatchID, OnlineSubsystem::EMPMatchOutcome LocalPlayerOutcome, OnlineSubsystem::EMPMatchOutcome OtherPlayersOutcome)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.JoinSessionCallbackProxy.JoinSession");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.EndMatchCallbackProxy.EndMatch");
         
-        UJoinSessionCallbackProxy_JoinSession_Params params {};
+        UEndMatchCallbackProxy_EndMatch_Params params {};
         params.WorldContextObject = WorldContextObject;
         params.PlayerController = PlayerController;
-        params.SearchResult = SearchResult;
+        params.MatchActor = MatchActor;
+        params.MatchID = MatchID;
+        params.LocalPlayerOutcome = LocalPlayerOutcome;
+        params.OtherPlayersOutcome = OtherPlayersOutcome;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -827,370 +1178,19 @@ namespace CG::OnlineSubsystemUtils
 
     /**
      * Function:
-     *         RVA    -> 0x00231550
-     *         Name   -> Function /Script/OnlineSubsystemUtils.InAppPurchaseRestoreCallbackProxy.CreateProxyObjectForInAppPurchaseRestore
-     *         Flags  -> (Final, Native, Static, Public, HasOutParms, BlueprintCallable)
+     *         RVA    -> 0x00232F20
+     *         Name   -> Function /Script/OnlineSubsystemUtils.VoipListenerSynthComponent.IsIdling
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         BasicTypes::TArray<OnlineSubsystem::FInAppPurchaseProductRequest> ConsumableProductFlags                                     (ConstParm, Parm, OutParm, ZeroConstructor, ReferenceParm, NativeAccessSpecifierPublic)
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UInAppPurchaseRestoreCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemUtils::UInAppPurchaseRestoreCallbackProxy* UInAppPurchaseRestoreCallbackProxy::STATIC_CreateProxyObjectForInAppPurchaseRestore(BasicTypes::TArray<OnlineSubsystem::FInAppPurchaseProductRequest> ConsumableProductFlags, Engine::APlayerController* PlayerController)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.InAppPurchaseRestoreCallbackProxy.CreateProxyObjectForInAppPurchaseRestore");
-        
-        UInAppPurchaseRestoreCallbackProxy_CreateProxyObjectForInAppPurchaseRestore_Params params {};
-        params.ConsumableProductFlags = ConsumableProductFlags;
-        params.PlayerController = PlayerController;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00231670
-     *         Name   -> Function /Script/OnlineSubsystemUtils.LeaderboardQueryCallbackProxy.CreateProxyObjectForIntQuery
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  StatName                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::ULeaderboardQueryCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemUtils::ULeaderboardQueryCallbackProxy* ULeaderboardQueryCallbackProxy::STATIC_CreateProxyObjectForIntQuery(Engine::APlayerController* PlayerController, const BasicTypes::FName& StatName)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.LeaderboardQueryCallbackProxy.CreateProxyObjectForIntQuery");
-        
-        ULeaderboardQueryCallbackProxy_CreateProxyObjectForIntQuery_Params params {};
-        params.PlayerController = PlayerController;
-        params.StatName = StatName;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x002331B0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.QuitMatchCallbackProxy.QuitMatch
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                MatchID                                                    (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystem::EMPMatchOutcome                   Outcome                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            TurnTimeoutInSeconds                                       (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UQuitMatchCallbackProxy*     ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemUtils::UQuitMatchCallbackProxy* UQuitMatchCallbackProxy::STATIC_QuitMatch(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const BasicTypes::FString& MatchID, OnlineSubsystem::EMPMatchOutcome Outcome, int32_t TurnTimeoutInSeconds)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.QuitMatchCallbackProxy.QuitMatch");
-        
-        UQuitMatchCallbackProxy_QuitMatch_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.PlayerController = PlayerController;
-        params.MatchID = MatchID;
-        params.Outcome = Outcome;
-        params.TurnTimeoutInSeconds = TurnTimeoutInSeconds;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00233930
-     *         Name   -> Function /Script/OnlineSubsystemUtils.AchievementWriteCallbackProxy.WriteAchievementProgress
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  AchievementName                                            (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              Progress                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            UserTag                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UAchievementWriteCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemUtils::UAchievementWriteCallbackProxy* UAchievementWriteCallbackProxy::STATIC_WriteAchievementProgress(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const BasicTypes::FName& AchievementName, float Progress, int32_t UserTag)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.AchievementWriteCallbackProxy.WriteAchievementProgress");
-        
-        UAchievementWriteCallbackProxy_WriteAchievementProgress_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.PlayerController = PlayerController;
-        params.AchievementName = AchievementName;
-        params.Progress = Progress;
-        params.UserTag = UserTag;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00233AB0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.LeaderboardBlueprintLibrary.WriteLeaderboardInteger
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FName                                  StatName                                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            StatValue                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      */
-    bool ULeaderboardBlueprintLibrary::STATIC_WriteLeaderboardInteger(Engine::APlayerController* PlayerController, const BasicTypes::FName& StatName, int32_t StatValue)
+    bool UVoipListenerSynthComponent::IsIdling()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.LeaderboardBlueprintLibrary.WriteLeaderboardInteger");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.VoipListenerSynthComponent.IsIdling");
         
-        ULeaderboardBlueprintLibrary_WriteLeaderboardInteger_Params params {};
-        params.PlayerController = PlayerController;
-        params.StatName = StatName;
-        params.StatValue = StatValue;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00231B30
-     *         Name   -> Function /Script/OnlineSubsystemUtils.EndTurnCallbackProxy.EndTurn
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::FString                                MatchID                                                    (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         BasicTypes::TScriptInterface<OnlineSubsystem::ITurnBasedMatchInterface> TurnBasedMatchInterface                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UEndTurnCallbackProxy*       ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemUtils::UEndTurnCallbackProxy* UEndTurnCallbackProxy::STATIC_EndTurn(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, const BasicTypes::FString& MatchID, const BasicTypes::TScriptInterface<OnlineSubsystem::ITurnBasedMatchInterface>& TurnBasedMatchInterface)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.EndTurnCallbackProxy.EndTurn");
-        
-        UEndTurnCallbackProxy_EndTurn_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.PlayerController = PlayerController;
-        params.MatchID = MatchID;
-        params.TurnBasedMatchInterface = TurnBasedMatchInterface;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00233720
-     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerUpdateReservationRequest
-     *         Flags  -> (Net, NetReliable, Native, Event, Protected, NetServer, NetValidate)
-     * Parameters:
-     *         BasicTypes::FString                                SessionId                                                  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::FPartyReservation            ReservationUpdate                                          (ConstParm, Parm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void APartyBeaconClient::ServerUpdateReservationRequest(const BasicTypes::FString& SessionId, const OnlineSubsystemUtils::FPartyReservation& ReservationUpdate)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerUpdateReservationRequest");
-        
-        APartyBeaconClient_ServerUpdateReservationRequest_Params params {};
-        params.SessionId = SessionId;
-        params.ReservationUpdate = ReservationUpdate;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x002335D0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerReservationRequest
-     *         Flags  -> (Net, NetReliable, Native, Event, Protected, NetServer, NetValidate)
-     * Parameters:
-     *         BasicTypes::FString                                SessionId                                                  (Parm, ZeroConstructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::FPartyReservation            Reservation                                                (ConstParm, Parm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void APartyBeaconClient::ServerReservationRequest(const BasicTypes::FString& SessionId, const OnlineSubsystemUtils::FPartyReservation& Reservation)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerReservationRequest");
-        
-        APartyBeaconClient_ServerReservationRequest_Params params {};
-        params.SessionId = SessionId;
-        params.Reservation = Reservation;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00233460
-     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerCancelReservationRequest
-     *         Flags  -> (Net, NetReliable, Native, Event, Protected, NetServer, NetValidate)
-     * Parameters:
-     *         Engine::FUniqueNetIdRepl                           PartyLeader                                                (ConstParm, Parm, ReferenceParm, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void APartyBeaconClient::ServerCancelReservationRequest(const Engine::FUniqueNetIdRepl& PartyLeader)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ServerCancelReservationRequest");
-        
-        APartyBeaconClient_ServerCancelReservationRequest_Params params {};
-        params.PartyLeader = PartyLeader;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00231140
-     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientSendReservationUpdates
-     *         Flags  -> (Net, NetReliable, Native, Event, Public, NetClient)
-     * Parameters:
-     *         int32_t                                            NumRemainingReservations                                   (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void APartyBeaconClient::ClientSendReservationUpdates(int32_t NumRemainingReservations)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientSendReservationUpdates");
-        
-        APartyBeaconClient_ClientSendReservationUpdates_Params params {};
-        params.NumRemainingReservations = NumRemainingReservations;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00231120
-     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientSendReservationFull
-     *         Flags  -> (Net, NetReliable, Native, Event, Public, NetClient)
-     * Parameters:
-     *         void                                               ReturnValue
-     */
-    void APartyBeaconClient::ClientSendReservationFull()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientSendReservationFull");
-        
-        APartyBeaconClient_ClientSendReservationFull_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x002310A0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientReservationResponse
-     *         Flags  -> (Net, NetReliable, Native, Event, Public, NetClient)
-     * Parameters:
-     *         OnlineSubsystemUtils::EPartyReservationResult      ReservationResponse                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void APartyBeaconClient::ClientReservationResponse(OnlineSubsystemUtils::EPartyReservationResult ReservationResponse)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientReservationResponse");
-        
-        APartyBeaconClient_ClientReservationResponse_Params params {};
-        params.ReservationResponse = ReservationResponse;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00230FE0
-     *         Name   -> Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientCancelReservationResponse
-     *         Flags  -> (Net, NetReliable, Native, Event, Public, NetClient)
-     * Parameters:
-     *         OnlineSubsystemUtils::EPartyReservationResult      ReservationResponse                                        (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void APartyBeaconClient::ClientCancelReservationResponse(OnlineSubsystemUtils::EPartyReservationResult ReservationResponse)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.PartyBeaconClient.ClientCancelReservationResponse");
-        
-        APartyBeaconClient_ClientCancelReservationResponse_Params params {};
-        params.ReservationResponse = ReservationResponse;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x00231730
-     *         Name   -> Function /Script/OnlineSubsystemUtils.CreateSessionCallbackProxy.CreateSession
-     *         Flags  -> (Final, Native, Static, Public, BlueprintCallable)
-     * Parameters:
-     *         CoreUObject::UObject*                              WorldContextObject                                         (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         Engine::APlayerController*                         PlayerController                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         int32_t                                            PublicConnections                                          (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         bool                                               bUseLAN                                                    (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         OnlineSubsystemUtils::UCreateSessionCallbackProxy* ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    OnlineSubsystemUtils::UCreateSessionCallbackProxy* UCreateSessionCallbackProxy::STATIC_CreateSession(CoreUObject::UObject* WorldContextObject, Engine::APlayerController* PlayerController, int32_t PublicConnections, bool bUseLAN)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/OnlineSubsystemUtils.CreateSessionCallbackProxy.CreateSession");
-        
-        UCreateSessionCallbackProxy_CreateSession_Params params {};
-        params.WorldContextObject = WorldContextObject;
-        params.PlayerController = PlayerController;
-        params.PublicConnections = PublicConnections;
-        params.bUseLAN = bUseLAN;
+        UVoipListenerSynthComponent_IsIdling_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

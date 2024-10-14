@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -19,12 +19,12 @@
 #include "Headers/CoreUObject_UFunction.h"
 #include "Headers/AudioMixer_ENUMS.h"
 #include "Headers/AudioMixer_PARAMS.h"
-#include "Headers/AudioMixer_USynthComponent.h"
-#include "Headers/AudioMixer_UAudioMixerBlueprintLibrary.h"
-#include "Headers/AudioMixer_USynthSound.h"
 #include "Headers/AudioMixer_USubmixEffectDynamicsProcessorPreset.h"
 #include "Headers/AudioMixer_USubmixEffectSubmixEQPreset.h"
 #include "Headers/AudioMixer_USubmixEffectReverbPreset.h"
+#include "Headers/AudioMixer_USynthSound.h"
+#include "Headers/AudioMixer_UAudioMixerBlueprintLibrary.h"
+#include "Headers/AudioMixer_USynthComponent.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)
@@ -37,19 +37,21 @@ namespace CG::AudioMixer
     // --------------------------------------------------
     /**
      * Function:
-     *         RVA    -> 0x010B6E90
-     *         Name   -> Function /Script/AudioMixer.SynthComponent.Stop
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     *         RVA    -> 0x010B6900
+     *         Name   -> Function /Script/AudioMixer.SubmixEffectDynamicsProcessorPreset.SetSettings
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
      * Parameters:
+     *         AudioMixer::FSubmixEffectDynamicsProcessorSettings InSettings                                                 (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void USynthComponent::Stop()
+    void USubmixEffectDynamicsProcessorPreset::SetSettings(const AudioMixer::FSubmixEffectDynamicsProcessorSettings& InSettings)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.Stop");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SubmixEffectDynamicsProcessorPreset.SetSettings");
         
-        USynthComponent_Stop_Params params {};
+        USubmixEffectDynamicsProcessorPreset_SetSettings_Params params {};
+        params.InSettings = InSettings;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -58,19 +60,21 @@ namespace CG::AudioMixer
 
     /**
      * Function:
-     *         RVA    -> 0x010B6D70
-     *         Name   -> Function /Script/AudioMixer.SynthComponent.Start
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     *         RVA    -> 0x010B6A70
+     *         Name   -> Function /Script/AudioMixer.SubmixEffectSubmixEQPreset.SetSettings
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
      * Parameters:
+     *         AudioMixer::FSubmixEffectSubmixEQSettings          InSettings                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void USynthComponent::Start()
+    void USubmixEffectSubmixEQPreset::SetSettings(const AudioMixer::FSubmixEffectSubmixEQSettings& InSettings)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.Start");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SubmixEffectSubmixEQPreset.SetSettings");
         
-        USynthComponent_Start_Params params {};
+        USubmixEffectSubmixEQPreset_SetSettings_Params params {};
+        params.InSettings = InSettings;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -79,21 +83,25 @@ namespace CG::AudioMixer
 
     /**
      * Function:
-     *         RVA    -> 0x010B6CF0
-     *         Name   -> Function /Script/AudioMixer.SynthComponent.SetVolumeMultiplier
+     *         RVA    -> 0x010B6B20
+     *         Name   -> Function /Script/AudioMixer.SubmixEffectReverbPreset.SetSettingsWithReverbEffect
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         float                                              VolumeMultiplier                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         Engine::UReverbEffect*                             InReverbEffect                                             (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              WetLevel                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              DryLevel                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void USynthComponent::SetVolumeMultiplier(float VolumeMultiplier)
+    void USubmixEffectReverbPreset::SetSettingsWithReverbEffect(Engine::UReverbEffect* InReverbEffect, float WetLevel, float DryLevel)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.SetVolumeMultiplier");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SubmixEffectReverbPreset.SetSettingsWithReverbEffect");
         
-        USynthComponent_SetVolumeMultiplier_Params params {};
-        params.VolumeMultiplier = VolumeMultiplier;
+        USubmixEffectReverbPreset_SetSettingsWithReverbEffect_Params params {};
+        params.InReverbEffect = InReverbEffect;
+        params.WetLevel = WetLevel;
+        params.DryLevel = DryLevel;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -102,50 +110,25 @@ namespace CG::AudioMixer
 
     /**
      * Function:
-     *         RVA    -> 0x010B6C20
-     *         Name   -> Function /Script/AudioMixer.SynthComponent.SetSubmixSend
-     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     *         RVA    -> 0x010B69B0
+     *         Name   -> Function /Script/AudioMixer.SubmixEffectReverbPreset.SetSettings
+     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
      * Parameters:
-     *         Engine::USoundSubmix*                              Submix                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              SendLevel                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         AudioMixer::FSubmixEffectReverbSettings            InSettings                                                 (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void USynthComponent::SetSubmixSend(Engine::USoundSubmix* Submix, float SendLevel)
+    void USubmixEffectReverbPreset::SetSettings(const AudioMixer::FSubmixEffectReverbSettings& InSettings)
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.SetSubmixSend");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SubmixEffectReverbPreset.SetSettings");
         
-        USynthComponent_SetSubmixSend_Params params {};
-        params.Submix = Submix;
-        params.SendLevel = SendLevel;
+        USubmixEffectReverbPreset_SetSettings_Params params {};
+        params.InSettings = InSettings;
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010B64A0
-     *         Name   -> Function /Script/AudioMixer.SynthComponent.IsPlaying
-     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
-     * Parameters:
-     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     */
-    bool USynthComponent::IsPlaying()
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.IsPlaying");
-        
-        USynthComponent_IsPlaying_Params params {};
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-        
-        return params.ReturnValue;
     }
 
     /**
@@ -445,71 +428,19 @@ namespace CG::AudioMixer
 
     /**
      * Function:
-     *         RVA    -> 0x010B6900
-     *         Name   -> Function /Script/AudioMixer.SubmixEffectDynamicsProcessorPreset.SetSettings
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         AudioMixer::FSubmixEffectDynamicsProcessorSettings InSettings                                                 (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USubmixEffectDynamicsProcessorPreset::SetSettings(const AudioMixer::FSubmixEffectDynamicsProcessorSettings& InSettings)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SubmixEffectDynamicsProcessorPreset.SetSettings");
-        
-        USubmixEffectDynamicsProcessorPreset_SetSettings_Params params {};
-        params.InSettings = InSettings;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010B6A70
-     *         Name   -> Function /Script/AudioMixer.SubmixEffectSubmixEQPreset.SetSettings
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
-     * Parameters:
-     *         AudioMixer::FSubmixEffectSubmixEQSettings          InSettings                                                 (ConstParm, Parm, OutParm, ReferenceParm, NativeAccessSpecifierPublic)
-     *         void                                               ReturnValue
-     */
-    void USubmixEffectSubmixEQPreset::SetSettings(const AudioMixer::FSubmixEffectSubmixEQSettings& InSettings)
-    {
-        static CoreUObject::UFunction* fn = nullptr;
-        if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SubmixEffectSubmixEQPreset.SetSettings");
-        
-        USubmixEffectSubmixEQPreset_SetSettings_Params params {};
-        params.InSettings = InSettings;
-        
-        auto flags = fn->FunctionFlags;
-        CoreUObject::UObject::ProcessEvent(fn, &params);
-        fn->FunctionFlags = flags;
-    }
-
-    /**
-     * Function:
-     *         RVA    -> 0x010B6B20
-     *         Name   -> Function /Script/AudioMixer.SubmixEffectReverbPreset.SetSettingsWithReverbEffect
+     *         RVA    -> 0x010B6E90
+     *         Name   -> Function /Script/AudioMixer.SynthComponent.Stop
      *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         Engine::UReverbEffect*                             InReverbEffect                                             (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              WetLevel                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
-     *         float                                              DryLevel                                                   (ConstParm, Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void USubmixEffectReverbPreset::SetSettingsWithReverbEffect(Engine::UReverbEffect* InReverbEffect, float WetLevel, float DryLevel)
+    void USynthComponent::Stop()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SubmixEffectReverbPreset.SetSettingsWithReverbEffect");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.Stop");
         
-        USubmixEffectReverbPreset_SetSettingsWithReverbEffect_Params params {};
-        params.InReverbEffect = InReverbEffect;
-        params.WetLevel = WetLevel;
-        params.DryLevel = DryLevel;
+        USynthComponent_Stop_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
@@ -518,25 +449,94 @@ namespace CG::AudioMixer
 
     /**
      * Function:
-     *         RVA    -> 0x010B69B0
-     *         Name   -> Function /Script/AudioMixer.SubmixEffectReverbPreset.SetSettings
-     *         Flags  -> (Final, Native, Public, HasOutParms, BlueprintCallable)
+     *         RVA    -> 0x010B6D70
+     *         Name   -> Function /Script/AudioMixer.SynthComponent.Start
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
      * Parameters:
-     *         AudioMixer::FSubmixEffectReverbSettings            InSettings                                                 (ConstParm, Parm, OutParm, ReferenceParm, NoDestructor, NativeAccessSpecifierPublic)
      *         void                                               ReturnValue
      */
-    void USubmixEffectReverbPreset::SetSettings(const AudioMixer::FSubmixEffectReverbSettings& InSettings)
+    void USynthComponent::Start()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SubmixEffectReverbPreset.SetSettings");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.Start");
         
-        USubmixEffectReverbPreset_SetSettings_Params params {};
-        params.InSettings = InSettings;
+        USynthComponent_Start_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);
         fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010B6CF0
+     *         Name   -> Function /Script/AudioMixer.SynthComponent.SetVolumeMultiplier
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         float                                              VolumeMultiplier                                           (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USynthComponent::SetVolumeMultiplier(float VolumeMultiplier)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.SetVolumeMultiplier");
+        
+        USynthComponent_SetVolumeMultiplier_Params params {};
+        params.VolumeMultiplier = VolumeMultiplier;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010B6C20
+     *         Name   -> Function /Script/AudioMixer.SynthComponent.SetSubmixSend
+     *         Flags  -> (Final, Native, Public, BlueprintCallable)
+     * Parameters:
+     *         Engine::USoundSubmix*                              Submix                                                     (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         float                                              SendLevel                                                  (Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     *         void                                               ReturnValue
+     */
+    void USynthComponent::SetSubmixSend(Engine::USoundSubmix* Submix, float SendLevel)
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.SetSubmixSend");
+        
+        USynthComponent_SetSubmixSend_Params params {};
+        params.Submix = Submix;
+        params.SendLevel = SendLevel;
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+    }
+
+    /**
+     * Function:
+     *         RVA    -> 0x010B64A0
+     *         Name   -> Function /Script/AudioMixer.SynthComponent.IsPlaying
+     *         Flags  -> (Final, Native, Public, BlueprintCallable, BlueprintPure, Const)
+     * Parameters:
+     *         bool                                               ReturnValue                                                (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+     */
+    bool USynthComponent::IsPlaying()
+    {
+        static CoreUObject::UFunction* fn = nullptr;
+        if (!fn)
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Script/AudioMixer.SynthComponent.IsPlaying");
+        
+        USynthComponent_IsPlaying_Params params {};
+        
+        auto flags = fn->FunctionFlags;
+        CoreUObject::UObject::ProcessEvent(fn, &params);
+        fn->FunctionFlags = flags;
+        
+        return params.ReturnValue;
     }
 
 }

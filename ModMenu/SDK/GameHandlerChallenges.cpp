@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -74,18 +74,18 @@ namespace CG::GameHandlerChallenges
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/GameHandlers/GameHandlerChallenges.GameHandlerChallenges_C.ShutDown
+     *         Name   -> Function /Game/Blueprints/GameHandlers/GameHandlerChallenges.GameHandlerChallenges_C.Shutdown
      *         Flags  -> (Public, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void AGameHandlerChallenges_C::ShutDown()
+    void AGameHandlerChallenges_C::Shutdown()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/GameHandlers/GameHandlerChallenges.GameHandlerChallenges_C.ShutDown");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/GameHandlers/GameHandlerChallenges.GameHandlerChallenges_C.Shutdown");
         
-        AGameHandlerChallenges_C_ShutDown_Params params {};
+        AGameHandlerChallenges_C_Shutdown_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

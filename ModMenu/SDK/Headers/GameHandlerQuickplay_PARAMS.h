@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -61,7 +61,7 @@ namespace CG::GameHandlerQuickplay
      * 
      * Size -> 0x0000
      */
-    class AGameHandlerQuickplay_C_ShutDown_Params
+    class AGameHandlerQuickplay_C_Shutdown_Params
     {
     };
 

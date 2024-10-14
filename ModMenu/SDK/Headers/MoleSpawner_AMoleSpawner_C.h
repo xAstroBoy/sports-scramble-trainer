@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -76,7 +76,7 @@ namespace CG::MoleSpawner
         void ReceiveBeginPlay();
         void ActivateSpawner();
         void DeactivateSpawner();
-        void ShutDown();
+        void Shutdown();
         void ReceiveEndPlay(Engine::EEndPlayReason EndPlayReason);
         void PlayTickTockCue();
         void StopTickTockCue();

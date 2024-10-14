@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -101,7 +101,7 @@ namespace CG::DemoTraining
         Travelcapsule::ATravelcapsule_C*                             TravelCapsule;                                           //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         int32_t                                                      Bounces;                                                 //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         uint8_t                                                      UnknownData_0008[0x4];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
-        DemoTargetTraining::ADemoTargetTraining_C*                   Minigame;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+        DemoTargetTraining::ADemoTargetTraining_C*                   MiniGame;                                                //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         ScramPlayer_BP::AScramPlayer_BP_C*                           Player;                                                  //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
         bool                                                         Error;                                                   //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor
         uint8_t                                                      UnknownData_0009[0x7];                                   //  MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
@@ -120,7 +120,7 @@ namespace CG::DemoTraining
         void AnnouncerSpeak(Engine::USoundBase* AnnouncerCue);
         void DisplayInfo(float DisplayTime, const BasicTypes::FText& DisplayText);
         void SaveNewHighScore();
-        void SpawnMinigame();
+        void SpawnMiniGame();
         void RevealCourt();
         void CheckInBounds(float XLocation, float YLocation, bool* InBounds);
         void DestroyHint();

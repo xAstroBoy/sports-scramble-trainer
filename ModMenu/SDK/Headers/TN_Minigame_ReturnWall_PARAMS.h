@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -46,7 +46,7 @@ namespace CG::TN_Minigame_ReturnWall
      * 
      * Size -> 0x0000
      */
-    class ATN_Minigame_ReturnWall_C_ShutDown_Params
+    class ATN_Minigame_ReturnWall_C_Shutdown_Params
     {
     public:
         bool                                                         ShutdownBegun;                                           //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)

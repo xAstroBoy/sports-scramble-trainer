@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -97,7 +97,7 @@ namespace CG::TN_Train_Base
 
     public:
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void TN_UnbindEvents();
         void TN_CalculateEndScore(int32_t CurrentScore, int32_t TargetScore);
         void GetListOfBallClasses();

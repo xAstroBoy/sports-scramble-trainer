@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -36,7 +36,7 @@ namespace CG::TN_Challenge_06_ReturnWall
      * 
      * Size -> 0x0000
      */
-    class ATN_Challenge_06_ReturnWall_C_SetupInfoText_Params
+    class ATN_Challenge_06_ReturnWall_C_SetUpInfoText_Params
     {
     };
 

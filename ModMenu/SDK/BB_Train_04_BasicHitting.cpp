@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -53,18 +53,18 @@ namespace CG::BB_Train_04_BasicHitting
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/Training/Baseball/BB_Train_04_BasicHitting.BB_Train_04_BasicHitting_C.SetupInfoText
+     *         Name   -> Function /Game/Blueprints/Training/Baseball/BB_Train_04_BasicHitting.BB_Train_04_BasicHitting_C.SetUpInfoText
      *         Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void ABB_Train_04_BasicHitting_C::SetupInfoText()
+    void ABB_Train_04_BasicHitting_C::SetUpInfoText()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Training/Baseball/BB_Train_04_BasicHitting.BB_Train_04_BasicHitting_C.SetupInfoText");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Training/Baseball/BB_Train_04_BasicHitting.BB_Train_04_BasicHitting_C.SetUpInfoText");
         
-        ABB_Train_04_BasicHitting_C_SetupInfoText_Params params {};
+        ABB_Train_04_BasicHitting_C_SetUpInfoText_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -54,7 +54,7 @@ namespace CG::BB_Minigame_Pitching_Whack
         BB_Scoreboard_Training_BP::ABB_Scoreboard_Training_BP_C*     TrainingScoreboard;                                      //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnTemplate, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 
     public:
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void ClearWhackTimer();
         void WhackScoreboardGameOver();
         void InitializeWhack();
@@ -63,7 +63,7 @@ namespace CG::BB_Minigame_Pitching_Whack
         void UserConstructionScript();
         void ReceiveBeginPlay();
         void StartCountdown();
-        void CountdownComplete();
+        void CountDownComplete();
         void DisableWhackTargets();
         void WhackEquipmentGrabbed();
         void GoMessageReceived();

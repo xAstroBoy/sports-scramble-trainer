@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -59,7 +59,7 @@ namespace CG::BB_Challenge_04_ChinaShop
         int32_t                                                      LightFixtureScore;                                       //  Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, ExposeOnSpawn, HasGetValueTypeHash
 
     public:
-        void SetupInfoText();
+        void SetUpInfoText();
         void LaunchBall();
         void UpdateLauncherSpeeds();
         void UpdateBallType();

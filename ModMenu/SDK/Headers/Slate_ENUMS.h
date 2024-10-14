@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -21,49 +21,6 @@ namespace CG::Slate
     // --------------------------------------------------
     // # Enums
     // --------------------------------------------------
-    /**
-     * Enum /Script/Slate.ETextFlowDirection
-     */
-    enum class ETextFlowDirection : uint8_t
-    {
-        Auto        = 0,
-        LeftToRight = 1,
-        RightToLeft = 2,
-        MAX         = 3
-    };
-
-    /**
-     * Enum /Script/Slate.ETextWrappingPolicy
-     */
-    enum class ETextWrappingPolicy : uint8_t
-    {
-        DefaultWrapping           = 0,
-        AllowPerCharacterWrapping = 1,
-        MAX                       = 2
-    };
-
-    /**
-     * Enum /Script/Slate.ETextJustify
-     */
-    enum class ETextJustify : uint8_t
-    {
-        Left   = 0,
-        Center = 1,
-        Right  = 2,
-        MAX    = 3
-    };
-
-    /**
-     * Enum /Script/Slate.EMultipleKeyBindingIndex
-     */
-    enum class EMultipleKeyBindingIndex : uint8_t
-    {
-        Primary   = 0,
-        Secondary = 1,
-        NumChords = 2,
-        MAX       = 3
-    };
-
     /**
      * Enum /Script/Slate.EVirtualKeyboardDismissAction
      */
@@ -162,6 +119,49 @@ namespace CG::Slate
         CenterAligned     = 5,
         Fill              = 6,
         MAX               = 7
+    };
+
+    /**
+     * Enum /Script/Slate.ETextFlowDirection
+     */
+    enum class ETextFlowDirection : uint8_t
+    {
+        Auto        = 0,
+        LeftToRight = 1,
+        RightToLeft = 2,
+        MAX         = 3
+    };
+
+    /**
+     * Enum /Script/Slate.ETextWrappingPolicy
+     */
+    enum class ETextWrappingPolicy : uint8_t
+    {
+        DefaultWrapping           = 0,
+        AllowPerCharacterWrapping = 1,
+        MAX                       = 2
+    };
+
+    /**
+     * Enum /Script/Slate.ETextJustify
+     */
+    enum class ETextJustify : uint8_t
+    {
+        Left   = 0,
+        Center = 1,
+        Right  = 2,
+        MAX    = 3
+    };
+
+    /**
+     * Enum /Script/Slate.EMultipleKeyBindingIndex
+     */
+    enum class EMultipleKeyBindingIndex : uint8_t
+    {
+        Primary   = 0,
+        Secondary = 1,
+        NumChords = 2,
+        MAX       = 3
     };
 
 }

@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -56,7 +56,7 @@ namespace CG::BB_Challenge_01_HRD
 
     public:
         void InitializeChallenge();
-        void SetupInfoText();
+        void SetUpInfoText();
         void CheckProperAudioList(bool* UseAlternate);
         void RequestNewBat(SportsScramble::AScramInstrument** NewInstrumentClass, bool* Success);
         void RequestNewBall(SportsScramble::AScramBall** NewBallClass, bool* Success);

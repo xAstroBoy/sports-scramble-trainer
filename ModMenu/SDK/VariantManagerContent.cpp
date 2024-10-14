@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -24,10 +24,10 @@
 #include "Headers/VariantManagerContent_UPropertyValue.h"
 #include "Headers/VariantManagerContent_UPropertyValueMaterial.h"
 #include "Headers/VariantManagerContent_UPropertyValueTransform.h"
+#include "Headers/VariantManagerContent_UPropertyValueVisibility.h"
 #include "Headers/VariantManagerContent_UVariant.h"
 #include "Headers/VariantManagerContent_UVariantObjectBinding.h"
 #include "Headers/VariantManagerContent_UVariantSet.h"
-#include "Headers/VariantManagerContent_UPropertyValueVisibility.h"
 
 #ifdef _MSC_VER
     #pragma pack(push, 0x01)

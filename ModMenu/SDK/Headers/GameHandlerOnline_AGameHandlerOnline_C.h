@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -219,7 +219,7 @@ namespace CG::GameHandlerOnline
         void OnMatchStart();
         void ReceiveEndPlay(Engine::EEndPlayReason EndPlayReason);
         void FadeComplete();
-        void ShutDown();
+        void Shutdown();
         void OnInitialPlayerInitComplete(SportsScramble::AScramPlayer* Player);
         void OnRemoteAvatarSelected(SportsScramble::AScramPlayer* Player);
         void ResultsDisplayComplete(bool WideNextButton);

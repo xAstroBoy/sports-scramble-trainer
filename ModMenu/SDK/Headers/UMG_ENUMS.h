@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -21,6 +21,33 @@ namespace CG::UMG
     // --------------------------------------------------
     // # Enums
     // --------------------------------------------------
+    /**
+     * Enum /Script/UMG.ESlateVisibility
+     */
+    enum class ESlateVisibility : uint8_t
+    {
+        Visible              = 0,
+        Collapsed            = 1,
+        Hidden               = 2,
+        HitTestInvisible     = 3,
+        SelfHitTestInvisible = 4,
+        MAX                  = 5
+    };
+
+    /**
+     * Enum /Script/UMG.EVirtualKeyboardType
+     */
+    enum class EVirtualKeyboardType : uint8_t
+    {
+        Default      = 0,
+        Number       = 1,
+        Web          = 2,
+        Email        = 3,
+        Password     = 4,
+        AlphaNumeric = 5,
+        MAX          = 6
+    };
+
     /**
      * Enum /Script/UMG.EDragPivot
      */
@@ -155,33 +182,6 @@ namespace CG::UMG
         CenterScreen = 2,
         Custom       = 3,
         MAX          = 4
-    };
-
-    /**
-     * Enum /Script/UMG.EVirtualKeyboardType
-     */
-    enum class EVirtualKeyboardType : uint8_t
-    {
-        Default      = 0,
-        Number       = 1,
-        Web          = 2,
-        Email        = 3,
-        Password     = 4,
-        AlphaNumeric = 5,
-        MAX          = 6
-    };
-
-    /**
-     * Enum /Script/UMG.ESlateVisibility
-     */
-    enum class ESlateVisibility : uint8_t
-    {
-        Visible              = 0,
-        Collapsed            = 1,
-        Hidden               = 2,
-        HitTestInvisible     = 3,
-        SelfHitTestInvisible = 4,
-        MAX                  = 5
     };
 
 }

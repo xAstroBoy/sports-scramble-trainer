@@ -4,11 +4,11 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
-#include "../pch.h"
+#include "pch.h"
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -74,18 +74,18 @@ namespace CG::TN_Challenge_02_DoubleCross
     /**
      * Function:
      *         RVA    -> 0x006628B0
-     *         Name   -> Function /Game/Blueprints/Challenges/Tennis/TN_Challenge_02_DoubleCross.TN_Challenge_02_DoubleCross_C.SetupInfoText
+     *         Name   -> Function /Game/Blueprints/Challenges/Tennis/TN_Challenge_02_DoubleCross.TN_Challenge_02_DoubleCross_C.SetUpInfoText
      *         Flags  -> (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
      * Parameters:
      *         void                                               ReturnValue
      */
-    void ATN_Challenge_02_DoubleCross_C::SetupInfoText()
+    void ATN_Challenge_02_DoubleCross_C::SetUpInfoText()
     {
         static CoreUObject::UFunction* fn = nullptr;
         if (!fn)
-            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Challenges/Tennis/TN_Challenge_02_DoubleCross.TN_Challenge_02_DoubleCross_C.SetupInfoText");
+            fn = CoreUObject::UObject::FindObject<CoreUObject::UFunction>("Function /Game/Blueprints/Challenges/Tennis/TN_Challenge_02_DoubleCross.TN_Challenge_02_DoubleCross_C.SetUpInfoText");
         
-        ATN_Challenge_02_DoubleCross_C_SetupInfoText_Params params {};
+        ATN_Challenge_02_DoubleCross_C_SetUpInfoText_Params params {};
         
         auto flags = fn->FunctionFlags;
         CoreUObject::UObject::ProcessEvent(fn, &params);

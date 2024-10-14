@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -37,7 +37,7 @@ namespace CG::BB_Challenge_05_MinorLeague
      * 
      * Size -> 0x0000
      */
-    class ABB_Challenge_05_MinorLeague_C_SetupInfoText_Params
+    class ABB_Challenge_05_MinorLeague_C_SetUpInfoText_Params
     {
     };
 

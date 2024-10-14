@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -37,7 +37,7 @@ namespace CG::TN_Train_03_TraditionalServing
      * 
      * Size -> 0x0000
      */
-    class ATN_Train_03_TraditionalServing_C_SetupInfoText_Params
+    class ATN_Train_03_TraditionalServing_C_SetUpInfoText_Params
     {
     };
 

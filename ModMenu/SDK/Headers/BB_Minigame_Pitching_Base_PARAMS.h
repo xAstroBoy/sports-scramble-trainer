@@ -7,7 +7,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -51,7 +51,7 @@ namespace CG::BB_Minigame_Pitching_Base
      * 
      * Size -> 0x0000
      */
-    class ABB_Minigame_Pitching_Base_C_ShutDown_Params
+    class ABB_Minigame_Pitching_Base_C_Shutdown_Params
     {
     public:
         bool                                                         ShutdownBegun;                                           //  0x0000(0x0001)  (Parm, OutParm, ZeroConstructor, IsPlainOldData, NoDestructor)

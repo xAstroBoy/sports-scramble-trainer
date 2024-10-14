@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -123,7 +123,7 @@ namespace CG::BB_Train_Base
 
     public:
         void AddActorToGameElementList(Engine::AActor* Actor, bool* Callback);
-        void ShutDown(bool* ShutdownBegun);
+        void Shutdown(bool* ShutdownBegun);
         void BB_SpawnPitchTargetListener();
         void BB_TNG_SpawnNeverMissBatter();
         void BB_TNG_TrackBasketballBounces(BB_BasketBall::ABB_BasketBall_C* Basketball, bool* DestroyBasketball);

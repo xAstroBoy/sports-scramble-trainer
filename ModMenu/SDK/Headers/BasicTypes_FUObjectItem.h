@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -34,8 +34,8 @@ namespace CG::BasicTypes
     public:
         CoreUObject::UObject*                                        Object;
         uint8_t                                                      Padding_M_Size[0x10];
-        int32_t                                                      Flags;
-        int32_t                                                      SerialNumber;
+        uint32_t                                                     Flags;
+        uint32_t                                                     SerialNumber;
 
     public:
         bool IsUnreachable();

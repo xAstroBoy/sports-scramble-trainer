@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -62,7 +62,7 @@ namespace CG::TN_Challenge_06_ReturnWall
         BasicTypes::TArray<BasicTypes::FName>                        Paired;                                                  //  Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance
 
     public:
-        void SetupInfoText();
+        void SetUpInfoText();
         void Initialize();
         void UserConstructionScript();
         void StartGame();

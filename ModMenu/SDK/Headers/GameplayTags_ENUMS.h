@@ -6,7 +6,7 @@
  * ----------------------------------------
  * | Game:    SportsScramble              |
  * | Version: 1                           |
- * | Date:    09/09/2024                  |
+ * | Date:    10/14/2024                  |
  * ----------------------------------------
  */
 
@@ -21,6 +21,31 @@ namespace CG::GameplayTags
     // --------------------------------------------------
     // # Enums
     // --------------------------------------------------
+    /**
+     * Enum /Script/GameplayTags.EGameplayTagQueryExprType
+     */
+    enum class EGameplayTagQueryExprType : uint8_t
+    {
+        Undefined    = 0,
+        AnyTagsMatch = 1,
+        AllTagsMatch = 2,
+        NoTagsMatch  = 3,
+        AnyExprMatch = 4,
+        AllExprMatch = 5,
+        NoExprMatch  = 6,
+        MAX          = 7
+    };
+
+    /**
+     * Enum /Script/GameplayTags.EGameplayContainerMatchType
+     */
+    enum class EGameplayContainerMatchType : uint8_t
+    {
+        Any = 0,
+        All = 1,
+        MAX = 2
+    };
+
     /**
      * Enum /Script/GameplayTags.EGameplayTagMatchType
      */
@@ -55,31 +80,6 @@ namespace CG::GameplayTags
         DataTable         = 4,
         Invalid           = 5,
         MAX               = 6
-    };
-
-    /**
-     * Enum /Script/GameplayTags.EGameplayTagQueryExprType
-     */
-    enum class EGameplayTagQueryExprType : uint8_t
-    {
-        Undefined    = 0,
-        AnyTagsMatch = 1,
-        AllTagsMatch = 2,
-        NoTagsMatch  = 3,
-        AnyExprMatch = 4,
-        AllExprMatch = 5,
-        NoExprMatch  = 6,
-        MAX          = 7
-    };
-
-    /**
-     * Enum /Script/GameplayTags.EGameplayContainerMatchType
-     */
-    enum class EGameplayContainerMatchType : uint8_t
-    {
-        Any = 0,
-        All = 1,
-        MAX = 2
     };
 
 }
